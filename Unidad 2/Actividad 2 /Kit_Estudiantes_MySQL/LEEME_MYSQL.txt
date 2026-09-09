@@ -1,0 +1,18 @@
+ACTIVIDAD 2 · KIT PRÁCTICO MYSQL
+=================================
+
+Orden de trabajo
+1. Ejecutar 00_instalar_lab_mysql.sql.
+2. El grupo ejecuta 01_linea_base_mysql.sql y conserva los planes.
+3. Completa y ejecuta 02_experimento_estudiantes_mysql.sql.
+4. Ejecuta 03_prueba_escritura_mysql.sql antes y después de sus índices.
+5. Registra hipótesis, evidencia y veredicto en la bitácora provista en Moodle.
+
+Reglas
+- Se permiten como máximo dos índices secundarios.
+- Deben repetirse los mismos parámetros y realizar tres mediciones.
+- La prueba de escritura termina con ROLLBACK y no deja filas del lote.
+- 04_reiniciar_lab_mysql.sql explica cómo volver al estado inicial.
+- 05_eliminar_lab_mysql.sql elimina únicamente la base sgbd_a2_lab.
+
+
