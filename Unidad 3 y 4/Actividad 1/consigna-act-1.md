@@ -35,7 +35,7 @@ Se entrega un script por motor a modo de instalación inicial con el esquema y a
 
 > **Nota:** En el script se encuentra comentada una inserción masiva de datos para probar carga. Luego de realizar las consultas, descomentarlos y solo ejecutar esa parte para poblar las tablas con más datos.
 
-*   `actividad1_mysql_setup.sql` (26 de agosto de 2026, 18:57)
+*   `actividad1_mysql_setup.sql`
 
 **Criterio de cierre**
 El grupo debe poder ejecutar el script desde cero, mostrar el resultado y explicar por qué cada construcción SQL es adecuada para el problema.
