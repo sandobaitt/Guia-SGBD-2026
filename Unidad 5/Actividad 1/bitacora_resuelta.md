@@ -70,21 +70,24 @@ Cada integrante instaló **MySQL Workbench** y logró conectarse al mismo servid
 
 **Consulta analizada:**
 ```sql
--- [Pegar aquí una consulta interesante de actividades anteriores]
-SELECT * FROM cuentas WHERE saldo > 1000; 
+EXPLAIN
+SELECT titular, saldo
+FROM cuenta
+WHERE saldo > 50000.00 AND estado = 'activa0'
+ORDER BY titular ASC;
 ```
 
-**Lectura del Plan de Ejecución Gráfico:**
-- **Acceso principal:** [Ej. Full Table Scan (Table Scan) o Index Range Scan].
-- **Uso de índice:** [Ej. Sí, usó idx_saldo / No, hizo lectura completa].
-- **Costo/Estimaciones:** [Mencionar el 'Query Cost' o las filas estimadas mostradas en el nodo].
-- **Parte más pesada:** [Ej. El escaneo de la tabla o el Sort, según indique el color de las cajas (Rojo/Naranja) o el % del costo].
+**Lectura del Plan de Ejecución (Formato Árbol/Gráfico):**
+- **Acceso principal:** Escaneo completo de tabla (`Table scan on cuenta`).
+- **Uso de índice:** No usó índices. El motor realizó una lectura secuencial completa de la tabla para luego aplicar el filtro `WHERE`.
+- **Costo/Estimaciones:** El costo total estimado de la consulta (`cost`) es muy bajo: **0.65**, y el optimizador estima procesar y retornar **4 filas** (`rows=4`).
+- **Parte más pesada:** La operación de lectura a disco base (`Table scan on cuenta`) que luego debe ser filtrada (`Filter: ((cuenta.estado = 'activa') ...`) y finalmente ordenada en memoria (`Sort: cuenta.titular`). Aunque los costos son bajos, al no haber índice, el motor tiene que leer todos los registros y ordenarlos "al vuelo".
 
 > **[ACCIÓN REQUERIDA]**  
-> Insertar CAPTURA del Plan de Ejecución (Visual Explain) desde MySQL Workbench para respaldar la lectura.
+> Insertar CAPTURA del Plan de Ejecución (Visual Explain o el formato árbol como se ve en la captura) desde MySQL Workbench para respaldar la lectura.
 
-**Texto vs Gráfica:**
-Al comparar la salida de la consola (`EXPLAIN SELECT ...`) contra el diagrama visual de Workbench, el diagrama gráfico es más fácil de entender a primera vista por el uso de colores y el flujo de cajas (de abajo hacia arriba), permitiendo notar de inmediato dónde está el cuello de botella (nodos rojos). El formato texto entrega la misma información pero exige mayor lectura técnica.
+**Texto vs Gráfica (o formato Árbol):**
+Al comparar la salida tradicional de consola contra la vista en forma de árbol (`FORMAT=TREE` o Visual Explain), resulta mucho más intuitivo entender el flujo de los datos desde adentro hacia afuera (o de abajo hacia arriba). Queda clarísimo en un solo vistazo que primero se lee toda la tabla, el paso intermedio es filtrar por estado y saldo, y el paso final (y más externo) es ordenar los resultados por titular.
 
 ---
 
