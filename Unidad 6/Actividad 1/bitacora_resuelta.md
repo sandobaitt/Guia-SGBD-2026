@@ -259,25 +259,23 @@ SELECT * FROM movimiento ORDER BY movimiento_id;
 ### 3.2. Propuesta de Arquitectura Técnica
 
 ```
-                    [ Clientes / Sistemas de Picking ]
+                           [ Aplicación Depósito ]
                                     │
                                     ▼
                       [ Virtual IP (Keepalived / VIP) ]
                                     │
-                  ┌─────────────────┴─────────────────┐
-                  ▼                                   ▼
+                  ┌─────────────────┴──────────────────────┐
+                  ▼                                        ▼
         [ NODO 1: Primario (RW) ]          [ NODO 2: Réplica (RO/Standby) ]
-        - Motor: MySQL InnoDB              - Motor: MySQL InnoDB
-        - Local SSD / NVMe                 - Local SSD / NVMe
-        - Escribe Binlog en tiempo real    - Replay continuo (Relay Log)
-                  │                                   │
-                  └──────── Replicación ──────────────┘
-                         (Semi-Synchronous)
-                                  │
-                                  ▼
-               [ Almacenamiento Externo / NFS Dedicado ]
-               - Backup Físico/Lógico Diario (02:00 AM)
-               - Archivo continuo de Binlogs (cada 5 min)
+        - Escribe Binlog en tiempo real     - Replay continuo (Relay Log)
+                  │                                        │
+                  └──────────── Replicación ───────────────┘
+                            (Semi-Synchronous)
+                                    │
+                                    ▼
+                      [ Almacenamiento Externo / NFS ]
+                  - Backup Físico/Lógico Diario (02:00 AM)
+                  - Archivo continuo de Binlogs (cada 5 min)
 ```
 
 #### 1. Usuarios y Roles
