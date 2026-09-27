@@ -177,6 +177,33 @@ SELECT '--- ESTADO POST-INCIDENTE (PRODUCCIÓN CORRUPTA) ---' AS etapa;
 SELECT COUNT(*) AS total_movimientos FROM movimiento;
 SELECT COALESCE(SUM(importe), 0) AS suma_total_importes FROM movimiento;
 
+-- =============================================================================
+-- PASO 4.4: RESTAURACIÓN (POINT-IN-TIME RECOVERY - PITR)
+-- =============================================================================
+
+
+-- 1. Consultas SQL para inspeccionar el Log Binario desde MySQL / Workbench:
+SHOW BINARY LOGS;
+
+
+-- Ver los eventos dentro del binlog activo para ubicar el DELETE y el corte exacto:
+-- (Cambiar 'binlog.000001' por el archivo que figure en tu SHOW BINARY LOGS)
+SHOW BINLOG EVENTS IN 'binlog.000002';
+
+
+-- -----------------------------------------------------------------------------
+-- 2. Comandos de Consola / Terminal del Sistema Operativo para la Restauración:
+-- NOTA: Como la restauración de un volcado (.sql) y la inyección de logs binarios
+-- se realizan con las herramientas de cliente de MySQL ('mysql' y 'mysqlbinlog'),
+-- estos comandos se ejecutan en la terminal de Linux/Windows:
+-- -----------------------------------------------------------------------------
+
+
+-- mysql -u root -p u6_rescate < backup_u6_rescate_inicial.sql
+-- sudo mysqlbinlog --start-position=157 --stop-position=<POSICION_JUSTO_ANTES_DEL_DELETE> /var/lib/mysql/binlog.000002
+
+
+-- 
 
 -- =============================================================================
 -- SECCIÓN 5: FASE 2 - VALIDACIÓN DEL ESTADO FINAL TRAS PITR
