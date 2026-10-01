@@ -1,0 +1,64 @@
+
+ARCHIVO 2 - SCRIPT: SENTENCIAS UTILIZADAS DURANTE LA ACTIVIDAD
+MOTOR DE BASE DE DATOS: PostgreSQL 18 (Ubuntu)
+
+-- 1. CREACIÓN DE LA BASE DE DATOS
+CREATE DATABASE sgbd_lab;
+
+-- Nota: Para conectarse a la base de datos recién creada 
+-- desde la consola interactiva psql se utilizó el comando:
+-- \c sgbd_lab
+
+
+-- 2. CREACIÓN DE LA TABLA
+CREATE TABLE cuentas (
+    id INT PRIMARY KEY,
+    nro_cuenta TEXT,
+    titular TEXT,
+    saldo DECIMAL,
+    fecha_alta DATE
+);
+
+
+-- 3. INSERCIÓN DE DATOS
+INSERT INTO cuentas (id, nro_cuenta, titular, saldo, fecha_alta) VALUES
+(1, '001-A', 'Diego Saavedra', 1500.50, '2026-01-15'),
+(2, '002-B', 'Carrasco Agustin', 2500.00, '2026-02-20'),
+(3, '003-C', 'Mauro Stegmayer', 450.75, '2026-03-10'),
+(4, '004-D', 'Ian Maximiliano Gossen', 8900.00, '2026-04-05'),
+(5, '005-E', 'Heber Ulises Matta', 0.00, '2026-05-12');
+
+
+-- 4. CONSULTAS
+SELECT * FROM cuentas;
+
+
+-- 5. MODIFICACIONES
+UPDATE cuentas 
+SET saldo = 5000.00 
+WHERE id = 1;
+
+-- 6. ELIMINACIÓN DE DATOS
+DELETE FROM cuentas 
+WHERE id = 3;
+
+
+-- 7. CONSULTAS DE METADATOS
+-- Consulta para ver columnas y tipos de datos en el esquema
+SELECT table_schema, column_name, data_type 
+FROM information_schema.columns 
+WHERE table_name = 'cuentas';
+
+
+-- 8. CREACIÓN DEL ÍNDICE
+CREATE INDEX idx_nro_cuenta ON cuentas(nro_cuenta);
+
+-- Consulta de catálogo para verificar la existencia del índice creado
+SELECT indexname, indexdef 
+FROM pg_indexes 
+WHERE tablename = 'cuentas';
+
+
+-- 9. COMANDOS PARA OBTENER EL PLAN DE EJECUCIÓN
+-- Plan de ejecución (se ejecutó antes y después de crear el índice)
+EXPLAIN SELECT * FROM cuentas WHERE nro_cuenta = '001-A';

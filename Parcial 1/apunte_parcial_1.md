@@ -31,6 +31,7 @@ Por eso cada tema está organizado así:
 - [Unidad 6 · Seguridad, backup, réplica y alta disponibilidad](#unidad-6--seguridad-backup-réplica-y-alta-disponibilidad)
 - [Integración: preguntas que cruzan unidades](#integración-preguntas-que-cruzan-unidades)
 - [Chuleta de comandos MySQL vs PostgreSQL](#chuleta-de-comandos-mysql-vs-postgresql)
+- [Resoluciones de las actividades: MySQL y PostgreSQL](#resoluciones-de-las-actividades-mysql-y-postgresql)
 
 ### El hilo conductor del bloque
 
@@ -564,9 +565,11 @@ ALTER TABLE movimiento DROP PARTITION p2026_09;
 | Alternativa | Mejora | Costo o límite |
 | :--- | :--- | :--- |
 | Filtrar más antes de ordenar (piso de importe, rango de fechas más chico) | Menos filas llegan al sort | Cambia el alcance del reporte: validar con el negocio. |
-| Índice `(fecha, importe DESC)` | Entrega las filas ya ordenadas y elimina el sort | Costo en cada escritura, por un reporte aislado. |
+| Columna generada `dia = DATE(fecha)` + índice `(dia, importe DESC)`, y filtrar con `dia = '2026-08-09'` | Con **igualdad** sobre `dia`, el índice entrega las filas ya ordenadas por importe y el `LIMIT` corta en 1.000 | Costo en cada escritura, por un reporte aislado. |
 | Más memoria de ordenamiento para esa sesión | El sort entra en RAM | Consume memoria por conexión: riesgoso con mucha concurrencia. |
 | Tabla resumen o vista materializada | El reporte lee resultados precalculados | Hay que definir cuándo se refresca. |
+
+> ⚠️ **Trampa:** un índice `(fecha, importe DESC)` **no** elimina el sort si `fecha` se filtra por **rango** (`fecha >= ... AND fecha < ...`). El índice ordena primero por fecha y hora, y el importe queda ordenado solo dentro de cada valor exacto de `fecha`. Después de un rango, las columnas siguientes del índice ya no sirven para ordenar (ver [2.5](#25-índices-compuestos-el-orden-de-las-columnas-importa)). Para que sirva hace falta una **igualdad** en la primera columna, como la columna `dia`.
 
 ## 2.14 El diseño físico envejece: mantenimiento
 
@@ -926,6 +929,8 @@ ALTER TABLE producto ADD CONSTRAINT chk_precio_positivo CHECK (precio > 0);
 | `NOT NULL` / `DEFAULT` | Presencia y valor inicial. |
 
 > **MySQL:** los `CHECK` se **aplican** recién desde la versión **8.0.16**. En versiones anteriores se aceptaban en la sintaxis pero se ignoraban. Un `CHECK` solo ve **la fila**: no puede consultar otras tablas. Para eso hace falta un trigger o una FK.
+
+> ⚠️ **Un `CHECK` deja pasar `NULL`.** La fila se rechaza solo si la condición da **FALSE**. Con `precio = NULL`, `precio > 0` da UNKNOWN y la fila **se acepta**. Para rechazar nulos hace falta `NOT NULL` en la columna.
 
 ## 4.4 Funciones almacenadas
 
@@ -1956,6 +1961,591 @@ Estas preguntas mezclan temas, igual que en una defensa:
 | Tamaño | `information_schema.tables` | `pg_database_size()` · `pg_total_relation_size()` |
 | Escuchar en la red | `bind-address` | `listen_addresses` + `pg_hba.conf` |
 | Carga masiva | `LOAD DATA INFILE` | `COPY` / `\copy` |
+
+---
+
+# Resoluciones de las actividades: MySQL y PostgreSQL
+
+En el simulacro de la cátedra las preguntas fueron de opción múltiple y describían situaciones de las actividades de laboratorio. Por ejemplo: una sesión que queda esperando un lock, un índice compuesto para una igualdad y un rango, la durabilidad del `COMMIT`, un PITR con RPO, la última venta de cada cliente o la secuencia segura de una migración.
+
+Este apartado repasa cada actividad comparando **dos resoluciones reales**, una en **MySQL** y otra en **PostgreSQL**, unidad por unidad. Para cada una hay:
+
+- **Qué pedía** la actividad.
+- **Cómo la resolvió cada motor**, en una tabla comparativa con la evidencia obtenida.
+- **Lo que hay que saber explicar**, con enlaces a la teoría del apunte.
+- **Errores y mejoras** detectados al revisar las dos resoluciones: son los detalles que suelen aparecer como opción incorrecta en una pregunta.
+
+> En algunas actividades la consigna cambiaba según el motor. En Unidad 2 cada grupo tuvo un caso o un escenario distinto, y en la Fase 3 de Unidad 6 un escenario de negocio distinto. En esos casos se comparan los temas, no los números.
+
+## U1 · Instalación y arquitectura del motor
+
+**Qué pedía:** instalar el motor en una máquina virtual, identificar servicio, proceso y puerto, crear una base y una tabla, consultar metadatos, ubicar archivos físicos y logs, comparar un plan antes y después de crear un índice y probar que los datos persisten. Teoría: [Unidad 1](#unidad-1--arquitectura-de-motores-de-bases-de-datos).
+
+| Aspecto | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Versión y servicio | MySQL 9.7 Community: servicio `mysql`, proceso `mysqld`, usuario del SO `mysql` | PostgreSQL 18.6: servicio `postgresql`, proceso `postgres`, usuario del SO `postgres` |
+| Puerto | 3306 (y 33060, del X Protocol) | 5432 |
+| Comandos usados | `systemctl status mysql` · `ps aux \| grep mysqld` · `ss -tulpn` · `SELECT VERSION();` | `psql -V` · `\conninfo` (mostró una conexión por socket local) · `ps aux` |
+| Crear la base y conectarse | `CREATE DATABASE sgbd_lab; USE sgbd_lab;` | `CREATE DATABASE sgbd_lab;` y `\c sgbd_lab`: una conexión es a **una sola base** |
+| Error encontrado | `ERROR 1046: No database selected` (faltaba el `USE`) | `no existe la relación «cuentas»` (se salteó el `CREATE TABLE`) |
+| Metadatos | `DESCRIBE`, `SHOW INDEX`, `information_schema`. Base y esquema son lo mismo. | `information_schema.columns`, `pg_indexes` (el índice `cuentas_pkey` lo crea solo la PK). Esquema `public` **dentro** de la base. |
+| Archivos físicos | Una carpeta por base dentro del directorio de datos (`/var/lib/mysql/sgbd_lab/`) con un archivo `.ibd` por tabla | Una carpeta numerada por base en `/var/lib/postgresql/18/main/base/<oid>/` y un archivo numerado por tabla e índice |
+| Log transaccional | Redo log y undo log (InnoDB), más el binlog del servidor | WAL en `pg_wal/` |
+| Configuración | `/etc/mysql/my.cnf` y `/etc/mysql/mysql.conf.d/` | `/etc/postgresql/18/main/postgresql.conf` (`shared_buffers` = 128 MB) |
+| Plan con índice en una tabla de 5 filas | Pasó a usar el índice sobre `nro_cuenta` | **Siguió con `Seq Scan`** antes y después del índice |
+| Persistencia | Insertar, confirmar, detener el servicio, reiniciarlo y consultar: el registro sigue | Igual |
+
+**Lo que hay que saber explicar**
+
+- **¿Un índice obliga al optimizador a usarlo? No.** La resolución en PostgreSQL lo muestra directamente: con 5 filas, leer la tabla entera cuesta menos que ir al índice y después a la tabla. Que MySQL sí lo haya usado no contradice nada: cada motor tiene su propio modelo de costos, y MySQL estima muy barato un acceso por igualdad sobre un índice. La respuesta que se defiende es **"el optimizador decide por costo, con estadísticas"** ([1.6](#16-arquitectura-interna-del-sql-al-disco) y [2.8](#28-por-qué-el-optimizador-no-usa-mi-índice)).
+- **¿Por qué el registro sobrevive al reinicio?** Porque el `COMMIT` escribe el **log** (redo/WAL) en disco. La página modificada puede seguir "sucia" en memoria; si el servicio se cae antes del checkpoint, al arrancar el motor **rehace** el cambio desde el log ([1.6](#16-arquitectura-interna-del-sql-al-disco)).
+  - ⚠️ Respuesta incompleta frecuente: "los cambios quedan en memoria hasta el `COMMIT` y ahí se escriben los datos en disco". En el `COMMIT` se escribe el **log**, no las páginas de datos. Los cambios que no llegaron a confirmarse **se deshacen** al recuperar.
+- **Autocommit:** tanto `psql` como el cliente `mysql` confirman cada sentencia sola. Para observar una transacción hay que abrirla con `BEGIN` / `START TRANSACTION`.
+- **Instancia, base y esquema** no significan lo mismo en los dos motores ([1.11](#111-instancia-base-de-datos-y-esquema-el-mismo-término-cambia-de-significado)).
+
+**Comandos útiles para ubicar la arquitectura**
+
+| Qué | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Directorio de datos | `SELECT @@datadir;` | `SHOW data_directory;` |
+| Archivo de una tabla | Carpeta de la base dentro de `@@datadir` | `SELECT pg_relation_filepath('cuentas');` |
+| Caché de datos | `SELECT @@innodb_buffer_pool_size;` | `SHOW shared_buffers;` |
+| Archivo de configuración | `/etc/mysql/my.cnf` | `SHOW config_file;` |
+| Logs de cambios | `SHOW BINARY LOGS;` | Carpeta `pg_wal/` |
+
+## U2 · Actividad 1: Detectives del plan
+
+**Qué pedía:** diagnosticar un caso de bajo rendimiento con **dos evidencias** del plan, proponer **una mejora prioritaria** (no necesariamente un índice), explicar **cómo verificarla** y reconocer **un efecto adverso**. Sin implementar cambios. Cada grupo recibió un caso distinto. Teoría: [2.11](#211-leer-un-plan-de-ejecución) y [2.13](#213-antes-de-cambiar-identificar-la-causa).
+
+### Caso en MySQL: el ordenamiento que llega al disco
+
+- **Consulta:** `WHERE fecha >= '2026-08-09' AND fecha < '2026-08-10' ORDER BY importe DESC LIMIT 1000` sobre 22 millones de movimientos (920.000 del día).
+- **Evidencia:** el *index range scan* tarda ~2.760 ms, pero la consulta total tarda **10.980 ms**; `Sort_merge_passes` sube **+24** con `sort_buffer_size` de 4 MiB.
+- **Diagnóstico:** el ordenamiento de 920.000 filas no entra en memoria y **derrama a disco** con pasadas de mezcla.
+
+| Propuesta de la resolución | Evaluación |
+| :--- | :--- |
+| Agregar un piso de importe al `WHERE` | Válida si el negocio acepta el cambio de alcance del reporte. |
+| Quedarse con las 1.000 mayores sin ordenar todo | Es la idea de un ordenamiento parcial (*top-N*). Hay que justificar cómo lo resuelve el motor. |
+| Índice `(fecha, importe DESC)` | ⚠️ **No elimina el sort**: `fecha` se filtra por **rango**. **Corrección:** columna generada `dia = DATE(fecha)` + índice `(dia, importe DESC)` y filtrar con `dia = '2026-08-09'`. Con igualdad, el índice entrega el orden por importe y el `LIMIT` corta en 1.000 ([2.13](#213-antes-de-cambiar-identificar-la-causa)). |
+
+**Verificación:** el nodo `Sort` desaparece del plan, `Sort_merge_passes` deja de aumentar y la mediana de tres ejecuciones baja.
+
+### Caso en PostgreSQL: el índice que no cubre
+
+- **Evidencia:** `Index Scan` sobre `ix_transacciones_comercio_fecha` que devuelve 65.480 filas de 18 millones, con `Buffers: shared hit=188.700 read=9.420` y **7.410 ms**. Las filas son anchas (`width=310`) por una columna `descripcion VARCHAR(250)`.
+- **Diagnóstico:** el índice **localiza** las filas pero **no tiene** las columnas que pide la consulta, así que por cada fila vuelve a la tabla (heap): miles de accesos aleatorios.
+- **Mejora:** índice cubriente.
+
+```sql
+CREATE INDEX ix_transacciones_cubriente
+ON transacciones (comercio_id, fecha DESC) INCLUDE (transaccion_id, importe, canal);
+```
+
+- **Verificación:** el plan pasa a `Index Only Scan`, los buffers bajan más del 90 % y los `Heap Fetches` quedan cerca de cero (depende del *visibility map*, es decir, de que la tabla tenga `VACUUM` al día).
+- **Efecto adverso:** más espacio en disco y en memoria, y más costo en cada `INSERT`/`UPDATE`.
+
+> ⚠️ Un `Index Only Scan` exige que **todas** las columnas que usa la consulta estén en el índice. Si el reporte sigue pidiendo `descripcion`, el motor sigue yendo al heap. Las opciones son sacar `descripcion` del listado y traerla solo para la fila que se abre, o incluirla y aceptar un índice mucho más grande ([2.7](#27-índices-de-cobertura-y-costo-oculto-de-los-índices)).
+
+### Lo que tienen en común
+
+| | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Problema | El **ordenamiento** no entra en memoria | El índice **no cubre** las columnas pedidas |
+| Señal física clave | `Sort_merge_passes` (pasadas de mezcla en disco) | `Buffers` (hit/read), `width`, `Heap Fetches` |
+| Mejora | Que el índice entregue el orden (con igualdad en la primera columna) | Que el índice tenga todas las columnas |
+| Efecto adverso común | Un índice mantenido en cada escritura **para un único reporte** | |
+
+## U2 · Actividad 2: Batalla de diseño físico
+
+**Qué pedía:** línea de base, **hipótesis antes del DDL**, como máximo dos estructuras nuevas, **tres mediciones y la mediana**, medir el costo y dar un veredicto: **mantener, modificar o revertir**. El escenario cambiaba según el motor. Teoría: [2.5](#25-índices-compuestos-el-orden-de-las-columnas-importa), [2.9](#29-particionamiento-divide-y-reinarás) y [2.12](#212-protocolo-de-medición-reproducible).
+
+### MySQL: lectura contra escritura (300.000 pedidos)
+
+Índices creados: `(cliente_id, fecha)` para A y `(sucursal_id, estado, fecha)` para B.
+
+| Operación | Mediana antes | Mediana después | Cambio en el plan |
+| :--- | ---: | ---: | :--- |
+| A · últimos 20 pedidos de un cliente | 155 ms | 0,198 ms | `Table scan` + `Sort` → `Index lookup ... (reverse)` |
+| B · pedidos pendientes por sucursal | 164 ms | 0,0215 ms | `Table scan` + `Sort` → `Index lookup` |
+| Lote de 10.000 `INSERT` | 194,69 ms | 273,29 ms | Hay que mantener dos índices más |
+| C · resumen trimestral (prioridad baja) | Sin cambios | Sin cambios | No se indexó, a propósito |
+
+- **Veredicto:** mantener. Las consultas prioritarias mejoran en órdenes de magnitud y la escritura empeora de forma acotada.
+- **Descartado:** un índice simple sobre `cliente_id`. Evita el scan, pero **sigue ordenando**.
+- **Por qué la mediana:** la primera inserción después de crear los índices tardó **2.410 ms** y la primera lectura 32,7 ms (caché fría). Con la mediana esos valores atípicos no distorsionan el resultado.
+
+### PostgreSQL: heap contra tabla particionada (600.000 pedidos, 48 particiones mensuales)
+
+| Consulta | Resultado (mediana) | Qué demuestra |
+| :--- | :--- | :--- |
+| C · un trimestre, en la tabla heap | 11,01 ms (`Parallel Seq Scan`, 5.941 buffers) | Sin estructura de acceso, recorre todo |
+| C · un trimestre, en la particionada | 7,10 ms (lee **3 de 48** particiones) | ***Partition pruning***: filtra por la clave de partición |
+| A · un cliente, en la particionada | 9,28 ms (recorre **las 48** particiones) | Sin filtro por fecha **no hay pruning** |
+| Contraste: rango 2022-2026, en la particionada | 43,75 ms | Un rango que cubre casi todo anula el pruning |
+| A · con índice `(cliente_id, fecha)` | **0,167 ms** (`Index Scan`, 90 buffers) | La partición **no reemplaza** al índice |
+| C · heap con índice `(fecha)` | 8,85 ms (`Bitmap Index Scan`) | Mejora leve: el trimestre es una porción grande de la tabla |
+| C · particionada con índice | El optimizador siguió con `Seq Scan` en las particiones podadas | Leer 3 particiones completas ya es barato |
+
+**Retención** (borrar un mes):
+
+| Operación | Resultado | Por qué |
+| :--- | :--- | :--- |
+| `DELETE` del mes en la tabla heap | 40 ms, 23.573 buffers | DML fila por fila: genera WAL y deja **tuplas muertas** que después limpia `VACUUM` |
+| `ALTER TABLE ... DETACH PARTITION` | Casi instantáneo | Es un cambio de **metadatos**: no toca las filas ni deja tuplas muertas |
+
+- **Veredicto:** **modificar**. Se mantiene la tabla particionada y se agrega el índice `(cliente_id, fecha)`.
+- **Descartado:** quedarse con la tabla heap e índices, porque la retención con `DELETE` no escala.
+
+### Comparación de los dos escenarios
+
+| Pregunta | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Costo que se midió | **Escritura** (lote de `INSERT`) | **Retención** (borrar un período) |
+| Estructura elegida | Dos índices compuestos | Partición por rango + índice |
+| Veredicto | Mantener | Modificar |
+| Lección | Cada índice se paga en cada escritura | Índice y partición resuelven problemas distintos |
+
+> Una hipótesis **refutada** también vale. En PostgreSQL se esperaba que la tabla particionada ganara "siempre" y no fue así: perdió en la consulta por cliente. Explicar por qué es parte de la nota.
+
+## U3 · Actividad 1: El reporte que nadie puede resolver
+
+**Qué pedía:** resolver dentro del motor la última venta de cada cliente, el acumulado mensual, un ranking por segmento y un recorrido jerárquico, usando al menos una CTE, una función de ventana y una CTE recursiva. También comparar dos alternativas para una consulta. Teoría: [Unidad 3](#unidad-3--sql-avanzado).
+
+| Requerimiento | MySQL | PostgreSQL | Comentario |
+| :--- | :--- | :--- | :--- |
+| Última venta | CTE con `ROW_NUMBER()` sobre `cliente JOIN venta`, `ORDER BY v.fecha DESC`, y filtro `cont_venta = 1` en el `WHERE` | `ROW_NUMBER()` solo sobre `venta`, con `ORDER BY fecha DESC, venta_id DESC`, y después `cliente LEFT JOIN ... ON ... AND rowc = 1` | La de PostgreSQL **conserva los clientes sin ventas** y **desempata**. La de MySQL los pierde (por el `JOIN`) y ante un empate de fecha elige cualquiera. |
+| Acumulado mensual | `SUM() OVER (PARTITION BY cliente, año, mes ORDER BY fecha, venta_id ROWS ...)` | Igual | Equivalentes |
+| Ranking | CTE con `LEFT JOIN` + `COALESCE` y `DENSE_RANK()` por segmento | Igual | Equivalentes: los clientes sin ventas aparecen con 0 |
+| Jerarquía | `WITH RECURSIVE`, nivel desde 0 | `WITH RECURSIVE`, nivel desde 1 | Equivalentes |
+| Comparación de alternativas | Ventana frente a self-join, con `EXPLAIN ANALYZE` (`Window aggregate`, `Materialize recursive CTE`) | Ventana frente a subconsulta correlacionada, mostrando que dan el mismo resultado | |
+
+### La versión que responde bien al requerimiento
+
+```sql
+WITH ventas_ordenadas AS (
+    SELECT v.*,
+           ROW_NUMBER() OVER (PARTITION BY v.cliente_id
+                              ORDER BY v.fecha DESC, v.venta_id DESC) AS rn  -- desempate explícito
+    FROM venta v
+)
+SELECT c.cliente_id, c.nombre, vo.venta_id, vo.fecha, vo.total
+FROM cliente c
+LEFT JOIN ventas_ordenadas vo
+       ON vo.cliente_id = c.cliente_id
+      AND vo.rn = 1                  -- en el ON: los clientes sin ventas quedan con NULL
+ORDER BY c.cliente_id;
+```
+
+> ⚠️ Si `rn = 1` se pasa al `WHERE`, los clientes sin ventas tienen `rn = NULL`, la condición da UNKNOWN y **desaparecen**: el `LEFT JOIN` se comporta como un `INNER JOIN` ([3.4](#34-join-decidir-qué-filas-sobreviven)). Esta diferencia fue una pregunta del simulacro.
+
+### Ventana frente a subconsulta correlacionada
+
+```sql
+SELECT v1.venta_id, v1.cliente_id, v1.fecha, v1.total,
+       (SELECT SUM(v2.total) FROM venta v2
+        WHERE v2.cliente_id = v1.cliente_id
+          AND EXTRACT(YEAR FROM v2.fecha)  = EXTRACT(YEAR FROM v1.fecha)
+          AND EXTRACT(MONTH FROM v2.fecha) = EXTRACT(MONTH FROM v1.fecha)
+          AND (v2.fecha < v1.fecha OR (v2.fecha = v1.fecha AND v2.venta_id <= v1.venta_id))
+       ) AS acumulado_mes
+FROM venta v1;
+```
+
+- La subconsulta reproduce a mano el mismo orden que `ORDER BY fecha, venta_id` + `ROWS`. Sin el desempate por `venta_id`, dos ventas del mismo día mostrarían el mismo acumulado.
+- **Costo:** la ventana ordena una vez y recorre una pasada. La subconsulta se ejecuta **una vez por fila** (salvo que el optimizador la transforme), así que con N ventas son N recorridos.
+
+**Evidencia:** el plan que se presenta tiene que ser **de la misma consulta** que se entrega. En una de las resoluciones, el `EXPLAIN` del acumulado usaba una partición distinta a la consulta entregada.
+
+## U3/4 · Actividad 2: La regla que no puede romperse
+
+**Qué pedía:** saldo no negativo, auditoría de cambios de precio, una función o un procedimiento que clasifique al cliente por su total anual (Bronce < 2 M, Plata entre 2 M y 50 M, Oro > 50 M) y al menos una regla con restricción declarativa. Para cada regla: mecanismo elegido y por qué. Teoría: [4.2](#42-mapa-de-mecanismos-del-más-simple-al-más-complejo) a [4.7](#47-tabla-de-decisión-qué-mecanismo-uso).
+
+| Regla | Mecanismo (las dos) | MySQL | PostgreSQL |
+| :--- | :--- | :--- | :--- |
+| Saldo ≥ 0 | `CHECK (saldo >= 0)` | `ERROR 3819 ... is violated` | `violates check constraint` |
+| Precio > 0 | `CHECK (precio > 0)` | Ídem | Ídem (el límite 0 se rechaza) |
+| Auditoría de precio | Trigger `AFTER UPDATE` | La condición va **dentro del cuerpo**: `IF OLD.precio <> NEW.precio` | La condición va **en la definición**: `AFTER UPDATE OF precio ... WHEN (OLD.precio IS DISTINCT FROM NEW.precio)` |
+| Clasificación anual | Función `clasificar_cliente(cliente, año)` con `COALESCE(SUM(total), 0)` | Declarada `DETERMINISTIC READS SQL DATA` | `plpgsql`, con la volatilidad por defecto |
+| Tabla de ventas | — | Se creó una tabla `venta` mínima porque el script base no la traía | Se usó el script complementario, y hubo que agregar los clientes 4 y 5 que faltaban (por la FK) |
+
+```sql
+-- PostgreSQL: el motor solo invoca la función si el precio cambió de verdad
+CREATE TRIGGER trg_auditar_precio
+AFTER UPDATE OF precio ON producto
+FOR EACH ROW
+WHEN (OLD.precio IS DISTINCT FROM NEW.precio)
+EXECUTE FUNCTION registrar_cambio_precio();
+```
+
+MySQL no tiene `UPDATE OF columna` ni `WHEN` en los triggers. La condición va dentro del cuerpo, y la forma segura con nulos es `IF NOT (OLD.precio <=> NEW.precio)`.
+
+### Pruebas comparadas
+
+| Caso | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Válido | Precio 1.000 → 1.200: aparece la fila en `auditoria_precio`. Clasificación: Plata, Oro y Bronce. | Igual |
+| Límite | `saldo = 0` aceptado | `saldo = 0` aceptado. Mismo precio (1.200 → 1.200): **no se audita**. `precio = 0` rechazado. Cliente sin ventas en el año → Bronce. |
+| Inválido | `saldo = -500` y `precio = 0` rechazados | `saldo = -1` rechazado. `precio = NULL` rechazado. `clasificar_cliente(NULL, NULL)` devuelve **Bronce**. |
+
+### Lo que hay que saber explicar
+
+- **¿Por qué se rechazó `precio = NULL`?** Por el **`NOT NULL`** de la columna, no por el `CHECK`. Un `CHECK (precio > 0)` **acepta** `NULL`, porque la condición da UNKNOWN y solo se rechaza lo que da FALSE ([4.3](#43-integridad-declarativa-constraints)).
+- **Parámetros inválidos:** que `clasificar_cliente(NULL, NULL)` devuelva "Bronce" es un resultado engañoso. Mejor validar y fallar:
+
+```sql
+-- PostgreSQL
+IF p_cliente_id IS NULL OR NOT EXISTS (SELECT 1 FROM cliente WHERE cliente_id = p_cliente_id) THEN
+    RAISE EXCEPTION 'Cliente % inexistente', p_cliente_id;
+END IF;
+-- MySQL: IF ... THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cliente inexistente'; END IF;
+```
+
+- **Atributos de la función:** una función que lee tablas no es determinística. En MySQL corresponde `NOT DETERMINISTIC READS SQL DATA` y en PostgreSQL `STABLE` ([4.4](#44-funciones-almacenadas)).
+- **Filtro por año:** las dos usan `EXTRACT(YEAR FROM fecha) = p_anio`, que impide usar un índice sobre `fecha`. El rango `fecha >= inicio_del_año AND fecha < inicio_del_año_siguiente` sí lo aprovecha.
+- **Bordes:** en las dos, 2.000.000 y 50.000.000 exactos dan **Plata** y solo lo mayor a 50.000.000 da Oro. Conviene probar esos valores exactos como casos límite.
+- **Base, aplicación o ambas:** la regla de saldo va en la base como última defensa y también en la aplicación para la experiencia de usuario ([4.1](#41-dónde-debería-vivir-la-regla-de-negocio)).
+
+## U3/4 · Actividad 3: Release de base de datos v2.0
+
+**Qué pedía:** evolucionar una base v1 con datos a una v2 **sin recrearla**: estados de pedido, auditoría de cambios de estado, totales no negativos, una función de total por cliente y un rollback razonado, con scripts versionados `01` a `06`. Teoría: [4.9](#49-migraciones-una-base-de-datos-también-tiene-versiones) a [4.11](#411-scripts-versionados-y-cicd).
+
+| Paso | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Contenedor del laboratorio | Una base de datos propia | Un **esquema** propio: `DROP SCHEMA ... CASCADE`, `CREATE SCHEMA`, `SET search_path` |
+| Columna de estado | `ENUM('pendiente', 'pagado', 'enviado', 'cancelado') NOT NULL DEFAULT 'pendiente'` | `CHAR(20) NOT NULL DEFAULT 'pendiente' CHECK (estado IN (...))` |
+| Estado inválido | `ERROR 1265: Data truncated for column 'estado'` (modo estricto) | `new row ... violates check constraint "pedido_estado_check"` |
+| Auditoría | Tabla con FK a `pedido`; trigger `AFTER UPDATE` con `OLD.estado <> NEW.estado` | Tabla con `SERIAL` y columna `usuario`; trigger `AFTER UPDATE OF estado` con `IS DISTINCT FROM` y `CURRENT_USER` |
+| Total no negativo | `CHECK (total >= 0)` | Ídem, con nombre propio (`regla_totales_no_negativos`) |
+| Función de total | `calcular_total_cliente` con `COALESCE`: un cliente sin pedidos da 0,00 | Ídem |
+| Continuidad de v1 | Los 3 pedidos siguen y toman `pendiente` | Ídem |
+| Rollback | `DROP` de cada objeto + advertencia de hacer `mysqldump` antes | **Copia los datos de v2** a tablas de respaldo (`CREATE TABLE ... AS SELECT`) y recién después hace los `DROP` |
+
+### Lo que hay que saber explicar
+
+- **Atajo frente a secuencia segura:** las dos resoluciones agregaron la columna en un solo paso, con `NOT NULL DEFAULT 'pendiente'`: expandir, completar y endurecer a la vez. En una tabla chica funciona. La secuencia que se defiende para producción es **columna nullable → completar históricos → validar → `CHECK` + `NOT NULL` → trigger** ([4.9](#49-migraciones-una-base-de-datos-también-tiene-versiones)). Es la respuesta del simulacro.
+  - En PostgreSQL 11+ y MySQL 8.0+ agregar una columna con un `DEFAULT` constante es casi instantáneo. Lo costoso en tablas grandes es validar restricciones sobre todas las filas.
+- **Rollback:** el de PostgreSQL es mejor práctica porque **preserva** los estados y la auditoría generados en v2 antes de borrarlos. Lo ideal es combinarlo con un backup.
+- **Migración atómica:** en PostgreSQL toda la migración puede ir entre `BEGIN` y `COMMIT`, porque el DDL es transaccional: si algo falla, no queda nada a medias. En MySQL cada DDL hace commit implícito ([4.10](#410-rollback-de-migraciones-avanzar-suele-ser-seguro-retroceder-es-destructivo)).
+- **`CHAR(20)` rellena con espacios** (`'pendiente'` + 11 blancos). Para textos de largo variable conviene `VARCHAR` o `TEXT`.
+- **`ENUM`, `CHECK` o tabla de estados:** las ventajas de cada opción están en [4.9](#tres-formas-de-restringir-un-conjunto-de-valores). El `ENUM` da integridad **de dominio**, no referencial.
+
+## U5 · Actividad 1: Guardia DBA
+
+**Qué pedía:** convertir el motor en un servidor accesible para todo el grupo, que cada integrante se conecte desde su equipo con la herramienta gráfica, recorrer el checklist DBA (objetos, seguridad, metadatos, ingeniería inversa), una primera guardia (sesiones, actividad, tres indicadores, espacio, mantenimiento) y la lectura de un plan. Teoría: [5.1](#51-del-motor-aislado-al-servidor-compartido) a [5.3](#53-primera-guardia-dba-qué-mirar-y-con-qué-consulta).
+
+| Aspecto | MySQL + Workbench | PostgreSQL + pgAdmin |
+| :--- | :--- | :--- |
+| Servidor | VM Ubuntu en VirtualBox con **adaptador puente** | Equipo físico con Linux, **sin virtualización**, conectado al Wi-Fi del aula para compartir la subred con los clientes |
+| Escuchar en la red | `bind-address = 0.0.0.0` | `listen_addresses = '*'` |
+| Quién puede conectarse | Usuarios `'alumno0N'@'%'` del script de la cátedra | `pg_hba.conf`: `host all all 0.0.0.0/0 scram-sha-256` |
+| Usuarios | **Uno por integrante** (`alumno01` a `alumno06`), con DML + `PROCESS` + `SELECT` en `performance_schema` | **Un rol compartido** `lab_dba` con `SUPERUSER` |
+| Verificación | `ss -lntp` → `0.0.0.0:3306`; *Test Connection* en Workbench | `ss -tulpn` → `0.0.0.0:5432`; `nmap` desde otro equipo: `5432/tcp open` |
+| Objetos y metadatos | Navigator → Schemas; Table Inspector | Object Explorer; pestaña Properties |
+| Seguridad | Users and Privileges | Login/Group Roles |
+| Ingeniería inversa | Database → Reverse Engineer | ERD For Database |
+| Sesiones | Client Connections | Dashboard y `pg_stat_activity` |
+| Indicadores | Tráfico de red, CPU, uso del InnoDB buffer pool | Sesiones, transacciones por segundo (commits y rollbacks), tuplas leídas y devueltas, Block I/O (hits frente a reads) |
+| Espacio | Table Inspector (*data length* e *index length*) | Base ≈ 7,9 MB; tabla `cuenta` 24 kB |
+| Mantenimiento | Server Logs, exportar e importar | `VACUUM`, `ANALYZE`, `REINDEX`, `CLUSTER` |
+| Plan analizado | Consulta sobre `cuenta`: `Table scan` → `Filter` → `Sort` (no había un índice útil) | JOIN `cuenta`–`movimiento`: `Nested Loop` con `Index Scan` en `cuenta_pkey` y `Bitmap Heap Scan` vía `ix_mov_cuenta_fecha` |
+
+### Lo que hay que saber explicar
+
+- **Mínimo privilegio también en el laboratorio.** Un rol compartido con `SUPERUSER` y una regla `0.0.0.0/0` funcionan, pero abren mucho más de lo necesario y no dejan saber quién hizo qué. Lo adecuado:
+  - **Un usuario por persona** con privilegios de observación: en MySQL, `PROCESS` + `SELECT` sobre `performance_schema`; en PostgreSQL, el rol predefinido **`pg_monitor`**. Es lo que propone el script de la cátedra.
+  - **Restringir la red:** en `pg_hba.conf`, solo la subred del aula (por ejemplo `10.13.24.0/21`); en MySQL, `'usuario'@'192.168.1.%'` en lugar de `'%'`.
+  - **No publicar contraseñas** en el informe: lo pedía la consigna.
+- **Distinguir capas:** `ss` muestra si el motor escucha; `nmap` o `nc` desde otra PC muestran si el puerto es alcanzable; el error del cliente indica si falla la autenticación ([5.1](#51-del-motor-aislado-al-servidor-compartido)).
+- **La herramienta también genera sesiones:** el Dashboard de pgAdmin abre conexiones propias que aparecen como `idle`. Para contar a los integrantes hay que filtrar por `client_addr` y `application_name`.
+- **Bitmap Heap Scan:** cuando el índice devuelve varias filas, PostgreSQL arma un mapa de las páginas que necesita y lee cada página una sola vez, en orden físico.
+- **Plan gráfico frente a texto:** el gráfico muestra mejor la forma del árbol; el texto o JSON tiene todos los números (filas, costo, buffers). Para la defensa conviene el gráfico; para la evidencia, el texto.
+
+## U5 · Actividad 2: Concurrencia y bloqueos
+
+**Qué pedía:** tres experimentos con dos sesiones sobre el mismo servidor (espera por lock, aislamiento con dos lecturas, deadlock controlado), con evidencia del motor antes de liberar cada espera, y dos medidas preventivas. Los scripts de la cátedra eran equivalentes en los dos motores. Teoría: [5.8](#58-niveles-de-aislamiento) a [5.11](#511-deadlock-el-abrazo-mortal).
+
+### Experimento 1: espera por lock
+
+| | MySQL / InnoDB | PostgreSQL |
+| :--- | :--- | :--- |
+| Sesión que bloquea (A) | En `SHOW PROCESSLIST` figura como `Sleep`: está ociosa pero **con la transacción abierta** (se ve en `information_schema.innodb_trx`) | `state = idle in transaction` |
+| Sesión bloqueada (B) | En `performance_schema.data_locks`, lock `X` sobre la fila con `lock_status = WAITING`; `data_lock_waits` relaciona B con A | `state = active`, `wait_event_type = Lock`, `wait_event = transactionid`, `pg_blocking_pids(B) = {A}` |
+| Recurso | El registro de la cuenta 1 en el índice de la PK | La fila de la cuenta 1: B espera a que **termine la transacción** de A |
+| Al liberar | `COMMIT` de A → el `UPDATE` de B termina al instante | Igual |
+
+- **¿Por qué en PostgreSQL la espera dice `transactionid`?** PostgreSQL no guarda los locks de fila en una tabla de locks: los marca en la propia fila. Quien llega después espera a que **termine la transacción** que la modificó.
+- **No hubo actualización perdida:** en la prueba con PostgreSQL el saldo terminó en 9.850 = 10.000 − 100 − 50. Como el `UPDATE` es atómico (`saldo = saldo - 50`), al liberarse la fila el motor aplicó el cambio de B **sobre la versión ya confirmada por A** ([5.9](#59-mvcc-y-locks)).
+
+### Experimento 2: dos lecturas en la misma transacción
+
+| | MySQL (`REPEATABLE READ` por defecto) | PostgreSQL (`READ COMMITTED` por defecto) |
+| :--- | :--- | :--- |
+| Primera lectura de A | Saldo S | 15.000 |
+| B suma 1.000 y confirma | | |
+| Segunda lectura de A | **S**: reutiliza el snapshot de la primera lectura | **16.000**: snapshot nuevo por sentencia (lectura no repetible) |
+| Para obtener el otro comportamiento | `SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;` | `BEGIN ISOLATION LEVEL REPEATABLE READ;` |
+
+> Mismo experimento, resultado opuesto, y **los dos son correctos**: dependen del nivel de aislamiento por defecto de cada motor. Por eso el primer paso siempre es consultar el nivel real (`@@transaction_isolation` / `SHOW transaction_isolation`).
+
+### Experimento 3: deadlock controlado
+
+| | MySQL / InnoDB | PostgreSQL |
+| :--- | :--- | :--- |
+| Detección | Inmediata | Después de `deadlock_timeout` (1 s por defecto) |
+| Error | `ERROR 1213 (40001): Deadlock found when trying to get lock` | `ERROR: deadlock detected` (SQLSTATE `40P01`) |
+| Víctima observada | Sesión B (la que cerró el ciclo) | Sesión B (la que cerró el ciclo) |
+| Por qué | InnoDB aborta la transacción "más chica" (menos filas modificadas). Con pesos iguales, en la práctica suele caer la que cerró el ciclo. | La sesión que cierra el ciclo es la que lo encuentra al cumplirse su `deadlock_timeout`, y se aborta a sí misma |
+| Estado de la víctima | Toda su transacción **se revierte** | Queda `idle in transaction (aborted)`: rechaza todo con *"current transaction is aborted"* hasta un `ROLLBACK` |
+| Sobreviviente | Su `UPDATE` termina; debe hacer `COMMIT` o `ROLLBACK` | Igual |
+| Evidencia | `SHOW ENGINE INNODB STATUS` → **LATEST DETECTED DEADLOCK** | `pg_stat_activity` (desaparece la espera) y el log del servidor |
+
+**Medidas preventivas** propuestas en las dos resoluciones:
+
+1. **Orden canónico de acceso:** actualizar siempre por `cuenta_id` ascendente hace imposible el ciclo.
+2. **Transacciones cortas:** sin lógica pesada ni espera del usuario con la transacción abierta.
+
+La de PostgreSQL agregó **`lock_timeout`** y **`SELECT ... FOR UPDATE NOWAIT`**, para fallar rápido en lugar de dejar conexiones colgadas ([5.11](#511-deadlock-el-abrazo-mortal)).
+
+## U6 · Actividad 1: Operación Rescate
+
+**Qué pedía:** Fase 1, detectar y corregir permisos excesivos con pruebas antes y después. Fase 2, backup, operaciones válidas, borrado accidental, punto objetivo y restauración validada. Fase 3, una arquitectura de continuidad para un escenario con RPO y RTO dados. Teoría: [Unidad 6](#unidad-6--seguridad-backup-réplica-y-alta-disponibilidad).
+
+### Fase 1: el usuario infiltrado
+
+| | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Permisos peligrosos del script | `rol_app` con `DELETE`, `CREATE` y `DROP` sobre toda la base; `rol_analista` con `UPDATE` | `rol_app` con `TRUNCATE` en todas las tablas y permiso para modificar y borrar la auditoría; `rol_analista` con `UPDATE` en todas las tablas |
+| Cómo se detectan | `SHOW GRANTS FOR rol_app;` | `information_schema.table_privileges` (o `\dp`) |
+| Accesos indebidos demostrados | La app crea y borra una tabla; el analista suma 500.000 a un saldo; la app borra la auditoría | El analista cambia un saldo; la app borra la auditoría; la app hace `TRUNCATE` de `movimiento` dentro de `BEGIN ... ROLLBACK` |
+| Corrección | `REVOKE ALL PRIVILEGES, GRANT OPTION FROM ...` + `GRANT` por tabla + `SET DEFAULT ROLE ALL` | `REVOKE ALL ON ALL TABLES IN SCHEMA public FROM ...` + `GRANT` por tabla + `USAGE, SELECT` sobre las secuencias para la app |
+| Error esperado al repetir | `ERROR 1142 (42000): ... command denied to user` | `ERROR: permission denied for table ...` |
+| Matriz final | app: `SELECT/INSERT/UPDATE` en cliente y cuenta, `SELECT/INSERT` en movimiento, solo `INSERT` en auditoría; analista: solo `SELECT` de negocio; auditor: solo `SELECT` | La misma |
+
+**Diferencias entre motores que conviene saber:**
+
+| Tema | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| `TRUNCATE` | Requiere el privilegio **`DROP`** y hace **commit implícito**: no se puede deshacer con `ROLLBACK` | Es un privilegio **propio** y es **transaccional**: por eso la prueba se pudo revertir |
+| IDs autoincrementales | `AUTO_INCREMENT` no requiere permisos extra | Para insertar en columnas `SERIAL` (que llaman a `nextval`), la app necesita `USAGE` sobre la **secuencia** |
+| Activación de roles | `SET DEFAULT ROLE` (si no, el rol no se activa al conectar) | Los roles se heredan |
+
+> Quitarle `DROP` a la cuenta de la aplicación en MySQL también le impide hacer `TRUNCATE`.
+
+### Fase 2: el DBA borró producción
+
+**Estados medidos** (iguales en los dos motores):
+
+| Métrica | Inicial | Después de las operaciones válidas | Después del incidente | Recuperado |
+| :--- | :---: | :---: | :---: | :---: |
+| Clientes / cuentas | 4 / 4 | 4 / 4 | 4 / 4 | 4 / 4 |
+| Movimientos | 5 | 7 | 4 | **7** |
+| Suma de importes | $73.000 | $81.000 | **$28.000** | **$81.000** |
+| Movimientos de la cuenta 101 | 2 | 3 | 0 | **3** |
+
+Después del incidente quedan 30.000 − 5.000 + 10.000 − 7.000 = **28.000**. Conviene verificar la cuenta a mano: es fácil escribir un valor equivocado en la bitácora.
+
+| | MySQL | PostgreSQL |
+| :--- | :--- | :--- |
+| Backup | `mysqldump --single-transaction --flush-logs --source-data=2` | `pg_dump -Fc` (formato custom) |
+| Recuperación | Restore del dump + `mysqlbinlog` desde la posición del backup hasta justo antes del `DELETE` | `TRUNCATE movimiento` + `pg_restore -t movimiento --data-only` + **reinsertar a mano** 1006 y 1007 (identificadas por la auditoría) |
+| ¿Es PITR? | **Sí:** el binlog reproduce lo ocurrido hasta el punto elegido | **No:** es un restore lógico más una reaplicación manual. Funciona porque se conocían las dos operaciones posteriores. |
+| Límite | Hay que ubicar la posición exacta del `DELETE` en el binlog | En producción no se conocen todas las operaciones posteriores al backup |
+
+### Lo que hay que saber explicar
+
+- **`pg_dump` no permite PITR:** es una foto lógica. El PITR en PostgreSQL necesita un **backup físico** (`pg_basebackup`) + **WAL archivado** + `recovery_target_time`/`_lsn`/`_xid` ([6.9](#69-recuperación-a-un-punto-en-el-tiempo-pitr)). Es justamente lo que la resolución en PostgreSQL diseñó en la Fase 3.
+- **En MySQL alcanza con `mysqldump` + binlog** porque el binlog es lógico y se puede reaplicar sobre un restore lógico. Las coordenadas de partida las escribe `--source-data=2`.
+- **Restaurar solo la tabla dañada** (`pg_restore -t`) reduce el corte y no pisa el resto de la base. Hay que cuidar las FK y los datos derivados, como los saldos.
+- Las dos resoluciones justificaron el punto objetivo igual: el backup solo pierde 1006 y 1007, y reaplicar todo repite el `DELETE`.
+
+### Fase 3: diseñar para sobrevivir (escenarios distintos)
+
+| | MySQL: logística (RPO 15 min, RTO 30 min, 2 nodos, presupuesto medio) | PostgreSQL: RR.HH. (RPO 8 h, RTO 12 h, evitar sobrearquitectura) |
+| :--- | :--- | :--- |
+| Réplica | Primario + réplica **semisíncrona**, IP virtual con Keepalived | **Sin réplica**: con 12 h de RTO alcanza con reconstruir |
+| Backup | Diario a las 02:00 (`mysqldump` o XtraBackup) | `pg_basebackup` diario a las 21:00 + `pg_dump` semanal |
+| Logs | Binlogs copiados fuera del nodo cada ≤ 5 min | Archivado de WAL con `archive_timeout = 900` (≤ 15 min) |
+| RPO logrado | ≈ 0 ante una falla física; ≤ 5 min ante un desastre total | ≤ 15 min |
+| RTO estimado | Failover en < 3 min; PITR en 18-22 min | 1-2 h restaurando en un servidor nuevo |
+| Error humano | PITR con `mysqlbinlog --stop-position` | PITR en una **instancia auxiliar** (puerto 5433) y copia de la tabla rescatada a producción |
+| Monitoreo y pruebas | Chequeos de salud del failover | `pg_stat_archiver.failed_count` y un restore de prueba mensual |
+| Riesgo declarado | **Split brain** con dos nodos, mitigado con *fencing* | La recuperación es **manual**: requiere a alguien del equipo |
+
+**Lecciones y mejoras:**
+
+- **Arquitectura proporcional al RPO/RTO.** Las dos propuestas son correctas para su escenario, aunque una tiene réplica y la otra no ([6.15](#615-diseño-por-criticidad-escenarios-típicos)).
+- **La réplica no protege contra un `DELETE`**: las dos lo dijeron explícitamente ([6.12](#612-alta-disponibilidad-no-es-backup)).
+- **Semisíncrona no es RPO = 0 garantizado:** si la réplica no responde a tiempo, MySQL vuelve a modo asíncrono ([6.13](#613-replicación)).
+- **Punto objetivo exacto:** recuperar "un minuto antes" pierde ese minuto. Es mejor la hora exacta del incidente con `recovery_target_inclusive = false`, o `recovery_target_lsn`/`_xid`.
+- **Cargar filas rescatadas** en producción a través de una tabla auxiliar, copiando solo las que faltan (`INSERT ... SELECT ... WHERE NOT EXISTS`), para no chocar con claves duplicadas.
+- **Monitorear el archivado** (`pg_stat_archiver`) y **probar el restore** periódicamente: un backup sin restore probado es una promesa ([6.11](#611-plan-de-recuperación)).
+
+## Preguntas tipo simulacro
+
+Las preguntas 1 a 6 siguen los temas del simulacro de la cátedra; el resto cubre las demás actividades. Hay una sola opción correcta por pregunta.
+
+### Cómo encarar la opción múltiple
+
+| Señal | Suele indicar |
+| :--- | :--- |
+| Absolutos: "siempre", "necesariamente", "la única solución" | Opción incorrecta: en esta materia casi todo depende de la carga y la evidencia |
+| Soluciones desproporcionadas: reiniciar el servidor, más memoria, un índice con todas las columnas, más usuarios administradores | Opción incorrecta: no atacan la causa |
+| "Evaluar ... y comprobar con un nuevo plan y mediciones comparables" | Opción correcta típica: decisión + verificación con evidencia |
+| El mecanismo más simple que garantiza la regla | Opción correcta típica (`CHECK` antes que un trigger) |
+
+**P1 · U5 · Espera por lock.** Un operador reporta que un `UPDATE` de stock "no termina" desde hace tres minutos. En `pg_stat_activity` la sesión figura `active` con `wait_event_type = Lock`, y `pg_blocking_pids` devuelve el PID de otra sesión que está `idle in transaction`. ¿Cuál es el diagnóstico más apropiado?
+
+- a) El `UPDATE` tiene un plan lento: hay que crear un índice y volver a ejecutarlo.
+- b) Es un deadlock: el motor lo va a resolver solo en unos segundos.
+- c) Es una espera por lock de una transacción abierta sin confirmar: hay que registrar la evidencia (bloqueante, recurso, desde cuándo) antes de decidir si se cierra o cancela la sesión bloqueante.
+- d) Hay que reiniciar el servicio para liberar la fila.
+
+> **Respuesta: c.** `wait_event_type = Lock` y `pg_blocking_pids` muestran una espera, no un plan lento. No es un deadlock porque la espera es lineal: la bloqueante está ociosa, no esperando a nadie. Reiniciar revierte el trabajo de todos sin diagnosticar.
+
+**P2 · U2 · Índice compuesto.** `SELECT ... FROM movimiento WHERE cuenta_id = ? AND fecha >= ? AND fecha < ?` examina millones de filas para devolver unas decenas. ¿Cuál es la intervención inicial más coherente?
+
+- a) Un índice con todas las columnas de la tabla.
+- b) Evaluar un índice `(cuenta_id, fecha)` y comprobar el cambio con un nuevo plan y mediciones comparables.
+- c) Un índice `(fecha, cuenta_id)`, porque el rango es lo más selectivo.
+- d) Particionar por `cuenta_id`, porque la partición reemplaza al índice.
+
+> **Respuesta: b.** Primero la igualdad y después el rango ([2.5](#25-índices-compuestos-el-orden-de-las-columnas-importa)). Con `(fecha, cuenta_id)` el rango va primero y `cuenta_id` ya no ayuda a acotar la búsqueda. La partición no reemplaza al índice. Y toda mejora se verifica con evidencia.
+
+**P3 · U1 · Durabilidad.** Una transacción hace `UPDATE` y `COMMIT`, el motor responde OK y el servidor se apaga antes del siguiente checkpoint. Al reiniciar, el cambio está. ¿Qué lo hizo posible?
+
+- a) La página de datos se escribe siempre en disco antes de que el `COMMIT` responda.
+- b) El log transaccional (redo/WAL) persistido antes de confirmar, que la recuperación usa para rehacer el cambio.
+- c) La caché de planes, que guarda la sentencia y la vuelve a ejecutar.
+- d) El catálogo, que guarda una copia de las filas modificadas.
+
+> **Respuesta: b.** El `COMMIT` fuerza el **log** a disco; la página baja después, con el checkpoint ([1.6](#16-arquitectura-interna-del-sql-al-disco)).
+
+**P4 · U6 · PITR y RPO.** El RPO es de 10 minutos. A las 11:20 un usuario autorizado ejecuta un `DELETE` incorrecto y se detecta a las 11:35. ¿Qué estrategia es más adecuada?
+
+- a) Restaurar el backup completo de la noche anterior.
+- b) Promover la réplica de alta disponibilidad.
+- c) Restaurar una copia base válida y aplicar los logs archivados hasta el instante inmediatamente anterior al `DELETE`.
+- d) Restaurar hasta las 11:35, el último estado conocido.
+
+> **Respuesta: c.** a) pierde toda la mañana. b) la réplica ya tiene el `DELETE`. d) conserva el error ([6.9](#69-recuperación-a-un-punto-en-el-tiempo-pitr)).
+
+**P5 · U3 · Última venta por cliente.** Se necesita una sola última venta por cliente, conservar los clientes sin ventas y resolver de forma determinista dos ventas con la misma fecha. ¿Qué enfoque es correcto?
+
+- a) `GROUP BY cliente_id` con `MAX(fecha)` como resultado final.
+- b) CTE con `ROW_NUMBER() OVER (PARTITION BY cliente_id ORDER BY fecha DESC, venta_id DESC)`, después `cliente LEFT JOIN cte ... WHERE rn = 1`.
+- c) CTE con `ROW_NUMBER() OVER (PARTITION BY cliente_id ORDER BY fecha DESC, venta_id DESC)`, después `cliente LEFT JOIN cte ON ... AND rn = 1`.
+- d) `RANK()` sin filtro, porque devuelve exactamente una fila por cliente.
+
+> **Respuesta: c.** a) no trae la fila completa ni desempata. b) en el `WHERE`, `rn = 1` elimina a los clientes sin ventas. d) `RANK` repite la posición en los empates y sin filtro devuelve todas las filas.
+
+**P6 · U4 · Migración.** La v2 debe agregar a `pedido`, que ya tiene datos, una columna `estado` obligatoria, validar los valores permitidos y auditar los cambios. ¿Cuál es la secuencia más segura?
+
+- a) Agregar `estado NOT NULL` sin valor inicial y corregir después las filas que fallen.
+- b) Agregar la columna aceptando `NULL`, completar los históricos, validar, aplicar `CHECK` y `NOT NULL`, y después crear el trigger de auditoría.
+- c) Borrar y recrear la tabla con la nueva definición.
+- d) Crear primero el trigger y después la columna.
+
+> **Respuesta: b.** Expandir → completar → validar → endurecer → programar ([4.9](#49-migraciones-una-base-de-datos-también-tiene-versiones)).
+
+**P7 · U1 · Optimizador.** Se crea un índice sobre `nro_cuenta` en una tabla de 5 filas y el plan sigue mostrando `Seq Scan`. ¿Qué se concluye?
+
+- a) El índice quedó corrupto: hay que hacer `REINDEX`.
+- b) El optimizador estimó que leer 5 filas es más barato que pasar por el índice: el índice no obliga a usarlo.
+- c) PostgreSQL no usa índices sobre columnas de texto.
+- d) Hay que forzar el índice desde la consulta.
+
+> **Respuesta: b.** El optimizador decide por costo. Con más filas o un filtro más selectivo cambiaría de plan.
+
+**P8 · U2 · Partición.** Una tabla de pedidos está particionada por mes según `fecha`. Una consulta filtra solo por `cliente_id` y el plan recorre todas las particiones. ¿Qué conviene?
+
+- a) Crear más particiones, una por semana.
+- b) Quitar el particionamiento.
+- c) Agregar un índice `(cliente_id, fecha)`: el *pruning* solo actúa cuando se filtra por la clave de partición.
+- d) Aumentar `work_mem`.
+
+> **Respuesta: c.** La partición reduce lo recorrido **por fecha**; para localizar un cliente hace falta un índice ([2.9](#29-particionamiento-divide-y-reinarás)).
+
+**P9 · U2 · Retención.** Hay que retirar todos los pedidos de enero de 2022 de una tabla de 50 millones de filas particionada por mes. ¿Qué opción tiene menor impacto?
+
+- a) `DELETE FROM pedido WHERE fecha >= '2022-01-01' AND fecha < '2022-02-01'`.
+- b) `DETACH` o `DROP` de la partición de enero de 2022.
+- c) `UPDATE` de las filas a un estado "archivado".
+- d) Recrear la tabla sin ese mes.
+
+> **Respuesta: b.** Es un cambio de metadatos. El `DELETE` recorre y borra fila por fila: genera log y locks, y en PostgreSQL deja tuplas muertas para `VACUUM`.
+
+**P10 · U4 · CHECK y NULL.** La columna `precio` admite `NULL` y tiene `CHECK (precio > 0)`. ¿Qué pasa con `UPDATE producto SET precio = NULL WHERE producto_id = 1`?
+
+- a) Lo rechaza el `CHECK`, porque `NULL` no es mayor que 0.
+- b) Se acepta: la condición da UNKNOWN y un `CHECK` solo rechaza lo que da FALSE.
+- c) Da error de tipo de dato.
+- d) Depende de que exista un trigger.
+
+> **Respuesta: b.** Para rechazar nulos hace falta `NOT NULL` ([4.3](#43-integridad-declarativa-constraints)).
+
+**P11 · U4 · Trigger de auditoría.** Se quiere auditar solo los cambios reales de precio, aunque en algún caso el precio anterior o el nuevo pueda ser `NULL`. ¿Qué condición es correcta?
+
+- a) `IF OLD.precio <> NEW.precio` en los dos motores.
+- b) `OLD.precio IS DISTINCT FROM NEW.precio` en PostgreSQL y `NOT (OLD.precio <=> NEW.precio)` en MySQL.
+- c) Un `CHECK (OLD.precio <> NEW.precio)`.
+- d) Un trigger `BEFORE INSERT`.
+
+> **Respuesta: b.** Con `<>`, un cambio de `NULL` a 100 da UNKNOWN y no se audita. Un `CHECK` no tiene `OLD`/`NEW`. El evento a capturar es un `UPDATE` ([4.6](#46-triggers-reacción-automática)).
+
+**P12 · U5 · Aislamiento.** En PostgreSQL con la configuración por defecto, A abre una transacción y lee un saldo de 15.000; B le suma 1.000 y confirma; A vuelve a leer en la misma transacción. ¿Qué ve A?
+
+- a) 15.000, porque A tiene un snapshot de toda la transacción.
+- b) 16.000, porque en `READ COMMITTED` cada sentencia toma un snapshot nuevo.
+- c) Un error de serialización.
+- d) A queda esperando a que B termine.
+
+> **Respuesta: b.** Es una lectura no repetible. En MySQL, con `REPEATABLE READ` por defecto, A vería 15.000 ([5.8](#58-niveles-de-aislamiento)).
+
+**P13 · U5 · Después de un deadlock.** En PostgreSQL, la sesión B recibe `deadlock detected`. ¿Qué pasa si B intenta ejecutar otra sentencia?
+
+- a) Se ejecuta con normalidad: solo se revirtió el último `UPDATE`.
+- b) Recibe *"current transaction is aborted"*: hay que hacer `ROLLBACK` antes de seguir.
+- c) Vuelve a quedar esperando a A.
+- d) El motor reinicia la conexión automáticamente.
+
+> **Respuesta: b.** En PostgreSQL un error deja la transacción abortada hasta el `ROLLBACK`. En MySQL el deadlock revierte la transacción completa de la víctima ([5.5](#55-dónde-empieza-y-termina-una-transacción)).
+
+**P14 · U6 · Mínimo privilegio.** La cuenta de la aplicación debe registrar movimientos pero nunca borrarlos ni vaciar la tabla. En PostgreSQL, con IDs `SERIAL`, ¿qué permisos corresponden?
+
+- a) `SELECT, INSERT` sobre `movimiento` y `USAGE` sobre la secuencia.
+- b) `ALL PRIVILEGES` sobre `movimiento`, controlado desde la aplicación.
+- c) `SELECT, INSERT, DELETE` sobre `movimiento`.
+- d) `SELECT, INSERT, TRUNCATE` sobre `movimiento`.
+
+> **Respuesta: a.** Sin `USAGE` sobre la secuencia, el `INSERT` falla al pedir el próximo ID. `DELETE` y `TRUNCATE` contradicen la regla de que los movimientos solo se agregan.
+
+**P15 · U6 · TRUNCATE en MySQL.** ¿Qué privilegio controla `TRUNCATE TABLE` en MySQL, y por qué es más peligroso que en PostgreSQL?
+
+- a) `DELETE`; es igual de peligroso en los dos motores.
+- b) `DROP`, y además hace commit implícito: no se puede deshacer con `ROLLBACK`.
+- c) `ALTER`; se puede revertir con `ROLLBACK`.
+- d) No requiere privilegios.
+
+> **Respuesta: b.** En PostgreSQL `TRUNCATE` tiene su propio privilegio y es transaccional.
+
+**P16 · U6 · Alta disponibilidad frente a backup.** Un sistema tiene primario + réplica semisíncrona. Un operador borra por error una tabla de licencias. ¿Qué es correcto?
+
+- a) Se promueve la réplica y el problema queda resuelto.
+- b) La réplica ya aplicó el borrado: hay que recuperar con backup + logs (PITR), idealmente en una instancia auxiliar, y copiar los datos rescatados.
+- c) La semisíncrona garantiza que el borrado no se replique.
+- d) Hay que reiniciar los dos nodos.
+
+> **Respuesta: b.** La alta disponibilidad protege contra fallas físicas, no contra errores lógicos ([6.12](#612-alta-disponibilidad-no-es-backup)).
+
+**P17 · U5 · Conectividad.** Un integrante recibe `no pg_hba.conf entry for host "192.168.1.25"`. El servidor ya escucha en `0.0.0.0:5432`. ¿Qué corresponde?
+
+- a) Cambiar `listen_addresses`.
+- b) Agregar una regla en `pg_hba.conf` para la subred del aula (no `0.0.0.0/0`) y recargar la configuración.
+- c) Darle `SUPERUSER` al usuario.
+- d) Abrir el puerto 3306.
+
+> **Respuesta: b.** La red y el listener funcionan: falla la regla de acceso. Hay que restringirla a la subred necesaria ([5.1](#51-del-motor-aislado-al-servidor-compartido)).
 
 ---
 
