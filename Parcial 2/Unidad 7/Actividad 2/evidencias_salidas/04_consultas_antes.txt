@@ -1,0 +1,110 @@
+
+USE sgbd_u7_act2
+
+SELECT '--- CONSULTAS ANTES DE INDEXAR ---' AS etapa
+
++------------------------------------+
+| etapa                              |
++------------------------------------+
+| --- CONSULTAS ANTES DE INDEXAR --- |
++------------------------------------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre, categoria, precio, stock
+FROM producto
+WHERE precio BETWEEN 300000 AND 900000 AND stock >= 5
+ORDER BY precio
+
++----+----------------------+-------------+-----------+-------+
+| id | nombre               | categoria   | precio    | stock |
++----+----------------------+-------------+-----------+-------+
+| 10 | Taladro Pro 18V      | herramienta | 310000.00 |    14 |
+| 17 | Cafetera Barista     | cafetera    | 350000.00 |    10 |
+| 15 | Monitor Work 27      | monitor     | 420000.00 |    13 |
+| 20 | Switch 24G Managed   | redes       | 510000.00 |     5 |
+| 12 | Compresor 50L        | herramienta | 540000.00 |     6 |
+|  5 | Heladera Compact 280 | heladera    | 690000.00 |     9 |
+| 16 | Monitor Game 32      | monitor     | 690000.00 |     8 |
+| 13 | Smart TV Nova 55     | televisor   | 820000.00 |     7 |
++----+----------------------+-------------+-----------+-------+
+8 rows in set (0.002 sec)
+
+EXPLAIN SELECT id, nombre, precio FROM producto
+WHERE precio BETWEEN 300000 AND 900000 AND stock >= 5
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                                                                                                   |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: (producto.stock >= 5)  (cost=4.31 rows=3)
+    -> Index range scan on producto using idx_precio over (300000.00 <= precio <= 900000.00), with index condition: (producto.precio between 300000 and 900000)  (cost=4.31 rows=9)
+ |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.002 sec)
+
+SELECT id, nombre, tags FROM producto WHERE 'gaming' MEMBER OF (tags)
+
++----+-------------------+--------------------------------+
+| id | nombre            | tags                           |
++----+-------------------+--------------------------------+
+|  2 | Notebook Titan 16 | ["gaming", "gpu", "alta-gama"] |
+| 16 | Monitor Game 32   | ["gaming", "alta-frecuencia"]  |
++----+-------------------+--------------------------------+
+2 rows in set (0.001 sec)
+
+EXPLAIN SELECT id, nombre FROM producto WHERE 'gaming' MEMBER OF (tags)
+
++---------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                         |
++---------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: <cache>('gaming') member of (producto.tags)  (cost=2.25 rows=20)
+    -> Table scan on producto  (cost=2.25 rows=20)
+ |
++---------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre, atributos->'$.talles' AS talles, atributos->>'$.material' AS material
+FROM producto
+WHERE categoria = 'calzado' AND 42 MEMBER OF (atributos->'$.talles')
+
++----+-----------------+----------------------+----------+
+| id | nombre          | talles               | material |
++----+-----------------+----------------------+----------+
+|  7 | Zapatilla Run X | [39, 40, 41, 42, 43] | mesh     |
+|  8 | Bota Trek Pro   | [40, 41, 42, 43, 44] | cuero    |
++----+-----------------+----------------------+----------+
+2 rows in set (0.002 sec)
+
+SELECT id, nombre, atributos->>'$.ram_gb' AS ram_gb, atributos->>'$.gpu' AS gpu
+FROM producto
+WHERE atributos->'$.ram_gb' >= 16 AND atributos->>'$.gpu' <> 'integrada'
+
++----+-------------------+--------+----------+
+| id | nombre            | ram_gb | gpu      |
++----+-------------------+--------+----------+
+|  2 | Notebook Titan 16 | 32     | RTX 5070 |
++----+-------------------+--------+----------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre FROM producto
+WHERE descripcion LIKE '%gaming%' OR nombre LIKE '%gaming%'
+
++----+-------------------+
+| id | nombre            |
++----+-------------------+
+|  2 | Notebook Titan 16 |
+| 16 | Monitor Game 32   |
++----+-------------------+
+2 rows in set (0.001 sec)
+
+EXPLAIN SELECT id, nombre FROM producto
+WHERE descripcion LIKE '%gaming%' OR nombre LIKE '%gaming%'
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                            |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: ((producto.descripcion like '%gaming%') or (producto.nombre like '%gaming%'))  (cost=2.25 rows=4.2)
+    -> Table scan on producto  (cost=2.25 rows=20)
+ |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+

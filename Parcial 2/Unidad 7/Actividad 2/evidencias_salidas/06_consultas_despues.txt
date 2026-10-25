@@ -1,0 +1,170 @@
+
+USE sgbd_u7_act2
+
+SELECT '--- CONSULTAS DESPUÉS DE INDEXAR ---' AS etapa
+
++---------------------------------------+
+| etapa                                 |
++---------------------------------------+
+| --- CONSULTAS DESPUÉS DE INDEXAR ---  |
++---------------------------------------+
+1 row in set (0.001 sec)
+
+EXPLAIN SELECT id, nombre FROM producto WHERE 'gaming' MEMBER OF (tags)
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                                                                     |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: json'"gaming"' member of (cast(tags as char(30) array))  (cost=0.7 rows=2)
+    -> Index lookup on producto using idx_tags_mv (cast(tags as char(30) array) = json'"gaming"')  (cost=0.7 rows=2)
+ |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.002 sec)
+
+EXPLAIN SELECT id, nombre FROM producto WHERE JSON_OVERLAPS(tags, '["gaming","oled"]')
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: json_overlaps(cast(tags as char(30) array),json'["gaming", "oled"]')  (cost=1.86 rows=3)
+    -> Index range scan on producto using idx_tags_mv over ('oled' MEMBER OF (tags)) OR ('gaming' MEMBER OF (tags))  (cost=1.86 rows=3)
+ |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre, tags FROM producto WHERE JSON_OVERLAPS(tags, '["gaming","oled"]')
+
++----+--------------------+--------------------------------+
+| id | nombre             | tags                           |
++----+--------------------+--------------------------------+
+| 14 | Smart TV Cinema 65 | ["hogar", "oled", "cine"]      |
+|  2 | Notebook Titan 16  | ["gaming", "gpu", "alta-gama"] |
+| 16 | Monitor Game 32    | ["gaming", "alta-frecuencia"]  |
++----+--------------------+--------------------------------+
+3 rows in set (0.002 sec)
+
+SELECT id, nombre,
+       ROUND(MATCH(nombre, descripcion) AGAINST('notebook gaming RTX'), 4) AS relevancia
+FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('notebook gaming RTX')
+ORDER BY relevancia DESC
+
++----+-------------------+------------+
+| id | nombre            | relevancia |
++----+-------------------+------------+
+|  2 | Notebook Titan 16 |     4.6927 |
+|  1 | Notebook Atlas 14 |          2 |
+| 16 | Monitor Game 32   |          1 |
++----+-------------------+------------+
+3 rows in set (0.002 sec)
+
+EXPLAIN SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('notebook gaming RTX')
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                                                                                                                             |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: (match producto.nombre,producto.descripcion against ('notebook gaming RTX'))  (cost=0.35 rows=1)
+    -> Full-text index search on producto using ft_producto_texto (nombre = 'notebook gaming RTX')  (cost=0.35 rows=1)
+ |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('+gaming -notebook' IN BOOLEAN MODE)
+
++----+-----------------+
+| id | nombre          |
++----+-----------------+
+| 16 | Monitor Game 32 |
++----+-----------------+
+1 row in set (0.002 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('"alta frecuencia"' IN BOOLEAN MODE)
+
++----+-------------------+
+| id | nombre            |
++----+-------------------+
+|  2 | Notebook Titan 16 |
+| 16 | Monitor Game 32   |
++----+-------------------+
+2 rows in set (0.002 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('inalambr*' IN BOOLEAN MODE)
+
++----+-----------------+
+| id | nombre          |
++----+-----------------+
+| 10 | Taladro Pro 18V |
++----+-----------------+
+1 row in set (0.001 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('+TV +4K' IN BOOLEAN MODE)
+
++----+--------------------+
+| id | nombre             |
++----+--------------------+
+| 13 | Smart TV Nova 55   |
+| 14 | Smart TV Cinema 65 |
++----+--------------------+
+2 rows in set (0.003 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('cafe')
+
++----+--------------------+
+| id | nombre             |
++----+--------------------+
+| 17 | Cafetera Barista   |
+| 18 | Cafetera Filtro 12 |
++----+--------------------+
+2 rows in set (0.019 sec)
+
+SELECT id, nombre, precio,
+       atributos->>'$.pulgadas' AS pulgadas,
+       atributos->>'$.resolucion' AS resolucion,
+       ROUND(MATCH(nombre, descripcion) AGAINST('pulgadas resolución HDR QHD'), 4) AS relevancia
+FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('pulgadas resolución HDR QHD')
+  AND precio <= 1000000
+  AND JSON_CONTAINS_PATH(atributos, 'one', '$.pulgadas')
+ORDER BY relevancia DESC
+
++----+------------------+-----------+----------+------------+------------+
+| id | nombre           | precio    | pulgadas | resolucion | relevancia |
++----+------------------+-----------+----------+------------+------------+
+| 13 | Smart TV Nova 55 | 820000.00 | 55       | 4K         |     1.8867 |
+| 15 | Monitor Work 27  | 420000.00 | 27       | QHD        |     1.8867 |
+| 16 | Monitor Game 32  | 690000.00 | 32       | QHD        |     1.8867 |
++----+------------------+-----------+----------+------------+------------+
+3 rows in set (0.004 sec)
+
+SELECT id, nombre FROM producto
+WHERE MATCH(nombre, descripcion) AGAINST('espresso' WITH QUERY EXPANSION)
+
++----+----------------------+
+| id | nombre               |
++----+----------------------+
+| 17 | Cafetera Barista     |
+| 18 | Cafetera Filtro 12   |
+| 12 | Compresor 50L        |
+|  4 | Heladera Polar 420   |
+|  5 | Heladera Compact 280 |
+|  6 | Freezer Arctic 300   |
++----+----------------------+
+6 rows in set (0.002 sec)
+
+EXPLAIN SELECT id, nombre FROM producto WHERE descripcion LIKE '%gaming%'
+
++------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: (producto.descripcion like '%gaming%')  (cost=2.25 rows=2.22)
+    -> Table scan on producto  (cost=2.25 rows=20)
+ |
++------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+

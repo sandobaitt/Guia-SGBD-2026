@@ -1,0 +1,20 @@
+{"id":1,"nombre":"Notebook Atlas 14","categoria":"notebook","precio":1250000,"stock":12,"atributos":{"ram_gb":16,"ssd_gb":512,"cpu":"Ryzen 7","gpu":"integrada"},"tags":["portable","trabajo","wifi6"]}
+{"id":2,"nombre":"Notebook Titan 16","categoria":"notebook","precio":2100000,"stock":5,"atributos":{"ram_gb":32,"ssd_gb":1024,"cpu":"Core Ultra 9","gpu":"RTX 5070"},"tags":["gaming","gpu","alta-gama"]}
+{"id":3,"nombre":"Ultrabook Air 13","categoria":"notebook","precio":1450000,"stock":8,"atributos":{"ram_gb":16,"ssd_gb":512,"peso_kg":1.1,"pantalla":"13.3"},"tags":["portable","liviana","viaje"]}
+{"id":4,"nombre":"Heladera Polar 420","categoria":"heladera","precio":980000,"stock":4,"atributos":{"litros":420,"no_frost":true,"puertas":2,"eficiencia":"A"},"tags":["hogar","no-frost"]}
+{"id":5,"nombre":"Heladera Compact 280","categoria":"heladera","precio":690000,"stock":9,"atributos":{"litros":280,"no_frost":false,"puertas":2,"eficiencia":"A+"},"tags":["hogar","compacta"]}
+{"id":6,"nombre":"Freezer Arctic 300","categoria":"freezer","precio":760000,"stock":3,"atributos":{"litros":300,"tipo":"horizontal","temperatura_min":-24},"tags":["frio","comercial"]}
+{"id":7,"nombre":"Zapatilla Run X","categoria":"calzado","precio":145000,"stock":35,"atributos":{"talles":[39,40,41,42,43],"material":"mesh","uso":"running"},"tags":["deporte","running","liviana"]}
+{"id":8,"nombre":"Bota Trek Pro","categoria":"calzado","precio":230000,"stock":18,"atributos":{"talles":[40,41,42,43,44],"material":"cuero","impermeable":true},"tags":["trekking","outdoor","impermeable"]}
+{"id":9,"nombre":"Sandalia Urban","categoria":"calzado","precio":89000,"stock":26,"atributos":{"talles":[36,37,38,39,40],"material":"sintetico"},"tags":["verano","urbano"]}
+{"id":10,"nombre":"Taladro Pro 18V","categoria":"herramienta","precio":310000,"stock":14,"atributos":{"voltaje":18,"bateria_ah":4,"rpm":1800,"percutor":true},"tags":["taller","inalambrico","profesional"]}
+{"id":11,"nombre":"Amoladora 900W","categoria":"herramienta","precio":165000,"stock":11,"atributos":{"potencia_w":900,"disco_mm":115,"rpm":11000},"tags":["taller","corte"]}
+{"id":12,"nombre":"Compresor 50L","categoria":"herramienta","precio":540000,"stock":6,"atributos":{"litros":50,"presion_bar":8,"potencia_hp":2},"tags":["taller","aire"]}
+{"id":13,"nombre":"Smart TV Nova 55","categoria":"televisor","precio":820000,"stock":7,"atributos":{"pulgadas":55,"resolucion":"4K","hdr":true,"so":"Google TV"},"tags":["hogar","4k","streaming"]}
+{"id":14,"nombre":"Smart TV Cinema 65","categoria":"televisor","precio":1350000,"stock":4,"atributos":{"pulgadas":65,"resolucion":"4K","panel":"OLED","hdr":true},"tags":["hogar","oled","cine"]}
+{"id":15,"nombre":"Monitor Work 27","categoria":"monitor","precio":420000,"stock":13,"atributos":{"pulgadas":27,"resolucion":"QHD","hz":75,"panel":"IPS"},"tags":["trabajo","ips"]}
+{"id":16,"nombre":"Monitor Game 32","categoria":"monitor","precio":690000,"stock":8,"atributos":{"pulgadas":32,"resolucion":"QHD","hz":165,"panel":"VA"},"tags":["gaming","alta-frecuencia"]}
+{"id":17,"nombre":"Cafetera Barista","categoria":"cafetera","precio":350000,"stock":10,"atributos":{"presion_bar":15,"deposito_l":1.8,"vaporizador":true},"tags":["cocina","cafe","espresso"]}
+{"id":18,"nombre":"Cafetera Filtro 12","categoria":"cafetera","precio":99000,"stock":22,"atributos":{"tazas":12,"programable":true,"filtro":"permanente"},"tags":["cocina","cafe"]}
+{"id":19,"nombre":"Router Mesh AX3000","categoria":"redes","precio":280000,"stock":16,"atributos":{"wifi":"6","puertos_gigabit":3,"mesh":true,"bandas":2},"tags":["redes","wifi6","mesh"]}
+{"id":20,"nombre":"Switch 24G Managed","categoria":"redes","precio":510000,"stock":5,"atributos":{"puertos":24,"gestionable":true,"poe":false,"rack":true},"tags":["redes","empresa","rack"]}

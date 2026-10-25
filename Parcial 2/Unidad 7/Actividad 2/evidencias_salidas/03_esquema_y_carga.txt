@@ -1,0 +1,140 @@
+
+USE sgbd_u7_act2
+
+SELECT '--- ESQUEMA HÍBRIDO Y CARGA ---' AS etapa
+
++----------------------------------+
+| etapa                            |
++----------------------------------+
+| --- ESQUEMA HÍBRIDO Y CARGA ---  |
++----------------------------------+
+1 row in set (0.001 sec)
+
+CREATE TABLE stopwords_es (value VARCHAR(30) NOT NULL) ENGINE = InnoDB
+
+Query OK, 0 rows affected (0.102 sec)
+
+INSERT INTO stopwords_es (value) VALUES
+  ('a'),('al'),('con'),('de'),('del'),('el'),('en'),('es'),('la'),('las'),
+  ('lo'),('los'),('o'),('para'),('por'),('se'),('sin'),('su'),('sus'),('un'),
+  ('una'),('y'),('que'),('como'),('mas'),('muy'),('e'),('u'),('le'),('les')
+
+Query OK, 30 rows affected (0.021 sec)
+Records: 30  Duplicates: 0  Warnings: 0
+
+CREATE TABLE catalogo_raw (linea JSON NOT NULL) ENGINE = InnoDB
+
+INSERT INTO catalogo_raw (linea) VALUES
+('{"id":1,"nombre":"Notebook Atlas 14","categoria":"notebook","precio":1250000,"stock":12,"atributos":{"ram_gb":16,"ssd_gb":512,"cpu":"Ryzen 7","gpu":"integrada"},"tags":["portable","trabajo","wifi6"]}'),
+('{"id":2,"nombre":"Notebook Titan 16","categoria":"notebook","precio":2100000,"stock":5,"atributos":{"ram_gb":32,"ssd_gb":1024,"cpu":"Core Ultra 9","gpu":"RTX 5070"},"tags":["gaming","gpu","alta-gama"]}'),
+('{"id":3,"nombre":"Ultrabook Air 13","categoria":"notebook","precio":1450000,"stock":8,"atributos":{"ram_gb":16,"ssd_gb":512,"peso_kg":1.1,"pantalla":"13.3"},"tags":["portable","liviana","viaje"]}'),
+('{"id":4,"nombre":"Heladera Polar 420","categoria":"heladera","precio":980000,"stock":4,"atributos":{"litros":420,"no_frost":true,"puertas":2,"eficiencia":"A"},"tags":["hogar","no-frost"]}'),
+('{"id":5,"nombre":"Heladera Compact 280","categoria":"heladera","precio":690000,"stock":9,"atributos":{"litros":280,"no_frost":false,"puertas":2,"eficiencia":"A+"},"tags":["hogar","compacta"]}'),
+('{"id":6,"nombre":"Freezer Arctic 300","categoria":"freezer","precio":760000,"stock":3,"atributos":{"litros":300,"tipo":"horizontal","temperatura_min":-24},"tags":["frio","comercial"]}'),
+('{"id":7,"nombre":"Zapatilla Run X","categoria":"calzado","precio":145000,"stock":35,"atributos":{"talles":[39,40,41,42,43],"material":"mesh","uso":"running"},"tags":["deporte","running","liviana"]}'),
+('{"id":8,"nombre":"Bota Trek Pro","categoria":"calzado","precio":230000,"stock":18,"atributos":{"talles":[40,41,42,43,44],"material":"cuero","impermeable":true},"tags":["trekking","outdoor","impermeable"]}'),
+('{"id":9,"nombre":"Sandalia Urban","categoria":"calzado","precio":89000,"stock":26,"atributos":{"talles":[36,37,38,39,40],"material":"sintetico"},"tags":["verano","urbano"]}'),
+('{"id":10,"nombre":"Taladro Pro 18V","categoria":"herramienta","precio":310000,"stock":14,"atributos":{"voltaje":18,"bateria_ah":4,"rpm":1800,"percutor":true},"tags":["taller","inalambrico","profesional"]}'),
+('{"id":11,"nombre":"Amoladora 900W","categoria":"herramienta","precio":165000,"stock":11,"atributos":{"potencia_w":900,"disco_mm":115,"rpm":11000},"tags":["taller","corte"]}'),
+('{"id":12,"nombre":"Compresor 50L","categoria":"herramienta","precio":540000,"stock":6,"atributos":{"litros":50,"presion_bar":8,"potencia_hp":2},"tags":["taller","aire"]}'),
+('{"id":13,"nombre":"Smart TV Nova 55","categoria":"televisor","precio":820000,"stock":7,"atributos":{"pulgadas":55,"resolucion":"4K","hdr":true,"so":"Google TV"},"tags":["hogar","4k","streaming"]}'),
+('{"id":14,"nombre":"Smart TV Cinema 65","categoria":"televisor","precio":1350000,"stock":4,"atributos":{"pulgadas":65,"resolucion":"4K","panel":"OLED","hdr":true},"tags":["hogar","oled","cine"]}'),
+('{"id":15,"nombre":"Monitor Work 27","categoria":"monitor","precio":420000,"stock":13,"atributos":{"pulgadas":27,"resolucion":"QHD","hz":75,"panel":"IPS"},"tags":["trabajo","ips"]}'),
+('{"id":16,"nombre":"Monitor Game 32","categoria":"monitor","precio":690000,"stock":8,"atributos":{"pulgadas":32,"resolucion":"QHD","hz":165,"panel":"VA"},"tags":["gaming","alta-frecuencia"]}'),
+('{"id":17,"nombre":"Cafetera Barista","categoria":"cafetera","precio":350000,"stock":10,"atributos":{"presion_bar":15,"deposito_l":1.8,"vaporizador":true},"tags":["cocina","cafe","espresso"]}'),
+('{"id":18,"nombre":"Cafetera Filtro 12","categoria":"cafetera","precio":99000,"stock":22,"atributos":{"tazas":12,"programable":true,"filtro":"permanente"},"tags":["cocina","cafe"]}'),
+('{"id":19,"nombre":"Router Mesh AX3000","categoria":"redes","precio":280000,"stock":16,"atributos":{"wifi":"6","puertos_gigabit":3,"mesh":true,"bandas":2},"tags":["redes","wifi6","mesh"]}'),
+('{"id":20,"nombre":"Switch 24G Managed","categoria":"redes","precio":510000,"stock":5,"atributos":{"puertos":24,"gestionable":true,"poe":false,"rack":true},"tags":["redes","empresa","rack"]}')
+
+Query OK, 20 rows affected (0.027 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+CREATE TABLE descripcion_carga (
+  id INT PRIMARY KEY,
+  descripcion TEXT NOT NULL
+) ENGINE = InnoDB
+
+Query OK, 0 rows affected (0.127 sec)
+
+INSERT INTO descripcion_carga VALUES
+(1,  'Notebook liviana de 14 pulgadas con procesador Ryzen 7, 16 GB de RAM y SSD de 512 GB. Gráficos integrados, conectividad WiFi 6 y batería de larga duración, ideal para trabajo remoto y estudio.'),
+(2,  'Notebook gaming de alta gama con procesador Core Ultra 9, placa de video RTX 5070 y 32 GB de RAM. Pantalla de 16 pulgadas de alta frecuencia para juegos exigentes, edición de video y renderizado 3D.'),
+(3,  'Ultrabook ultraliviana de 1,1 kg con pantalla de 13,3 pulgadas, 16 GB de RAM y SSD de 512 GB. Pensada para viajar: carcasa de aluminio, carga rápida USB-C y teclado retroiluminado.'),
+(4,  'Heladera no frost de 420 litros con freezer superior, dos puertas y eficiencia energética A. Control electrónico de temperatura, dispensador de agua y estantes de vidrio templado.'),
+(5,  'Heladera compacta de 280 litros con sistema cíclico, dos puertas y eficiencia A+. Ideal para departamentos y cocinas chicas, bajo consumo eléctrico.'),
+(6,  'Freezer horizontal de 300 litros que alcanza -24 grados. Tapa con cerradura, uso doméstico o comercial para conservar congelados en almacenes y comercios gastronómicos.'),
+(7,  'Zapatilla de running con capellada de mesh transpirable y suela de espuma con amortiguación. Liviana y flexible, para entrenamiento diario y carreras de calle.'),
+(8,  'Bota de trekking de cuero impermeable con membrana respirable y suela de goma antideslizante. Protección de tobillo para senderismo, montaña y actividades outdoor.'),
+(9,  'Sandalia urbana de material sintético con tiras regulables y plantilla acolchada. Cómoda para el verano y el uso diario en la ciudad.'),
+(10, 'Taladro percutor inalámbrico de 18V con batería de litio de 4 Ah y 1800 rpm. Mandril metálico, luz LED y maletín, para uso profesional en taller y obra.'),
+(11, 'Amoladora angular de 900W con disco de 115 mm y 11000 rpm. Empuñadura lateral antivibración para corte y desbaste de metal en el taller.'),
+(12, 'Compresor de aire de 50 litros, 2 HP y 8 bar de presión. Ruedas para traslado, manómetro y salida rápida para inflado, pintura y herramientas neumáticas de taller.'),
+(13, 'Smart TV de 55 pulgadas con resolución 4K y HDR. Sistema Google TV con aplicaciones de streaming, control por voz y WiFi integrado para el living del hogar.'),
+(14, 'Smart TV OLED de 65 pulgadas 4K con HDR y negros perfectos. Experiencia de cine en casa con sonido envolvente y modo filmmaker.'),
+(15, 'Monitor de 27 pulgadas con panel IPS, resolución QHD y 75 Hz. Colores precisos y soporte ergonómico regulable para oficina y trabajo de diseño.'),
+(16, 'Monitor gaming curvo de 32 pulgadas con panel VA, resolución QHD y 165 Hz de alta frecuencia. Tiempo de respuesta de 1 ms y FreeSync para juegos competitivos.'),
+(17, 'Cafetera espresso de 15 bar con depósito de 1,8 litros y vaporizador para espumar leche. Café de especialidad, capuchino y latte en la cocina.'),
+(18, 'Cafetera de filtro programable para 12 tazas con filtro permanente lavable. Mantiene el café caliente y se programa la hora de inicio.'),
+(19, 'Router mesh AX3000 con WiFi 6, doble banda y 3 puertos gigabit. Cobertura total del hogar sin zonas muertas y control parental desde la app.'),
+(20, 'Switch gestionable de 24 puertos gigabit para montaje en rack. VLAN, QoS y monitoreo SNMP para redes de empresa; no incluye PoE.')
+
+Query OK, 20 rows affected (0.020 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+CREATE TABLE producto (
+  id          INT            PRIMARY KEY,
+  nombre      VARCHAR(120)   NOT NULL,
+  categoria   VARCHAR(40)    NOT NULL,
+  precio      DECIMAL(12,2)  NOT NULL CHECK (precio >= 0),
+  stock       INT            NOT NULL CHECK (stock >= 0),
+  atributos   JSON           NOT NULL,           -- RAM/GPU, litros/no_frost, talles...
+  tags        JSON           NOT NULL,           -- etiquetas (array JSON)
+  descripcion TEXT           NOT NULL,           -- texto libre para Full-Text Search
+  CONSTRAINT chk_tags_array CHECK (JSON_TYPE(tags) = 'ARRAY'),
+  KEY idx_precio (precio)
+) ENGINE = InnoDB
+
+INSERT INTO producto (id, nombre, categoria, precio, stock, atributos, tags, descripcion)
+SELECT r.linea->>'$.id',
+       r.linea->>'$.nombre',
+       r.linea->>'$.categoria',
+       r.linea->>'$.precio',
+       r.linea->>'$.stock',
+       r.linea->'$.atributos',
+       r.linea->'$.tags',
+       d.descripcion
+FROM catalogo_raw r
+JOIN descripcion_carga d ON d.id = r.linea->>'$.id'
+
+Query OK, 20 rows affected (0.027 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+SELECT COUNT(*) AS productos, COUNT(DISTINCT categoria) AS categorias,
+       COUNT(DISTINCT JSON_KEYS(atributos)) AS esquemas_de_atributos_distintos
+FROM producto
+
++-----------+------------+---------------------------------+
+| productos | categorias | esquemas_de_atributos_distintos |
++-----------+------------+---------------------------------+
+|        20 |          9 |                              17 |
++-----------+------------+---------------------------------+
+1 row in set (0.006 sec)
+
+SELECT categoria, COUNT(*) AS cant, JSON_KEYS(ANY_VALUE(atributos)) AS claves_ejemplo
+FROM producto GROUP BY categoria ORDER BY categoria
+
++-------------+------+-------------------------------------------------+
+| categoria   | cant | claves_ejemplo                                  |
++-------------+------+-------------------------------------------------+
+| cafetera    |    2 | ["deposito_l", "presion_bar", "vaporizador"]    |
+| calzado     |    3 | ["uso", "talles", "material"]                   |
+| freezer     |    1 | ["tipo", "litros", "temperatura_min"]           |
+| heladera    |    2 | ["litros", "puertas", "no_frost", "eficiencia"] |
+| herramienta |    3 | ["rpm", "voltaje", "percutor", "bateria_ah"]    |
+| monitor     |    2 | ["hz", "panel", "pulgadas", "resolucion"]       |
+| notebook    |    3 | ["cpu", "gpu", "ram_gb", "ssd_gb"]              |
+| redes       |    2 | ["mesh", "wifi", "bandas", "puertos_gigabit"]   |
+| televisor   |    2 | ["so", "hdr", "pulgadas", "resolucion"]         |
++-------------+------+-------------------------------------------------+
+9 rows in set (0.002 sec)
+
