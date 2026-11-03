@@ -1,0 +1,82 @@
+﻿===============================================================================
+ACTIVIDAD 2 - TAREA 5: BACKUP Y RESTAURACIÓN (restore.txt)
+===============================================================================
+Grupo: 11
+Base de datos origen: u8_g11
+Base de datos destino (restaurada): u8_g11_restore
+
+
+-------------------------------------------------------------------------------
+1. COMANDO DE RESPALDO (mongodump)
+-------------------------------------------------------------------------------
+# Generar volcado binario BSON y metadatos JSON de la base u8_g11
+mongodump --host "127.0.0.1:27017" \
+  --db "u8_g11" \
+  --authenticationDatabase "admin" \
+  -u "adminG11" -p 'AdminPassword123*' \
+  --out ~/backup_u8_g11
+
+
+-------------------------------------------------------------------------------
+2. VERIFICACIÓN DE ARTEFACTOS GENERADOS EN DISCO
+-------------------------------------------------------------------------------
+# Listar los archivos generados en la ruta del backup
+ls -lh ~/backup_u8_g11/u8_g11/
+
+
+-------------------------------------------------------------------------------
+3. COMANDO DE RESTAURACIÓN (mongorestore)
+-------------------------------------------------------------------------------
+# Restaurar el volcado en la base alternativa u8_g11_restore sin alterar la original
+mongorestore --host "127.0.0.1:27017" \
+  --authenticationDatabase "admin" \
+  -u "adminG11" -p 'AdminPassword123*' \
+  --db "u8_g11_restore" \
+  ~/backup_u8_g11/u8_g11/
+
+
+-------------------------------------------------------------------------------
+4. CONTROL DE INTEGRIDAD Y VALIDACIÓN DE CONTEOS DE DOCUMENTOS
+-------------------------------------------------------------------------------
+# Comando de conexión a mongosh para ejecutar las comprobaciones
+mongosh "mongodb://127.0.0.1:27017/admin" -u "adminG11" -p 'AdminPassword123*'
+
+
+# Sentencias ejecutadas dentro de mongosh para validación:
+
+
+// Conteos en la base original (u8_g11)
+use u8_g11
+db.envios.countDocuments()
+db.eventos_seguimiento.countDocuments()
+
+
+// Conteos en la base restaurada (u8_g11_restore)
+use u8_g11_restore
+db.envios.countDocuments()
+db.eventos_seguimiento.countDocuments()
+
+
+-------------------------------------------------------------------------------
+5. RESUMEN DE CONTEOS DE CONTROL (ANTES / DESPUÉS)
+-------------------------------------------------------------------------------
+Colección: envios
+- Base Original (u8_g11):         16 documentos
+- Base Restaurada (u8_g11_restore): 16 documentos
+- Estado: COINCIDENCIA EXACTA (100% Recuperado)
+
+
+Colección: eventos_seguimiento
+- Base Original (u8_g11):         20 documentos
+- Base Restaurada (u8_g11_restore): 20 documentos
+- Estado: COINCIDENCIA EXACTA (100% Recuperado)
+
+
+-------------------------------------------------------------------------------
+6. VERIFICACIÓN DE RECONSTRUCCIÓN DE ÍNDICES
+-------------------------------------------------------------------------------
+# Verificar que los índices de la Etapa 4 se reconstruyeron en la base restaurada
+use u8_g11_restore
+db.envios.getIndexes()
+db.eventos_seguimiento.getIndexes()
+===============================================================================

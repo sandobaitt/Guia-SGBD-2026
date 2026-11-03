@@ -1,0 +1,48 @@
+﻿//Creacion del usuario “admin”
+use admin
+
+
+db.createUser({
+  user: "adminG11",
+  pwd: "AdminPassword123*",
+  roles: [
+    { role: "userAdminAnyDatabase", db: "admin" },
+    { role: "readWriteAnyDatabase", db: "admin" }
+  ]
+})
+
+
+//Verificación que el usuario se creó (Debería dar error)
+use u8_g11
+db.envios.find()
+
+
+//Comando utilizado para entrar a la BD como admin
+mongosh "mongodb://localhost:27017/u8_g11" -u "adminG11" -p "AdminPassword123*" --authenticationDatabase "admin"
+
+
+//Verificación de que se entró como el usuario admin (devuelve 15)
+db.envios.countDocuments()
+
+
+//Prueba 1 (Resultado esperado:Permitida)
+db.envios.find({}, { _id: 1, tracking_code: 1, estado_actual: 1 }).limit(2)
+
+
+//Prueba 2 (Resultado esperado: Denegada) 
+db.envios.insertOne({ _id: "ENV-TEST-DENIED", tracking_code: "TRK-X" })
+
+
+//Prueba 3 (Resultado esperado: Permitida) 
+db.envios.updateOne(
+  { _id: "ENV-2026-001" },
+  { $set: { observaciones_operador: "Verificación de control RBAC exitosa" } }
+)
+
+
+//Prueba 4 (Resultado esperado: Denegada) 
+db.createUser({
+  user: "usuario_no_autorizado",
+  pwd: "Password123*",
+  roles: [{ role: "read", db: "u8_g11" }]
+})
