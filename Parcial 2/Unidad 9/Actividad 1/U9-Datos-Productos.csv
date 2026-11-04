@@ -1,0 +1,9 @@
+﻿producto_id,nombre,precio_ars,categoria
+P101,Notebook,1200000,Tecnologia
+P102,Mouse,18000,Tecnologia
+P103,Teclado,35000,Tecnologia
+P104,Monitor,320000,Tecnologia
+P105,Campera,95000,Indumentaria
+P106,Zapatillas,110000,Indumentaria
+P107,Libro SQL,28000,Libros
+P108,Libro NoSQL,31000,Libros
