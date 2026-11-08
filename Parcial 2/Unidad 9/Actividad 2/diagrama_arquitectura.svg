@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1000" viewBox="0 0 1520 1000" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#333"/></marker><marker id="b" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0 L8,3 L0,6 z" fill="#333"/></marker></defs>
+<rect width="1520" height="1000" fill="#ffffff"/>
+<text x="760.0" y="36" font-size="22" font-weight="bold" fill="#123" text-anchor="middle">OmniMarket · Arquitectura de datos (persistencia políglota)</text>
+<rect x="40" y="70" width="360" height="76" rx="10" fill="#f1f3f5" stroke="#555" stroke-width="2.5"/>
+<text x="54" y="96" font-size="16" font-weight="bold" fill="#555" text-anchor="start">Canales</text>
+<text x="54" y="122" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Web · App móvil · Tiendas físicas</text>
+<rect x="560" y="70" width="400" height="76" rx="10" fill="#f1f3f5" stroke="#555" stroke-width="2.5"/>
+<text x="574" y="96" font-size="16" font-weight="bold" fill="#555" text-anchor="start">Backend / API de OmniMarket</text>
+<text x="574" y="122" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Única puerta de entrada a los datos</text>
+<path d="M400,108 L560,108" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<rect x="40" y="240" width="380" height="220" rx="10" fill="#fdebd3" stroke="#c9721a" stroke-width="2.5"/>
+<text x="54" y="266" font-size="16" font-weight="bold" fill="#c9721a" text-anchor="start">Redis · clave-valor</text>
+<text x="54" y="292" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Sesiones (STRING + TTL 30 min)</text>
+<text x="54" y="313" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Carritos (HASH + TTL 7 días)</text>
+<text x="54" y="334" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Ranking de vistos (SORTED SET)</text>
+<text x="54" y="355" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Promociones activas (TTL)</text>
+<text x="54" y="376" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Caché de recomendaciones (TTL 1 h)</text>
+<text x="408" y="448" font-size="12" font-weight="bold" fill="#a85a10" text-anchor="end">IMPLEMENTADO · temporal / derivado</text>
+<rect x="510" y="240" width="520" height="300" rx="10" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.5"/>
+<text x="524" y="266" font-size="16" font-weight="bold" fill="#1f5fa8" text-anchor="start">PostgreSQL · FUENTE DE VERDAD (relacional)</text>
+<text x="524" y="292" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Clientes</text>
+<text x="524" y="313" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Catálogo (atributos en JSONB)</text>
+<text x="524" y="334" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Inventario y reservas</text>
+<text x="524" y="355" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Pedidos · pagos · comprobantes</text>
+<text x="524" y="376" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Marketing · Logística · Fidelización</text>
+<text x="524" y="397" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Tabla outbox (eventos por publicar)</text>
+<text x="1018" y="528" font-size="12" font-weight="bold" fill="#154a85" text-anchor="end">SOLO DISEÑO · transaccional</text>
+<rect x="1090" y="240" width="390" height="220" rx="10" fill="#e7e0f3" stroke="#6b4fa3" stroke-width="2.5"/>
+<text x="1104" y="266" font-size="16" font-weight="bold" fill="#6b4fa3" text-anchor="start">Cassandra · columnas anchas</text>
+<text x="1104" y="292" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Eventos de navegación</text>
+<text x="1104" y="313" font-size="13" font-weight="normal" fill="#222" text-anchor="start">PK ((usuario, día), fecha, id)</text>
+<text x="1104" y="334" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Lectura: historial reciente</text>
+<text x="1104" y="355" font-size="13" font-weight="normal" fill="#222" text-anchor="start">TTL de 12 meses</text>
+<text x="1468" y="448" font-size="12" font-weight="bold" fill="#523a82" text-anchor="end">SOLO DISEÑO · fuente de la navegación</text>
+<rect x="510" y="610" width="520" height="84" rx="10" fill="#f1f3f5" stroke="#555" stroke-width="2.5"/>
+<text x="524" y="636" font-size="16" font-weight="bold" fill="#555" text-anchor="start">Relay de outbox + consumidores</text>
+<text x="524" y="662" font-size="13" font-weight="normal" fill="#222" text-anchor="start">At-least-once · idempotentes · event_id y version</text>
+<rect x="1090" y="560" width="390" height="200" rx="10" fill="#dcf1e4" stroke="#2e8b57" stroke-width="2.5"/>
+<text x="1104" y="586" font-size="16" font-weight="bold" fill="#2e8b57" text-anchor="start">Neo4j · grafos</text>
+<text x="1104" y="612" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Clientes · Productos · Categorías</text>
+<text x="1104" y="633" font-size="13" font-weight="normal" fill="#222" text-anchor="start">COMPRO · VIO · SIGUE · PERTENECE_A</text>
+<text x="1104" y="654" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Recomendaciones por afinidad</text>
+<text x="1468" y="748" font-size="12" font-weight="bold" fill="#1f6b41" text-anchor="end">IMPLEMENTADO · derivado (reconstruible)</text>
+<path d="M600,146 L240,240" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)" marker-start="url(#b)"/>
+<text x="110" y="200" font-size="13" font-weight="bold" fill="#a85a10" text-anchor="start" stroke="#fff" stroke-width="5" paint-order="stroke">1 · sesión, carrito y recomendaciones (&lt; 5 ms)</text>
+<path d="M760,146 L760,240" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="770" y="196" font-size="13" font-weight="bold" fill="#154a85" text-anchor="start" stroke="#fff" stroke-width="5" paint-order="stroke">2 · pedido, pago y stock (transacción)</text>
+<path d="M930,146 L1285,240" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="9,6" marker-end="url(#a)"/>
+<text x="1180" y="170" font-size="13" font-weight="bold" fill="#523a82" text-anchor="middle" stroke="#fff" stroke-width="5" paint-order="stroke">3 · eventos de navegación (asíncrono)</text>
+<path d="M760,540 L760,610" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="770" y="580" font-size="13" font-weight="bold" fill="#154a85" text-anchor="start" stroke="#fff" stroke-width="5" paint-order="stroke">4 · outbox (misma transacción)</text>
+<path d="M1030,652 L1090,652" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="9,6" marker-end="url(#a)"/>
+<text x="1060" y="640" font-size="13" font-weight="bold" fill="#1f6b41" text-anchor="middle" stroke="#fff" stroke-width="5" paint-order="stroke">5</text>
+<path d="M510,652 L320,652 L320,460" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="9,6" marker-end="url(#a)"/>
+<text x="500" y="690" font-size="13" font-weight="bold" fill="#a85a10" text-anchor="end" stroke="#fff" stroke-width="5" paint-order="stroke">6 · invalida caché (catálogo, promos)</text>
+<path d="M1285,760 L1285,830 L130,830 L130,460" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="9,6" marker-end="url(#a)"/>
+<text x="700" y="820" font-size="13" font-weight="bold" fill="#1f6b41" text-anchor="middle" stroke="#fff" stroke-width="5" paint-order="stroke">7 · recomendaciones precalculadas (TTL 1 h)</text>
+<path d="M1285,460 L1285,560" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="9,6" marker-end="url(#a)"/>
+<text x="1295" y="515" font-size="13" font-weight="bold" fill="#523a82" text-anchor="start" stroke="#fff" stroke-width="5" paint-order="stroke">8 · vistas agregadas (lote)</text>
+<text x="1085" y="730" font-size="12" font-weight="normal" fill="#1f6b41" text-anchor="end" stroke="#fff" stroke-width="5" paint-order="stroke">5 · PEDIDO_CONFIRMADO,</text>
+<text x="1085" y="746" font-size="12" font-weight="normal" fill="#1f6b41" text-anchor="end" stroke="#fff" stroke-width="5" paint-order="stroke">PRODUCTO_ACTUALIZADO</text>
+<rect x="40" y="870" width="1440" height="100" rx="10" fill="#fafafa" stroke="#999" stroke-width="1.5"/>
+<text x="56" y="896" font-size="15" font-weight="bold" fill="#123" text-anchor="start">Fuente de verdad por dato compartido</text>
+<text x="56" y="922" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Clientes, productos, pedidos, stock, puntos → PostgreSQL</text>
+<text x="776" y="922" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Navegación (eventos) → Cassandra</text>
+<text x="56" y="944" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Sesiones y carritos → Redis (efímero)</text>
+<text x="776" y="944" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Afinidades y recomendaciones → Derivado: se reconstruye desde PostgreSQL y Cassandra</text>
+<text x="56" y="990" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Línea continua = síncrono · Línea punteada = asíncrono · Azul = fuente de verdad · Naranja = temporal · Verde = derivado</text>
+</svg>

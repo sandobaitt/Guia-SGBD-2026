@@ -1,0 +1,178 @@
+# =====================================================================
+# U9 - Actividad 1 · Parte A: Redis - Sesiones, carritos y rankings
+# Escenario: tienda en línea (OmniMarket)
+#
+# Formato: una línea por comando; los comentarios empiezan con "#".
+# Los comandos se ejecutan dentro de redis-cli (prompt 127.0.0.1:6379>),
+# salvo las líneas marcadas "[Terminal]", que son de la terminal.
+# Sin credenciales: <clave> y <clave_admin> se reemplazan al ejecutar.
+# =====================================================================
+
+
+# ---------------------------------------------------------------------
+# 0. VERIFICACIÓN DEL SERVICIO
+# ---------------------------------------------------------------------
+# [Terminal] redis-server --version
+# [Terminal] sudo systemctl status redis-server
+# [Terminal] redis-cli ping
+
+
+# ---------------------------------------------------------------------
+# MODELO MÍNIMO Y CARGA (IDs del dataset)
+# 3 sesiones STRING, 3 carritos HASH (>= 2 productos), 2 SET de favoritos
+# y un ranking SORTED SET de 5 productos.
+# NX / HSETNX: no pisan valores que ya existan.
+# ---------------------------------------------------------------------
+SET sesion:U01 "activa" NX
+SET sesion:U02 "activa" NX
+SET sesion:U03 "activa" NX
+
+HSETNX carrito:U01 P101 1
+HSETNX carrito:U01 P102 2
+HSETNX carrito:U02 P103 1
+HSETNX carrito:U02 P104 2
+HSETNX carrito:U03 P105 1
+HSETNX carrito:U03 P106 1
+
+SADD favoritos:U01 P101 P103
+SADD favoritos:U02 P102
+
+ZADD ranking_productos NX 95 P101 90 P105 85 P104 80 P102 60 P103
+
+# Verificación del modelo: tipo de cada clave
+# [Terminal] for k in $(redis-cli --scan | sort); do printf '%-20s %s\n' "$k" "$(redis-cli TYPE $k)"; done
+
+
+# =====================================================================
+# A1. CRUD Y CONSULTAS OBLIGATORIAS
+# =====================================================================
+
+# ---- A1.1 Sesión U01: crear, leer, actualizar, eliminar y comprobar ----
+# Crear la sesión U01
+SET sesion:U01 "activa"
+
+# Leer la sesión U01
+GET sesion:U01
+
+# Actualizar la sesión
+SET sesion:U01 "renovada"
+
+# Comprobar el valor actualizado
+GET sesion:U01
+
+# Eliminar la sesión
+DEL sesion:U01
+
+# Comprobar que ya no existe
+EXISTS sesion:U01
+
+
+# ---- A1.2 Carrito U01 con dos productos ----
+# Crear el carrito con dos productos (devuelve 2: campos nuevos)
+HSET carrito:U01 P101 1 P102 2
+
+# Consultar todos sus campos
+HGETALL carrito:U01
+
+# Modificar una cantidad (devuelve 0: el campo ya existía)
+HSET carrito:U01 P101 3
+
+# Quitar un producto del carrito
+HDEL carrito:U01 P102
+
+# Estado final del carrito
+HGETALL carrito:U01
+
+
+# ---- A1.3 Favoritos ----
+# Agregar un producto a favoritos
+SADD favoritos:U01 P107
+
+# Demostrar membresía con SISMEMBER
+SISMEMBER favoritos:U01 P107
+
+# Quitar el producto de favoritos
+SREM favoritos:U01 P107
+
+# Confirmar que ya no pertenece
+SISMEMBER favoritos:U01 P107
+
+
+# ---- A1.4 Ranking: los 3 productos de mayor puntaje (orden descendente) ----
+ZREVRANGE ranking_productos 0 2 WITHSCORES
+
+# Ranking completo (para comprobar que el top 3 es correcto)
+ZREVRANGE ranking_productos 0 -1 WITHSCORES
+
+
+# ---- A1.5 Sesión temporal con TTL de 30 segundos ----
+# Crear la sesión temporal con TTL de 30 segundos
+SET sesion:temporal "token_temporal_123" EX 30
+
+# Registrar el TTL inicial
+TTL sesion:temporal
+
+# (esperar 30 segundos) Verificar la expiración: TTL = -2 y GET = (nil)
+TTL sesion:temporal
+GET sesion:temporal
+
+
+# =====================================================================
+# A2. SEGURIDAD Y RECUPERACIÓN
+# =====================================================================
+
+# ---- A2.1 ACL de aplicación restringida a las claves del laboratorio ----
+# Usuario de aplicación (no administrador). -@dangerous quita FLUSHALL, FLUSHDB, KEYS, CONFIG...
+ACL SETUSER app_user on ><clave> ~sesion:* ~carrito:* ~favoritos:* ~ranking_* +@read +@write +ping -@dangerous
+
+# Autenticarse como app_user (la clave no se muestra en las capturas)
+AUTH app_user <clave>
+
+# Comando autorizado (clave dentro de los patrones)
+GET sesion:U02
+
+# Comando denegado (clave fuera de los patrones): NOPERM
+GET usuario:U01
+
+# Comando denegado por categoría (recomendado): NOPERM ... 'flushall' command
+FLUSHALL
+
+
+# ---- A2.2 Respaldo RDB: generar, ubicar y copiar de forma consistente ----
+# app_user no puede ejecutar SAVE (comando administrativo): se usa el usuario default.
+# (En esta instalación default no tiene contraseña.)
+AUTH default <clave_admin>
+
+# Guardado síncrono: SAVE termina de escribir el archivo antes de responder
+SAVE
+
+# Identificación de la ruta y del nombre del archivo de respaldo
+CONFIG GET dir
+CONFIG GET dbfilename
+
+# Copia del archivo y comprobación de que es idéntico al original
+# [Terminal] sudo cp /var/lib/redis/dump.rdb /tmp/dump_backup.rdb
+# [Terminal] sudo chmod 644 /tmp/dump_backup.rdb
+# [Terminal] sudo ls -l /var/lib/redis/dump.rdb /tmp/dump_backup.rdb
+# [Terminal] sudo sha256sum /var/lib/redis/dump.rdb /tmp/dump_backup.rdb
+
+
+# ---- A2.3 Restauración en una instancia de prueba aislada (puerto 6380) ----
+# Entorno de prueba: otro directorio y otro puerto, para no sobrescribir el servicio (6379)
+# [Terminal] mkdir -p ~/redis_test
+# [Terminal] cp /tmp/dump_backup.rdb ~/redis_test/dump.rdb
+# [Terminal] redis-server --port 6380 --dir ~/redis_test --dbfilename dump.rdb --daemonize yes
+# [Terminal] redis-cli -p 6380
+
+# Comparar al menos tres claves y sus valores (en 6379 y en 6380 deben coincidir)
+# Clave 1: STRING (sesión)
+GET sesion:U02
+
+# Clave 2: HASH (carrito)
+HGETALL carrito:U01
+
+# Clave 3: SORTED SET (ranking)
+ZREVRANGE ranking_productos 0 -1 WITHSCORES
+
+# Apagar la instancia de prueba
+SHUTDOWN

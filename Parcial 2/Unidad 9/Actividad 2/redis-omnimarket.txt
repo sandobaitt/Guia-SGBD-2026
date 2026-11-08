@@ -1,0 +1,100 @@
+# =====================================================================
+# U9 - Actividad 2 · OmniMarket · Componente Redis
+# Dominios que resuelve: sesiones y carritos (con expiración), ranking de
+# productos vistos, promociones temporales y caché de recomendaciones.
+# Redis NO es fuente de verdad: guarda datos temporales o derivados.
+#
+# Formato: una línea por comando; los comentarios empiezan con "#".
+# Las líneas "#@ ..." separan pasos (para la sesión guiada de capturas) y
+# "#! sleep N" indica una espera. Sin credenciales en este archivo.
+# Datos coherentes con el escenario: IDs U01-U05 y P101-P108 de la cátedra.
+# =====================================================================
+
+
+#@ Verificación del servicio
+PING
+DBSIZE
+
+
+#@ Modelo y carga: sesiones (STRING con TTL de 30 minutos de inactividad)
+SET sesion:U01 '{"cliente":"U01","canal":"web"}' EX 1800
+SET sesion:U02 '{"cliente":"U02","canal":"app"}' EX 1800
+SET sesion:U03 '{"cliente":"U03","canal":"tienda"}' EX 1800
+
+
+#@ Modelo y carga: carritos (HASH producto -> cantidad, TTL de 7 días)
+HSET carrito:U01 P103 1 P107 1
+HSET carrito:U02 P101 1 P108 2
+HSET carrito:U03 P104 1
+EXPIRE carrito:U01 604800
+EXPIRE carrito:U02 604800
+EXPIRE carrito:U03 604800
+
+
+#@ Modelo y carga: ranking de productos más vistos (SORTED SET) y promociones (TTL)
+ZADD ranking:vistos 120 P101 95 P102 88 P105 70 P103 55 P104 40 P106 30 P107 25 P108
+SET promo:ENVIOGRATIS "Envío gratis en compras de más de $50.000" EX 3600
+SET promo:CIBERLUNES "10% en Tecnologia" EX 7200
+
+
+#@ Verificación del modelo: tipo de cada estructura
+TYPE sesion:U01
+TYPE carrito:U01
+TYPE ranking:vistos
+TYPE promo:ENVIOGRATIS
+DBSIZE
+
+
+#@ CRUD · Altas (CREATE)
+SET sesion:U04 '{"cliente":"U04","canal":"app"}' EX 1800
+HSET carrito:U04 P106 1 P102 2
+EXPIRE carrito:U04 604800
+ZINCRBY ranking:vistos 1 P106
+
+
+#@ CRUD · Lecturas (READ)
+GET sesion:U04
+TTL sesion:U04
+HGETALL carrito:U04
+HLEN carrito:U04
+
+
+#@ CRUD · Modificaciones (UPDATE)
+EXPIRE sesion:U04 1800
+HINCRBY carrito:U04 P102 1
+HSET carrito:U04 P106 2
+HGETALL carrito:U04
+
+
+#@ CRUD · Bajas (DELETE)
+HDEL carrito:U04 P106
+DEL carrito:U04
+DEL sesion:U04
+EXISTS carrito:U04
+EXISTS sesion:U04
+
+
+#@ Expiración: una sesión inactiva desaparece sola
+SET sesion:inactiva '{"cliente":"U05","canal":"web"}' EX 3
+TTL sesion:inactiva
+#! sleep 4
+GET sesion:inactiva
+EXISTS sesion:inactiva
+
+
+#@ Consulta de negocio 1 · Top 3 de productos más vistos
+ZREVRANGE ranking:vistos 0 2 WITHSCORES
+
+
+#@ Consulta de negocio 2 · Unidades totales en el carrito de un cliente (script Lua atómico)
+EVAL "local t=0 for _,v in ipairs(redis.call('HVALS',KEYS[1])) do t=t+tonumber(v) end return t" 1 carrito:U02
+
+
+#@ Consulta de negocio 3 · ¿La sesión de U01 sigue vigente y cuánto le queda?
+GET sesion:U01
+TTL sesion:U01
+
+
+#@ Consulta de negocio 4 · Promociones activas (las vencidas ya no existen)
+SCAN 0 MATCH promo:* COUNT 100
+TTL promo:ENVIOGRATIS

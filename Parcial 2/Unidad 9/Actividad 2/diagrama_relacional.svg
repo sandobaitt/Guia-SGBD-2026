@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="830" viewBox="0 0 1400 830" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#333"/></marker><marker id="b" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0 L8,3 L0,6 z" fill="#333"/></marker></defs>
+<rect width="1400" height="830" fill="#ffffff"/>
+<text x="700.0" y="34" font-size="22" font-weight="bold" fill="#123" text-anchor="middle">OmniMarket · Modelo relacional (especificación, no se implementa)</text>
+<path d="M195,235 L195,206" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M50,388 L34,388 L34,138 L50,138" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M50,503 L26,503 L26,128 L50,128" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M50,623 L18,623 L18,148 L50,148" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M195,661 L195,685" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M380,128 L340,138" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M340,503 L362,503 L362,142 L380,142" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M525,215 L525,186" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M670,263 L690,263 L690,138 L710,138" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M670,388 L672,388 L672,104 L670,104" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M670,513 L682,513 L682,120 L670,120" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M670,628 L699,628 L699,138 L670,138" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M855,215 L855,186" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1000,373 L1012,373 L1012,128 L1000,128" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1000,613 L1020,613 L1020,385 L1000,385" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M855,450 L855,421" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1185,70 L1185,52 L525,52 L525,70" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1185,195 L1185,166" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1185,445 L1185,416" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<path d="M1040,493 L1030,493 L1030,253 L1000,253" fill="none" stroke="#333" stroke-width="2.2" marker-end="url(#a)"/>
+<rect x="50" y="70" width="290" height="136" rx="8" fill="#e0f2f1" stroke="#00796b" stroke-width="2.2"/>
+<rect x="50" y="70" width="290" height="28" rx="8" fill="#00796b"/>
+<text x="60" y="89" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">cliente</text>
+<text x="60" y="118" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK cliente_id</text>
+<text x="60" y="138" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">codigo · dni · email  (UQ)</text>
+<text x="60" y="158" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">nombre · apellido · telefono</text>
+<text x="60" y="178" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">acepta_marketing · baja_en</text>
+<text x="60" y="198" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">version</text>
+<rect x="50" y="235" width="290" height="96" rx="8" fill="#e0f2f1" stroke="#00796b" stroke-width="2.2"/>
+<rect x="50" y="235" width="290" height="28" rx="8" fill="#00796b"/>
+<text x="60" y="254" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">direccion</text>
+<text x="60" y="283" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK direccion_id</text>
+<text x="60" y="303" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK cliente_id</text>
+<text x="60" y="323" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · calle · localidad</text>
+<rect x="50" y="350" width="290" height="76" rx="8" fill="#fff8e1" stroke="#b8860b" stroke-width="2.2"/>
+<rect x="50" y="350" width="290" height="28" rx="8" fill="#b8860b"/>
+<text x="60" y="369" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">cuenta_puntos</text>
+<text x="60" y="398" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK/FK cliente_id</text>
+<text x="60" y="418" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">saldo (&gt;= 0) · version</text>
+<rect x="50" y="445" width="290" height="116" rx="8" fill="#fff8e1" stroke="#b8860b" stroke-width="2.2"/>
+<rect x="50" y="445" width="290" height="28" rx="8" fill="#b8860b"/>
+<text x="60" y="464" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">movimiento_puntos</text>
+<text x="60" y="493" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK movimiento_id</text>
+<text x="60" y="513" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK cliente_id · FK pedido_id</text>
+<text x="60" y="533" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · puntos (&lt;&gt; 0) · motivo</text>
+<text x="60" y="553" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">(solo INSERT)</text>
+<rect x="50" y="585" width="290" height="76" rx="8" fill="#fce4ec" stroke="#ad1457" stroke-width="2.2"/>
+<rect x="50" y="585" width="290" height="28" rx="8" fill="#ad1457"/>
+<text x="60" y="604" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">segmento_cliente</text>
+<text x="60" y="633" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK/FK segmento_id + cliente_id</text>
+<text x="60" y="653" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">calculado_en</text>
+<rect x="50" y="685" width="290" height="76" rx="8" fill="#fce4ec" stroke="#ad1457" stroke-width="2.2"/>
+<rect x="50" y="685" width="290" height="28" rx="8" fill="#ad1457"/>
+<text x="60" y="704" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">segmento</text>
+<text x="60" y="733" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK segmento_id</text>
+<text x="60" y="753" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">nombre (UQ) · criterio</text>
+<rect x="380" y="70" width="290" height="116" rx="8" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.2"/>
+<rect x="380" y="70" width="290" height="28" rx="8" fill="#1f5fa8"/>
+<text x="390" y="89" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">pedido</text>
+<text x="390" y="118" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK pedido_id</text>
+<text x="390" y="138" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK cliente_id</text>
+<text x="390" y="158" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">canal · estado · total_ars</text>
+<text x="390" y="178" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">version (bloqueo optimista)</text>
+<rect x="380" y="215" width="290" height="96" rx="8" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.2"/>
+<rect x="380" y="215" width="290" height="28" rx="8" fill="#1f5fa8"/>
+<text x="390" y="234" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">pedido_item</text>
+<text x="390" y="263" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK pedido_id + linea</text>
+<text x="390" y="283" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK producto_id</text>
+<text x="390" y="303" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">cantidad · precio_unitario</text>
+<rect x="380" y="340" width="290" height="96" rx="8" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.2"/>
+<rect x="380" y="340" width="290" height="28" rx="8" fill="#1f5fa8"/>
+<text x="390" y="359" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">pago</text>
+<text x="390" y="388" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK pago_id · FK pedido_id</text>
+<text x="390" y="408" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">medio · monto_ars · estado</text>
+<text x="390" y="428" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">referencia_externa (UQ)</text>
+<rect x="380" y="465" width="290" height="96" rx="8" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.2"/>
+<rect x="380" y="465" width="290" height="28" rx="8" fill="#1f5fa8"/>
+<text x="390" y="484" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">comprobante</text>
+<text x="390" y="513" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK comprobante_id</text>
+<text x="390" y="533" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK pedido_id (UQ)</text>
+<text x="390" y="553" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · numero (UQ)</text>
+<rect x="380" y="580" width="290" height="96" rx="8" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.2"/>
+<rect x="380" y="580" width="290" height="28" rx="8" fill="#1f5fa8"/>
+<text x="390" y="599" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">pedido_estado_hist</text>
+<text x="390" y="628" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK hist_id · FK pedido_id</text>
+<text x="390" y="648" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">estado_anterior → estado_nuevo</text>
+<text x="390" y="668" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">cambiado_en · cambiado_por</text>
+<rect x="710" y="70" width="290" height="116" rx="8" fill="#ede7f6" stroke="#5e35b1" stroke-width="2.2"/>
+<rect x="710" y="70" width="290" height="28" rx="8" fill="#5e35b1"/>
+<text x="720" y="89" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">producto</text>
+<text x="720" y="118" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK producto_id · sku (UQ)</text>
+<text x="720" y="138" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK categoria_id</text>
+<text x="720" y="158" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">precio_ars · version</text>
+<text x="720" y="178" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">atributos JSONB (GIN)</text>
+<rect x="710" y="215" width="290" height="76" rx="8" fill="#ede7f6" stroke="#5e35b1" stroke-width="2.2"/>
+<rect x="710" y="215" width="290" height="28" rx="8" fill="#5e35b1"/>
+<text x="720" y="234" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">categoria</text>
+<text x="720" y="263" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK categoria_id</text>
+<text x="720" y="283" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">nombre (UQ) · FK padre_id</text>
+<rect x="710" y="325" width="290" height="96" rx="8" fill="#fdebd3" stroke="#c9721a" stroke-width="2.2"/>
+<rect x="710" y="325" width="290" height="28" rx="8" fill="#c9721a"/>
+<text x="720" y="344" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">stock</text>
+<text x="720" y="373" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK/FK producto_id + sucursal_id</text>
+<text x="720" y="393" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">cantidad_fisica &gt;= 0</text>
+<text x="720" y="413" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">cantidad_reservada &lt;= fisica</text>
+<rect x="710" y="450" width="290" height="96" rx="8" fill="#fdebd3" stroke="#c9721a" stroke-width="2.2"/>
+<rect x="710" y="450" width="290" height="28" rx="8" fill="#c9721a"/>
+<text x="720" y="469" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">reserva</text>
+<text x="720" y="498" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK reserva_id (UUID)</text>
+<text x="720" y="518" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK (producto_id, sucursal_id)</text>
+<text x="720" y="538" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">cantidad · estado · expira_en</text>
+<rect x="710" y="575" width="290" height="76" rx="8" fill="#fdebd3" stroke="#c9721a" stroke-width="2.2"/>
+<rect x="710" y="575" width="290" height="28" rx="8" fill="#c9721a"/>
+<text x="720" y="594" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">sucursal</text>
+<text x="720" y="623" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK sucursal_id</text>
+<text x="720" y="643" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">nombre (UQ) · tipo</text>
+<rect x="1040" y="70" width="290" height="96" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.2"/>
+<rect x="1040" y="70" width="290" height="28" rx="8" fill="#2e7d32"/>
+<text x="1050" y="89" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">envio</text>
+<text x="1050" y="118" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK envio_id</text>
+<text x="1050" y="138" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK pedido_id (UQ)</text>
+<text x="1050" y="158" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">transportista · estado</text>
+<rect x="1040" y="195" width="290" height="96" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.2"/>
+<rect x="1040" y="195" width="290" height="28" rx="8" fill="#2e7d32"/>
+<text x="1050" y="214" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">envio_evento</text>
+<text x="1050" y="243" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK envio_evento_id</text>
+<text x="1050" y="263" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK envio_id</text>
+<text x="1050" y="283" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">estado · ubicacion · ocurrido_en</text>
+<rect x="1040" y="320" width="290" height="96" rx="8" fill="#fce4ec" stroke="#ad1457" stroke-width="2.2"/>
+<rect x="1040" y="320" width="290" height="28" rx="8" fill="#ad1457"/>
+<text x="1050" y="339" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">campana</text>
+<text x="1050" y="368" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK campana_id</text>
+<text x="1050" y="388" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">nombre · canal</text>
+<text x="1050" y="408" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">vigente_desde / hasta</text>
+<rect x="1040" y="445" width="290" height="96" rx="8" fill="#fce4ec" stroke="#ad1457" stroke-width="2.2"/>
+<rect x="1040" y="445" width="290" height="28" rx="8" fill="#ad1457"/>
+<text x="1050" y="464" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">promocion</text>
+<text x="1050" y="493" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK promocion_id</text>
+<text x="1050" y="513" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK campana_id · FK categoria_id</text>
+<text x="1050" y="533" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">descuento_pct · vigencia</text>
+<rect x="1040" y="585" width="290" height="96" rx="8" fill="#eceff1" stroke="#546e7a" stroke-width="2.2"/>
+<rect x="1040" y="585" width="290" height="28" rx="8" fill="#546e7a"/>
+<text x="1050" y="604" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">outbox</text>
+<text x="1050" y="633" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK evento_id (UUID)</text>
+<text x="1050" y="653" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · version · payload JSONB</text>
+<text x="1050" y="673" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">publicado_en (NULL = pendiente)</text>
+<rect x="50" y="765" width="16" height="16" fill="#e0f2f1" stroke="#00796b" stroke-width="2"/>
+<text x="74" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Clientes</text>
+<rect x="210" y="765" width="16" height="16" fill="#ede7f6" stroke="#5e35b1" stroke-width="2"/>
+<text x="234" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Catálogo</text>
+<rect x="370" y="765" width="16" height="16" fill="#fdebd3" stroke="#c9721a" stroke-width="2"/>
+<text x="394" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Inventario</text>
+<rect x="530" y="765" width="16" height="16" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2"/>
+<text x="554" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Ventas y pagos</text>
+<rect x="690" y="765" width="16" height="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+<text x="714" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Logística</text>
+<rect x="850" y="765" width="16" height="16" fill="#fce4ec" stroke="#ad1457" stroke-width="2"/>
+<text x="874" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Marketing</text>
+<rect x="1010" y="765" width="16" height="16" fill="#fff8e1" stroke="#b8860b" stroke-width="2"/>
+<text x="1034" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Fidelización</text>
+<rect x="1170" y="765" width="16" height="16" fill="#eceff1" stroke="#546e7a" stroke-width="2"/>
+<text x="1194" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Integración</text>
+<text x="50" y="812" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Las flechas van de la tabla hija (clave foránea) a la tabla padre. Todas las tablas pertenecen al esquema PostgreSQL de OmniMarket.</text>
+</svg>
