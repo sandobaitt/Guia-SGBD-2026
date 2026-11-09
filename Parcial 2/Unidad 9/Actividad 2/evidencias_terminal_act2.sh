@@ -42,19 +42,19 @@ clave_ok() { NEO4J_USERNAME=neo4j NEO4J_PASSWORD="$1" cypher-shell -a "$ADDR" --
 # ------------------------------------------------------------------ ejecutores de los scripts entregables
 ejecutar_redis_txt() {   # un paso por cada línea "#@ ..."; "#! sleep N" espera
   local linea abierto=0
-  while IFS= read -r linea || [ -n "$linea" ]; do
+  while IFS= read -r -u 9 linea || [ -n "$linea" ]; do   # el archivo se lee por el descriptor 9: la pausa lee del teclado
     case "$linea" in
       "#@ "*)  [ $abierto = 1 ] && pausa; paso "Redis · ${linea#\#@ }"; abierto=1 ;;
       "#! sleep "*) va && { printf '\n(esperando %s segundos...)\n' "${linea#\#! sleep }"; sleep "${linea#\#! sleep }"; } ;;
       "#"*|"") ;;
       *) RC "$linea" ;;
     esac
-  done < "$AQUI/redis-omnimarket.txt"
+  done 9< "$AQUI/redis-omnimarket.txt"
   [ $abierto = 1 ] && pausa
 }
 ejecutar_cypher() {      # un paso por cada línea "//@ ..."; las sentencias terminan en ";"
   local linea stmt="" abierto=0 t
-  while IFS= read -r linea || [ -n "$linea" ]; do
+  while IFS= read -r -u 9 linea || [ -n "$linea" ]; do   # descriptor 9: ni la pausa ni cypher-shell consumen el archivo
     t="${linea%"${linea##*[![:space:]]}"}"
     case "$t" in
       "//@ "*) [ $abierto = 1 ] && pausa; paso "Neo4j · ${t#//@ }"; abierto=1 ;;
@@ -62,7 +62,7 @@ ejecutar_cypher() {      # un paso por cada línea "//@ ..."; las sentencias ter
       *) stmt="${stmt:+$stmt$'\n'}$t"
          if [[ "$t" == *";" ]]; then QN "$stmt"; stmt=""; fi ;;
     esac
-  done < "$AQUI/neo4j-omnimarket.cypher"
+  done 9< "$AQUI/neo4j-omnimarket.cypher"
   [ $abierto = 1 ] && pausa
 }
 

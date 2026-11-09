@@ -95,7 +95,7 @@
 <text x="720" y="118" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK producto_id · sku (UQ)</text>
 <text x="720" y="138" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">FK categoria_id</text>
 <text x="720" y="158" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">precio_ars · version</text>
-<text x="720" y="178" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">atributos JSONB (GIN)</text>
+<text x="720" y="178" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">atributos JSON + índices generados</text>
 <rect x="710" y="215" width="290" height="76" rx="8" fill="#ede7f6" stroke="#5e35b1" stroke-width="2.2"/>
 <rect x="710" y="215" width="290" height="28" rx="8" fill="#5e35b1"/>
 <text x="720" y="234" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">categoria</text>
@@ -146,7 +146,7 @@
 <rect x="1040" y="585" width="290" height="28" rx="8" fill="#546e7a"/>
 <text x="1050" y="604" font-size="14" font-weight="bold" fill="#fff" text-anchor="start">outbox</text>
 <text x="1050" y="633" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">PK evento_id (UUID)</text>
-<text x="1050" y="653" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · version · payload JSONB</text>
+<text x="1050" y="653" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">tipo · version · payload JSON</text>
 <text x="1050" y="673" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">publicado_en (NULL = pendiente)</text>
 <rect x="50" y="765" width="16" height="16" fill="#e0f2f1" stroke="#00796b" stroke-width="2"/>
 <text x="74" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Clientes</text>
@@ -164,5 +164,5 @@
 <text x="1034" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Fidelización</text>
 <rect x="1170" y="765" width="16" height="16" fill="#eceff1" stroke="#546e7a" stroke-width="2"/>
 <text x="1194" y="778" font-size="12.5" font-weight="normal" fill="#222" text-anchor="start">Integración</text>
-<text x="50" y="812" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Las flechas van de la tabla hija (clave foránea) a la tabla padre. Todas las tablas pertenecen al esquema PostgreSQL de OmniMarket.</text>
+<text x="50" y="812" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Las flechas van de la tabla hija (clave foránea) a la tabla padre. Todas las tablas pertenecen al esquema MySQL (InnoDB) de OmniMarket.</text>
 </svg>

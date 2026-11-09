@@ -17,7 +17,7 @@
 | Diagrama de arquitectura | `diagrama_arquitectura.png` (y `.svg` editable); sección 2.5 |
 | Modelos NoSQL: diseños, scripts, capturas y resultados | Sección 3.2 a 3.5; scripts `redis-omnimarket.txt` y `neo4j-omnimarket.cypher` |
 | Diseño relacional (sin implementación) | Sección 3.1, `diagrama_relacional.png` y Anexo A |
-| Presentación para defensa y registro de objeciones | Sección 5 |
+| Presentación para defensa y registro de objeciones | Guion de la exposición, objeciones anticipadas con respuesta y tabla de objeciones recibidas en la sección 5 (las diapositivas se arman a partir de ese guion) |
 | Estrategia de integración | Sección 4 |
 
 ---
@@ -28,12 +28,14 @@ Diseñamos una arquitectura de **cuatro motores con un núcleo relacional**:
 
 | Motor | Modelo | Qué resuelve | Estado en esta entrega |
 | :--- | :--- | :--- | :--- |
-| **PostgreSQL** | Relacional | Clientes, catálogo (con atributos en `JSONB`), inventario, ventas y pagos, marketing, logística y fidelización. **Fuente de verdad** de los datos compartidos. | Modelado y justificado, **no implementado** (como pide la consigna) |
+| **MySQL** | Relacional | Clientes, catálogo (con atributos en una columna `JSON`), inventario, ventas y pagos, marketing, logística y fidelización. **Fuente de verdad** de los datos compartidos. | Modelado y justificado, **no implementado** (como pide la consigna) |
 | **Redis** | Clave-valor | Sesiones y carritos con expiración, ranking de vistos, promociones activas y caché de recomendaciones | **Implementado** |
 | **Neo4j** | Grafos | Recomendaciones y afinidades | **Implementado** |
 | **Cassandra** | Columnas anchas | Eventos masivos de navegación | Diseñado, **no implementado** |
 
-**MongoDB (documental) fue evaluado y descartado.** Los atributos heterogéneos del catálogo quedan cubiertos por `JSONB` en PostgreSQL, y sumar un quinto motor no se justifica (sección 2.2 y 2.6).
+**MongoDB (documental) fue evaluado y descartado.** Los atributos heterogéneos del catálogo quedan cubiertos por una columna `JSON` con índices en MySQL (la factibilidad se verificó con 150.000 productos; sección 3.1), y sumar un quinto motor no se justifica (secciones 2.2 y 2.6).
+
+**¿Por qué MySQL como motor relacional?** La consigna admite MySQL o PostgreSQL. Elegimos MySQL porque es el motor que usamos en todas las unidades anteriores: el equipo ya domina su administración, seguridad, respaldo y consultas, y eso es una de las preferencias declaradas en la sección 1.2. El costo de la elección es concreto y lo evaluamos: MySQL no tiene un índice general sobre columnas `JSON` como el `GIN` de PostgreSQL, así que cada atributo que se filtre con frecuencia debe tener su propio índice (sección 3.1).
 
 Implementamos **Redis y Neo4j** porque entre ellos existe un intercambio de datos real y demostrable: el carrito confirmado en Redis se convierte en compras dentro del grafo, y las recomendaciones calculadas en Neo4j se sirven desde Redis. Cassandra se modeló pero no se implementó porque un nodo único con factor de replicación 1 no demuestra su ventaja distintiva (distribución y tolerancia a fallas); afirmar esas propiedades sin un clúster real no tendría respaldo.
 
@@ -91,7 +93,7 @@ Cálculos de referencia: 30.000.000 de eventos por día ÷ 86.400 s ≈ 347 even
 | **Obligatorio** | Relaciones entre clientes, productos y categorías | Consigna (Recomendaciones) |
 | Preferencia | Recomendaciones actualizadas en minutos | Grupo |
 | Preferencia | Minimizar la cantidad de motores | Consigna: "no gana quien usa más tecnologías" |
-| Preferencia | Aprovechar el conocimiento del equipo (SQL, Redis y Neo4j de la materia) | Grupo |
+| Preferencia | Aprovechar el conocimiento del equipo (MySQL de las unidades anteriores, y Redis y Neo4j de esta unidad) | Grupo |
 | Preferencia | Costo de licencias nulo (motores de código abierto) | Grupo |
 | Fuera de alcance | Búsqueda de texto libre, pasarelas de pago reales, interfaz web | No pedido |
 
@@ -114,7 +116,7 @@ Las aptitudes y los pesos son una **valoración cualitativa del grupo**, no una 
 
 | Modelo | I | F | L | E | R | T | Q | S |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Relacional (PostgreSQL) | 3 | 2 (`JSONB`) | 2 | 1 | 1 | 0 | 3 | 2 |
+| Relacional (MySQL) | 3 | 2 (`JSON` e índices generados) | 2 | 1 | 1 | 0 | 3 | 2 |
 | Documental (MongoDB) | 2 | 3 | 2 | 2 | 1 | 2 | 2 | 2 |
 | Clave-valor (Redis) | 1 | 2 | 3 | 1 (RAM) | 0 | 3 | 0 | 1 |
 | Columnas anchas (Cassandra) | 1 | 1 | 2 | 3 | 0 | 2 | 1 | 3 |
@@ -139,8 +141,8 @@ Las aptitudes y los pesos son una **valoración cualitativa del grupo**, no una 
 
 | Dominio | Relacional | Documental | Clave-valor | Col. anchas | Grafos | Máximo | Mayor puntaje | ¿Cumple la regla para sumar un NoSQL? |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :--- | :--- |
-| Clientes | **22** | 19 | 12 | 13 | 20 | 27 | Relacional | No: queda en PostgreSQL |
-| Catálogo | **23** | **23** | 14 | 14 | 20 | 30 | Empate relacional y documental | No (la flexibilidad la cubre `JSONB`): queda en PostgreSQL |
+| Clientes | **22** | 19 | 12 | 13 | 20 | 27 | Relacional | No: queda en MySQL |
+| Catálogo | **23** | **23** | 14 | 14 | 20 | 30 | Empate relacional y documental | No (la flexibilidad la cubre `JSON` con índices): queda en MySQL |
 | Inventario | **17** | 16 | 13 | 13 | 16 | 24 | Relacional | No |
 | Ventas y pagos | **25** | 21 | 10 | 15 | 20 | 30 | Relacional | No |
 | Sesiones y carritos | 13 | 21 | **23** | 20 | 13 | 30 | Clave-valor | **Sí** (criterio T) |
@@ -151,29 +153,29 @@ Las aptitudes y los pesos son una **valoración cualitativa del grupo**, no una 
 | Fidelización | **22** | 18 | 9 | 16 | 16 | 27 | Relacional | No |
 
 Dos casos muestran por qué usamos una regla y no solo el puntaje:
-- **Catálogo:** relacional y documental empatan en 23. Como `JSONB` con índice `GIN` cubre la necesidad crítica de flexibilidad, no hay una razón suficiente para sumar un motor.
+- **Catálogo:** relacional y documental empatan en 23. Como una columna `JSON` con índices (columnas generadas e índices funcionales) cubre la necesidad crítica de flexibilidad, no hay una razón suficiente para sumar un motor. Es un caso donde la decisión **depende del motor relacional elegido**: con MySQL hay que declarar un índice por cada atributo que se filtra, mientras que con PostgreSQL un único índice `GIN` cubriría todos. Por eso lo verificamos con datos (sección 3.1).
 - **Marketing:** el modelo documental suma 25 contra 23 del relacional, pero la diferencia es pequeña y el criterio crítico (consultas con filtros) ya lo cubre el relacional. No justifica un quinto motor.
 
 ### 2.3 Selección por dominio, alternativa descartada y condición de revisión
 
 | Dominio | Elegido | Alternativa descartada y por qué | Cuándo revisaríamos la decisión |
 | :--- | :--- | :--- | :--- |
-| **Clientes** | PostgreSQL | **Documental:** la unicidad de DNI y email, la baja con consentimiento y la relación con pedidos exigen integridad referencial; un documento por cliente obligaría a duplicar datos en los pedidos | Si el perfil pasara a ser casi sin estructura (muchos campos opcionales por canal) |
-| **Catálogo** | PostgreSQL con `JSONB` | **Documental (MongoDB):** empata en puntaje, pero sumaría un quinto motor. El catálogo además se une con inventario y precios, que están en PostgreSQL | Si los atributos superaran lo que un índice `GIN` filtra con la latencia pedida, o si el catálogo requiriera fragmentación horizontal propia |
-| **Inventario** | PostgreSQL | **Clave-valor y columnas anchas:** la consistencia eventual o la volatilidad permiten dos reservas simultáneas sobre la última unidad (sobreventa, prohibida por la consigna) | Si el pico de reservas superara lo que soporta un único primario (se particiona por sucursal) |
-| **Ventas y pagos** | PostgreSQL | **Documental:** admite transacciones, pero la integridad entre pedido, pago y comprobante y la trazabilidad contable se expresan mejor con claves foráneas y restricciones. **Columnas anchas:** sin transacciones sobre varias filas | Si el volumen de pedidos obligara a particionar por fecha (sigue en PostgreSQL) |
-| **Sesiones y carritos** | Redis | **Relacional:** la expiración exige un proceso que borre y cada acceso paga disco y transacción. **Documental con índice TTL:** funciona, pero con latencia mayor y un motor adicional | Si las sesiones concurrentes bajaran de ≈ 5.000: podrían vivir en una tabla de PostgreSQL |
-| **Navegación** | Cassandra | **Relacional particionado:** soporta la carga con ajustes, pero ≈ 11.000 M de filas por año presionan escritura, mantenimiento y espacio. **Documental con colecciones de series temporales:** alternativa válida; Cassandra la supera en el criterio de escritura sostenida | Si los eventos bajaran de ≈ 2 M por día: una tabla particionada de PostgreSQL alcanza |
+| **Clientes** | MySQL | **Documental:** la unicidad de DNI y email, la baja con consentimiento y la relación con pedidos exigen integridad referencial; un documento por cliente obligaría a duplicar datos en los pedidos | Si el perfil pasara a ser casi sin estructura (muchos campos opcionales por canal) |
+| **Catálogo** | MySQL con columna `JSON` | **Documental (MongoDB):** empata en puntaje, pero sumaría un quinto motor. El catálogo además se une con inventario y precios, que están en MySQL | Si hubiera que filtrar libremente por cualquier atributo, sin indexarlo antes, con latencia menor a 100 ms (en MySQL cada atributo filtrado necesita su índice), o si el catálogo requiriera fragmentación horizontal propia |
+| **Inventario** | MySQL | **Clave-valor y columnas anchas:** la consistencia eventual o la volatilidad permiten dos reservas simultáneas sobre la última unidad (sobreventa, prohibida por la consigna) | Si el pico de reservas superara lo que soporta un único primario (se fragmentaría por sucursal, cada una en su propia base) |
+| **Ventas y pagos** | MySQL | **Documental:** admite transacciones, pero la integridad entre pedido, pago y comprobante y la trazabilidad contable se expresan mejor con claves foráneas y restricciones. **Columnas anchas:** sin transacciones sobre varias filas | Si el volumen de pedidos superara lo que soporta un primario: réplicas de lectura y archivado de pedidos históricos (las tablas con claves foráneas no admiten particionado en InnoDB) |
+| **Sesiones y carritos** | Redis | **Relacional:** la expiración exige un proceso que borre y cada acceso paga disco y transacción. **Documental con índice TTL:** funciona, pero con latencia mayor y un motor adicional | Si las sesiones concurrentes bajaran de ≈ 5.000: podrían vivir en una tabla de MySQL |
+| **Navegación** | Cassandra | **Relacional particionado:** soporta la carga con ajustes, pero ≈ 11.000 M de filas por año presionan escritura, mantenimiento y espacio. **Documental con colecciones de series temporales:** alternativa válida; Cassandra la supera en el criterio de escritura sostenida | Si los eventos bajaran de ≈ 2 M por día: una tabla particionada de MySQL alcanza |
 | **Recomendaciones** | Neo4j | **Relacional con consultas recursivas:** el costo crece con la profundidad y el volumen de las uniones. **Clave-valor:** solo sirve resultados ya calculados, no los calcula | Si bastara una tabla de co-ocurrencias recalculada por lote (sin exploración ad hoc) |
-| **Marketing** | PostgreSQL | **Documental:** gana 2 puntos pero no cumple la regla. Las campañas y promociones son datos estructurados con vigencia y se combinan con clientes y categorías | Si las campañas pasaran a tener estructuras muy variables por canal |
-| **Logística** | PostgreSQL | **Columnas anchas:** la consulta por pedido encajaría, pero ≈ 7 eventos por segundo no justifica otro motor | Si se agregara seguimiento por GPS con frecuencia alta |
-| **Fidelización** | PostgreSQL | **Contadores de Redis o Cassandra:** sin transacciones ni auditoría confiable del libro mayor de puntos | Sin condición prevista: es un dominio contable |
+| **Marketing** | MySQL | **Documental:** gana 2 puntos pero no cumple la regla. Las campañas y promociones son datos estructurados con vigencia y se combinan con clientes y categorías | Si las campañas pasaran a tener estructuras muy variables por canal |
+| **Logística** | MySQL | **Columnas anchas:** la consulta por pedido encajaría, pero ≈ 7 eventos por segundo no justifica otro motor | Si se agregara seguimiento por GPS con frecuencia alta |
+| **Fidelización** | MySQL | **Contadores de Redis o Cassandra:** sin transacciones ni auditoría confiable del libro mayor de puntos | Sin condición prevista: es un dominio contable |
 
 ### 2.4 Justificación de la arquitectura de conjunto
 
 - **Un núcleo relacional con siete de los diez dominios.** Los dominios donde la integridad es obligatoria (inventario, ventas, pagos, clientes, puntos) comparten transacciones: un pedido descuenta stock, registra el pago y acredita puntos. Mantenerlos en un mismo motor permite hacerlo en **una sola transacción ACID** y evita transacciones distribuidas.
 - **Tres motores especializados solo donde el relacional falla en un criterio crítico** (expiración, escritura masiva, recorridos), según la regla de adopción.
-- **Los motores NoSQL guardan datos temporales o derivados, nunca el único registro de un dato crítico.** Si Redis o Neo4j se perdieran, se reconstruirían desde PostgreSQL y Cassandra.
+- **Los motores NoSQL guardan datos temporales o derivados, nunca el único registro de un dato crítico.** Si Redis o Neo4j se perdieran, se reconstruirían desde MySQL y Cassandra.
 
 ### 2.5 Diagrama de arquitectura
 
@@ -184,9 +186,9 @@ Dos casos muestran por qué usamos una regla y no solo el puntaje:
 | N.º | Flujo | Tipo | Dato que circula | Garantía |
 | :--: | :--- | :--- | :--- | :--- |
 | 1 | API ↔ Redis | Síncrono | Sesión, carrito, recomendaciones precalculadas | Baja latencia; datos temporales |
-| 2 | API → PostgreSQL | Síncrono | Pedido, pago, stock | Transacción ACID |
+| 2 | API → MySQL | Síncrono | Pedido, pago, stock | Transacción ACID |
 | 3 | API → Cassandra | Asíncrono | Eventos de navegación | Escritura con consistencia configurable; no bloquea la compra |
-| 4 | PostgreSQL → Relay | Asíncrono | Fila de la tabla `outbox` | Se inserta en la misma transacción del pedido |
+| 4 | MySQL → Relay | Asíncrono | Fila de la tabla `outbox` | Se inserta en la misma transacción del pedido |
 | 5 | Relay → Neo4j | Asíncrono | `PEDIDO_CONFIRMADO`, `PRODUCTO_ACTUALIZADO` | Entrega al menos una vez; aplicación idempotente |
 | 6 | Relay → Redis | Asíncrono | Invalidación de caché de catálogo y promociones | Basta con reintentar |
 | 7 | Neo4j → Redis | Asíncrono | Recomendaciones de cada cliente | Caché con vencimiento de 1 hora |
@@ -196,12 +198,12 @@ Dos casos muestran por qué usamos una regla y no solo el puntaje:
 
 | Dato compartido | Fuente de verdad | Copias o proyecciones | Estrategia de sincronización |
 | :--- | :--- | :--- | :--- |
-| Clientes | PostgreSQL | Identificador en Neo4j | Evento `CLIENTE_CREADO` o `CLIENTE_ELIMINADO` por outbox; **solo identificadores**, nunca datos personales |
-| Productos (nombre, precio) | PostgreSQL | Nodo `Producto` en Neo4j; caché en Redis | Evento `PRODUCTO_ACTUALIZADO` con `version`; se descartan eventos viejos |
-| Pedidos y compras | PostgreSQL | Relaciones `COMPRO` en Neo4j | Evento `PEDIDO_CONFIRMADO`; clave `linea_id` evita duplicados |
-| Stock | PostgreSQL | Ninguna (Redis no guarda stock) | Se consulta siempre en la fuente |
+| Clientes | MySQL | Identificador en Neo4j | Evento `CLIENTE_CREADO` o `CLIENTE_ELIMINADO` por outbox; **solo identificadores**, nunca datos personales |
+| Productos (nombre, precio) | MySQL | Nodo `Producto` en Neo4j; caché en Redis | Evento `PRODUCTO_ACTUALIZADO` con `version`; se descartan eventos viejos |
+| Pedidos y compras | MySQL | Relaciones `COMPRO` en Neo4j | Evento `PEDIDO_CONFIRMADO`; clave `linea_id` evita duplicados |
+| Stock | MySQL | Ninguna (Redis no guarda stock) | Se consulta siempre en la fuente |
 | Navegación | Cassandra | Relaciones `VIO` en Neo4j | Carga por lote de agregados |
-| Sesiones y carritos | Redis | Ninguna | Al confirmar el pedido pasa a PostgreSQL |
+| Sesiones y carritos | Redis | Ninguna | Al confirmar el pedido pasa a MySQL |
 | Recomendaciones | Neo4j (derivado) | Caché en Redis | Se recalculan tras cada compra; vencen a la hora |
 
 ### 2.6 Costo de sumar motores
@@ -210,13 +212,13 @@ Cada motor adicional no es gratis: agrega instalación y parches, respaldo y rec
 
 | Motor | Qué aporta | Costo que introduce | Lo mantenemos mientras… | Lo daríamos de baja si… |
 | :--- | :--- | :--- | :--- | :--- |
-| PostgreSQL | Integridad, transacciones y consultas; hospeda 7 dominios | Mantenerlo disponible (réplica y conmutación); particionar el crecimiento | Es el motor base | — |
+| MySQL | Integridad, transacciones y consultas; hospeda 7 dominios | Mantenerlo disponible (replicación y conmutación, por ejemplo con InnoDB Cluster); archivar o fragmentar el crecimiento | Es el motor base | — |
 | Redis | Expiración nativa y latencia de milisegundos | Memoria, persistencia y conmutación a configurar; un consumidor de invalidación | Haya cientos de miles de sesiones y se exija < 5 ms | Las sesiones concurrentes bajen de ≈ 5.000 |
-| Cassandra | Escritura sostenida sobre ≈ 11.000 M de eventos al año | Clúster de al menos 3 nodos, modelado por consulta, reparación y *tombstones*, conocimiento específico | Los eventos superen ≈ 2 M por día de forma sostenida | Bajen de ≈ 2 M por día: tabla particionada en PostgreSQL |
+| Cassandra | Escritura sostenida sobre ≈ 11.000 M de eventos al año | Clúster de al menos 3 nodos, modelado por consulta, reparación y *tombstones*, conocimiento específico | Los eventos superen ≈ 2 M por día de forma sostenida | Bajen de ≈ 2 M por día: tabla particionada en MySQL |
 | Neo4j | Recorridos de varias relaciones en milisegundos | Community no tiene clúster, roles ni respaldo en caliente; proyección que hay que mantener y poder reconstruir | Se necesiten recomendaciones con 2 o más saltos sobre decenas de millones de relaciones | Alcance con una tabla de co-ocurrencias por lote |
-| MongoDB (descartado) | Flexibilidad de esquema | Un quinto motor, otro modelo de seguridad y otro camino de sincronización | — | No se incorpora: `JSONB` cubre la necesidad |
+| MongoDB (descartado) | Flexibilidad de esquema | Un quinto motor, otro modelo de seguridad y otro camino de sincronización | — | No se incorpora: la columna `JSON` con índices cubre la necesidad |
 
-**Conclusión del costo:** con cuatro motores, el flujo de datos es un esquema en estrella con PostgreSQL al centro (tres proyecciones). Una malla entre cinco motores exigiría hasta diez caminos de sincronización. Esa es la razón de fondo para no sumar MongoDB.
+**Conclusión del costo:** con cuatro motores, el flujo de datos es un esquema en estrella con MySQL al centro (tres proyecciones). Una malla entre cinco motores exigiría hasta diez caminos de sincronización. Esa es la razón de fondo para no sumar MongoDB.
 
 ---
 
@@ -234,12 +236,13 @@ Cada motor adicional no es gratis: agrega instalación y parches, respaldo y rec
 
 | Decisión | Motivo |
 | :--- | :--- |
-| Claves sustitutas (`IDENTITY`) más claves naturales con `UNIQUE` (`codigo`, `dni`, `email`, `sku`) | Búsqueda por identidad sin exponer claves internas; integridad de unicidad |
+| Motor de almacenamiento `InnoDB` | Transacciones ACID, claves foráneas y bloqueo por fila |
+| Claves sustitutas (`AUTO_INCREMENT`) más claves naturales con `UNIQUE` (`codigo`, `dni`, `email`, `sku`) | Búsqueda por identidad sin exponer claves internas; integridad de unicidad |
 | `CHECK (cantidad_reservada <= cantidad_fisica)` y cantidades no negativas en `stock` | La base garantiza que no se reserve más de lo disponible, aunque la aplicación falle |
 | `precio_unitario` copiado en `pedido_item` | Congela el precio al momento de la compra; un cambio posterior no altera pedidos pasados |
-| `atributos JSONB` con índice `GIN` en `producto` | Atributos heterogéneos por categoría sin una columna por atributo y con filtros eficientes |
+| `atributos JSON` en `producto`, con columnas generadas indexadas (`marca`, `pantalla_pulgadas`), índice multivalor para las etiquetas e índices funcionales a pedido | Atributos heterogéneos por categoría sin una columna por atributo; los filtros frecuentes se resuelven por índice |
 | Columna `version` en `cliente`, `producto`, `pedido` y `cuenta_puntos` | Bloqueo optimista para actualizaciones concurrentes |
-| `movimiento_puntos` y `pedido_estado_hist` de solo inserción (se revoca `UPDATE` y `DELETE`) | Auditoría: el historial no puede modificarse |
+| `movimiento_puntos` y `pedido_estado_hist` de solo inserción (solo se otorga `SELECT` e `INSERT` y disparadores rechazan `UPDATE` y `DELETE`) | Auditoría: el historial no puede modificarse |
 | `referencia_externa` única en `pago` | Idempotencia ante reintentos de la pasarela de pagos |
 | Baja lógica (`baja_en`) en `cliente` | Cumple el derecho de supresión sin romper el historial de pedidos |
 | Tabla `outbox` en el mismo motor | Publicar eventos en la misma transacción del negocio |
@@ -248,8 +251,25 @@ Cada motor adicional no es gratis: agrega instalación y parches, respaldo y rec
 - **Reserva de stock atómica:** `UPDATE stock SET cantidad_reservada = cantidad_reservada + n WHERE ... AND cantidad_fisica - cantidad_reservada >= n`. Si afecta 0 filas, no hay disponible. Dos clientes que compiten por la última unidad no pueden ganar ambos.
 - **Cambio de estado con bloqueo optimista:** `UPDATE pedido SET estado = ..., version = version + 1 WHERE pedido_id = ... AND version = <leída>`. Si afecta 0 filas, otro proceso lo modificó antes.
 - **Acreditar puntos:** el movimiento y el saldo se escriben en la misma transacción.
+- **Relay del outbox:** toma los eventos pendientes con `SELECT ... FOR UPDATE SKIP LOCKED`, de modo que varios procesos relay no se bloquean entre sí ni toman el mismo evento.
 
-**Protección de datos personales.** Los datos personales (DNI, email, teléfono, dirección) viven **únicamente en PostgreSQL**. Redis y Neo4j almacenan identificadores (`U01`), no datos personales. La baja de un cliente se propaga con un evento `CLIENTE_ELIMINADO` para que los otros motores eliminen su identificador y sus relaciones.
+**Protección de datos personales.** Los datos personales (DNI, email, teléfono, dirección) viven **únicamente en MySQL**. Redis y Neo4j almacenan identificadores (`U01`), no datos personales. La baja de un cliente se propaga con un evento `CLIENTE_ELIMINADO` para que los otros motores eliminen su identificador y sus relaciones. MySQL no tiene seguridad por filas ni el rol `PUBLIC` de otros motores: el acceso se limita con roles y privilegios por tabla y por columna.
+
+### 3.1.1 Verificación de factibilidad del catálogo en MySQL
+
+Como la decisión de no sumar MongoDB depende de que una columna `JSON` alcance para el catálogo, la comprobamos con datos y no solo con argumentos. **No es la implementación del componente relacional** (que la consigna no pide), sino una prueba de factibilidad sobre una tabla de productos generada para el informe: 150.000 productos en 60 categorías, en donde el tipo de atributos depende de la categoría (por ejemplo `pantalla_pulgadas`, `ram_gb` y `marca` para tecnología; `talle` y `color` para indumentaria; `autor` y `paginas` para libros) y cada producto tiene un arreglo de etiquetas.
+
+| Filtro | Estrategia | Plan de ejecución | Tiempo |
+| :--- | :--- | :--- | :---: |
+| Productos de tecnología de 15,1" (≈ 500 coincidencias) | Columna generada indexada (`pantalla_pulgadas`) | Búsqueda por índice | ≈ 0,3 ms |
+| Productos de una categoría con `ram_gb = 16` (≈ 830 coincidencias) | Sin índice propio; el índice de categoría acota la búsqueda | Recorre solo las ≈ 2.500 filas de la categoría | ≈ 10 ms |
+| Productos con la etiqueta `outlet` (≈ 12.500 coincidencias) | Índice multivalor sobre el arreglo de etiquetas | Búsqueda por índice | ≈ 48 ms |
+| Libros de un autor (100 coincidencias), **sin índice** y sin categoría | Peor caso | Recorre las 150.000 filas | ≈ 88 ms |
+| El mismo filtro con un **índice funcional creado a pedido** | `CREATE INDEX ... ((CAST(atributos->>'$.autor' AS CHAR(40)) ...))` | Búsqueda por índice (100 filas) | ≈ 0,3 ms |
+
+**Lectura de los resultados.** El peor caso (recorrer todo el catálogo) ronda los 90 ms, dentro del objetivo de 100 ms para una consulta aislada; pero con 500 lecturas por segundo en pico consumiría ≈ 44 segundos de procesador por cada segundo reloj, lo que no es sostenible. Por eso **los filtros frecuentes se indexan**, y un atributo que no se había previsto se indexa a pedido con una sola sentencia (de ≈ 88 ms a ≈ 0,3 ms). La limitación real frente a PostgreSQL es que **hay que prever el índice de cada atributo** que se filtra; si el negocio exigiera filtrar libremente por cualquier atributo sin planificarlo, esa condición activaría la revisión de la decisión (sección 2.3).
+
+*[INSERTAR CAPTURA: planes de consulta y tiempos de la prueba de factibilidad (guía, sección 7)]*
 
 ### 3.2 Diseño de los modelos NoSQL
 
@@ -398,7 +418,7 @@ La afinidad cuenta cuántos clientes distintos compraron ese producto y además 
 
 ### 3.5 Interacción entre componentes: de un carrito a una recomendación
 
-Demostramos el intercambio de datos con un flujo completo entre Redis y Neo4j. En la arquitectura real, el paso 2 ocurre en PostgreSQL; en el laboratorio, como el componente relacional no se implementa, el mensaje se genera a mano y lo aplica el consumidor.
+Demostramos el intercambio de datos con un flujo completo entre Redis y Neo4j. En la arquitectura real, el paso 2 ocurre en MySQL; en el laboratorio, como el componente relacional no se implementa, el mensaje se genera a mano y lo aplica el consumidor.
 
 | Paso | Qué ocurre | Resultado verificado |
 | :--: | :--- | :--- |
@@ -415,7 +435,7 @@ Observación: tras comprar Teclado y Libro SQL, esos productos desaparecen de la
 
 ### 3.6 Duplicación de datos y actualizaciones concurrentes
 
-**Duplicación.** En esta arquitectura hay duplicación **deliberada** (el nombre y el precio de un producto existen en PostgreSQL, en Neo4j y en la caché de Redis) y duplicación **accidental** (el mismo evento entregado dos veces). Para controlarlas definimos:
+**Duplicación.** En esta arquitectura hay duplicación **deliberada** (el nombre y el precio de un producto existen en MySQL, en Neo4j y en la caché de Redis) y duplicación **accidental** (el mismo evento entregado dos veces). Para controlarlas definimos:
 
 | Situación | Riesgo | Qué haríamos | Evidencia |
 | :--- | :--- | :--- | :--- |
@@ -431,8 +451,8 @@ Observación: tras comprar Teclado y Libro SQL, esos productos desaparecen de la
 
 | Situación | Mecanismo | Dónde |
 | :--- | :--- | :--- |
-| Dos clientes reservan la última unidad | `UPDATE` atómico con condición sobre lo disponible; la base rechaza la segunda reserva | PostgreSQL (Anexo B) |
-| Dos procesos cambian el estado de un pedido | Bloqueo optimista con `version` | PostgreSQL (Anexo B) |
+| Dos clientes reservan la última unidad | `UPDATE` atómico con condición sobre lo disponible; la base rechaza la segunda reserva | MySQL (Anexo B) |
+| Dos procesos cambian el estado de un pedido | Bloqueo optimista con `version` | MySQL (Anexo B) |
 | Muchos clientes modifican el mismo contador | Operación atómica del motor (`HINCRBY`) | Redis (experimento siguiente) |
 | Eventos que llegan desordenados | Comparación de `version` | Neo4j (3.6, tabla anterior) |
 
@@ -453,11 +473,11 @@ El método de leer y luego escribir **pierde actualizaciones**: varios procesos 
 
 ### 4.1 Patrón elegido: outbox transaccional con consumidores idempotentes
 
-Cada vez que una transacción de PostgreSQL cambia un dato que otros motores necesitan, **escribe también un evento en la tabla `outbox` dentro de la misma transacción**. Un proceso *relay* lee los eventos pendientes y los entrega a los consumidores (Neo4j, Redis). Si el relay o un consumidor fallan, el evento queda pendiente y se reintenta: **no se pierde ninguna compra**.
+Cada vez que una transacción de MySQL cambia un dato que otros motores necesitan, **escribe también un evento en la tabla `outbox` dentro de la misma transacción**. Un proceso *relay* lee los eventos pendientes y los entrega a los consumidores (Neo4j, Redis). Si el relay o un consumidor fallan, el evento queda pendiente y se reintenta: **no se pierde ninguna compra**.
 
 | Alternativa | Por qué no la elegimos |
 | :--- | :--- |
-| **Escritura doble** (la aplicación escribe en PostgreSQL y luego en Neo4j) | Si falla la segunda escritura, los datos quedan inconsistentes y no hay forma automática de detectarlo ni repararlo |
+| **Escritura doble** (la aplicación escribe en MySQL y luego en Neo4j) | Si falla la segunda escritura, los datos quedan inconsistentes y no hay forma automática de detectarlo ni repararlo |
 | **Transacción distribuida (2PC)** entre motores | Los motores NoSQL elegidos no participan de transacciones distribuidas; además bloquea y reduce la disponibilidad |
 | **Captura de cambios (CDC)**, por ejemplo Debezium | Es la evolución natural del outbox para volúmenes mayores (lee el registro de transacciones sin consultar la tabla), pero agrega un componente más. Es el siguiente paso si el relay se vuelve un cuello de botella |
 | **Carga por lote nocturna** | Las recomendaciones tardarían un día en reflejar una compra, contra el objetivo de minutos |
@@ -481,9 +501,9 @@ Cada vez que una transacción de PostgreSQL cambia un dato que otros motores nec
 | **Entrega** | Al menos una vez; la **idempotencia** del consumidor la convierte en efecto único (`MERGE` con restricción de unicidad, `version`) |
 | **Orden** | Garantizado por entidad mediante `version`; no se exige orden global |
 | **Reintentos** | Con espera creciente; tras varios fallos, el evento pasa a una cola de eventos fallidos para revisión |
-| **Consistencia** | Fuerte dentro de PostgreSQL; **eventual** hacia Neo4j y Redis (segundos a minutos). Es aceptable porque la recomendación no es un dato crítico |
-| **Reconciliación** | Tarea diaria que compara conteos y sumas de control entre PostgreSQL y las proyecciones, y corrige las diferencias |
-| **Reconstrucción** | Neo4j y Redis se reconstruyen reaplicando el historial de PostgreSQL y de Cassandra (carga idempotente con `MERGE`) |
+| **Consistencia** | Fuerte dentro de MySQL; **eventual** hacia Neo4j y Redis (segundos a minutos). Es aceptable porque la recomendación no es un dato crítico |
+| **Reconciliación** | Tarea diaria que compara conteos y sumas de control entre MySQL y las proyecciones, y corrige las diferencias |
+| **Reconstrucción** | Neo4j y Redis se reconstruyen reaplicando el historial de MySQL y de Cassandra (carga idempotente con `MERGE`) |
 | **Supresión de datos** | El evento `CLIENTE_ELIMINADO` elimina el identificador y las relaciones del cliente en Neo4j y las claves en Redis |
 | **Seguridad** | Cada motor con usuarios propios de mínimo privilegio; credenciales fuera de los scripts; conexión cifrada entre componentes |
 | **Observabilidad** | Se monitorea el **retraso del outbox** (edad del evento pendiente más antiguo) y la tasa de eventos fallidos |
@@ -495,7 +515,7 @@ Cada vez que una transacción de PostgreSQL cambia un dato que otros motores nec
 | Cae **Redis** | Se pierden sesiones y carritos no persistidos | Persistencia y réplica configuradas; el cliente vuelve a iniciar sesión; no se pierden pedidos |
 | Cae **Neo4j** | No se actualizan ni calculan recomendaciones | **Degradación elegante:** la API muestra los productos más vistos desde Redis; los eventos se acumulan en el outbox y se aplican al volver |
 | Cae el **relay** | Los eventos esperan | Se reinicia; retoma desde los pendientes |
-| Cae **PostgreSQL** | No se pueden confirmar pedidos | Conmutación a la réplica; es el único componente crítico para vender |
+| Cae **MySQL** | No se pueden confirmar pedidos | Conmutación a la réplica; es el único componente crítico para vender |
 | Cae **Cassandra** | No se registran eventos de navegación | Se almacenan en una cola local y se reintenta; la compra no se bloquea |
 
 ---
@@ -508,7 +528,7 @@ Cada vez que una transacción de PostgreSQL cambia un dato que otros motores nec
 | :--- | :--- | :--- |
 | 0:00 a 1:00 | Problema y pregunta guía: ¿una única arquitectura correcta? Respuesta: no; depende de los requisitos | Escenario y 10 dominios |
 | 1:00 a 2:30 | Diagnóstico: obligatorios frente a preferencias y supuestos de volumen | Matriz de requisitos |
-| 2:30 a 4:30 | Método de decisión y resultado: criterios con peso, regla de adopción, por qué `JSONB` y no MongoDB | Matriz de los cinco modelos |
+| 2:30 a 4:30 | Método de decisión y resultado: criterios con peso, regla de adopción, por qué `JSON` con índices y no MongoDB | Matriz de los cinco modelos |
 | 4:30 a 6:00 | Arquitectura: fuente de verdad, outbox, flujos síncronos y asíncronos | Diagrama de arquitectura |
 | 6:00 a 7:15 | Evidencia: carrito → evento → Neo4j → recomendación en Redis; idempotencia; experimento de concurrencia | Capturas de la sección 3 |
 | 7:15 a 8:00 | Costo de cada motor y cuándo lo daríamos de baja; cierre | Tabla de costos |
@@ -517,21 +537,22 @@ Cada vez que una transacción de PostgreSQL cambia un dato que otros motores nec
 
 | N.º | Objeción esperable | Respuesta |
 | :--: | :--- | :--- |
-| 1 | "El catálogo con atributos heterogéneos es el caso típico de MongoDB." | Lo evaluamos: empata con el relacional (23 a 23). `JSONB` con índice `GIN` cubre atributos distintos por categoría y filtros, y el catálogo se une con inventario y precios que ya están en PostgreSQL. Sumar MongoDB agrega un quinto motor y otro camino de sincronización sin una ventaja técnica concreta |
-| 2 | "PostgreSQL concentra siete dominios: es un punto único de falla." | Es un primario con réplica y conmutación automática. La carga transaccional es moderada (≈ 1 a 40 pedidos por segundo). Lo crítico para vender está allí a propósito, para usar una sola transacción. Lo de latencia extrema (sesiones y recomendaciones) no depende de él |
+| 1 | "El catálogo con atributos heterogéneos es el caso típico de MongoDB." | Lo evaluamos: empata con el relacional (23 a 23). Una columna `JSON` con índices cubre atributos distintos por categoría y filtros (lo verificamos con 150.000 productos: de ≈ 88 ms sin índice a menos de 1 ms con índice), y el catálogo se une con inventario y precios que ya están en MySQL. Sumar MongoDB agrega un quinto motor y otro camino de sincronización sin una ventaja técnica concreta |
+| 2 | "MySQL concentra siete dominios: es un punto único de falla." | Es un primario con réplicas y conmutación automática (por ejemplo, InnoDB Cluster). La carga transaccional es moderada (≈ 1 a 40 pedidos por segundo). Lo crítico para vender está allí a propósito, para usar una sola transacción. Lo de latencia extrema (sesiones y recomendaciones) no depende de él |
 | 3 | "Diseñaron Cassandra pero no la implementaron." | Es lo que exige la consigna (implementar al menos dos). Con un nodo y factor de replicación 1 no se observa lo que justifica a Cassandra (distribución y tolerancia a fallas); preferimos no afirmar propiedades sin un clúster real. El diseño está completo y se justifica por el volumen supuesto |
 | 4 | "Eso se resuelve con SQL, ¿para qué Neo4j?" | Con pocos datos, sí. Con decenas de millones de relaciones y 2 o 3 saltos, las uniones recursivas degradan, mientras el recorrido de un grafo depende de lo que se explora. Fijamos un criterio de baja: si bastara una tabla de co-ocurrencias por lote, lo eliminaríamos |
-| 5 | "¿Y si Redis se cae y se pierden los carritos?" | Es un dato temporal. Se configura persistencia y réplica. Lo irrecuperable (pedidos y pagos) nunca vive solo en Redis: al confirmar, pasa a PostgreSQL |
+| 5 | "¿Y si Redis se cae y se pierden los carritos?" | Es un dato temporal. Se configura persistencia y réplica. Lo irrecuperable (pedidos y pagos) nunca vive solo en Redis: al confirmar, pasa a MySQL |
 | 6 | "¿Por qué no escribir directo en Neo4j desde la aplicación?" | Si la segunda escritura falla, los datos divergen sin aviso (problema de la escritura doble). El outbox hace que el evento se registre en la misma transacción del pedido y se reintente hasta aplicarse |
 | 7 | "Consistencia eventual: ¿pueden recomendar algo sin stock?" | Sí es posible; se acepta un desfase de minutos. Por eso la API consulta el stock en la fuente de verdad al mostrar y al comprar. El stock jamás se guarda en una caché |
-| 8 | "¿Cómo evitan la sobreventa?" | Reserva atómica en PostgreSQL: `UPDATE ... WHERE disponible >= n`; la restricción `CHECK` impide reservar más que el stock físico aunque falle la aplicación |
-| 9 | "¿Dónde ubican cada motor en CAP?" | No se asigna una etiqueta fija: depende de la configuración. PostgreSQL con un único primario prioriza consistencia en escrituras; Redis con réplica asíncrona privilegia disponibilidad y puede perder las últimas escrituras; Cassandra depende del nivel de consistencia elegido por operación; Neo4j depende de si es una instancia única o un clúster |
-| 10 | "Cuatro motores es mucho para un equipo chico." | Por eso la regla de adopción y los criterios de baja: cada motor tiene un umbral de uso por debajo del cual desaparece. Además, el flujo es una estrella con PostgreSQL al centro (tres proyecciones) y no una malla |
-| 11 | "Datos personales en cuatro lugares es un riesgo legal." | Los datos personales están solo en PostgreSQL. Los demás motores guardan identificadores. La baja de un cliente se propaga con un evento |
+| 8 | "¿Cómo evitan la sobreventa?" | Reserva atómica en MySQL: `UPDATE ... WHERE disponible >= n`; la restricción `CHECK` impide reservar más que el stock físico aunque falle la aplicación |
+| 9 | "¿Dónde ubican cada motor en CAP?" | No se asigna una etiqueta fija: depende de la configuración. MySQL con un único primario prioriza consistencia en escrituras; Redis con réplica asíncrona privilegia disponibilidad y puede perder las últimas escrituras; Cassandra depende del nivel de consistencia elegido por operación; Neo4j depende de si es una instancia única o un clúster |
+| 10 | "Cuatro motores es mucho para un equipo chico." | Por eso la regla de adopción y los criterios de baja: cada motor tiene un umbral de uso por debajo del cual desaparece. Además, el flujo es una estrella con MySQL al centro (tres proyecciones) y no una malla |
+| 11 | "Datos personales en cuatro lugares es un riesgo legal." | Los datos personales están solo en MySQL. Los demás motores guardan identificadores. La baja de un cliente se propaga con un evento |
 | 12 | "¿Qué hacen si se corrompe Neo4j?" | Es una proyección: se reconstruye reaplicando compras y vistas con carga idempotente. Se mide el tiempo de reconstrucción como parte del plan de recuperación |
 | 13 | "¿Y los eventos desordenados?" | Cada evento lleva `version`; el consumidor descarta los viejos. Lo probamos: el evento con versión menor no modifica el dato |
 | 14 | "¿Por qué eligieron implementar Redis y Neo4j y no Cassandra?" | Entre Redis y Neo4j hay un intercambio real (carrito → compra → recomendación → caché), que es lo que pide demostrar la consigna. Cassandra no aporta un intercambio distinto con un solo nodo |
 | 15 | "¿Por qué no usar una sola base relacional para todo?" | Sería la opción más simple y la usaríamos si los volúmenes fueran bajos. Con las cifras supuestas, falla la expiración de sesiones con latencia de milisegundos, la escritura de 11.000 M de eventos al año y los recorridos sobre decenas de millones de relaciones. Dejamos documentado en qué umbral volvemos a ella |
+| 16 | "¿Por qué MySQL y no PostgreSQL? Su `JSONB` con índice `GIN` sería ideal para el catálogo." | La consigna admite ambos. Elegimos MySQL porque es el motor de todas las unidades anteriores y el equipo lo domina. Reconocemos la diferencia: en MySQL hay que declarar un índice por cada atributo filtrado. Lo verificamos con 150.000 productos (de ≈ 88 ms sin índice a menos de 1 ms con índice) y dejamos escrito el criterio de revisión: si hiciera falta filtrar libremente por cualquier atributo, evaluaríamos PostgreSQL o MongoDB |
 
 ### 5.3 Preguntas para la propuesta rival (5 minutos)
 
@@ -566,249 +587,309 @@ Cada vez que una transacción de PostgreSQL cambia un dato que otros motores nec
 **Detección:** Al revisar los datos de prueba comprobamos que ningún producto recomendable lo habían comprado dos clientes en común con U01.
 **Corrección:** Agregamos una compra histórica coherente con el escenario (U03 compró también P103) y repetimos la carga. Ahora Teclado aparece con afinidad 2 y encabeza la lista, lo que demuestra el ordenamiento.
 
+**Falla 3:** Al llevar el diseño relacional a **MySQL** (el motor de las unidades anteriores), el argumento contra MongoDB para el catálogo perdía su apoyo: la columna `JSONB` con índice `GIN` de PostgreSQL no existe en MySQL.
+**Detección:** Al revisar qué ofrece MySQL para indexar JSON comprobamos que no hay un índice general sobre toda la columna, sino índices sobre columnas generadas, funcionales y multivalor, que hay que declarar uno por uno.
+**Corrección:** Rediseñamos `producto` con columnas generadas indexadas para los atributos más filtrados y un índice multivalor para las etiquetas, y **medimos** la alternativa con 150.000 productos (sección 3.1.1). El resultado sostiene la decisión, pero ahora queda escrita su condición de revisión: si hubiera que filtrar libremente por cualquier atributo sin indexarlo antes, se reevaluaría.
+
 ## Conclusión
 
-La pregunta guía no tiene una única respuesta correcta: la arquitectura depende de qué propiedad exige cada área. Resolvimos el conflicto con un **método explícito**: criterios ponderados por dominio y una regla que solo admite un motor adicional si el relacional falla en un criterio crítico. El resultado es un núcleo PostgreSQL con tres motores especializados (Redis, Cassandra y Neo4j) y un motor evaluado y descartado (MongoDB). La arquitectura se sostiene en dos ideas: **una fuente de verdad por dato** y **sincronización por eventos idempotentes** (outbox), con degradación controlada cuando un motor secundario falla. Comprobamos con evidencia ejecutada que el intercambio entre Redis y Neo4j funciona, que reentregar un evento no duplica datos, que un evento viejo no pisa uno nuevo y que las operaciones atómicas del motor evitan la pérdida de actualizaciones concurrentes. Las cifras de volumen son supuestos nuestros: si cambiaran, la regla indica qué motores se sumarían o se darían de baja.
+La pregunta guía no tiene una única respuesta correcta: la arquitectura depende de qué propiedad exige cada área. Resolvimos el conflicto con un **método explícito**: criterios ponderados por dominio y una regla que solo admite un motor adicional si el relacional falla en un criterio crítico. El resultado es un núcleo MySQL con tres motores especializados (Redis, Cassandra y Neo4j) y un motor evaluado y descartado (MongoDB). La arquitectura se sostiene en dos ideas: **una fuente de verdad por dato** y **sincronización por eventos idempotentes** (outbox), con degradación controlada cuando un motor secundario falla. Comprobamos con evidencia ejecutada que el intercambio entre Redis y Neo4j funciona, que reentregar un evento no duplica datos, que un evento viejo no pisa uno nuevo y que las operaciones atómicas del motor evitan la pérdida de actualizaciones concurrentes. Las cifras de volumen son supuestos nuestros: si cambiaran, la regla indica qué motores se sumarían o se darían de baja.
 
 ## Uso de IA
 
 Se utilizó una IA (Claude) como asistente para estructurar el análisis, calcular la matriz ponderada y preparar los scripts de Redis y Neo4j y la sesión guiada de capturas.
-- **Qué se validó:** ejecutamos los scripts en la terminal sobre instancias aisladas de Redis y Neo4j y comprobamos los resultados (conteos, consultas, idempotencia, versión y concurrencia). El DDL relacional se validó con el analizador sintáctico de PostgreSQL y el diseño de Cassandra se validó ejecutándolo en un nodo de laboratorio.
-- **Qué se descartó:** sumar MongoDB (cuya necesidad cubre `JSONB`), implementar Cassandra con un solo nodo (no demostraría su ventaja) y afirmar tolerancia a fallas sin un clúster real. Los volúmenes de la sección 1 son supuestos del grupo y no mediciones.
+- **Qué se validó:** ejecutamos los scripts en la terminal sobre instancias aisladas de Redis y Neo4j y comprobamos los resultados (conteos, consultas, idempotencia, versión y concurrencia). El DDL relacional se ejecutó en un MySQL de laboratorio (21 tablas, 22 restricciones `CHECK` y 4 disparadores) y se probaron la reserva atómica (5 reservas aceptadas de 20 simultáneas sobre 5 unidades), el rechazo de una reserva excesiva por el `CHECK`, el bloqueo optimista, los disparadores de solo inserción, `SKIP LOCKED` en el relay y la factibilidad del catálogo. El diseño de Cassandra se validó ejecutándolo en un nodo de laboratorio.
+- **Qué se descartó:** sumar MongoDB (cuya necesidad cubre la columna `JSON` con índices), implementar Cassandra con un solo nodo (no demostraría su ventaja) y afirmar tolerancia a fallas sin un clúster real. Los volúmenes de la sección 1 son supuestos del grupo y no mediciones.
 
 ---
 
-## Anexo A. DDL del componente relacional (especificación, no se ejecuta)
+## Anexo A. DDL del componente relacional (especificación para MySQL 8.0, no se implementa)
+
+El DDL se ejecutó en una instancia de laboratorio solo para comprobar que no tuviera errores.
 
 ```sql
+CREATE DATABASE IF NOT EXISTS omnimarket CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE omnimarket;
+
 -- ---------------------------------------------------------------- Clientes
 CREATE TABLE cliente (
-  cliente_id      BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  codigo          TEXT        NOT NULL UNIQUE,            -- U01, U02...
-  dni             TEXT        NOT NULL UNIQUE,
-  email           TEXT        NOT NULL UNIQUE,
-  nombre          TEXT        NOT NULL,
-  apellido        TEXT        NOT NULL,
-  telefono        TEXT,
-  acepta_marketing BOOLEAN    NOT NULL DEFAULT FALSE,     -- consentimiento (Ley 25.326)
-  creado_en       TIMESTAMPTZ NOT NULL DEFAULT now(),
-  actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT now(),
-  baja_en         TIMESTAMPTZ,                            -- baja lógica (derecho de supresión)
-  version         INTEGER     NOT NULL DEFAULT 1          -- bloqueo optimista
-);
+  cliente_id       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  codigo           VARCHAR(20)  NOT NULL UNIQUE,                 -- U01, U02...
+  dni              VARCHAR(15)  NOT NULL UNIQUE,
+  email            VARCHAR(254) NOT NULL UNIQUE,
+  nombre           VARCHAR(80)  NOT NULL,
+  apellido         VARCHAR(80)  NOT NULL,
+  telefono         VARCHAR(30),
+  acepta_marketing BOOLEAN      NOT NULL DEFAULT FALSE,          -- consentimiento (Ley 25.326)
+  creado_en        DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  actualizado_en   DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  baja_en          DATETIME(3)  NULL,                            -- baja lógica (derecho de supresión)
+  version          INT UNSIGNED NOT NULL DEFAULT 1               -- bloqueo optimista
+) ENGINE=InnoDB;
 
 CREATE TABLE direccion (
-  direccion_id  BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  cliente_id    BIGINT NOT NULL REFERENCES cliente(cliente_id),
-  tipo          TEXT   NOT NULL CHECK (tipo IN ('envio', 'facturacion')),
-  calle         TEXT   NOT NULL,
-  localidad     TEXT   NOT NULL,
-  provincia     TEXT   NOT NULL,
-  codigo_postal TEXT   NOT NULL
-);
+  direccion_id  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  cliente_id    BIGINT UNSIGNED NOT NULL,
+  tipo          VARCHAR(12)  NOT NULL CHECK (tipo IN ('envio', 'facturacion')),
+  calle         VARCHAR(150) NOT NULL,
+  localidad     VARCHAR(80)  NOT NULL,
+  provincia     VARCHAR(60)  NOT NULL,
+  codigo_postal VARCHAR(10)  NOT NULL,
+  FOREIGN KEY (cliente_id) REFERENCES cliente (cliente_id)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Catálogo
 CREATE TABLE categoria (
-  categoria_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  nombre       TEXT NOT NULL UNIQUE,
-  padre_id     INTEGER REFERENCES categoria(categoria_id)
-);
+  categoria_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre       VARCHAR(80)  NOT NULL UNIQUE,
+  padre_id     INT UNSIGNED NULL,
+  FOREIGN KEY (padre_id) REFERENCES categoria (categoria_id)
+) ENGINE=InnoDB;
 
 CREATE TABLE producto (
-  producto_id    BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  sku            TEXT           NOT NULL UNIQUE,          -- P101, P102...
-  nombre         TEXT           NOT NULL,
-  categoria_id   INTEGER        NOT NULL REFERENCES categoria(categoria_id),
-  precio_ars     NUMERIC(12,2)  NOT NULL CHECK (precio_ars >= 0),
-  atributos      JSONB          NOT NULL DEFAULT '{}'::jsonb,  -- atributos heterogéneos por categoría
-  activo         BOOLEAN        NOT NULL DEFAULT TRUE,
-  actualizado_en TIMESTAMPTZ    NOT NULL DEFAULT now(),
-  version        INTEGER        NOT NULL DEFAULT 1
-);
-CREATE INDEX idx_producto_categoria ON producto (categoria_id);
-CREATE INDEX idx_producto_atributos ON producto USING GIN (atributos jsonb_path_ops);
+  producto_id    BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  sku            VARCHAR(30)   NOT NULL UNIQUE,                  -- P101, P102...
+  nombre         VARCHAR(150)  NOT NULL,
+  categoria_id   INT UNSIGNED  NOT NULL,
+  precio_ars     DECIMAL(12,2) NOT NULL CHECK (precio_ars >= 0),
+  atributos      JSON          NOT NULL DEFAULT (JSON_OBJECT()), -- atributos heterogéneos por categoría
+  -- columnas generadas: exponen los atributos más filtrados para poder indexarlos
+  pantalla_pulgadas DECIMAL(4,1) GENERATED ALWAYS AS (CAST(JSON_UNQUOTE(JSON_EXTRACT(atributos, '$.pantalla_pulgadas')) AS DECIMAL(4,1))) VIRTUAL,
+  marca          VARCHAR(40)   GENERATED ALWAYS AS (JSON_UNQUOTE(JSON_EXTRACT(atributos, '$.marca'))) VIRTUAL,
+  activo         BOOLEAN       NOT NULL DEFAULT TRUE,
+  actualizado_en DATETIME(3)   NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  version        INT UNSIGNED  NOT NULL DEFAULT 1,
+  FOREIGN KEY (categoria_id) REFERENCES categoria (categoria_id),
+  KEY idx_producto_pantalla (categoria_id, pantalla_pulgadas),
+  KEY idx_producto_marca (marca),
+  KEY idx_producto_etiquetas ((CAST(atributos -> '$.etiquetas' AS CHAR(30) ARRAY)))   -- índice multivalor (8.0.17+)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Inventario
 CREATE TABLE sucursal (
-  sucursal_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  nombre      TEXT NOT NULL UNIQUE,
-  tipo        TEXT NOT NULL CHECK (tipo IN ('tienda', 'deposito'))
-);
+  sucursal_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre      VARCHAR(80)  NOT NULL UNIQUE,
+  tipo        VARCHAR(10)  NOT NULL CHECK (tipo IN ('tienda', 'deposito'))
+) ENGINE=InnoDB;
 
 CREATE TABLE stock (
-  producto_id        BIGINT  NOT NULL REFERENCES producto(producto_id),
-  sucursal_id        INTEGER NOT NULL REFERENCES sucursal(sucursal_id),
-  cantidad_fisica    INTEGER NOT NULL CHECK (cantidad_fisica >= 0),
-  cantidad_reservada INTEGER NOT NULL DEFAULT 0 CHECK (cantidad_reservada >= 0),
+  producto_id        BIGINT UNSIGNED NOT NULL,
+  sucursal_id        INT UNSIGNED    NOT NULL,
+  cantidad_fisica    INT UNSIGNED    NOT NULL,
+  cantidad_reservada INT UNSIGNED    NOT NULL DEFAULT 0,
   PRIMARY KEY (producto_id, sucursal_id),
-  CHECK (cantidad_reservada <= cantidad_fisica)           -- nunca se reserva más de lo disponible
-);
+  FOREIGN KEY (producto_id) REFERENCES producto (producto_id),
+  FOREIGN KEY (sucursal_id) REFERENCES sucursal (sucursal_id),
+  CHECK (cantidad_reservada <= cantidad_fisica)                  -- nunca se reserva más de lo disponible
+) ENGINE=InnoDB;
 
 CREATE TABLE reserva (
-  reserva_id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  producto_id BIGINT  NOT NULL,
-  sucursal_id INTEGER NOT NULL,
-  cantidad    INTEGER NOT NULL CHECK (cantidad > 0),
-  estado      TEXT    NOT NULL DEFAULT 'activa' CHECK (estado IN ('activa', 'confirmada', 'expirada', 'cancelada')),
-  expira_en   TIMESTAMPTZ NOT NULL,
-  creada_en   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  reserva_id  BINARY(16)      NOT NULL DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY,
+  producto_id BIGINT UNSIGNED NOT NULL,
+  sucursal_id INT UNSIGNED    NOT NULL,
+  cantidad    INT UNSIGNED    NOT NULL CHECK (cantidad > 0),
+  estado      VARCHAR(12)     NOT NULL DEFAULT 'activa' CHECK (estado IN ('activa', 'confirmada', 'expirada', 'cancelada')),
+  expira_en   DATETIME(3)     NOT NULL,
+  creada_en   DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   FOREIGN KEY (producto_id, sucursal_id) REFERENCES stock (producto_id, sucursal_id)
-);
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Ventas y pagos
 CREATE TABLE pedido (
-  pedido_id  BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  cliente_id BIGINT        NOT NULL REFERENCES cliente(cliente_id),
-  canal      TEXT          NOT NULL CHECK (canal IN ('web', 'app', 'tienda')),
-  estado     TEXT          NOT NULL DEFAULT 'creado'
+  pedido_id  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  cliente_id BIGINT UNSIGNED NOT NULL,
+  canal      VARCHAR(10)     NOT NULL CHECK (canal IN ('web', 'app', 'tienda')),
+  estado     VARCHAR(12)     NOT NULL DEFAULT 'creado'
              CHECK (estado IN ('creado', 'pagado', 'preparado', 'enviado', 'entregado', 'cancelado')),
-  total_ars  NUMERIC(14,2) NOT NULL CHECK (total_ars >= 0),
-  creado_en  TIMESTAMPTZ   NOT NULL DEFAULT now(),
-  version    INTEGER       NOT NULL DEFAULT 1
-);
-CREATE INDEX idx_pedido_cliente ON pedido (cliente_id, creado_en DESC);
+  total_ars  DECIMAL(14,2)   NOT NULL CHECK (total_ars >= 0),
+  creado_en  DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  version    INT UNSIGNED    NOT NULL DEFAULT 1,
+  FOREIGN KEY (cliente_id) REFERENCES cliente (cliente_id),
+  KEY idx_pedido_cliente (cliente_id, creado_en DESC)
+) ENGINE=InnoDB;
 
 CREATE TABLE pedido_item (
-  pedido_id       BIGINT        NOT NULL REFERENCES pedido(pedido_id),
-  linea           INTEGER       NOT NULL,
-  producto_id     BIGINT        NOT NULL REFERENCES producto(producto_id),
-  cantidad        INTEGER       NOT NULL CHECK (cantidad > 0),
-  precio_unitario NUMERIC(12,2) NOT NULL CHECK (precio_unitario >= 0),   -- precio congelado al comprar
-  PRIMARY KEY (pedido_id, linea)
-);
+  pedido_id       BIGINT UNSIGNED NOT NULL,
+  linea           INT UNSIGNED    NOT NULL,
+  producto_id     BIGINT UNSIGNED NOT NULL,
+  cantidad        INT UNSIGNED    NOT NULL CHECK (cantidad > 0),
+  precio_unitario DECIMAL(12,2)   NOT NULL CHECK (precio_unitario >= 0),   -- precio congelado al comprar
+  PRIMARY KEY (pedido_id, linea),
+  FOREIGN KEY (pedido_id)   REFERENCES pedido (pedido_id),
+  FOREIGN KEY (producto_id) REFERENCES producto (producto_id)
+) ENGINE=InnoDB;
 
 CREATE TABLE pago (
-  pago_id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  pedido_id          BIGINT        NOT NULL REFERENCES pedido(pedido_id),
-  medio              TEXT          NOT NULL CHECK (medio IN ('tarjeta', 'transferencia', 'billetera', 'efectivo')),
-  monto_ars          NUMERIC(14,2) NOT NULL CHECK (monto_ars > 0),
-  estado             TEXT          NOT NULL CHECK (estado IN ('pendiente', 'aprobado', 'rechazado', 'reintegrado')),
-  referencia_externa TEXT UNIQUE,                         -- idempotencia frente a la pasarela de pagos
-  creado_en          TIMESTAMPTZ   NOT NULL DEFAULT now()
-);
+  pago_id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pedido_id          BIGINT UNSIGNED NOT NULL,
+  medio              VARCHAR(15)     NOT NULL CHECK (medio IN ('tarjeta', 'transferencia', 'billetera', 'efectivo')),
+  monto_ars          DECIMAL(14,2)   NOT NULL CHECK (monto_ars > 0),
+  estado             VARCHAR(12)     NOT NULL CHECK (estado IN ('pendiente', 'aprobado', 'rechazado', 'reintegrado')),
+  referencia_externa VARCHAR(80)     NULL UNIQUE,                  -- idempotencia frente a la pasarela de pagos
+  creado_en          DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  FOREIGN KEY (pedido_id) REFERENCES pedido (pedido_id)
+) ENGINE=InnoDB;
 
 CREATE TABLE comprobante (
-  comprobante_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  pedido_id      BIGINT NOT NULL UNIQUE REFERENCES pedido(pedido_id),
-  tipo           TEXT   NOT NULL CHECK (tipo IN ('A', 'B', 'C')),
-  numero         TEXT   NOT NULL UNIQUE,
-  emitido_en     TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+  comprobante_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pedido_id      BIGINT UNSIGNED NOT NULL UNIQUE,
+  tipo           CHAR(1)         NOT NULL CHECK (tipo IN ('A', 'B', 'C')),
+  numero         VARCHAR(30)     NOT NULL UNIQUE,
+  emitido_en     DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  FOREIGN KEY (pedido_id) REFERENCES pedido (pedido_id)
+) ENGINE=InnoDB;
 
-CREATE TABLE pedido_estado_hist (                          -- trazabilidad: solo se inserta
-  hist_id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  pedido_id       BIGINT NOT NULL REFERENCES pedido(pedido_id),
-  estado_anterior TEXT,
-  estado_nuevo    TEXT   NOT NULL,
-  cambiado_en     TIMESTAMPTZ NOT NULL DEFAULT now(),
-  cambiado_por    TEXT   NOT NULL
-);
+CREATE TABLE pedido_estado_hist (                                -- trazabilidad: solo se inserta
+  hist_id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pedido_id       BIGINT UNSIGNED NOT NULL,
+  estado_anterior VARCHAR(12),
+  estado_nuevo    VARCHAR(12)     NOT NULL,
+  cambiado_en     DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  cambiado_por    VARCHAR(60)     NOT NULL,
+  FOREIGN KEY (pedido_id) REFERENCES pedido (pedido_id)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Logística
 CREATE TABLE envio (
-  envio_id       BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  pedido_id      BIGINT NOT NULL UNIQUE REFERENCES pedido(pedido_id),
-  transportista  TEXT   NOT NULL,
-  estado         TEXT   NOT NULL CHECK (estado IN ('preparando', 'despachado', 'en_transito', 'en_sucursal', 'entregado', 'devuelto')),
-  actualizado_en TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+  envio_id       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pedido_id      BIGINT UNSIGNED NOT NULL UNIQUE,
+  transportista  VARCHAR(60)     NOT NULL,
+  estado         VARCHAR(12)     NOT NULL CHECK (estado IN ('preparando', 'despachado', 'en_transito', 'en_sucursal', 'entregado', 'devuelto')),
+  actualizado_en DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  FOREIGN KEY (pedido_id) REFERENCES pedido (pedido_id)
+) ENGINE=InnoDB;
 
-CREATE TABLE envio_evento (                                -- seguimiento: historial por pedido
-  envio_evento_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  envio_id        BIGINT NOT NULL REFERENCES envio(envio_id),
-  estado          TEXT   NOT NULL,
-  ubicacion       TEXT,
-  ocurrido_en     TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_envio_evento ON envio_evento (envio_id, ocurrido_en DESC);
+CREATE TABLE envio_evento (                                      -- seguimiento: historial por pedido
+  envio_evento_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  envio_id        BIGINT UNSIGNED NOT NULL,
+  estado          VARCHAR(12)     NOT NULL,
+  ubicacion       VARCHAR(120),
+  ocurrido_en     DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  FOREIGN KEY (envio_id) REFERENCES envio (envio_id),
+  KEY idx_envio_evento (envio_id, ocurrido_en DESC)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Marketing
 CREATE TABLE campana (
-  campana_id    INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  nombre        TEXT NOT NULL,
-  canal         TEXT NOT NULL CHECK (canal IN ('email', 'push', 'sms', 'tienda')),
-  vigente_desde TIMESTAMPTZ NOT NULL,
-  vigente_hasta TIMESTAMPTZ NOT NULL,
+  campana_id    INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre        VARCHAR(100) NOT NULL,
+  canal         VARCHAR(10)  NOT NULL CHECK (canal IN ('email', 'push', 'sms', 'tienda')),
+  vigente_desde DATETIME(3)  NOT NULL,
+  vigente_hasta DATETIME(3)  NOT NULL,
   CHECK (vigente_hasta > vigente_desde)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE promocion (
-  promocion_id  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  campana_id    INTEGER NOT NULL REFERENCES campana(campana_id),
-  descripcion   TEXT    NOT NULL,
-  descuento_pct NUMERIC(5,2) NOT NULL CHECK (descuento_pct > 0 AND descuento_pct <= 100),
-  categoria_id  INTEGER REFERENCES categoria(categoria_id),
-  vigente_desde TIMESTAMPTZ NOT NULL,
-  vigente_hasta TIMESTAMPTZ NOT NULL,
-  CHECK (vigente_hasta > vigente_desde)
-);
+  promocion_id  INT UNSIGNED  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  campana_id    INT UNSIGNED  NOT NULL,
+  descripcion   VARCHAR(200)  NOT NULL,
+  descuento_pct DECIMAL(5,2)  NOT NULL CHECK (descuento_pct > 0 AND descuento_pct <= 100),
+  categoria_id  INT UNSIGNED  NULL,
+  vigente_desde DATETIME(3)   NOT NULL,
+  vigente_hasta DATETIME(3)   NOT NULL,
+  CHECK (vigente_hasta > vigente_desde),
+  FOREIGN KEY (campana_id)   REFERENCES campana (campana_id),
+  FOREIGN KEY (categoria_id) REFERENCES categoria (categoria_id)
+) ENGINE=InnoDB;
 
 CREATE TABLE segmento (
-  segmento_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  nombre      TEXT NOT NULL UNIQUE,
-  criterio    TEXT NOT NULL
-);
+  segmento_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre      VARCHAR(80)  NOT NULL UNIQUE,
+  criterio    VARCHAR(255) NOT NULL
+) ENGINE=InnoDB;
 
 CREATE TABLE segmento_cliente (
-  segmento_id  INTEGER NOT NULL REFERENCES segmento(segmento_id),
-  cliente_id   BIGINT  NOT NULL REFERENCES cliente(cliente_id),
-  calculado_en TIMESTAMPTZ NOT NULL DEFAULT now(),
-  PRIMARY KEY (segmento_id, cliente_id)
-);
+  segmento_id  INT UNSIGNED    NOT NULL,
+  cliente_id   BIGINT UNSIGNED NOT NULL,
+  calculado_en DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (segmento_id, cliente_id),
+  FOREIGN KEY (segmento_id) REFERENCES segmento (segmento_id),
+  FOREIGN KEY (cliente_id)  REFERENCES cliente (cliente_id)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Fidelización
 CREATE TABLE cuenta_puntos (
-  cliente_id BIGINT PRIMARY KEY REFERENCES cliente(cliente_id),
-  saldo      INTEGER NOT NULL DEFAULT 0 CHECK (saldo >= 0),
-  version    INTEGER NOT NULL DEFAULT 1
-);
+  cliente_id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+  saldo      INT UNSIGNED    NOT NULL DEFAULT 0,
+  version    INT UNSIGNED    NOT NULL DEFAULT 1,
+  FOREIGN KEY (cliente_id) REFERENCES cliente (cliente_id)
+) ENGINE=InnoDB;
 
-CREATE TABLE movimiento_puntos (                           -- libro mayor: solo se inserta
-  movimiento_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  cliente_id    BIGINT  NOT NULL REFERENCES cliente(cliente_id),
-  tipo          TEXT    NOT NULL CHECK (tipo IN ('acredita', 'canjea', 'ajusta', 'expira')),
-  puntos        INTEGER NOT NULL CHECK (puntos <> 0),
-  pedido_id     BIGINT  REFERENCES pedido(pedido_id),
-  motivo        TEXT    NOT NULL,
-  creado_en     TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_mov_puntos_cliente ON movimiento_puntos (cliente_id, creado_en DESC);
+CREATE TABLE movimiento_puntos (                                 -- libro mayor: solo se inserta
+  movimiento_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  cliente_id    BIGINT UNSIGNED NOT NULL,
+  tipo          VARCHAR(10)     NOT NULL CHECK (tipo IN ('acredita', 'canjea', 'ajusta', 'expira')),
+  puntos        INT             NOT NULL CHECK (puntos <> 0),
+  pedido_id     BIGINT UNSIGNED NULL,
+  motivo        VARCHAR(120)    NOT NULL,
+  creado_en     DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  FOREIGN KEY (cliente_id) REFERENCES cliente (cliente_id),
+  FOREIGN KEY (pedido_id)  REFERENCES pedido (pedido_id),
+  KEY idx_mov_puntos_cliente (cliente_id, creado_en DESC)
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Integración (patrón outbox)
 CREATE TABLE outbox (
-  evento_id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  agregado     TEXT    NOT NULL,                          -- 'pedido', 'producto', 'cliente'
-  agregado_id  TEXT    NOT NULL,
-  tipo         TEXT    NOT NULL,                          -- 'PEDIDO_CONFIRMADO', 'PRODUCTO_ACTUALIZADO'
-  version      INTEGER NOT NULL,                          -- orden por agregado (descarta eventos viejos)
-  payload      JSONB   NOT NULL,
-  creado_en    TIMESTAMPTZ NOT NULL DEFAULT now(),
-  publicado_en TIMESTAMPTZ
-);
-CREATE INDEX idx_outbox_pendientes ON outbox (creado_en) WHERE publicado_en IS NULL;
+  evento_id    BINARY(16)   NOT NULL DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY,
+  agregado     VARCHAR(30)  NOT NULL,                            -- 'pedido', 'producto', 'cliente'
+  agregado_id  VARCHAR(60)  NOT NULL,
+  tipo         VARCHAR(40)  NOT NULL,                            -- 'PEDIDO_CONFIRMADO', 'PRODUCTO_ACTUALIZADO'
+  version      INT UNSIGNED NOT NULL,                            -- orden por agregado (descarta eventos viejos)
+  payload      JSON         NOT NULL,
+  creado_en    DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  publicado_en DATETIME(3)  NULL,
+  KEY idx_outbox_pendientes (publicado_en, creado_en)            -- los pendientes tienen publicado_en NULL
+) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------- Seguridad
-REVOKE UPDATE, DELETE ON movimiento_puntos FROM PUBLIC;
-REVOKE UPDATE, DELETE ON pedido_estado_hist FROM PUBLIC;
-CREATE ROLE app_ventas NOLOGIN;
-GRANT SELECT, INSERT ON pedido, pedido_item, pago, comprobante, pedido_estado_hist TO app_ventas;
-GRANT UPDATE (estado, version) ON pedido TO app_ventas;
+-- MySQL no tiene PUBLIC ni RLS: se otorga solo lo necesario y se bloquea UPDATE/DELETE con disparadores
+CREATE ROLE IF NOT EXISTS app_ventas;
+GRANT SELECT, INSERT ON omnimarket.pedido             TO app_ventas;
+GRANT SELECT, INSERT ON omnimarket.pedido_item        TO app_ventas;
+GRANT SELECT, INSERT ON omnimarket.pago               TO app_ventas;
+GRANT SELECT, INSERT ON omnimarket.comprobante        TO app_ventas;
+GRANT SELECT, INSERT ON omnimarket.pedido_estado_hist TO app_ventas;
+GRANT UPDATE (estado, version) ON omnimarket.pedido   TO app_ventas;
+
+DELIMITER //
+CREATE TRIGGER trg_mov_puntos_bu BEFORE UPDATE ON movimiento_puntos FOR EACH ROW
+  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'movimiento_puntos es de solo inserción'//
+CREATE TRIGGER trg_mov_puntos_bd BEFORE DELETE ON movimiento_puntos FOR EACH ROW
+  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'movimiento_puntos es de solo inserción'//
+CREATE TRIGGER trg_pedido_hist_bu BEFORE UPDATE ON pedido_estado_hist FOR EACH ROW
+  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'pedido_estado_hist es de solo inserción'//
+CREATE TRIGGER trg_pedido_hist_bd BEFORE DELETE ON pedido_estado_hist FOR EACH ROW
+  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'pedido_estado_hist es de solo inserción'//
+DELIMITER ;
 ```
 
 ## Anexo B. Operaciones críticas del componente relacional
 
 ```sql
--- Reserva atómica de stock: 0 filas afectadas = no hay disponible (evita la sobreventa)
-UPDATE stock SET cantidad_reservada = cantidad_reservada + $1
- WHERE producto_id = $2 AND sucursal_id = $3 AND cantidad_fisica - cantidad_reservada >= $1;
+-- Reserva atómica de stock: ROW_COUNT() = 0 significa que no hay disponible (evita la sobreventa)
+UPDATE stock SET cantidad_reservada = cantidad_reservada + ?
+ WHERE producto_id = ? AND sucursal_id = ? AND cantidad_fisica - cantidad_reservada >= ?;
+SELECT ROW_COUNT();
 
 -- Cambio de estado con bloqueo optimista: 0 filas = otro proceso lo modificó antes
-UPDATE pedido SET estado = $1, version = version + 1 WHERE pedido_id = $2 AND version = $3;
+UPDATE pedido SET estado = ?, version = version + 1 WHERE pedido_id = ? AND version = ?;
 
 -- Acreditar puntos: movimiento (libro mayor) y saldo en la misma transacción
-INSERT INTO movimiento_puntos (cliente_id, tipo, puntos, pedido_id, motivo) VALUES ($1, 'acredita', $2, $3, 'compra');
-UPDATE cuenta_puntos SET saldo = saldo + $2, version = version + 1 WHERE cliente_id = $1;
+START TRANSACTION;
+INSERT INTO movimiento_puntos (cliente_id, tipo, puntos, pedido_id, motivo) VALUES (?, 'acredita', ?, ?, 'compra');
+UPDATE cuenta_puntos SET saldo = saldo + ?, version = version + 1 WHERE cliente_id = ?;
+COMMIT;
 
--- Filtro por atributos heterogéneos del catálogo (índice GIN)
-SELECT sku, nombre, precio_ars FROM producto WHERE categoria_id = $1 AND atributos @> '{"pantalla_pulgadas": 15.6}';
+-- Filtro por un atributo del catálogo con columna generada indexada
+SELECT sku, nombre, precio_ars FROM producto WHERE categoria_id = ? AND pantalla_pulgadas = ?;
+
+-- Atributo no previsto: se crea un índice funcional a pedido y se filtra con la misma expresión
+CREATE INDEX idx_color ON producto ((CAST(atributos->>'$.color' AS CHAR(20)) COLLATE utf8mb4_bin));
+SELECT sku FROM producto WHERE CAST(atributos->>'$.color' AS CHAR(20)) COLLATE utf8mb4_bin = 'rojo';
+
+-- Relay del outbox: toma pendientes sin bloquear a otros relays
+START TRANSACTION;
+SELECT evento_id, tipo, payload FROM outbox WHERE publicado_en IS NULL ORDER BY creado_en LIMIT 100 FOR UPDATE SKIP LOCKED;
+UPDATE outbox SET publicado_en = CURRENT_TIMESTAMP(3) WHERE evento_id IN (?);
+COMMIT;
 ```

@@ -18,9 +18,9 @@
 <text x="54" y="376" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Caché de recomendaciones (TTL 1 h)</text>
 <text x="408" y="448" font-size="12" font-weight="bold" fill="#a85a10" text-anchor="end">IMPLEMENTADO · temporal / derivado</text>
 <rect x="510" y="240" width="520" height="300" rx="10" fill="#dbe9f8" stroke="#1f5fa8" stroke-width="2.5"/>
-<text x="524" y="266" font-size="16" font-weight="bold" fill="#1f5fa8" text-anchor="start">PostgreSQL · FUENTE DE VERDAD (relacional)</text>
+<text x="524" y="266" font-size="16" font-weight="bold" fill="#1f5fa8" text-anchor="start">MySQL · FUENTE DE VERDAD (relacional)</text>
 <text x="524" y="292" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Clientes</text>
-<text x="524" y="313" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Catálogo (atributos en JSONB)</text>
+<text x="524" y="313" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Catálogo (atributos en JSON)</text>
 <text x="524" y="334" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Inventario y reservas</text>
 <text x="524" y="355" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Pedidos · pagos · comprobantes</text>
 <text x="524" y="376" font-size="13" font-weight="normal" fill="#222" text-anchor="start">Marketing · Logística · Fidelización</text>
@@ -62,9 +62,9 @@
 <text x="1085" y="746" font-size="12" font-weight="normal" fill="#1f6b41" text-anchor="end" stroke="#fff" stroke-width="5" paint-order="stroke">PRODUCTO_ACTUALIZADO</text>
 <rect x="40" y="870" width="1440" height="100" rx="10" fill="#fafafa" stroke="#999" stroke-width="1.5"/>
 <text x="56" y="896" font-size="15" font-weight="bold" fill="#123" text-anchor="start">Fuente de verdad por dato compartido</text>
-<text x="56" y="922" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Clientes, productos, pedidos, stock, puntos → PostgreSQL</text>
+<text x="56" y="922" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Clientes, productos, pedidos, stock, puntos → MySQL</text>
 <text x="776" y="922" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Navegación (eventos) → Cassandra</text>
 <text x="56" y="944" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Sesiones y carritos → Redis (efímero)</text>
-<text x="776" y="944" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Afinidades y recomendaciones → Derivado: se reconstruye desde PostgreSQL y Cassandra</text>
+<text x="776" y="944" font-size="13" font-weight="normal" fill="#222" text-anchor="start">• Afinidades y recomendaciones → Derivado: se reconstruye desde MySQL y Cassandra</text>
 <text x="56" y="990" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Línea continua = síncrono · Línea punteada = asíncrono · Azul = fuente de verdad · Naranja = temporal · Verde = derivado</text>
 </svg>

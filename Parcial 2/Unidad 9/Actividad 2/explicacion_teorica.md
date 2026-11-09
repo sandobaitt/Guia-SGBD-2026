@@ -82,14 +82,14 @@ Antes de elegir un motor hay que saber de qué tamaño es el problema. Se hace c
 | Pedidos por segundo = 100.000 ÷ 86.400 | ≈ 1,2 por segundo promedio |
 | Memoria de sesiones y carritos = 400.000 × 2 × 1 KB | ≈ 800 MB |
 
-Lectura de las cifras: **1,2 pedidos por segundo es una carga que un solo servidor relacional resuelve sin dificultad**, así que no hay razón técnica para sacar los pedidos de PostgreSQL. En cambio **2.800 eventos por segundo sostenidos y 11.000 millones por año** presionan a un único nodo en escritura y en espacio: ahí empieza a justificarse otro modelo. Y 800 MB de sesiones caben en memoria sin problema.
+Lectura de las cifras: **1,2 pedidos por segundo es una carga que un solo servidor relacional resuelve sin dificultad**, así que no hay razón técnica para sacar los pedidos de MySQL. En cambio **2.800 eventos por segundo sostenidos y 11.000 millones por año** presionan a un único nodo en escritura y en espacio: ahí empieza a justificarse otro modelo. Y 800 MB de sesiones caben en memoria sin problema.
 
 ### 2.6. Cómo se validarían los supuestos
 Un supuesto se convierte en dato con una medición. Herramientas oficiales de cada motor:
 
 | Motor | Herramienta | Qué se mide |
 | :--- | :--- | :--- |
-| PostgreSQL | `pgbench` y `EXPLAIN (ANALYZE)` | Transacciones por segundo y plan de las consultas críticas |
+| MySQL | `sysbench` y `EXPLAIN ANALYZE` | Transacciones por segundo y plan, con tiempos reales, de las consultas críticas |
 | Redis | `redis-benchmark` | Operaciones por segundo y latencia por comando |
 | Cassandra | `cassandra-stress` | Escritura y lectura sostenida por nodo |
 | Neo4j | `PROFILE` en Cypher | Filas procesadas y accesos a la base por consulta |
@@ -115,14 +115,14 @@ Propiedades de una **transacción**:
 ### 3.2. NoSQL no significa "sin ACID"
 Cada motor ofrece garantías distintas y de alcance distinto:
 
-| Propiedad | Redis | Cassandra | Neo4j | PostgreSQL |
+| Propiedad | Redis | Cassandra | Neo4j | MySQL |
 | :--- | :--- | :--- | :--- | :--- |
 | Atomicidad | Cada comando es atómico; `MULTI`/`EXEC` ejecuta un bloque sin retroceso tradicional | Atómica **por partición**; transacciones ligeras con Paxos para casos puntuales | Transacciones completas | Transacciones completas |
 | Consistencia | Depende de las reglas de la aplicación | Configurable entre réplicas | Mantiene las restricciones definidas | Restricciones declarativas |
 | Aislamiento | Comandos en secuencia; sin aislamiento SQL | Sin aislamiento general entre particiones | Aislamiento transaccional con bloqueos | Varios niveles (ver 3.5) |
-| Durabilidad | Según RDB o AOF | *Commit log* más SSTables | Registro de transacciones y recuperación | Registro de escritura previa (WAL) |
+| Durabilidad | Según RDB o AOF | *Commit log* más SSTables | Registro de transacciones y recuperación | Registro de rehacer (*redo log*) y registro binario (*binlog*) |
 
-La conclusión que importa: **el alcance de la garantía cambia**. En Cassandra la atomicidad vale dentro de una partición; en PostgreSQL vale entre tablas. Por eso los dominios que necesitan atomicidad **entre varias entidades** (pedido, stock, pago) se ubican en el motor que la ofrece.
+La conclusión que importa: **el alcance de la garantía cambia**. En Cassandra la atomicidad vale dentro de una partición; en MySQL vale entre tablas. Por eso los dominios que necesitan atomicidad **entre varias entidades** (pedido, stock, pago) se ubican en el motor que la ofrece.
 
 ### 3.3. BASE
 Alternativa de diseño frecuente en sistemas distribuidos: ***B**asically **A**vailable, **S**oft state, **E**ventual consistency*. Prioriza responder siempre, aceptando que las copias converjan con el tiempo. Es una **actitud de diseño**, no un producto.
@@ -149,7 +149,7 @@ Completa a CAP: **si hay Partición (P)**, se elige entre Disponibilidad (A) y C
 ### 3.6. Modelos de consistencia
 | Modelo | Qué garantiza | Ejemplo |
 | :--- | :--- | :--- |
-| **Fuerte** | Toda lectura ve la última escritura | Una reserva de stock en PostgreSQL |
+| **Fuerte** | Toda lectura ve la última escritura | Una reserva de stock en MySQL |
 | **Eventual** | Si no hay más escrituras, las copias convergen | Una recomendación en Neo4j respecto de una compra reciente |
 | **Leer lo propio** | Quien escribe ve su escritura | El cliente ve su carrito recién modificado |
 | **Monótona** | No se ve un dato más viejo después de uno más nuevo | Un precio que no "retrocede" |
@@ -163,7 +163,7 @@ Completa a CAP: **si hay Partición (P)**, se elige entre Disponibilidad (A) y C
 | **Actualización perdida** | Dos transacciones leen el mismo valor y la segunda pisa a la primera |
 | Sesgo de escritura | Dos transacciones leen datos solapados y escriben cosas que juntas rompen una regla |
 
-PostgreSQL ofrece Read Committed (el predeterminado), Repeatable Read y Serializable, con **control de concurrencia multiversión (MVCC)**: los lectores no bloquean a los escritores. Para la reserva de stock no hace falta el nivel más alto: alcanza con una **sentencia atómica con condición** (sección 9.3).
+MySQL con el motor **InnoDB** ofrece Read Uncommitted, Read Committed, **Repeatable Read (el predeterminado)** y Serializable, con **control de concurrencia multiversión (MVCC)**: las lecturas consistentes no bloquean a los escritores. (PostgreSQL, en cambio, usa Read Committed por defecto.) Para la reserva de stock no hace falta el nivel más alto: alcanza con una **sentencia atómica con condición** (sección 9.3).
 
 ### 3.8. Replicación y consistencia ajustable en Cassandra
 - **RF (factor de replicación):** cuántas copias de cada partición se mantienen. Con RF = 3 hay tres copias.
@@ -182,12 +182,18 @@ PostgreSQL ofrece Read Committed (el predeterminado), Repeatable Read y Serializ
 
 Para cada modelo: cómo guarda los datos, fortalezas, límites y cuándo **no** usarlo.
 
-### 4.1. Relacional (PostgreSQL)
+### 4.1. Relacional (MySQL)
 - **Cómo guarda:** tablas con filas y columnas tipadas; relaciones con claves foráneas; consultas con SQL.
 - **Fortalezas:** integridad declarativa (`PRIMARY KEY`, `UNIQUE`, `FOREIGN KEY`, `CHECK`), transacciones ACID entre varias tablas, consultas con uniones y agregaciones, índices variados, madurez y herramientas.
 - **Normalización:** descomponer los datos para que cada hecho viva en un solo lugar y evitar anomalías de actualización. Reduce duplicación a cambio de uniones al leer.
-- **`JSONB`:** tipo de PostgreSQL para guardar documentos JSON en forma binaria, con operadores de contención (`@>`) y un **índice `GIN`** que acelera filtros sobre claves y valores. Permite una columna de **atributos que varían por fila** dentro de un modelo relacional.
-- **Límites:** un único primario de escritura; escalar la escritura horizontalmente exige particionar (por rango, hash o fecha) o fragmentar; las uniones sobre recorridos profundos se encarecen.
+- **Tipo `JSON` en MySQL:** guarda documentos JSON en un formato binario, con funciones para leer (`->`, `->>`, `JSON_EXTRACT`) y modificar partes sin reescribir todo el documento (`JSON_SET`, `JSON_REPLACE`). Permite una columna de **atributos que varían por fila** dentro de un modelo relacional.
+- **Cómo se indexa un `JSON` en MySQL:** **no existe un índice general sobre toda la columna**. Hay tres herramientas, y cada atributo filtrado con frecuencia necesita la suya:
+  1. **Columna generada** (virtual) que expone un atributo, más un índice común sobre esa columna;
+  2. **Índice funcional** sobre una expresión (por ejemplo `CAST(atributos->>'$.autor' AS CHAR(40))`), que se puede crear a pedido y que el optimizador usa cuando la consulta repite la misma expresión;
+  3. **Índice multivalor** sobre un arreglo (`CAST(... AS CHAR(30) ARRAY)`), consultado con `MEMBER OF`, `JSON_CONTAINS` o `JSON_OVERLAPS`.
+- **Comparación con `JSONB` de PostgreSQL:** allí un único índice `GIN` cubre filtros sobre cualquier clave. Es una **ventaja real de PostgreSQL** para atributos impredecibles; en MySQL el costo es declarar los índices, a cambio de un motor que el equipo ya domina. Esa diferencia es la que se midió en la verificación de factibilidad del informe (sección 3.1.1).
+- **Restricciones:** `CHECK` aplicado desde MySQL 8.0.16; claves foráneas con `InnoDB`; no hay índices parciales ni seguridad por filas, ni un rol `PUBLIC`.
+- **Límites:** un único primario de escritura (la replicación puede ser asíncrona, semisíncrona o de grupo; **InnoDB Cluster** agrega conmutación automática); escalar la escritura horizontalmente exige archivar o fragmentar. El **particionado nativo existe, pero las tablas `InnoDB` particionadas no admiten claves foráneas**, por lo que las tablas con integridad referencial (pedidos, stock) no se particionan: se usan réplicas de lectura, archivado y, como último recurso, fragmentación por cliente o sucursal. Las uniones sobre recorridos profundos se encarecen.
 - **Cuándo no:** expiración nativa de datos con latencia de milisegundos, o escritura de miles de millones de eventos por año sin particionado cuidadoso.
 
 ### 4.2. Documental (MongoDB)
@@ -264,17 +270,17 @@ Un puntaje solo puede inducir a error cuando los modelos quedan cerca. **Ejemplo
 
 | Modelo | Total |
 | :--- | :-: |
-| Relacional con `JSONB` | 1×3 + 3×2 + 2×2 + 1×1 + 3×3 = **23** |
+| Relacional (MySQL con `JSON` e índices) | 1×3 + 3×2 + 2×2 + 1×1 + 3×3 = **23** |
 | Documental | 1×2 + 3×3 + 2×2 + 1×2 + 3×2 = **23** |
 
 **Empate.** Con solo el puntaje no se puede decidir. Por eso se fija de antemano una **regla de adopción de un motor adicional**:
 
 > Un motor NoSQL se suma a un dominio solo si **(a)** existe un criterio de peso 3 que el motor base (relacional) cubre con aptitud 1 o menos, **(b)** el candidato lo cubre con aptitud 3, y **(c)** su puntaje total supera al del relacional.
 
-Aplicada al catálogo: el criterio de peso 3 es la flexibilidad (F), pero el relacional con `JSONB` tiene aptitud 2, es decir, **no es una carencia**. La regla da "queda en el relacional". Es el método que concreta el principio *"no gana quien usa más tecnologías"*.
+Aplicada al catálogo: el criterio de peso 3 es la flexibilidad (F), pero el relacional con `JSON` e índices tiene aptitud 2, es decir, **no es una carencia**. La regla da "queda en el relacional". Es el método que concreta el principio *"no gana quien usa más tecnologías"*.
 
 ### 5.4. Análisis de sensibilidad
-Se pregunta qué pasaría si un peso cambiara. **Ejemplo:** si en el catálogo el peso de las consultas con filtros (Q) bajara de 3 a 1, el relacional sumaría 17 y el documental 19. El documental ganaría por 2 puntos, **pero la regla seguiría sin sumarlo**, porque la flexibilidad sigue cubierta por `JSONB`. Es una decisión **robusta** a ese cambio. En cambio, si los atributos fueran tan variables que el filtrado con `GIN` no alcanzara la latencia pedida, la aptitud de F del relacional bajaría a 1 y la regla sí habilitaría al documental: ese es el **criterio de revisión** escrito en el informe.
+Se pregunta qué pasaría si un peso cambiara. **Ejemplo:** si en el catálogo el peso de las consultas con filtros (Q) bajara de 3 a 1, el relacional sumaría 17 y el documental 19. El documental ganaría por 2 puntos, **pero la regla seguiría sin sumarlo**, porque la flexibilidad sigue cubierta por la columna `JSON` con índices. Es una decisión **robusta** a ese cambio. En cambio, si los atributos a filtrar fueran impredecibles (no se pudiera prever qué índice crear) o el filtrado no alcanzara la latencia pedida, la aptitud de F del relacional bajaría a 1 y la regla sí habilitaría al documental: ese es el **criterio de revisión** escrito en el informe. Notar que **la elección del motor relacional influye**: con PostgreSQL, un solo índice `GIN` mantendría la aptitud en 2 aun con atributos impredecibles; con MySQL esa aptitud depende de poder declarar los índices.
 
 ### 5.5. Honestidad sobre las aptitudes
 Las aptitudes y los pesos son una **valoración cualitativa** basada en la documentación y el material de la materia, no una medición. Sirven para que la discusión sea sobre criterios concretos. Una pregunta válida del rival es *"¿por qué le pusieron 2 y no 3 a tal criterio?"*; la respuesta es el fundamento de cada aptitud (sección 4) y la sensibilidad del resultado.
@@ -288,16 +294,16 @@ La primera versión tenía siete criterios y dejaba a Navegación **empatada ent
 
 | Dominio | Motor | Razón técnica principal | Qué descartamos |
 | :--- | :--- | :--- | :--- |
-| Clientes | PostgreSQL | Unicidad de identidad y relación con pedidos con integridad | Documental: duplicaría datos en los pedidos |
-| Catálogo | PostgreSQL + `JSONB` | `JSONB` cubre la flexibilidad; se une con inventario y precios | MongoDB: empate; un quinto motor no se justifica |
-| Inventario | PostgreSQL | No sobrevender exige atomicidad y restricciones | Redis y Cassandra: eventual o volátil |
-| Ventas y pagos | PostgreSQL | Integridad y trazabilidad entre pedido, pago y comprobante | Documental y Cassandra: integridad entre entidades más débil |
+| Clientes | MySQL | Unicidad de identidad y relación con pedidos con integridad | Documental: duplicaría datos en los pedidos |
+| Catálogo | MySQL + `JSON` | `JSON` con índices cubre la flexibilidad; se une con inventario y precios | MongoDB: empate; un quinto motor no se justifica |
+| Inventario | MySQL | No sobrevender exige atomicidad y restricciones | Redis y Cassandra: eventual o volátil |
+| Ventas y pagos | MySQL | Integridad y trazabilidad entre pedido, pago y comprobante | Documental y Cassandra: integridad entre entidades más débil |
 | Sesiones y carritos | Redis | TTL nativo y latencia de milisegundos | Relacional: expiración manual y latencia mayor |
 | Navegación | Cassandra | Escritura sostenida y consulta por usuario y rango | Relacional particionado y documental |
 | Recomendaciones | Neo4j | Recorridos de 2 a 3 saltos sobre decenas de millones de relaciones | Relacional recursivo; Redis solo sirve resultados |
-| Marketing | PostgreSQL | Datos estructurados con vigencia, combinados con clientes y categorías | Documental: +2 puntos sin cumplir la regla |
-| Logística | PostgreSQL | ≈ 7 eventos por segundo no justifican otro motor | Cassandra |
-| Fidelización | PostgreSQL | Libro mayor auditable con transacciones | Contadores de Redis o Cassandra |
+| Marketing | MySQL | Datos estructurados con vigencia, combinados con clientes y categorías | Documental: +2 puntos sin cumplir la regla |
+| Logística | MySQL | ≈ 7 eventos por segundo no justifican otro motor | Cassandra |
+| Fidelización | MySQL | Libro mayor auditable con transacciones | Contadores de Redis o Cassandra |
 
 **Idea de conjunto:** un **núcleo relacional** con los datos que requieren integridad entre sí, y **motores especializados** solo donde el relacional falla en un criterio crítico. Los motores especializados guardan datos **temporales o derivados**: si se pierden, se reconstruyen.
 
@@ -321,23 +327,23 @@ Con **n** motores:
 - en **estrella** (un motor central que alimenta a los demás), los caminos de sincronización son **n − 1**;
 - en **malla** (todos con todos), son **n × (n − 1) ÷ 2**.
 
-Con cinco motores, una malla tendría **10** caminos; la estrella de OmniMarket con cuatro motores tiene **3**. Esa es la razón estructural para **centralizar la fuente de verdad en PostgreSQL** y proyectar desde ahí.
+Con cinco motores, una malla tendría **10** caminos; la estrella de OmniMarket con cuatro motores tiene **3**. Esa es la razón estructural para **centralizar la fuente de verdad en MySQL** y proyectar desde ahí.
 
 ### 7.3. Criterio de baja
-Cada motor debe poder **justificar su permanencia** y tener una condición explícita de salida (por ejemplo: "si los eventos bajan de 2 millones por día, Cassandra se reemplaza por una tabla particionada en PostgreSQL"). Una arquitectura sin criterio de baja acumula motores por inercia.
+Cada motor debe poder **justificar su permanencia** y tener una condición explícita de salida (por ejemplo: "si los eventos bajan de 2 millones por día, Cassandra se reemplaza por una tabla particionada en MySQL"). Una arquitectura sin criterio de baja acumula motores por inercia.
 
 ---
 
 ## 8. Integración de datos entre motores
 
 ### 8.1. El problema de la escritura doble
-Escribir en PostgreSQL y luego en Neo4j desde la aplicación parece simple, pero **no es atómico**: si el proceso cae entre las dos escrituras, los motores quedan **inconsistentes** y nadie se entera. Una transacción distribuida entre motores (*two-phase commit*) no está disponible entre estos motores y, aunque lo estuviera, bloquea y reduce la disponibilidad.
+Escribir en MySQL y luego en Neo4j desde la aplicación parece simple, pero **no es atómico**: si el proceso cae entre las dos escrituras, los motores quedan **inconsistentes** y nadie se entera. Una transacción distribuida entre motores (*two-phase commit*) no está disponible entre estos motores y, aunque lo estuviera, bloquea y reduce la disponibilidad.
 
 ### 8.2. Patrones de integración
 | Patrón | Idea | Cuándo | Costo |
 | :--- | :--- | :--- | :--- |
 | **Outbox transaccional** | Se escribe el evento en una tabla del mismo motor, **en la misma transacción** del negocio; un proceso lo publica | Volumen moderado; control total | Un proceso relay y una tabla |
-| **Captura de cambios (CDC)** | Se lee el registro de transacciones (WAL) del motor y se publica cada cambio | Volumen alto; no tocar el código | Un componente más (p. ej. Debezium) |
+| **Captura de cambios (CDC)** | Se lee el registro binario (*binlog*) del motor y se publica cada cambio | Volumen alto; no tocar el código | Un componente más (p. ej. Debezium) |
 | **Carga por lote (ETL)** | Se extrae y carga periódicamente | La latencia no importa (horas) | Datos desactualizados entre cargas |
 | **Eventos como fuente (*event sourcing*)** | El registro de eventos es el dato primario | Auditoría total | Complejidad de modelado y reproducción |
 | **Saga** | Secuencia de transacciones locales con compensaciones | Procesos de negocio largos entre servicios | Lógica de compensación |
@@ -368,7 +374,7 @@ Cada pedido confirmado inserta una fila en `outbox` dentro de la **misma transac
 ## 9. Duplicación y concurrencia
 
 ### 9.1. Duplicación de datos
-- **Deliberada (desnormalización o proyección):** el nombre y el precio de un producto existen en PostgreSQL, en Neo4j y en una caché de Redis. Se acepta por rendimiento, pero exige **una fuente de verdad** y un mecanismo para propagar cambios.
+- **Deliberada (desnormalización o proyección):** el nombre y el precio de un producto existen en MySQL, en Neo4j y en una caché de Redis. Se acepta por rendimiento, pero exige **una fuente de verdad** y un mecanismo para propagar cambios.
 - **Accidental:** el mismo evento procesado dos veces. Se evita con idempotencia.
 
 Regla: **un dato tiene un único dueño**. Las demás copias son proyecciones que (a) se actualizan por eventos y (b) se pueden reconstruir.
@@ -382,7 +388,7 @@ Las dos formas de mantener una caché razonablemente fresca son el **vencimiento
 | **Operación atómica del motor** | El motor ejecuta la modificación completa como una unidad | `HINCRBY` en Redis; `UPDATE ... SET x = x + n` en SQL |
 | **Actualización condicional** | La modificación solo se aplica si la condición sigue siendo cierta | `UPDATE stock ... WHERE cantidad_fisica - cantidad_reservada >= n` |
 | **Bloqueo optimista** | Se lee la `version`; se escribe solo si no cambió | `UPDATE pedido ... WHERE pedido_id = ? AND version = ?` |
-| **Bloqueo pesimista** | Se bloquea la fila mientras se trabaja | `SELECT ... FOR UPDATE` |
+| **Bloqueo pesimista** | Se bloquea la fila mientras se trabaja | `SELECT ... FOR UPDATE`; con `SKIP LOCKED` varios procesos reparten el trabajo sin bloquearse (el relay del outbox) |
 | **Última escritura gana (LWW)** | Gana la escritura con mayor marca de tiempo | Cassandra por defecto; riesgoso si los relojes difieren |
 | **Tipos convergentes (CRDT)** | Estructuras que se combinan sin conflicto | Contadores distribuidos |
 | **Transacción con vigilancia** | El bloque falla si una clave cambió | `WATCH` y `MULTI`/`EXEC` en Redis; scripts Lua |
@@ -408,9 +414,9 @@ En Argentina, la **Ley 25.326 de Protección de los Datos Personales** establece
 | Medida | Cómo se aplica en OmniMarket |
 | :--- | :--- |
 | **Minimización** | Los motores secundarios guardan solo identificadores (`U01`), nunca DNI, email ni dirección |
-| **Fuente única de datos personales** | Solo PostgreSQL contiene datos personales: un único lugar para proteger, auditar y suprimir |
-| **Derecho de supresión** | Baja lógica en PostgreSQL y evento `CLIENTE_ELIMINADO` que borra el identificador y sus relaciones en Neo4j y las claves en Redis |
-| **Mínimo privilegio** | Un usuario por aplicación y por motor, con permisos limitados (ACL en Redis, roles en PostgreSQL y Cassandra) |
+| **Fuente única de datos personales** | Solo MySQL contiene datos personales: un único lugar para proteger, auditar y suprimir |
+| **Derecho de supresión** | Baja lógica en MySQL y evento `CLIENTE_ELIMINADO` que borra el identificador y sus relaciones en Neo4j y las claves en Redis |
+| **Mínimo privilegio** | Un usuario por aplicación y por motor, con permisos limitados (ACL en Redis; roles en MySQL y Cassandra). MySQL no tiene seguridad por filas ni un rol `PUBLIC`: se logra con privilegios por tabla y por columna, y con disparadores que impiden modificar tablas de solo inserción |
 | **Auditoría** | Tablas de solo inserción para movimientos de puntos e historial de estados |
 | **Credenciales** | Fuera de los scripts y de las capturas |
 | **Cifrado** | En tránsito entre componentes y en reposo para los datos personales |
@@ -432,19 +438,19 @@ En Argentina, la **Ley 25.326 de Protección de los Datos Personales** establece
 ### 11.2. Qué es crítico y qué es reconstruible
 | Componente | ¿Se puede perder? | Estrategia |
 | :--- | :--- | :--- |
-| PostgreSQL | **No** | Réplica con conmutación; respaldo con recuperación a un punto en el tiempo (WAL) |
+| MySQL | **No** | Réplica con conmutación; respaldo con recuperación a un punto en el tiempo (*binlog*) |
 | Cassandra | Parcialmente (navegación) | Replicación entre nodos y snapshots |
 | Redis | Sí (temporal) | Persistencia y réplica para acortar la recuperación; las sesiones se rehacen |
 | Neo4j | Sí (derivado) | Dump periódico y, sobre todo, **reconstrucción desde las fuentes** |
 
 ### 11.3. Respaldo en cada motor
-- **PostgreSQL:** respaldo físico más archivo de WAL, que permite volver a un instante.
+- **MySQL:** copia lógica (`mysqldump`) o física (por ejemplo, Percona XtraBackup) más el registro binario, que permite volver a un instante.
 - **Redis:** RDB (fotografía) o AOF; se restaura levantando otra instancia con el archivo.
 - **Cassandra:** *snapshots* (enlaces a las SSTables) y restauración copiándolas.
 - **Neo4j Community:** *dump* **fuera de línea** con `neo4j-admin` (con el servicio detenido).
 
 ### 11.4. Degradación elegante
-Un fallo de un componente secundario **no debe impedir vender**. Si cae Neo4j, la API muestra los productos más vistos desde Redis; si cae Cassandra, los eventos de navegación esperan en una cola local. Solo PostgreSQL es indispensable para confirmar un pedido.
+Un fallo de un componente secundario **no debe impedir vender**. Si cae Neo4j, la API muestra los productos más vistos desde Redis; si cae Cassandra, los eventos de navegación esperan en una cola local. Solo MySQL es indispensable para confirmar un pedido.
 
 ---
 
@@ -452,9 +458,9 @@ Un fallo de un componente secundario **no debe impedir vender**. Si cae Neo4j, l
 
 ### 12.1. Estructura de una respuesta sólida
 **Afirmación → evidencia → razonamiento → límite.**
-1. *Qué decidimos.* ("El catálogo queda en PostgreSQL con JSONB.")
+1. *Qué decidimos.* ("El catálogo queda en MySQL con una columna JSON.")
 2. *Con qué evidencia.* ("En la matriz empata con el documental, 23 a 23, y la regla no habilita sumar un motor.")
-3. *Por qué.* ("JSONB con índice GIN cubre atributos variables; el catálogo se une con inventario y precios.")
+3. *Por qué.* ("Una columna JSON con índices cubre atributos variables; el catálogo se une con inventario y precios.")
 4. *Hasta dónde vale.* ("Si el filtrado no alcanzara la latencia pedida, lo revisaríamos.")
 
 Reconocer el **límite** de la decisión **fortalece** la posición.
@@ -495,13 +501,13 @@ Una buena pregunta es **concreta, verificable y no se responde con una opinión*
 ### Diagnóstico y decisión
 1. **¿Por qué no usar una sola base relacional para todo?** Sería lo más simple y es la opción por defecto. Con los volúmenes supuestos falla en la expiración de sesiones con latencia de milisegundos, en la escritura de 11.000 M de eventos por año y en recorridos sobre decenas de millones de relaciones. Y dejamos escrito el umbral en que volveríamos a ella.
 2. **¿Cómo eligieron los motores?** Con una matriz de ocho criterios ponderados por dominio y una regla de adopción: un motor NoSQL se suma solo si el relacional falla en un criterio crítico y el candidato lo cubre del todo.
-3. **¿Por qué el catálogo no va en MongoDB?** Empata con el relacional (23 a 23). `JSONB` con índice `GIN` cubre los atributos variables y el catálogo se une con inventario y precios. La regla no justifica un motor más.
+3. **¿Por qué el catálogo no va en MongoDB?** Empata con el relacional (23 a 23). una columna `JSON` con índices cubre los atributos variables (lo verificamos con 150.000 productos: de ≈ 88 ms sin índice a menos de 1 ms con índice) y el catálogo se une con inventario y precios. La regla no justifica un motor más.
 4. **¿Por qué Marketing no va en el documental si saca más puntos?** Gana por 2 puntos, pero la necesidad crítica (consultas con filtros) ya la cubre el relacional. La regla evita sumar un motor por una ventaja marginal.
-5. **¿Qué pasa si cambian los supuestos de volumen?** Cambia el puntaje; la regla indica qué dominio cambiaría de motor. Por ejemplo, con menos de 2 M de eventos por día, Cassandra se reemplaza por una tabla particionada de PostgreSQL.
+5. **¿Qué pasa si cambian los supuestos de volumen?** Cambia el puntaje; la regla indica qué dominio cambiaría de motor. Por ejemplo, con menos de 2 M de eventos por día, Cassandra se reemplaza por una tabla particionada de MySQL.
 6. **¿Qué diferencia hay entre aptitud y peso?** La aptitud es qué tan bien cubre un modelo un criterio; el peso es cuánto importa ese criterio en un dominio. El puntaje combina ambos.
 
 ### Arquitectura e integración
-7. **¿Cuál es la fuente de verdad de cada dato?** PostgreSQL para clientes, productos, pedidos, stock y puntos; Cassandra para la navegación; Redis para sesiones y carritos temporales; Neo4j es un derivado reconstruible.
+7. **¿Cuál es la fuente de verdad de cada dato?** MySQL para clientes, productos, pedidos, stock y puntos; Cassandra para la navegación; Redis para sesiones y carritos temporales; Neo4j es un derivado reconstruible.
 8. **¿Qué es el patrón outbox y por qué lo usan?** Se guarda el evento en una tabla del mismo motor dentro de la misma transacción del negocio, y un proceso lo publica. Evita la escritura doble, que deja datos inconsistentes si falla la segunda.
 9. **¿Por qué no escribir directo en Neo4j desde la aplicación?** Porque dos escrituras a motores distintos no son atómicas: si falla la segunda, los datos divergen sin aviso.
 10. **¿Qué garantiza la entrega "al menos una vez"?** Que no se pierde ningún evento, pero puede duplicarse. Se compensa con un consumidor idempotente.
@@ -509,7 +515,7 @@ Una buena pregunta es **concreta, verificable y no se responde con una opinión*
 12. **¿Y si los eventos llegan desordenados?** Cada evento lleva `version`; el consumidor solo aplica si es mayor que la almacenada.
 13. **¿Qué pasa si cae Neo4j?** Se muestran los más vistos desde Redis; los eventos esperan en el outbox y se aplican al volver.
 14. **¿Cómo se reconstruye Neo4j?** Reaplicando compras y vistas desde las fuentes con cargas idempotentes.
-15. **¿Cuántos caminos de sincronización hay y por qué importa?** Tres, porque es una estrella centrada en PostgreSQL. Una malla de cinco motores tendría diez.
+15. **¿Cuántos caminos de sincronización hay y por qué importa?** Tres, porque es una estrella centrada en MySQL. Una malla de cinco motores tendría diez.
 
 ### Propiedades y consistencia
 16. **¿La "C" de CAP es la misma que la de ACID?** No. La de ACID es respetar las reglas de integridad; la de CAP es que cada lectura vea la última escritura.
@@ -526,11 +532,17 @@ Una buena pregunta es **concreta, verificable y no se responde con una opinión*
 25. **¿Por qué el stock no va en una caché?** Porque exige exactitud inmediata; una caché puede estar desactualizada y permitir vender de más.
 
 ### Datos personales y operación
-26. **¿Dónde están los datos personales?** Solo en PostgreSQL. Los demás motores guardan identificadores.
-27. **¿Cómo cumplen una solicitud de baja?** Baja lógica en PostgreSQL y evento `CLIENTE_ELIMINADO` que elimina el identificador y las relaciones en Neo4j y las claves en Redis.
-28. **¿Qué es crítico perder y qué no?** Pedidos y pagos no se pueden perder (PostgreSQL con réplica y WAL). Sesiones, recomendaciones y caché son reconstruibles.
+26. **¿Dónde están los datos personales?** Solo en MySQL. Los demás motores guardan identificadores.
+27. **¿Cómo cumplen una solicitud de baja?** Baja lógica en MySQL y evento `CLIENTE_ELIMINADO` que elimina el identificador y las relaciones en Neo4j y las claves en Redis.
+28. **¿Qué es crítico perder y qué no?** Pedidos y pagos no se pueden perder (MySQL con réplica y registro binario). Sesiones, recomendaciones y caché son reconstruibles.
 29. **¿Cuándo daría de baja un motor?** Cuando deja de cumplir su condición: Redis si las sesiones concurrentes bajan de ≈ 5.000, Cassandra si los eventos bajan de ≈ 2 M por día, Neo4j si alcanza con una tabla de co-ocurrencias por lote.
 30. **¿Qué evidencia ejecutada respaldan?** El flujo carrito → evento → Neo4j → recomendación en Redis, la reentrega sin duplicados, el evento viejo descartado, la restricción que rechaza duplicados y el experimento de concurrencia.
+
+### Motor relacional
+31. **¿Por qué MySQL y no PostgreSQL?** La consigna admite ambos. Elegimos MySQL porque es el motor de todas las unidades anteriores y el equipo lo domina (administración, seguridad, respaldo, consultas). El costo concreto es que MySQL no tiene un índice general sobre JSON: cada atributo filtrado necesita su índice.
+32. **¿Qué diferencia hay entre `JSON` de MySQL y `JSONB` de PostgreSQL para el catálogo?** En PostgreSQL un único índice `GIN` acelera filtros sobre cualquier clave. En MySQL hay que declarar columnas generadas, índices funcionales o multivalor para los atributos que se filtran. Con 150.000 productos, un atributo sin índice tarda ≈ 88 ms y con índice menos de 1 ms.
+33. **¿Y si necesitaran filtrar por cualquier atributo sin planificarlo?** Es el criterio de revisión: la aptitud de flexibilidad del relacional bajaría a 1 y la regla habilitaría un motor documental (o evaluar PostgreSQL con `JSONB` y `GIN`).
+34. **¿Por qué no particionan los pedidos por fecha?** Porque en InnoDB las tablas particionadas no admiten claves foráneas y los pedidos las necesitan. Se usan réplicas de lectura y archivado. En cambio la tabla de eventos de navegación, si se dejara en MySQL, sí podría particionarse porque no tiene claves foráneas.
 
 ---
 

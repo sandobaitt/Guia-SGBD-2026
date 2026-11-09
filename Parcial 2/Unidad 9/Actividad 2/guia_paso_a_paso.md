@@ -1,6 +1,6 @@
 # Guía Paso a Paso: U9 - Actividad 2 (Batalla de arquitecturas multimodelo)
 **Grupo:** G11 (Escenario: OmniMarket)
-**Motores implementados:** Redis (`redis-cli`) y Neo4j Community (`cypher-shell`) · **Diseñados:** PostgreSQL (relacional) y Cassandra
+**Motores implementados:** Redis (`redis-cli`) y Neo4j Community (`cypher-shell`) · **Diseñados:** MySQL (relacional) y Cassandra
 **Archivos:** `bitacora_resuelta.md` (informe) · `redis-omnimarket.txt` y `neo4j-omnimarket.cypher` (scripts de los modelos NoSQL) · `evidencias_terminal_act2.sh` (sesión guiada para las capturas) · `diagrama_arquitectura.png/.svg` y `diagrama_relacional.png/.svg` (diagramas)
 
 > Esta guía sirve para tres cosas: **reproducir** la parte NoSQL y sacar las capturas, **armar el informe** con todos los entregables de la consigna y **preparar la defensa** (batalla entre grupos).
@@ -137,6 +137,8 @@ La bitácora (`bitacora_resuelta.md`) ya está escrita con el formato del inform
 5. **Decidir con el grupo los supuestos de volumen** (sección 1.1): son números nuestros. Si los cambian, cambia la matriz; la regla de la sección 2.1 indica qué decisión se modifica.
 6. **Completar el registro de objeciones** (sección 5.4) durante o después de la batalla.
 
+**Cómo pasarla a PDF.** La bitácora es Markdown. Lo más simple es abrirla en VS Code con la vista previa de Markdown, copiar el contenido a Google Docs o Word (las tablas se conservan), insertar ahí las capturas y los dos diagramas y exportar a PDF. Revisá que las tablas anchas (la matriz de decisión y la de requisitos) no se corten en la página; si pasa, pasá esa página a horizontal.
+
 ### 4.1. Entregables de la consigna y dónde están
 
 | Entregable | Archivo o sección |
@@ -145,7 +147,7 @@ La bitácora (`bitacora_resuelta.md`) ya está escrita con el formato del inform
 | Diagrama de arquitectura | `diagrama_arquitectura.png` (editable: `.svg`) |
 | Modelos NoSQL: diseños, scripts, capturas y resultados | Sección 3.2 a 3.5; `redis-omnimarket.txt` y `neo4j-omnimarket.cypher` |
 | Diseño relacional (sin implementación) | Sección 3.1, `diagrama_relacional.png` y Anexo A |
-| Presentación para defensa y objeciones | Sección 5 de la bitácora y sección 6 de esta guía |
+| Presentación para defensa y objeciones | Guion y objeciones en la sección 5 de la bitácora; diapositivas armadas según la sección 6.1 de esta guía (ver la nota al final de esa sección: hay que completar dos datos) |
 | Estrategia de integración | Sección 4 de la bitácora |
 
 ### 4.2. Los diagramas
@@ -156,13 +158,14 @@ La bitácora (`bitacora_resuelta.md`) ya está escrita con el formato del inform
 
 ## 5. Cómo leer la decisión (para poder defenderla)
 
-Antes de la batalla, cada integrante tiene que poder explicar **sin mirar** estas cinco cosas:
+Antes de la batalla, cada integrante tiene que poder explicar **sin mirar** estas seis cosas:
 
 1. **Por qué hay un núcleo relacional:** siete de diez dominios necesitan integridad entre sí (un pedido descuenta stock, registra el pago y acredita puntos en una sola transacción).
-2. **Cuándo se suma un motor NoSQL:** solo si hay un criterio de peso 3 que el relacional no cubre bien. Eso pasa en tres dominios: sesiones (expiración), navegación (escritura masiva) y recomendaciones (recorridos).
-3. **Por qué no MongoDB:** en el catálogo empata con el relacional (23 a 23) y `JSONB` cubre la flexibilidad. Sumarlo no se justifica.
-4. **Qué es la fuente de verdad y el outbox:** cada dato tiene un dueño; los demás motores reciben copias por eventos que se guardan en la misma transacción del pedido y se reintentan hasta aplicarse.
-5. **Qué demuestran los experimentos:** reentregar un evento no duplica (idempotencia), un evento viejo no pisa uno nuevo (versión), y la operación atómica no pierde actualizaciones (200 contra un valor muy inferior).
+2. **Por qué MySQL:** es el motor de todas las unidades anteriores y la consigna lo admite. Su costo concreto: no tiene un índice general sobre JSON (como el `GIN` de PostgreSQL), así que cada atributo filtrado necesita su índice. Se verificó que alcanza.
+3. **Cuándo se suma un motor NoSQL:** solo si hay un criterio de peso 3 que el relacional no cubre bien. Eso pasa en tres dominios: sesiones (expiración), navegación (escritura masiva) y recomendaciones (recorridos).
+4. **Por qué no MongoDB:** en el catálogo empata con el relacional (23 a 23) y una columna `JSON` con índices cubre la flexibilidad (sección 7 de esta guía lo comprueba con 150.000 productos). Sumarlo no se justifica.
+5. **Qué es la fuente de verdad y el outbox:** cada dato tiene un dueño; los demás motores reciben copias por eventos que se guardan en la misma transacción del pedido y se reintentan hasta aplicarse.
+6. **Qué demuestran los experimentos:** reentregar un evento no duplica (idempotencia), un evento viejo no pisa uno nuevo (versión), y la operación atómica no pierde actualizaciones (200 contra un valor muy inferior).
 
 La teoría detallada de cada punto está en `explicacion_teorica.md`.
 
@@ -179,13 +182,22 @@ La teoría detallada de cada punto está en `explicacion_teorica.md`.
 | 3 | Supuestos de volumen | 4 cifras clave: 30 M de eventos por día, 400.000 sesiones, 100.000 pedidos por día, 50 M de relaciones | 0:30 |
 | 4 | Método de decisión | 8 criterios con peso y la regla para sumar un motor | 1:00 |
 | 5 | Resultado | Matriz de los cinco modelos; resaltar Catálogo (empate) y Marketing | 1:00 |
-| 6 | Arquitectura | Diagrama; núcleo PostgreSQL y tres motores especializados | 1:00 |
+| 6 | Arquitectura | Diagrama; núcleo MySQL y tres motores especializados | 1:00 |
 | 7 | Fuente de verdad e integración | Outbox, evento, consumidor idempotente | 0:45 |
 | 8 | Evidencia | Carrito → evento → Neo4j → recomendación en Redis (capturas 31 a 35) | 1:00 |
 | 9 | Duplicación y concurrencia | Idempotencia, versión y el experimento 200 contra N | 0:45 |
 | 10 | Costo y cierre | Costo por motor y cuándo se daría de baja; mensaje final | 0:30 |
 
 Mensaje final sugerido: *"No elegimos la arquitectura con más tecnologías, sino la que menos motores necesita para cumplir cada requisito, y dejamos escrito cuándo cambiaríamos de opinión."*
+
+**Las diapositivas ya están armadas** (11 para presentar y 3 de respaldo, con notas del orador y los tiempos de la tabla): <https://claude.ai/artifact/Cu7akuapHDaToqdq1tmDTL>. El contenido sale de la bitácora; la tabla anterior las numera 1 a 10 y el mensaje final tiene su propia diapositiva (la 11). Antes de presentar hay que completar **dos datos**:
+
+| Dónde | Qué completar |
+| :--- | :--- |
+| Diapositiva 1 (portada) | `[Integrantes del grupo]` |
+| Diapositiva 9 (concurrencia) | `[N]`: el valor del paso 38, el mismo que va en la bitácora (sección 3.6) |
+
+Las tres diapositivas finales son de **respaldo** (núcleo relacional, catálogo en MySQL medido y las seis objeciones más probables): no se presentan, se muestran solo si el rival pregunta por ese tema. Si se cambian los supuestos de volumen o la matriz, hay que actualizar también las diapositivas 3, 5 y 10.
 
 ### 6.2. Cuestionar a la propuesta rival (5 minutos)
 
@@ -200,7 +212,7 @@ Mensaje final sugerido: *"No elegimos la arquitectura con más tecnologías, sin
 
 ### 6.3. Responder objeciones (4 minutos)
 
-- La sección 5.2 de la bitácora trae **15 objeciones anticipadas con respuesta**. Repartan en el grupo quién responde cuáles.
+- La sección 5.2 de la bitácora trae **16 objeciones anticipadas con respuesta**. Repartan en el grupo quién responde cuáles.
 - Estructura de cada respuesta: **qué evaluamos → qué decidimos → por qué → qué evidencia tenemos → cuándo cambiaríamos de opinión.**
 - Si no tenés una respuesta, decí qué dato falta y cómo lo obtendrías. Es mejor que inventar.
 - **Anotá cada objeción recibida y tu respuesta** en la tabla de la sección 5.4 de la bitácora (es un entregable).
@@ -212,7 +224,83 @@ Mensaje final sugerido: *"No elegimos la arquitectura con más tecnologías, sin
 
 ---
 
-## 7. Checklist final de entrega
+## 7. Prueba de factibilidad del catálogo en MySQL (opcional, refuerza la defensa)
+
+**Para qué sirve.** El ataque más probable contra nuestro diseño es *"el catálogo con atributos heterogéneos es un caso de MongoDB"*. Nuestra respuesta es que una columna `JSON` con índices en MySQL alcanza. Esta prueba lo demuestra con **150.000 productos** y deja una captura propia para el informe (sección 3.1.1 de la bitácora). **No es la implementación del componente relacional**: es una prueba de factibilidad en una base de laboratorio que se borra al final.
+
+**Requisito:** MySQL 8.0 o superior (el de las unidades anteriores). Todo se hace en una base aparte, `omnimarket_prueba`.
+
+```sql
+CREATE DATABASE omnimarket_prueba CHARACTER SET utf8mb4;
+USE omnimarket_prueba;
+CREATE TABLE categoria (categoria_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(80) NOT NULL UNIQUE) ENGINE=InnoDB;
+CREATE TABLE producto (
+  producto_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, sku VARCHAR(30) NOT NULL UNIQUE, nombre VARCHAR(150) NOT NULL,
+  categoria_id INT UNSIGNED NOT NULL, precio_ars DECIMAL(12,2) NOT NULL, atributos JSON NOT NULL,
+  pantalla_pulgadas DECIMAL(4,1) GENERATED ALWAYS AS (CAST(JSON_UNQUOTE(JSON_EXTRACT(atributos, '$.pantalla_pulgadas')) AS DECIMAL(4,1))) VIRTUAL,
+  marca VARCHAR(40) GENERATED ALWAYS AS (JSON_UNQUOTE(JSON_EXTRACT(atributos, '$.marca'))) VIRTUAL,
+  KEY idx_producto_pantalla (categoria_id, pantalla_pulgadas),
+  KEY idx_producto_marca (marca),
+  KEY idx_producto_etiquetas ((CAST(atributos -> '$.etiquetas' AS CHAR(30) ARRAY)))
+) ENGINE=InnoDB;
+
+SET SESSION cte_max_recursion_depth = 200000;
+INSERT INTO categoria (nombre) SELECT CONCAT('cat_', n) FROM (WITH RECURSIVE s(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM s WHERE n < 60) SELECT n FROM s) t;
+INSERT INTO producto (sku, nombre, categoria_id, precio_ars, atributos)
+SELECT CONCAT('P', 100000 + n), CONCAT('Producto ', n), 1 + (n MOD 60), 1000 + (n MOD 5000),
+  CASE (n MOD 60) MOD 3                                   -- el tipo de atributos depende de la categoría
+    WHEN 0 THEN JSON_OBJECT('marca', ELT(1 + ((n DIV 60) MOD 5), 'Acme', 'Zeta', 'Orion', 'Nova', 'Kilo'), 'pantalla_pulgadas', 13 + ((n DIV 60) MOD 5) * 0.7,
+                            'ram_gb', CAST(ELT(1 + ((n DIV 60) MOD 3), 8, 16, 32) AS UNSIGNED),
+                            'etiquetas', JSON_ARRAY('tecnologia', ELT(1 + ((n DIV 60) MOD 4), 'oferta', 'nuevo', 'premium', 'outlet')))
+    WHEN 1 THEN JSON_OBJECT('marca', ELT(1 + ((n DIV 60) MOD 5), 'Acme', 'Zeta', 'Orion', 'Nova', 'Kilo'), 'talle', ELT(1 + ((n DIV 60) MOD 4), 'S', 'M', 'L', 'XL'),
+                            'color', ELT(1 + ((n DIV 60) MOD 6), 'rojo', 'azul', 'verde', 'negro', 'blanco', 'gris'), 'etiquetas', JSON_ARRAY('indumentaria', 'oferta'))
+    ELSE JSON_OBJECT('autor', CONCAT('Autor ', (n DIV 60) MOD 500), 'paginas', 100 + ((n DIV 60) MOD 700),
+                     'color', ELT(1 + ((n DIV 60) MOD 6), 'rojo', 'azul', 'verde', 'negro', 'blanco', 'gris'), 'etiquetas', JSON_ARRAY('libros'))
+  END
+FROM (WITH RECURSIVE s(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM s WHERE n < 150000) SELECT n FROM s) t;
+
+SELECT COUNT(*) AS productos FROM producto;
+```
+
+Cada consulta se ejecuta con `EXPLAIN ANALYZE`, que muestra el **plan** y el **tiempo real** de cada paso (la salida cambia de una máquina a otra, pero el orden de magnitud se mantiene):
+
+```sql
+-- 1) Atributo con columna generada indexada (tecnología, 15,1 pulgadas): debe decir "Index lookup ... idx_producto_pantalla"
+EXPLAIN ANALYZE SELECT COUNT(*) FROM producto WHERE categoria_id = 1 AND pantalla_pulgadas = 15.1;
+
+-- 2) Atributo sin índice propio, acotado por categoría: recorre solo las filas de esa categoría
+EXPLAIN ANALYZE SELECT COUNT(*) FROM producto WHERE categoria_id = 1 AND JSON_EXTRACT(atributos, '$.ram_gb') = 16;
+
+-- 3) Peor caso: atributo sin índice y sin categoría (libros de un autor); recorre las 150.000 filas
+EXPLAIN ANALYZE SELECT COUNT(*) FROM producto WHERE atributos->>'$.autor' = 'Autor 123';
+
+-- 4) El mismo filtro con un índice funcional creado a pedido: la consulta debe usar la misma expresión
+CREATE INDEX idx_autor ON producto ((CAST(atributos->>'$.autor' AS CHAR(40)) COLLATE utf8mb4_bin));
+EXPLAIN ANALYZE SELECT COUNT(*) FROM producto WHERE CAST(atributos->>'$.autor' AS CHAR(40)) COLLATE utf8mb4_bin = 'Autor 123';
+
+-- 5) Índice multivalor sobre el arreglo de etiquetas
+EXPLAIN ANALYZE SELECT COUNT(*) FROM producto WHERE 'outlet' MEMBER OF (atributos->'$.etiquetas');
+```
+
+**Qué tiene que verse (y qué se concluye)**
+
+| Consulta | Resultado esperado | Conclusión |
+| :---: | :--- | :--- |
+| 1 | Búsqueda por índice sobre ≈ 500 filas; menos de 1 ms (≈ 0,3 ms) | Los atributos más filtrados se resuelven por índice |
+| 2 | Recorre las ≈ 2.500 filas de la categoría (≈ 834 coincidencias); unos 10 ms | Con la categoría, aun sin índice propio, el costo es bajo |
+| 3 | Recorre las 150.000 filas (100 coincidencias); ≈ 90 ms | El peor caso: con 500 lecturas por segundo sería insostenible (≈ 44 segundos de procesador por segundo) |
+| 4 | Pasa a búsqueda por índice sobre 100 filas; ≈ 0,3 ms | Un atributo no previsto se indexa con **una sola sentencia** |
+| 5 | Búsqueda por índice multivalor (12.500 coincidencias); unos 50 ms | Los arreglos (etiquetas) también se indexan; el tiempo lo domina contar muchas filas (≈ 48 ms) |
+
+**Conclusión para la defensa:** una columna `JSON` con índices alcanza para el catálogo; el costo frente a PostgreSQL es que hay que **declarar** un índice por cada atributo que se filtra. Si el negocio exigiera filtrar libremente por cualquier atributo sin planificarlo, ese sería el momento de reevaluar (criterio de revisión de la bitácora, sección 2.3).
+
+Cuando termines: `DROP DATABASE omnimarket_prueba;`
+
+*Captura sugerida:* las consultas 1, 3 y 4 con su `EXPLAIN ANALYZE` (se ve el salto de recorrer todo a buscar por índice).
+
+---
+
+## 8. Checklist final de entrega
 
 | Criterio de evaluación | Peso | ¿Qué lo respalda? | Listo |
 | :--- | :---: | :--- | :---: |
@@ -228,11 +316,13 @@ Revisión final:
 - ☐ Ambos diagramas insertados.
 - ☐ Valor del experimento de concurrencia completado.
 - ☐ Scripts incluidos (`redis-omnimarket.txt`, `neo4j-omnimarket.cypher`) y sin credenciales.
+- ☐ **Diapositivas** (sección 6.1) con la portada y el valor `[N]` de la diapositiva 9 completados, y presentación ensayada en 8 minutos.
+- ☐ Informe pasado a PDF (ver nota de la sección 4).
 - ☐ Tabla de objeciones recibidas completada tras la batalla.
 
 ---
 
-## 8. Problemas frecuentes
+## 9. Problemas frecuentes
 
 | Síntoma | Causa | Solución |
 | :--- | :--- | :--- |
