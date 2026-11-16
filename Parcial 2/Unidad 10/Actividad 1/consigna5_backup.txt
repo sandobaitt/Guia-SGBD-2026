@@ -1,0 +1,63 @@
+===============================================================================
+U10 - ACTIVIDAD 1 · Consigna 5: BACKUP Y RECUPERACIÓN (consigna5_backup.txt)
+===============================================================================
+Grupo: 11
+Origen (producción): MongoDB Atlas M0 · cluster SGBD-U10-Grupo11 · base practicaU10
+Destino (entorno de prueba): el MISMO cluster de Atlas, en otra base: practicaU10_restore
+Se ejecuta desde la VM Ubuntu (la misma desde la que se conectó mongosh); origen y destino están en el cloud.
+Ninguna contraseña figura en este archivo: las herramientas la piden al ejecutarse.
+
+
+-------------------------------------------------------------------------------
+0. PROTECCIÓN ADMINISTRADA DISPONIBLE (consola web de Atlas)
+-------------------------------------------------------------------------------
+# Database → Backup: en el plan Free no hay snapshots incluidos. Atlas ofrece
+# "Purchase Daily Backups" (suscripción paga que exige medio de pago) y
+# "Upgrade cluster for continuous backups" (plan pago). No se activa ninguna:
+# la consigna prohíbe registrar tarjetas.
+
+
+-------------------------------------------------------------------------------
+1. ESTADO PREVIO EN ATLAS (para comparar después)
+-------------------------------------------------------------------------------
+mongosh "mongodb+srv://sgbd-u10-grupo11.ryeyzsk.mongodb.net/" --apiVersion 1 --username admin_grupo11 \
+  --eval 'db = db.getSiblingDB("practicaU10"); print("productos: " + db.productos.countDocuments()); db.productos.find({}, { codigo: 1, precio: 1, stock: 1 }).sort({ codigo: 1 }).forEach(printjson)'
+
+
+-------------------------------------------------------------------------------
+2. RESPALDO LÓGICO (mongodump desde Atlas hacia la VM)
+-------------------------------------------------------------------------------
+# --username sin --password: mongodump pide la contraseña con entrada oculta.
+mongodump --uri "mongodb+srv://sgbd-u10-grupo11.ryeyzsk.mongodb.net/" \
+  --username admin_grupo11 \
+  --db practicaU10 \
+  --out ~/backup_u10
+
+
+-------------------------------------------------------------------------------
+3. VERIFICACIÓN DE LOS ARTEFACTOS GENERADOS
+-------------------------------------------------------------------------------
+ls -lh ~/backup_u10/practicaU10/
+bsondump --quiet ~/backup_u10/practicaU10/productos.bson | wc -l      # documentos dentro del respaldo (esperado: 4)
+
+
+-------------------------------------------------------------------------------
+4. RECUPERACIÓN EN EL ENTORNO DE PRUEBA (Atlas, base practicaU10_restore)
+-------------------------------------------------------------------------------
+# --nsFrom/--nsTo restauran con OTRO nombre de base: la original no se toca.
+# Requiere un usuario con rol atlasAdmin (admin_grupo11).
+mongorestore --uri "mongodb+srv://sgbd-u10-grupo11.ryeyzsk.mongodb.net/" \
+  --username admin_grupo11 \
+  --nsFrom 'practicaU10.*' --nsTo 'practicaU10_restore.*' \
+  ~/backup_u10
+
+
+-------------------------------------------------------------------------------
+5. CONTROL DE LA RECUPERACIÓN (misma consulta que en el punto 1, sobre la base restaurada)
+-------------------------------------------------------------------------------
+mongosh "mongodb+srv://sgbd-u10-grupo11.ryeyzsk.mongodb.net/" --apiVersion 1 --username admin_grupo11 \
+  --eval 'db = db.getSiblingDB("practicaU10_restore"); print("productos: " + db.productos.countDocuments()); db.productos.find({}, { codigo: 1, precio: 1, stock: 1 }).sort({ codigo: 1 }).forEach(printjson)'
+
+# Resultado esperado: 4 productos, con los MISMOS _id, códigos, precios y stock que en practicaU10
+# (PROD-04 con precio 68000 y stock 12; sin PROD-05).
+# La base practicaU10_restore también se ve en Data Explorer de Atlas (captura opcional).
