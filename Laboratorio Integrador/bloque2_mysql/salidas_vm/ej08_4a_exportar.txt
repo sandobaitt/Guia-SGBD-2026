@@ -1,0 +1,17 @@
+$ ./ej08_4_exportar_city.sh ciudades.json
+Archivo: ciudades.json
+Líneas (documentos): 4079
+Filas en world_x.city: 4079
+
+$ head -3 ciudades.json
+{"Ciudad": "Kabul", "CodP": "AFG"}
+{"Ciudad": "Qandahar", "CodP": "AFG"}
+{"Ciudad": "Herat", "CodP": "AFG"}
+
+$ grep -n "Resistencia\|Corrientes\|São Paulo" ciudades.json
+94:{"Ciudad": "Corrientes", "CodP": "ARG"}
+98:{"Ciudad": "Resistencia", "CodP": "ARG"}
+206:{"Ciudad": "São Paulo", "CodP": "BRA"}
+
+$ ls -lh ciudades.json
+-rw-rw-r-- 1 vboxuser vboxuser 154K Nov 17 23:55 ciudades.json

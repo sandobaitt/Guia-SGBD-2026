@@ -1,0 +1,12 @@
+
+
+
+$ sudo mysql -t < ej07_0_base_y_permisos.sql
++----------------------------------------------------------------------------+
+| Grants for usr_g11@%                                                       |
++----------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `usr_g11`@`%`                                        |
+| GRANT ALL PRIVILEGES ON `employees`.* TO `usr_g11`@`%` WITH GRANT OPTION   |
+| GRANT ALL PRIVILEGES ON `world_x`.* TO `usr_g11`@`%` WITH GRANT OPTION     |
+| GRANT ALL PRIVILEGES ON `zakila_json`.* TO `usr_g11`@`%` WITH GRANT OPTION |
++----------------------------------------------------------------------------+

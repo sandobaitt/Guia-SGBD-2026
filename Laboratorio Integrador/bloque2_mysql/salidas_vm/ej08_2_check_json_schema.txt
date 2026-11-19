@@ -1,0 +1,115 @@
+$ mysql -t -h 127.0.0.1 -u usr_g11 --force < ej08_2_check_json_schema.sql
+
+mysql> USE zakila_json;
+Query OK, 0 rows affected (0.002 sec)
+
+mysql> SET NAMES utf8mb4;
+Query OK, 0 rows affected (0.001 sec)
+
+mysql> SET @esquema = '{
+    ->   "type": "object",
+    ->   "required": ["_id", "First Name", "Last Name", "Country", "Rentals"],
+    ->   "properties": {
+    ->     "_id":          { "type": "integer" },
+    ->     "First Name":   { "type": "string", "minLength": 1 },
+    ->     "Last Name":    { "type": "string", "minLength": 1 },
+    ->     "Country":      { "type": "string", "minLength": 1 },
+    ->     "Rentals":      { "type": "array" },
+    ->     "ClienteVIP":   { "type": "string", "enum": ["SÍ", "NO"] }
+    ->   }
+    -> }';
+Query OK, 0 rows affected (0.002 sec)
+
+mysql> SELECT COUNT(*) AS documentos,
+    ->        SUM(JSON_SCHEMA_VALID(@esquema, doc)) AS validos,
+    ->        SUM(NOT JSON_SCHEMA_VALID(@esquema, doc)) AS invalidos
+    -> FROM customers;
++------------+---------+-----------+
+| documentos | validos | invalidos |
++------------+---------+-----------+
+|        599 |     599 |         0 |
++------------+---------+-----------+
+1 row in set (0.590 sec)
+
+mysql> ALTER TABLE customers ADD CONSTRAINT chk_customers_esquema CHECK (JSON_SCHEMA_VALID('{
+    ->   "type": "object",
+    ->   "required": ["_id", "First Name", "Last Name", "Country", "Rentals"],
+    ->   "properties": {
+    ->     "_id":          { "type": "integer" },
+    ->     "First Name":   { "type": "string", "minLength": 1 },
+    ->     "Last Name":    { "type": "string", "minLength": 1 },
+    ->     "Country":      { "type": "string", "minLength": 1 },
+    ->     "Rentals":      { "type": "array" },
+    ->     "ClienteVIP":   { "type": "string", "enum": ["SÍ", "NO"] }
+    ->   }
+    -> }', doc));
+Query OK, 599 rows affected (1.705 sec)
+Records: 599  Duplicates: 0  Warnings: 0
+
+mysql> SELECT CONSTRAINT_NAME, ENFORCED FROM information_schema.TABLE_CONSTRAINTS
+    -> WHERE TABLE_SCHEMA = 'zakila_json' AND TABLE_NAME = 'customers' AND CONSTRAINT_TYPE = 'CHECK';
++-----------------------+----------+
+| CONSTRAINT_NAME       | ENFORCED |
++-----------------------+----------+
+| chk_customers_esquema | YES      |
++-----------------------+----------+
+1 row in set (0.011 sec)
+
+mysql> INSERT INTO customers (doc) VALUES ('{"_id": 9001, "First Name": "LUCIA", "Last Name": "BENITEZ",
+    ->   "Country": "Argentina", "City": "Resistencia", "Rentals": []}');
+Query OK, 1 row affected (0.026 sec)
+
+mysql> INSERT INTO customers (doc) VALUES ('{"_id": 9002, "First Name": "MARTIN", "Last Name": "ACOSTA",
+    ->   "Country": "Paraguay", "Rentals": [], "ClienteVIP": "NO"}');
+Query OK, 1 row affected (0.021 sec)
+
+mysql> INSERT INTO customers (doc) VALUES ('{"_id": 9003, "First Name": "SIN",
+    ->   "Country": "Chile", "Rentals": []}');
+ERROR 3819 (HY000) at line 44: Check constraint 'chk_customers_esquema' is violated.
+
+mysql> INSERT INTO customers (doc) VALUES ('{"_id": 9004, "First Name": "ANA", "Last Name": "ROJAS",
+    ->   "Country": "Uruguay", "Rentals": [], "ClienteVIP": "TAL VEZ"}');
+ERROR 3819 (HY000) at line 47: Check constraint 'chk_customers_esquema' is violated.
+
+mysql> SELECT r.id,
+    ->        JSON_UNQUOTE(JSON_EXTRACT(r.rep, '$.valid'))                   AS valido,
+    ->        JSON_UNQUOTE(JSON_EXTRACT(r.rep, '$."schema-failed-keyword"')) AS regla_fallida,
+    ->        JSON_UNQUOTE(JSON_EXTRACT(r.rep, '$."document-location"'))     AS ubicacion_en_doc,
+    ->        JSON_UNQUOTE(JSON_EXTRACT(r.rep, '$."schema-location"'))       AS ubicacion_en_esquema
+    -> FROM (
+    ->   SELECT 9003 AS id, JSON_SCHEMA_VALIDATION_REPORT(@esquema,
+    ->     '{"_id": 9003, "First Name": "SIN", "Country": "Chile", "Rentals": []}') AS rep
+    ->   UNION ALL
+    ->   SELECT 9004, JSON_SCHEMA_VALIDATION_REPORT(@esquema,
+    ->     '{"_id": 9004, "First Name": "ANA", "Last Name": "ROJAS",
+    ->       "Country": "Uruguay", "Rentals": [], "ClienteVIP": "TAL VEZ"}')
+    -> ) AS r;
++------+--------+---------------+------------------+-------------------------+
+| id   | valido | regla_fallida | ubicacion_en_doc | ubicacion_en_esquema    |
++------+--------+---------------+------------------+-------------------------+
+| 9003 | false  | required      | #                | #                       |
+| 9004 | false  | enum          | #/ClienteVIP     | #/properties/ClienteVIP |
++------+--------+---------------+------------------+-------------------------+
+2 rows in set (0.002 sec)
+
+mysql> SELECT id, doc->>'$."First Name"' AS nombre, doc->>'$."Last Name"' AS apellido,
+    ->        doc->>'$.Country' AS pais, IFNULL(doc->>'$.ClienteVIP', '(sin clave)') AS ClienteVIP
+    -> FROM customers WHERE id >= 9000 ORDER BY id;
++------+--------+----------+-----------+-------------+
+| id   | nombre | apellido | pais      | ClienteVIP  |
++------+--------+----------+-----------+-------------+
+| 9001 | LUCIA  | BENITEZ  | Argentina | (sin clave) |
+| 9002 | MARTIN | ACOSTA   | Paraguay  | NO          |
++------+--------+----------+-----------+-------------+
+2 rows in set (0.003 sec)
+
+mysql> DELETE FROM customers WHERE id IN (9001, 9002);
+Query OK, 2 rows affected (0.069 sec)
+
+mysql> SELECT COUNT(*) AS customers_final FROM customers;
++-----------------+
+| customers_final |
++-----------------+
+|             599 |
++-----------------+
+1 row in set (0.025 sec)

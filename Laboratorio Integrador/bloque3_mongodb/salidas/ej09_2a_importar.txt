@@ -1,0 +1,20 @@
+$ ./ej09_2_importar.sh ../archivos_lab/zakila-json/zakila-json
+=== customers.json -> LabMongoDB.clientes
+2026-11-17T18:41:59.146-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-17T18:41:59.147-0300	dropping: `LabMongoDB.clientes`
+2026-11-17T18:41:59.533-0300	599 document(s) imported successfully. 0 document(s) failed to import.
+
+=== films.json -> LabMongoDB.peliculas
+2026-11-17T18:41:59.585-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-17T18:41:59.586-0300	dropping: `LabMongoDB.peliculas`
+2026-11-17T18:41:59.690-0300	1000 document(s) imported successfully. 0 document(s) failed to import.
+
+=== stores.json -> LabMongoDB.tiendas
+2026-11-17T18:41:59.738-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-17T18:41:59.739-0300	dropping: `LabMongoDB.tiendas`
+2026-11-17T18:41:59.799-0300	2 document(s) imported successfully. 0 document(s) failed to import.
+
+
+real	0m0.875s
+user	0m1.152s
+sys	0m0.223s

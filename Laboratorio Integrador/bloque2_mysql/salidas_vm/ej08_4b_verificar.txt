@@ -1,0 +1,31 @@
+$ mysql -t -h 127.0.0.1 -u usr_g11 < ej08_4_verificar.sql
+
+mysql> SET NAMES utf8mb4;
+Query OK, 0 rows affected (0.002 sec)
+
+mysql> SELECT JSON_OBJECT('Ciudad', 'Resistencia', 'CodP', 'ARG') AS con_json_object;
++------------------------------------------+
+| con_json_object                          |
++------------------------------------------+
+| {"CodP": "ARG", "Ciudad": "Resistencia"} |
++------------------------------------------+
+1 row in set (0.007 sec)
+
+mysql> SELECT CONCAT('{"Ciudad": ', JSON_QUOTE(Name), ', "CodP": ', JSON_QUOTE(CountryCode), '}') AS exportado
+    -> FROM world_x.city WHERE Name = 'Resistencia';
++------------------------------------------+
+| exportado                                |
++------------------------------------------+
+| {"Ciudad": "Resistencia", "CodP": "ARG"} |
++------------------------------------------+
+1 row in set (0.021 sec)
+
+mysql> SELECT COUNT(*) AS ciudades,
+    ->        SUM(JSON_VALID(CONCAT('{"Ciudad": ', JSON_QUOTE(Name), ', "CodP": ', JSON_QUOTE(CountryCode), '}'))) AS json_validos
+    -> FROM world_x.city;
++----------+--------------+
+| ciudades | json_validos |
++----------+--------------+
+|     4079 |         4079 |
++----------+--------------+
+1 row in set (0.013 sec)

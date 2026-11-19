@@ -1,0 +1,4079 @@
+{"Ciudad": "Kabul", "CodP": "AFG"}
+{"Ciudad": "Qandahar", "CodP": "AFG"}
+{"Ciudad": "Herat", "CodP": "AFG"}
+{"Ciudad": "Mazar-e-Sharif", "CodP": "AFG"}
+{"Ciudad": "Amsterdam", "CodP": "NLD"}
+{"Ciudad": "Rotterdam", "CodP": "NLD"}
+{"Ciudad": "Haag", "CodP": "NLD"}
+{"Ciudad": "Utrecht", "CodP": "NLD"}
+{"Ciudad": "Eindhoven", "CodP": "NLD"}
+{"Ciudad": "Tilburg", "CodP": "NLD"}
+{"Ciudad": "Groningen", "CodP": "NLD"}
+{"Ciudad": "Breda", "CodP": "NLD"}
+{"Ciudad": "Apeldoorn", "CodP": "NLD"}
+{"Ciudad": "Nijmegen", "CodP": "NLD"}
+{"Ciudad": "Enschede", "CodP": "NLD"}
+{"Ciudad": "Haarlem", "CodP": "NLD"}
+{"Ciudad": "Almere", "CodP": "NLD"}
+{"Ciudad": "Arnhem", "CodP": "NLD"}
+{"Ciudad": "Zaanstad", "CodP": "NLD"}
+{"Ciudad": "´s-Hertogenbosch", "CodP": "NLD"}
+{"Ciudad": "Amersfoort", "CodP": "NLD"}
+{"Ciudad": "Maastricht", "CodP": "NLD"}
+{"Ciudad": "Dordrecht", "CodP": "NLD"}
+{"Ciudad": "Leiden", "CodP": "NLD"}
+{"Ciudad": "Haarlemmermeer", "CodP": "NLD"}
+{"Ciudad": "Zoetermeer", "CodP": "NLD"}
+{"Ciudad": "Emmen", "CodP": "NLD"}
+{"Ciudad": "Zwolle", "CodP": "NLD"}
+{"Ciudad": "Ede", "CodP": "NLD"}
+{"Ciudad": "Delft", "CodP": "NLD"}
+{"Ciudad": "Heerlen", "CodP": "NLD"}
+{"Ciudad": "Alkmaar", "CodP": "NLD"}
+{"Ciudad": "Willemstad", "CodP": "ANT"}
+{"Ciudad": "Tirana", "CodP": "ALB"}
+{"Ciudad": "Alger", "CodP": "DZA"}
+{"Ciudad": "Oran", "CodP": "DZA"}
+{"Ciudad": "Constantine", "CodP": "DZA"}
+{"Ciudad": "Annaba", "CodP": "DZA"}
+{"Ciudad": "Batna", "CodP": "DZA"}
+{"Ciudad": "Sétif", "CodP": "DZA"}
+{"Ciudad": "Sidi Bel Abbès", "CodP": "DZA"}
+{"Ciudad": "Skikda", "CodP": "DZA"}
+{"Ciudad": "Biskra", "CodP": "DZA"}
+{"Ciudad": "Blida (el-Boulaida)", "CodP": "DZA"}
+{"Ciudad": "Béjaïa", "CodP": "DZA"}
+{"Ciudad": "Mostaganem", "CodP": "DZA"}
+{"Ciudad": "Tébessa", "CodP": "DZA"}
+{"Ciudad": "Tlemcen (Tilimsen)", "CodP": "DZA"}
+{"Ciudad": "Béchar", "CodP": "DZA"}
+{"Ciudad": "Tiaret", "CodP": "DZA"}
+{"Ciudad": "Ech-Chleff (el-Asnam)", "CodP": "DZA"}
+{"Ciudad": "Ghardaïa", "CodP": "DZA"}
+{"Ciudad": "Tafuna", "CodP": "ASM"}
+{"Ciudad": "Fagatogo", "CodP": "ASM"}
+{"Ciudad": "Andorra la Vella", "CodP": "AND"}
+{"Ciudad": "Luanda", "CodP": "AGO"}
+{"Ciudad": "Huambo", "CodP": "AGO"}
+{"Ciudad": "Lobito", "CodP": "AGO"}
+{"Ciudad": "Benguela", "CodP": "AGO"}
+{"Ciudad": "Namibe", "CodP": "AGO"}
+{"Ciudad": "South Hill", "CodP": "AIA"}
+{"Ciudad": "The Valley", "CodP": "AIA"}
+{"Ciudad": "Saint John´s", "CodP": "ATG"}
+{"Ciudad": "Dubai", "CodP": "ARE"}
+{"Ciudad": "Abu Dhabi", "CodP": "ARE"}
+{"Ciudad": "Sharja", "CodP": "ARE"}
+{"Ciudad": "al-Ayn", "CodP": "ARE"}
+{"Ciudad": "Ajman", "CodP": "ARE"}
+{"Ciudad": "Buenos Aires", "CodP": "ARG"}
+{"Ciudad": "La Matanza", "CodP": "ARG"}
+{"Ciudad": "Córdoba", "CodP": "ARG"}
+{"Ciudad": "Rosario", "CodP": "ARG"}
+{"Ciudad": "Lomas de Zamora", "CodP": "ARG"}
+{"Ciudad": "Quilmes", "CodP": "ARG"}
+{"Ciudad": "Almirante Brown", "CodP": "ARG"}
+{"Ciudad": "La Plata", "CodP": "ARG"}
+{"Ciudad": "Mar del Plata", "CodP": "ARG"}
+{"Ciudad": "San Miguel de Tucumán", "CodP": "ARG"}
+{"Ciudad": "Lanús", "CodP": "ARG"}
+{"Ciudad": "Merlo", "CodP": "ARG"}
+{"Ciudad": "General San Martín", "CodP": "ARG"}
+{"Ciudad": "Salta", "CodP": "ARG"}
+{"Ciudad": "Moreno", "CodP": "ARG"}
+{"Ciudad": "Santa Fé", "CodP": "ARG"}
+{"Ciudad": "Avellaneda", "CodP": "ARG"}
+{"Ciudad": "Tres de Febrero", "CodP": "ARG"}
+{"Ciudad": "Morón", "CodP": "ARG"}
+{"Ciudad": "Florencio Varela", "CodP": "ARG"}
+{"Ciudad": "San Isidro", "CodP": "ARG"}
+{"Ciudad": "Tigre", "CodP": "ARG"}
+{"Ciudad": "Malvinas Argentinas", "CodP": "ARG"}
+{"Ciudad": "Vicente López", "CodP": "ARG"}
+{"Ciudad": "Berazategui", "CodP": "ARG"}
+{"Ciudad": "Corrientes", "CodP": "ARG"}
+{"Ciudad": "San Miguel", "CodP": "ARG"}
+{"Ciudad": "Bahía Blanca", "CodP": "ARG"}
+{"Ciudad": "Esteban Echeverría", "CodP": "ARG"}
+{"Ciudad": "Resistencia", "CodP": "ARG"}
+{"Ciudad": "José C. Paz", "CodP": "ARG"}
+{"Ciudad": "Paraná", "CodP": "ARG"}
+{"Ciudad": "Godoy Cruz", "CodP": "ARG"}
+{"Ciudad": "Posadas", "CodP": "ARG"}
+{"Ciudad": "Guaymallén", "CodP": "ARG"}
+{"Ciudad": "Santiago del Estero", "CodP": "ARG"}
+{"Ciudad": "San Salvador de Jujuy", "CodP": "ARG"}
+{"Ciudad": "Hurlingham", "CodP": "ARG"}
+{"Ciudad": "Neuquén", "CodP": "ARG"}
+{"Ciudad": "Ituzaingó", "CodP": "ARG"}
+{"Ciudad": "San Fernando", "CodP": "ARG"}
+{"Ciudad": "Formosa", "CodP": "ARG"}
+{"Ciudad": "Las Heras", "CodP": "ARG"}
+{"Ciudad": "La Rioja", "CodP": "ARG"}
+{"Ciudad": "San Fernando del Valle de Cata", "CodP": "ARG"}
+{"Ciudad": "Río Cuarto", "CodP": "ARG"}
+{"Ciudad": "Comodoro Rivadavia", "CodP": "ARG"}
+{"Ciudad": "Mendoza", "CodP": "ARG"}
+{"Ciudad": "San Nicolás de los Arroyos", "CodP": "ARG"}
+{"Ciudad": "San Juan", "CodP": "ARG"}
+{"Ciudad": "Escobar", "CodP": "ARG"}
+{"Ciudad": "Concordia", "CodP": "ARG"}
+{"Ciudad": "Pilar", "CodP": "ARG"}
+{"Ciudad": "San Luis", "CodP": "ARG"}
+{"Ciudad": "Ezeiza", "CodP": "ARG"}
+{"Ciudad": "San Rafael", "CodP": "ARG"}
+{"Ciudad": "Tandil", "CodP": "ARG"}
+{"Ciudad": "Yerevan", "CodP": "ARM"}
+{"Ciudad": "Gjumri", "CodP": "ARM"}
+{"Ciudad": "Vanadzor", "CodP": "ARM"}
+{"Ciudad": "Oranjestad", "CodP": "ABW"}
+{"Ciudad": "Sydney", "CodP": "AUS"}
+{"Ciudad": "Melbourne", "CodP": "AUS"}
+{"Ciudad": "Brisbane", "CodP": "AUS"}
+{"Ciudad": "Perth", "CodP": "AUS"}
+{"Ciudad": "Adelaide", "CodP": "AUS"}
+{"Ciudad": "Canberra", "CodP": "AUS"}
+{"Ciudad": "Gold Coast", "CodP": "AUS"}
+{"Ciudad": "Newcastle", "CodP": "AUS"}
+{"Ciudad": "Central Coast", "CodP": "AUS"}
+{"Ciudad": "Wollongong", "CodP": "AUS"}
+{"Ciudad": "Hobart", "CodP": "AUS"}
+{"Ciudad": "Geelong", "CodP": "AUS"}
+{"Ciudad": "Townsville", "CodP": "AUS"}
+{"Ciudad": "Cairns", "CodP": "AUS"}
+{"Ciudad": "Baku", "CodP": "AZE"}
+{"Ciudad": "Gäncä", "CodP": "AZE"}
+{"Ciudad": "Sumqayit", "CodP": "AZE"}
+{"Ciudad": "Mingäçevir", "CodP": "AZE"}
+{"Ciudad": "Nassau", "CodP": "BHS"}
+{"Ciudad": "al-Manama", "CodP": "BHR"}
+{"Ciudad": "Dhaka", "CodP": "BGD"}
+{"Ciudad": "Chittagong", "CodP": "BGD"}
+{"Ciudad": "Khulna", "CodP": "BGD"}
+{"Ciudad": "Rajshahi", "CodP": "BGD"}
+{"Ciudad": "Narayanganj", "CodP": "BGD"}
+{"Ciudad": "Rangpur", "CodP": "BGD"}
+{"Ciudad": "Mymensingh", "CodP": "BGD"}
+{"Ciudad": "Barisal", "CodP": "BGD"}
+{"Ciudad": "Tungi", "CodP": "BGD"}
+{"Ciudad": "Jessore", "CodP": "BGD"}
+{"Ciudad": "Comilla", "CodP": "BGD"}
+{"Ciudad": "Nawabganj", "CodP": "BGD"}
+{"Ciudad": "Dinajpur", "CodP": "BGD"}
+{"Ciudad": "Bogra", "CodP": "BGD"}
+{"Ciudad": "Sylhet", "CodP": "BGD"}
+{"Ciudad": "Brahmanbaria", "CodP": "BGD"}
+{"Ciudad": "Tangail", "CodP": "BGD"}
+{"Ciudad": "Jamalpur", "CodP": "BGD"}
+{"Ciudad": "Pabna", "CodP": "BGD"}
+{"Ciudad": "Naogaon", "CodP": "BGD"}
+{"Ciudad": "Sirajganj", "CodP": "BGD"}
+{"Ciudad": "Narsinghdi", "CodP": "BGD"}
+{"Ciudad": "Saidpur", "CodP": "BGD"}
+{"Ciudad": "Gazipur", "CodP": "BGD"}
+{"Ciudad": "Bridgetown", "CodP": "BRB"}
+{"Ciudad": "Antwerpen", "CodP": "BEL"}
+{"Ciudad": "Gent", "CodP": "BEL"}
+{"Ciudad": "Charleroi", "CodP": "BEL"}
+{"Ciudad": "Liège", "CodP": "BEL"}
+{"Ciudad": "Bruxelles [Brussel]", "CodP": "BEL"}
+{"Ciudad": "Brugge", "CodP": "BEL"}
+{"Ciudad": "Schaerbeek", "CodP": "BEL"}
+{"Ciudad": "Namur", "CodP": "BEL"}
+{"Ciudad": "Mons", "CodP": "BEL"}
+{"Ciudad": "Belize City", "CodP": "BLZ"}
+{"Ciudad": "Belmopan", "CodP": "BLZ"}
+{"Ciudad": "Cotonou", "CodP": "BEN"}
+{"Ciudad": "Porto-Novo", "CodP": "BEN"}
+{"Ciudad": "Djougou", "CodP": "BEN"}
+{"Ciudad": "Parakou", "CodP": "BEN"}
+{"Ciudad": "Saint George", "CodP": "BMU"}
+{"Ciudad": "Hamilton", "CodP": "BMU"}
+{"Ciudad": "Thimphu", "CodP": "BTN"}
+{"Ciudad": "Santa Cruz de la Sierra", "CodP": "BOL"}
+{"Ciudad": "La Paz", "CodP": "BOL"}
+{"Ciudad": "El Alto", "CodP": "BOL"}
+{"Ciudad": "Cochabamba", "CodP": "BOL"}
+{"Ciudad": "Oruro", "CodP": "BOL"}
+{"Ciudad": "Sucre", "CodP": "BOL"}
+{"Ciudad": "Potosí", "CodP": "BOL"}
+{"Ciudad": "Tarija", "CodP": "BOL"}
+{"Ciudad": "Sarajevo", "CodP": "BIH"}
+{"Ciudad": "Banja Luka", "CodP": "BIH"}
+{"Ciudad": "Zenica", "CodP": "BIH"}
+{"Ciudad": "Gaborone", "CodP": "BWA"}
+{"Ciudad": "Francistown", "CodP": "BWA"}
+{"Ciudad": "São Paulo", "CodP": "BRA"}
+{"Ciudad": "Rio de Janeiro", "CodP": "BRA"}
+{"Ciudad": "Salvador", "CodP": "BRA"}
+{"Ciudad": "Belo Horizonte", "CodP": "BRA"}
+{"Ciudad": "Fortaleza", "CodP": "BRA"}
+{"Ciudad": "Brasília", "CodP": "BRA"}
+{"Ciudad": "Curitiba", "CodP": "BRA"}
+{"Ciudad": "Recife", "CodP": "BRA"}
+{"Ciudad": "Porto Alegre", "CodP": "BRA"}
+{"Ciudad": "Manaus", "CodP": "BRA"}
+{"Ciudad": "Belém", "CodP": "BRA"}
+{"Ciudad": "Guarulhos", "CodP": "BRA"}
+{"Ciudad": "Goiânia", "CodP": "BRA"}
+{"Ciudad": "Campinas", "CodP": "BRA"}
+{"Ciudad": "São Gonçalo", "CodP": "BRA"}
+{"Ciudad": "Nova Iguaçu", "CodP": "BRA"}
+{"Ciudad": "São Luís", "CodP": "BRA"}
+{"Ciudad": "Maceió", "CodP": "BRA"}
+{"Ciudad": "Duque de Caxias", "CodP": "BRA"}
+{"Ciudad": "São Bernardo do Campo", "CodP": "BRA"}
+{"Ciudad": "Teresina", "CodP": "BRA"}
+{"Ciudad": "Natal", "CodP": "BRA"}
+{"Ciudad": "Osasco", "CodP": "BRA"}
+{"Ciudad": "Campo Grande", "CodP": "BRA"}
+{"Ciudad": "Santo André", "CodP": "BRA"}
+{"Ciudad": "João Pessoa", "CodP": "BRA"}
+{"Ciudad": "Jaboatão dos Guararapes", "CodP": "BRA"}
+{"Ciudad": "Contagem", "CodP": "BRA"}
+{"Ciudad": "São José dos Campos", "CodP": "BRA"}
+{"Ciudad": "Uberlândia", "CodP": "BRA"}
+{"Ciudad": "Feira de Santana", "CodP": "BRA"}
+{"Ciudad": "Ribeirão Preto", "CodP": "BRA"}
+{"Ciudad": "Sorocaba", "CodP": "BRA"}
+{"Ciudad": "Niterói", "CodP": "BRA"}
+{"Ciudad": "Cuiabá", "CodP": "BRA"}
+{"Ciudad": "Juiz de Fora", "CodP": "BRA"}
+{"Ciudad": "Aracaju", "CodP": "BRA"}
+{"Ciudad": "São João de Meriti", "CodP": "BRA"}
+{"Ciudad": "Londrina", "CodP": "BRA"}
+{"Ciudad": "Joinville", "CodP": "BRA"}
+{"Ciudad": "Belford Roxo", "CodP": "BRA"}
+{"Ciudad": "Santos", "CodP": "BRA"}
+{"Ciudad": "Ananindeua", "CodP": "BRA"}
+{"Ciudad": "Campos dos Goytacazes", "CodP": "BRA"}
+{"Ciudad": "Mauá", "CodP": "BRA"}
+{"Ciudad": "Carapicuíba", "CodP": "BRA"}
+{"Ciudad": "Olinda", "CodP": "BRA"}
+{"Ciudad": "Campina Grande", "CodP": "BRA"}
+{"Ciudad": "São José do Rio Preto", "CodP": "BRA"}
+{"Ciudad": "Caxias do Sul", "CodP": "BRA"}
+{"Ciudad": "Moji das Cruzes", "CodP": "BRA"}
+{"Ciudad": "Diadema", "CodP": "BRA"}
+{"Ciudad": "Aparecida de Goiânia", "CodP": "BRA"}
+{"Ciudad": "Piracicaba", "CodP": "BRA"}
+{"Ciudad": "Cariacica", "CodP": "BRA"}
+{"Ciudad": "Vila Velha", "CodP": "BRA"}
+{"Ciudad": "Pelotas", "CodP": "BRA"}
+{"Ciudad": "Bauru", "CodP": "BRA"}
+{"Ciudad": "Porto Velho", "CodP": "BRA"}
+{"Ciudad": "Serra", "CodP": "BRA"}
+{"Ciudad": "Betim", "CodP": "BRA"}
+{"Ciudad": "Jundíaí", "CodP": "BRA"}
+{"Ciudad": "Canoas", "CodP": "BRA"}
+{"Ciudad": "Franca", "CodP": "BRA"}
+{"Ciudad": "São Vicente", "CodP": "BRA"}
+{"Ciudad": "Maringá", "CodP": "BRA"}
+{"Ciudad": "Montes Claros", "CodP": "BRA"}
+{"Ciudad": "Anápolis", "CodP": "BRA"}
+{"Ciudad": "Florianópolis", "CodP": "BRA"}
+{"Ciudad": "Petrópolis", "CodP": "BRA"}
+{"Ciudad": "Itaquaquecetuba", "CodP": "BRA"}
+{"Ciudad": "Vitória", "CodP": "BRA"}
+{"Ciudad": "Ponta Grossa", "CodP": "BRA"}
+{"Ciudad": "Rio Branco", "CodP": "BRA"}
+{"Ciudad": "Foz do Iguaçu", "CodP": "BRA"}
+{"Ciudad": "Macapá", "CodP": "BRA"}
+{"Ciudad": "Ilhéus", "CodP": "BRA"}
+{"Ciudad": "Vitória da Conquista", "CodP": "BRA"}
+{"Ciudad": "Uberaba", "CodP": "BRA"}
+{"Ciudad": "Paulista", "CodP": "BRA"}
+{"Ciudad": "Limeira", "CodP": "BRA"}
+{"Ciudad": "Blumenau", "CodP": "BRA"}
+{"Ciudad": "Caruaru", "CodP": "BRA"}
+{"Ciudad": "Santarém", "CodP": "BRA"}
+{"Ciudad": "Volta Redonda", "CodP": "BRA"}
+{"Ciudad": "Novo Hamburgo", "CodP": "BRA"}
+{"Ciudad": "Caucaia", "CodP": "BRA"}
+{"Ciudad": "Santa Maria", "CodP": "BRA"}
+{"Ciudad": "Cascavel", "CodP": "BRA"}
+{"Ciudad": "Guarujá", "CodP": "BRA"}
+{"Ciudad": "Ribeirão das Neves", "CodP": "BRA"}
+{"Ciudad": "Governador Valadares", "CodP": "BRA"}
+{"Ciudad": "Taubaté", "CodP": "BRA"}
+{"Ciudad": "Imperatriz", "CodP": "BRA"}
+{"Ciudad": "Gravataí", "CodP": "BRA"}
+{"Ciudad": "Embu", "CodP": "BRA"}
+{"Ciudad": "Mossoró", "CodP": "BRA"}
+{"Ciudad": "Várzea Grande", "CodP": "BRA"}
+{"Ciudad": "Petrolina", "CodP": "BRA"}
+{"Ciudad": "Barueri", "CodP": "BRA"}
+{"Ciudad": "Viamão", "CodP": "BRA"}
+{"Ciudad": "Ipatinga", "CodP": "BRA"}
+{"Ciudad": "Juazeiro", "CodP": "BRA"}
+{"Ciudad": "Juazeiro do Norte", "CodP": "BRA"}
+{"Ciudad": "Taboão da Serra", "CodP": "BRA"}
+{"Ciudad": "São José dos Pinhais", "CodP": "BRA"}
+{"Ciudad": "Magé", "CodP": "BRA"}
+{"Ciudad": "Suzano", "CodP": "BRA"}
+{"Ciudad": "São Leopoldo", "CodP": "BRA"}
+{"Ciudad": "Marília", "CodP": "BRA"}
+{"Ciudad": "São Carlos", "CodP": "BRA"}
+{"Ciudad": "Sumaré", "CodP": "BRA"}
+{"Ciudad": "Presidente Prudente", "CodP": "BRA"}
+{"Ciudad": "Divinópolis", "CodP": "BRA"}
+{"Ciudad": "Sete Lagoas", "CodP": "BRA"}
+{"Ciudad": "Rio Grande", "CodP": "BRA"}
+{"Ciudad": "Itabuna", "CodP": "BRA"}
+{"Ciudad": "Jequié", "CodP": "BRA"}
+{"Ciudad": "Arapiraca", "CodP": "BRA"}
+{"Ciudad": "Colombo", "CodP": "BRA"}
+{"Ciudad": "Americana", "CodP": "BRA"}
+{"Ciudad": "Alvorada", "CodP": "BRA"}
+{"Ciudad": "Araraquara", "CodP": "BRA"}
+{"Ciudad": "Itaboraí", "CodP": "BRA"}
+{"Ciudad": "Santa Bárbara d´Oeste", "CodP": "BRA"}
+{"Ciudad": "Nova Friburgo", "CodP": "BRA"}
+{"Ciudad": "Jacareí", "CodP": "BRA"}
+{"Ciudad": "Araçatuba", "CodP": "BRA"}
+{"Ciudad": "Barra Mansa", "CodP": "BRA"}
+{"Ciudad": "Praia Grande", "CodP": "BRA"}
+{"Ciudad": "Marabá", "CodP": "BRA"}
+{"Ciudad": "Criciúma", "CodP": "BRA"}
+{"Ciudad": "Boa Vista", "CodP": "BRA"}
+{"Ciudad": "Passo Fundo", "CodP": "BRA"}
+{"Ciudad": "Dourados", "CodP": "BRA"}
+{"Ciudad": "Santa Luzia", "CodP": "BRA"}
+{"Ciudad": "Rio Claro", "CodP": "BRA"}
+{"Ciudad": "Maracanaú", "CodP": "BRA"}
+{"Ciudad": "Guarapuava", "CodP": "BRA"}
+{"Ciudad": "Rondonópolis", "CodP": "BRA"}
+{"Ciudad": "São José", "CodP": "BRA"}
+{"Ciudad": "Cachoeiro de Itapemirim", "CodP": "BRA"}
+{"Ciudad": "Nilópolis", "CodP": "BRA"}
+{"Ciudad": "Itapevi", "CodP": "BRA"}
+{"Ciudad": "Cabo de Santo Agostinho", "CodP": "BRA"}
+{"Ciudad": "Camaçari", "CodP": "BRA"}
+{"Ciudad": "Sobral", "CodP": "BRA"}
+{"Ciudad": "Itajaí", "CodP": "BRA"}
+{"Ciudad": "Chapecó", "CodP": "BRA"}
+{"Ciudad": "Cotia", "CodP": "BRA"}
+{"Ciudad": "Lages", "CodP": "BRA"}
+{"Ciudad": "Ferraz de Vasconcelos", "CodP": "BRA"}
+{"Ciudad": "Indaiatuba", "CodP": "BRA"}
+{"Ciudad": "Hortolândia", "CodP": "BRA"}
+{"Ciudad": "Caxias", "CodP": "BRA"}
+{"Ciudad": "São Caetano do Sul", "CodP": "BRA"}
+{"Ciudad": "Itu", "CodP": "BRA"}
+{"Ciudad": "Nossa Senhora do Socorro", "CodP": "BRA"}
+{"Ciudad": "Parnaíba", "CodP": "BRA"}
+{"Ciudad": "Poços de Caldas", "CodP": "BRA"}
+{"Ciudad": "Teresópolis", "CodP": "BRA"}
+{"Ciudad": "Barreiras", "CodP": "BRA"}
+{"Ciudad": "Castanhal", "CodP": "BRA"}
+{"Ciudad": "Alagoinhas", "CodP": "BRA"}
+{"Ciudad": "Itapecerica da Serra", "CodP": "BRA"}
+{"Ciudad": "Uruguaiana", "CodP": "BRA"}
+{"Ciudad": "Paranaguá", "CodP": "BRA"}
+{"Ciudad": "Ibirité", "CodP": "BRA"}
+{"Ciudad": "Timon", "CodP": "BRA"}
+{"Ciudad": "Luziânia", "CodP": "BRA"}
+{"Ciudad": "Macaé", "CodP": "BRA"}
+{"Ciudad": "Teófilo Otoni", "CodP": "BRA"}
+{"Ciudad": "Moji-Guaçu", "CodP": "BRA"}
+{"Ciudad": "Palmas", "CodP": "BRA"}
+{"Ciudad": "Pindamonhangaba", "CodP": "BRA"}
+{"Ciudad": "Francisco Morato", "CodP": "BRA"}
+{"Ciudad": "Bagé", "CodP": "BRA"}
+{"Ciudad": "Sapucaia do Sul", "CodP": "BRA"}
+{"Ciudad": "Cabo Frio", "CodP": "BRA"}
+{"Ciudad": "Itapetininga", "CodP": "BRA"}
+{"Ciudad": "Patos de Minas", "CodP": "BRA"}
+{"Ciudad": "Camaragibe", "CodP": "BRA"}
+{"Ciudad": "Bragança Paulista", "CodP": "BRA"}
+{"Ciudad": "Queimados", "CodP": "BRA"}
+{"Ciudad": "Araguaína", "CodP": "BRA"}
+{"Ciudad": "Garanhuns", "CodP": "BRA"}
+{"Ciudad": "Vitória de Santo Antão", "CodP": "BRA"}
+{"Ciudad": "Santa Rita", "CodP": "BRA"}
+{"Ciudad": "Barbacena", "CodP": "BRA"}
+{"Ciudad": "Abaetetuba", "CodP": "BRA"}
+{"Ciudad": "Jaú", "CodP": "BRA"}
+{"Ciudad": "Lauro de Freitas", "CodP": "BRA"}
+{"Ciudad": "Franco da Rocha", "CodP": "BRA"}
+{"Ciudad": "Teixeira de Freitas", "CodP": "BRA"}
+{"Ciudad": "Varginha", "CodP": "BRA"}
+{"Ciudad": "Ribeirão Pires", "CodP": "BRA"}
+{"Ciudad": "Sabará", "CodP": "BRA"}
+{"Ciudad": "Catanduva", "CodP": "BRA"}
+{"Ciudad": "Rio Verde", "CodP": "BRA"}
+{"Ciudad": "Botucatu", "CodP": "BRA"}
+{"Ciudad": "Colatina", "CodP": "BRA"}
+{"Ciudad": "Santa Cruz do Sul", "CodP": "BRA"}
+{"Ciudad": "Linhares", "CodP": "BRA"}
+{"Ciudad": "Apucarana", "CodP": "BRA"}
+{"Ciudad": "Barretos", "CodP": "BRA"}
+{"Ciudad": "Guaratinguetá", "CodP": "BRA"}
+{"Ciudad": "Cachoeirinha", "CodP": "BRA"}
+{"Ciudad": "Codó", "CodP": "BRA"}
+{"Ciudad": "Jaraguá do Sul", "CodP": "BRA"}
+{"Ciudad": "Cubatão", "CodP": "BRA"}
+{"Ciudad": "Itabira", "CodP": "BRA"}
+{"Ciudad": "Itaituba", "CodP": "BRA"}
+{"Ciudad": "Araras", "CodP": "BRA"}
+{"Ciudad": "Resende", "CodP": "BRA"}
+{"Ciudad": "Atibaia", "CodP": "BRA"}
+{"Ciudad": "Pouso Alegre", "CodP": "BRA"}
+{"Ciudad": "Toledo", "CodP": "BRA"}
+{"Ciudad": "Crato", "CodP": "BRA"}
+{"Ciudad": "Passos", "CodP": "BRA"}
+{"Ciudad": "Araguari", "CodP": "BRA"}
+{"Ciudad": "São José de Ribamar", "CodP": "BRA"}
+{"Ciudad": "Pinhais", "CodP": "BRA"}
+{"Ciudad": "Sertãozinho", "CodP": "BRA"}
+{"Ciudad": "Conselheiro Lafaiete", "CodP": "BRA"}
+{"Ciudad": "Paulo Afonso", "CodP": "BRA"}
+{"Ciudad": "Angra dos Reis", "CodP": "BRA"}
+{"Ciudad": "Eunápolis", "CodP": "BRA"}
+{"Ciudad": "Salto", "CodP": "BRA"}
+{"Ciudad": "Ourinhos", "CodP": "BRA"}
+{"Ciudad": "Parnamirim", "CodP": "BRA"}
+{"Ciudad": "Jacobina", "CodP": "BRA"}
+{"Ciudad": "Coronel Fabriciano", "CodP": "BRA"}
+{"Ciudad": "Birigui", "CodP": "BRA"}
+{"Ciudad": "Tatuí", "CodP": "BRA"}
+{"Ciudad": "Ji-Paraná", "CodP": "BRA"}
+{"Ciudad": "Bacabal", "CodP": "BRA"}
+{"Ciudad": "Cametá", "CodP": "BRA"}
+{"Ciudad": "Guaíba", "CodP": "BRA"}
+{"Ciudad": "São Lourenço da Mata", "CodP": "BRA"}
+{"Ciudad": "Santana do Livramento", "CodP": "BRA"}
+{"Ciudad": "Votorantim", "CodP": "BRA"}
+{"Ciudad": "Campo Largo", "CodP": "BRA"}
+{"Ciudad": "Patos", "CodP": "BRA"}
+{"Ciudad": "Ituiutaba", "CodP": "BRA"}
+{"Ciudad": "Corumbá", "CodP": "BRA"}
+{"Ciudad": "Palhoça", "CodP": "BRA"}
+{"Ciudad": "Barra do Piraí", "CodP": "BRA"}
+{"Ciudad": "Bento Gonçalves", "CodP": "BRA"}
+{"Ciudad": "Poá", "CodP": "BRA"}
+{"Ciudad": "Águas Lindas de Goiás", "CodP": "BRA"}
+{"Ciudad": "London", "CodP": "GBR"}
+{"Ciudad": "Birmingham", "CodP": "GBR"}
+{"Ciudad": "Glasgow", "CodP": "GBR"}
+{"Ciudad": "Liverpool", "CodP": "GBR"}
+{"Ciudad": "Edinburgh", "CodP": "GBR"}
+{"Ciudad": "Sheffield", "CodP": "GBR"}
+{"Ciudad": "Manchester", "CodP": "GBR"}
+{"Ciudad": "Leeds", "CodP": "GBR"}
+{"Ciudad": "Bristol", "CodP": "GBR"}
+{"Ciudad": "Cardiff", "CodP": "GBR"}
+{"Ciudad": "Coventry", "CodP": "GBR"}
+{"Ciudad": "Leicester", "CodP": "GBR"}
+{"Ciudad": "Bradford", "CodP": "GBR"}
+{"Ciudad": "Belfast", "CodP": "GBR"}
+{"Ciudad": "Nottingham", "CodP": "GBR"}
+{"Ciudad": "Kingston upon Hull", "CodP": "GBR"}
+{"Ciudad": "Plymouth", "CodP": "GBR"}
+{"Ciudad": "Stoke-on-Trent", "CodP": "GBR"}
+{"Ciudad": "Wolverhampton", "CodP": "GBR"}
+{"Ciudad": "Derby", "CodP": "GBR"}
+{"Ciudad": "Swansea", "CodP": "GBR"}
+{"Ciudad": "Southampton", "CodP": "GBR"}
+{"Ciudad": "Aberdeen", "CodP": "GBR"}
+{"Ciudad": "Northampton", "CodP": "GBR"}
+{"Ciudad": "Dudley", "CodP": "GBR"}
+{"Ciudad": "Portsmouth", "CodP": "GBR"}
+{"Ciudad": "Newcastle upon Tyne", "CodP": "GBR"}
+{"Ciudad": "Sunderland", "CodP": "GBR"}
+{"Ciudad": "Luton", "CodP": "GBR"}
+{"Ciudad": "Swindon", "CodP": "GBR"}
+{"Ciudad": "Southend-on-Sea", "CodP": "GBR"}
+{"Ciudad": "Walsall", "CodP": "GBR"}
+{"Ciudad": "Bournemouth", "CodP": "GBR"}
+{"Ciudad": "Peterborough", "CodP": "GBR"}
+{"Ciudad": "Brighton", "CodP": "GBR"}
+{"Ciudad": "Blackpool", "CodP": "GBR"}
+{"Ciudad": "Dundee", "CodP": "GBR"}
+{"Ciudad": "West Bromwich", "CodP": "GBR"}
+{"Ciudad": "Reading", "CodP": "GBR"}
+{"Ciudad": "Oldbury/Smethwick (Warley)", "CodP": "GBR"}
+{"Ciudad": "Middlesbrough", "CodP": "GBR"}
+{"Ciudad": "Huddersfield", "CodP": "GBR"}
+{"Ciudad": "Oxford", "CodP": "GBR"}
+{"Ciudad": "Poole", "CodP": "GBR"}
+{"Ciudad": "Bolton", "CodP": "GBR"}
+{"Ciudad": "Blackburn", "CodP": "GBR"}
+{"Ciudad": "Newport", "CodP": "GBR"}
+{"Ciudad": "Preston", "CodP": "GBR"}
+{"Ciudad": "Stockport", "CodP": "GBR"}
+{"Ciudad": "Norwich", "CodP": "GBR"}
+{"Ciudad": "Rotherham", "CodP": "GBR"}
+{"Ciudad": "Cambridge", "CodP": "GBR"}
+{"Ciudad": "Watford", "CodP": "GBR"}
+{"Ciudad": "Ipswich", "CodP": "GBR"}
+{"Ciudad": "Slough", "CodP": "GBR"}
+{"Ciudad": "Exeter", "CodP": "GBR"}
+{"Ciudad": "Cheltenham", "CodP": "GBR"}
+{"Ciudad": "Gloucester", "CodP": "GBR"}
+{"Ciudad": "Saint Helens", "CodP": "GBR"}
+{"Ciudad": "Sutton Coldfield", "CodP": "GBR"}
+{"Ciudad": "York", "CodP": "GBR"}
+{"Ciudad": "Oldham", "CodP": "GBR"}
+{"Ciudad": "Basildon", "CodP": "GBR"}
+{"Ciudad": "Worthing", "CodP": "GBR"}
+{"Ciudad": "Chelmsford", "CodP": "GBR"}
+{"Ciudad": "Colchester", "CodP": "GBR"}
+{"Ciudad": "Crawley", "CodP": "GBR"}
+{"Ciudad": "Gillingham", "CodP": "GBR"}
+{"Ciudad": "Solihull", "CodP": "GBR"}
+{"Ciudad": "Rochdale", "CodP": "GBR"}
+{"Ciudad": "Birkenhead", "CodP": "GBR"}
+{"Ciudad": "Worcester", "CodP": "GBR"}
+{"Ciudad": "Hartlepool", "CodP": "GBR"}
+{"Ciudad": "Halifax", "CodP": "GBR"}
+{"Ciudad": "Woking/Byfleet", "CodP": "GBR"}
+{"Ciudad": "Southport", "CodP": "GBR"}
+{"Ciudad": "Maidstone", "CodP": "GBR"}
+{"Ciudad": "Eastbourne", "CodP": "GBR"}
+{"Ciudad": "Grimsby", "CodP": "GBR"}
+{"Ciudad": "Saint Helier", "CodP": "GBR"}
+{"Ciudad": "Douglas", "CodP": "GBR"}
+{"Ciudad": "Road Town", "CodP": "VGB"}
+{"Ciudad": "Bandar Seri Begawan", "CodP": "BRN"}
+{"Ciudad": "Sofija", "CodP": "BGR"}
+{"Ciudad": "Plovdiv", "CodP": "BGR"}
+{"Ciudad": "Varna", "CodP": "BGR"}
+{"Ciudad": "Burgas", "CodP": "BGR"}
+{"Ciudad": "Ruse", "CodP": "BGR"}
+{"Ciudad": "Stara Zagora", "CodP": "BGR"}
+{"Ciudad": "Pleven", "CodP": "BGR"}
+{"Ciudad": "Sliven", "CodP": "BGR"}
+{"Ciudad": "Dobric", "CodP": "BGR"}
+{"Ciudad": "Šumen", "CodP": "BGR"}
+{"Ciudad": "Ouagadougou", "CodP": "BFA"}
+{"Ciudad": "Bobo-Dioulasso", "CodP": "BFA"}
+{"Ciudad": "Koudougou", "CodP": "BFA"}
+{"Ciudad": "Bujumbura", "CodP": "BDI"}
+{"Ciudad": "George Town", "CodP": "CYM"}
+{"Ciudad": "Santiago de Chile", "CodP": "CHL"}
+{"Ciudad": "Puente Alto", "CodP": "CHL"}
+{"Ciudad": "Viña del Mar", "CodP": "CHL"}
+{"Ciudad": "Valparaíso", "CodP": "CHL"}
+{"Ciudad": "Talcahuano", "CodP": "CHL"}
+{"Ciudad": "Antofagasta", "CodP": "CHL"}
+{"Ciudad": "San Bernardo", "CodP": "CHL"}
+{"Ciudad": "Temuco", "CodP": "CHL"}
+{"Ciudad": "Concepción", "CodP": "CHL"}
+{"Ciudad": "Rancagua", "CodP": "CHL"}
+{"Ciudad": "Arica", "CodP": "CHL"}
+{"Ciudad": "Talca", "CodP": "CHL"}
+{"Ciudad": "Chillán", "CodP": "CHL"}
+{"Ciudad": "Iquique", "CodP": "CHL"}
+{"Ciudad": "Los Angeles", "CodP": "CHL"}
+{"Ciudad": "Puerto Montt", "CodP": "CHL"}
+{"Ciudad": "Coquimbo", "CodP": "CHL"}
+{"Ciudad": "Osorno", "CodP": "CHL"}
+{"Ciudad": "La Serena", "CodP": "CHL"}
+{"Ciudad": "Calama", "CodP": "CHL"}
+{"Ciudad": "Valdivia", "CodP": "CHL"}
+{"Ciudad": "Punta Arenas", "CodP": "CHL"}
+{"Ciudad": "Copiapó", "CodP": "CHL"}
+{"Ciudad": "Quilpué", "CodP": "CHL"}
+{"Ciudad": "Curicó", "CodP": "CHL"}
+{"Ciudad": "Ovalle", "CodP": "CHL"}
+{"Ciudad": "Coronel", "CodP": "CHL"}
+{"Ciudad": "San Pedro de la Paz", "CodP": "CHL"}
+{"Ciudad": "Melipilla", "CodP": "CHL"}
+{"Ciudad": "Avarua", "CodP": "COK"}
+{"Ciudad": "San José", "CodP": "CRI"}
+{"Ciudad": "Djibouti", "CodP": "DJI"}
+{"Ciudad": "Roseau", "CodP": "DMA"}
+{"Ciudad": "Santo Domingo de Guzmán", "CodP": "DOM"}
+{"Ciudad": "Santiago de los Caballeros", "CodP": "DOM"}
+{"Ciudad": "La Romana", "CodP": "DOM"}
+{"Ciudad": "San Pedro de Macorís", "CodP": "DOM"}
+{"Ciudad": "San Francisco de Macorís", "CodP": "DOM"}
+{"Ciudad": "San Felipe de Puerto Plata", "CodP": "DOM"}
+{"Ciudad": "Guayaquil", "CodP": "ECU"}
+{"Ciudad": "Quito", "CodP": "ECU"}
+{"Ciudad": "Cuenca", "CodP": "ECU"}
+{"Ciudad": "Machala", "CodP": "ECU"}
+{"Ciudad": "Santo Domingo de los Colorados", "CodP": "ECU"}
+{"Ciudad": "Portoviejo", "CodP": "ECU"}
+{"Ciudad": "Ambato", "CodP": "ECU"}
+{"Ciudad": "Manta", "CodP": "ECU"}
+{"Ciudad": "Duran [Eloy Alfaro]", "CodP": "ECU"}
+{"Ciudad": "Ibarra", "CodP": "ECU"}
+{"Ciudad": "Quevedo", "CodP": "ECU"}
+{"Ciudad": "Milagro", "CodP": "ECU"}
+{"Ciudad": "Loja", "CodP": "ECU"}
+{"Ciudad": "Ríobamba", "CodP": "ECU"}
+{"Ciudad": "Esmeraldas", "CodP": "ECU"}
+{"Ciudad": "Cairo", "CodP": "EGY"}
+{"Ciudad": "Alexandria", "CodP": "EGY"}
+{"Ciudad": "Giza", "CodP": "EGY"}
+{"Ciudad": "Shubra al-Khayma", "CodP": "EGY"}
+{"Ciudad": "Port Said", "CodP": "EGY"}
+{"Ciudad": "Suez", "CodP": "EGY"}
+{"Ciudad": "al-Mahallat al-Kubra", "CodP": "EGY"}
+{"Ciudad": "Tanta", "CodP": "EGY"}
+{"Ciudad": "al-Mansura", "CodP": "EGY"}
+{"Ciudad": "Luxor", "CodP": "EGY"}
+{"Ciudad": "Asyut", "CodP": "EGY"}
+{"Ciudad": "Bahtim", "CodP": "EGY"}
+{"Ciudad": "Zagazig", "CodP": "EGY"}
+{"Ciudad": "al-Faiyum", "CodP": "EGY"}
+{"Ciudad": "Ismailia", "CodP": "EGY"}
+{"Ciudad": "Kafr al-Dawwar", "CodP": "EGY"}
+{"Ciudad": "Assuan", "CodP": "EGY"}
+{"Ciudad": "Damanhur", "CodP": "EGY"}
+{"Ciudad": "al-Minya", "CodP": "EGY"}
+{"Ciudad": "Bani Suwayf", "CodP": "EGY"}
+{"Ciudad": "Qina", "CodP": "EGY"}
+{"Ciudad": "Sawhaj", "CodP": "EGY"}
+{"Ciudad": "Shibin al-Kawm", "CodP": "EGY"}
+{"Ciudad": "Bulaq al-Dakrur", "CodP": "EGY"}
+{"Ciudad": "Banha", "CodP": "EGY"}
+{"Ciudad": "Warraq al-Arab", "CodP": "EGY"}
+{"Ciudad": "Kafr al-Shaykh", "CodP": "EGY"}
+{"Ciudad": "Mallawi", "CodP": "EGY"}
+{"Ciudad": "Bilbays", "CodP": "EGY"}
+{"Ciudad": "Mit Ghamr", "CodP": "EGY"}
+{"Ciudad": "al-Arish", "CodP": "EGY"}
+{"Ciudad": "Talkha", "CodP": "EGY"}
+{"Ciudad": "Qalyub", "CodP": "EGY"}
+{"Ciudad": "Jirja", "CodP": "EGY"}
+{"Ciudad": "Idfu", "CodP": "EGY"}
+{"Ciudad": "al-Hawamidiya", "CodP": "EGY"}
+{"Ciudad": "Disuq", "CodP": "EGY"}
+{"Ciudad": "San Salvador", "CodP": "SLV"}
+{"Ciudad": "Santa Ana", "CodP": "SLV"}
+{"Ciudad": "Mejicanos", "CodP": "SLV"}
+{"Ciudad": "Soyapango", "CodP": "SLV"}
+{"Ciudad": "San Miguel", "CodP": "SLV"}
+{"Ciudad": "Nueva San Salvador", "CodP": "SLV"}
+{"Ciudad": "Apopa", "CodP": "SLV"}
+{"Ciudad": "Asmara", "CodP": "ERI"}
+{"Ciudad": "Madrid", "CodP": "ESP"}
+{"Ciudad": "Barcelona", "CodP": "ESP"}
+{"Ciudad": "Valencia", "CodP": "ESP"}
+{"Ciudad": "Sevilla", "CodP": "ESP"}
+{"Ciudad": "Zaragoza", "CodP": "ESP"}
+{"Ciudad": "Málaga", "CodP": "ESP"}
+{"Ciudad": "Bilbao", "CodP": "ESP"}
+{"Ciudad": "Las Palmas de Gran Canaria", "CodP": "ESP"}
+{"Ciudad": "Murcia", "CodP": "ESP"}
+{"Ciudad": "Palma de Mallorca", "CodP": "ESP"}
+{"Ciudad": "Valladolid", "CodP": "ESP"}
+{"Ciudad": "Córdoba", "CodP": "ESP"}
+{"Ciudad": "Vigo", "CodP": "ESP"}
+{"Ciudad": "Alicante [Alacant]", "CodP": "ESP"}
+{"Ciudad": "Gijón", "CodP": "ESP"}
+{"Ciudad": "L´Hospitalet de Llobregat", "CodP": "ESP"}
+{"Ciudad": "Granada", "CodP": "ESP"}
+{"Ciudad": "A Coruña (La Coruña)", "CodP": "ESP"}
+{"Ciudad": "Vitoria-Gasteiz", "CodP": "ESP"}
+{"Ciudad": "Santa Cruz de Tenerife", "CodP": "ESP"}
+{"Ciudad": "Badalona", "CodP": "ESP"}
+{"Ciudad": "Oviedo", "CodP": "ESP"}
+{"Ciudad": "Móstoles", "CodP": "ESP"}
+{"Ciudad": "Elche [Elx]", "CodP": "ESP"}
+{"Ciudad": "Sabadell", "CodP": "ESP"}
+{"Ciudad": "Santander", "CodP": "ESP"}
+{"Ciudad": "Jerez de la Frontera", "CodP": "ESP"}
+{"Ciudad": "Pamplona [Iruña]", "CodP": "ESP"}
+{"Ciudad": "Donostia-San Sebastián", "CodP": "ESP"}
+{"Ciudad": "Cartagena", "CodP": "ESP"}
+{"Ciudad": "Leganés", "CodP": "ESP"}
+{"Ciudad": "Fuenlabrada", "CodP": "ESP"}
+{"Ciudad": "Almería", "CodP": "ESP"}
+{"Ciudad": "Terrassa", "CodP": "ESP"}
+{"Ciudad": "Alcalá de Henares", "CodP": "ESP"}
+{"Ciudad": "Burgos", "CodP": "ESP"}
+{"Ciudad": "Salamanca", "CodP": "ESP"}
+{"Ciudad": "Albacete", "CodP": "ESP"}
+{"Ciudad": "Getafe", "CodP": "ESP"}
+{"Ciudad": "Cádiz", "CodP": "ESP"}
+{"Ciudad": "Alcorcón", "CodP": "ESP"}
+{"Ciudad": "Huelva", "CodP": "ESP"}
+{"Ciudad": "León", "CodP": "ESP"}
+{"Ciudad": "Castellón de la Plana [Castell", "CodP": "ESP"}
+{"Ciudad": "Badajoz", "CodP": "ESP"}
+{"Ciudad": "[San Cristóbal de] la Laguna", "CodP": "ESP"}
+{"Ciudad": "Logroño", "CodP": "ESP"}
+{"Ciudad": "Santa Coloma de Gramenet", "CodP": "ESP"}
+{"Ciudad": "Tarragona", "CodP": "ESP"}
+{"Ciudad": "Lleida (Lérida)", "CodP": "ESP"}
+{"Ciudad": "Jaén", "CodP": "ESP"}
+{"Ciudad": "Ourense (Orense)", "CodP": "ESP"}
+{"Ciudad": "Mataró", "CodP": "ESP"}
+{"Ciudad": "Algeciras", "CodP": "ESP"}
+{"Ciudad": "Marbella", "CodP": "ESP"}
+{"Ciudad": "Barakaldo", "CodP": "ESP"}
+{"Ciudad": "Dos Hermanas", "CodP": "ESP"}
+{"Ciudad": "Santiago de Compostela", "CodP": "ESP"}
+{"Ciudad": "Torrejón de Ardoz", "CodP": "ESP"}
+{"Ciudad": "Cape Town", "CodP": "ZAF"}
+{"Ciudad": "Soweto", "CodP": "ZAF"}
+{"Ciudad": "Johannesburg", "CodP": "ZAF"}
+{"Ciudad": "Port Elizabeth", "CodP": "ZAF"}
+{"Ciudad": "Pretoria", "CodP": "ZAF"}
+{"Ciudad": "Inanda", "CodP": "ZAF"}
+{"Ciudad": "Durban", "CodP": "ZAF"}
+{"Ciudad": "Vanderbijlpark", "CodP": "ZAF"}
+{"Ciudad": "Kempton Park", "CodP": "ZAF"}
+{"Ciudad": "Alberton", "CodP": "ZAF"}
+{"Ciudad": "Pinetown", "CodP": "ZAF"}
+{"Ciudad": "Pietermaritzburg", "CodP": "ZAF"}
+{"Ciudad": "Benoni", "CodP": "ZAF"}
+{"Ciudad": "Randburg", "CodP": "ZAF"}
+{"Ciudad": "Umlazi", "CodP": "ZAF"}
+{"Ciudad": "Bloemfontein", "CodP": "ZAF"}
+{"Ciudad": "Vereeniging", "CodP": "ZAF"}
+{"Ciudad": "Wonderboom", "CodP": "ZAF"}
+{"Ciudad": "Roodepoort", "CodP": "ZAF"}
+{"Ciudad": "Boksburg", "CodP": "ZAF"}
+{"Ciudad": "Klerksdorp", "CodP": "ZAF"}
+{"Ciudad": "Soshanguve", "CodP": "ZAF"}
+{"Ciudad": "Newcastle", "CodP": "ZAF"}
+{"Ciudad": "East London", "CodP": "ZAF"}
+{"Ciudad": "Welkom", "CodP": "ZAF"}
+{"Ciudad": "Kimberley", "CodP": "ZAF"}
+{"Ciudad": "Uitenhage", "CodP": "ZAF"}
+{"Ciudad": "Chatsworth", "CodP": "ZAF"}
+{"Ciudad": "Mdantsane", "CodP": "ZAF"}
+{"Ciudad": "Krugersdorp", "CodP": "ZAF"}
+{"Ciudad": "Botshabelo", "CodP": "ZAF"}
+{"Ciudad": "Brakpan", "CodP": "ZAF"}
+{"Ciudad": "Witbank", "CodP": "ZAF"}
+{"Ciudad": "Oberholzer", "CodP": "ZAF"}
+{"Ciudad": "Germiston", "CodP": "ZAF"}
+{"Ciudad": "Springs", "CodP": "ZAF"}
+{"Ciudad": "Westonaria", "CodP": "ZAF"}
+{"Ciudad": "Randfontein", "CodP": "ZAF"}
+{"Ciudad": "Paarl", "CodP": "ZAF"}
+{"Ciudad": "Potchefstroom", "CodP": "ZAF"}
+{"Ciudad": "Rustenburg", "CodP": "ZAF"}
+{"Ciudad": "Nigel", "CodP": "ZAF"}
+{"Ciudad": "George", "CodP": "ZAF"}
+{"Ciudad": "Ladysmith", "CodP": "ZAF"}
+{"Ciudad": "Addis Abeba", "CodP": "ETH"}
+{"Ciudad": "Dire Dawa", "CodP": "ETH"}
+{"Ciudad": "Nazret", "CodP": "ETH"}
+{"Ciudad": "Gonder", "CodP": "ETH"}
+{"Ciudad": "Dese", "CodP": "ETH"}
+{"Ciudad": "Mekele", "CodP": "ETH"}
+{"Ciudad": "Bahir Dar", "CodP": "ETH"}
+{"Ciudad": "Stanley", "CodP": "FLK"}
+{"Ciudad": "Suva", "CodP": "FJI"}
+{"Ciudad": "Quezon", "CodP": "PHL"}
+{"Ciudad": "Manila", "CodP": "PHL"}
+{"Ciudad": "Kalookan", "CodP": "PHL"}
+{"Ciudad": "Davao", "CodP": "PHL"}
+{"Ciudad": "Cebu", "CodP": "PHL"}
+{"Ciudad": "Zamboanga", "CodP": "PHL"}
+{"Ciudad": "Pasig", "CodP": "PHL"}
+{"Ciudad": "Valenzuela", "CodP": "PHL"}
+{"Ciudad": "Las Piñas", "CodP": "PHL"}
+{"Ciudad": "Antipolo", "CodP": "PHL"}
+{"Ciudad": "Taguig", "CodP": "PHL"}
+{"Ciudad": "Cagayan de Oro", "CodP": "PHL"}
+{"Ciudad": "Parañaque", "CodP": "PHL"}
+{"Ciudad": "Makati", "CodP": "PHL"}
+{"Ciudad": "Bacolod", "CodP": "PHL"}
+{"Ciudad": "General Santos", "CodP": "PHL"}
+{"Ciudad": "Marikina", "CodP": "PHL"}
+{"Ciudad": "Dasmariñas", "CodP": "PHL"}
+{"Ciudad": "Muntinlupa", "CodP": "PHL"}
+{"Ciudad": "Iloilo", "CodP": "PHL"}
+{"Ciudad": "Pasay", "CodP": "PHL"}
+{"Ciudad": "Malabon", "CodP": "PHL"}
+{"Ciudad": "San José del Monte", "CodP": "PHL"}
+{"Ciudad": "Bacoor", "CodP": "PHL"}
+{"Ciudad": "Iligan", "CodP": "PHL"}
+{"Ciudad": "Calamba", "CodP": "PHL"}
+{"Ciudad": "Mandaluyong", "CodP": "PHL"}
+{"Ciudad": "Butuan", "CodP": "PHL"}
+{"Ciudad": "Angeles", "CodP": "PHL"}
+{"Ciudad": "Tarlac", "CodP": "PHL"}
+{"Ciudad": "Mandaue", "CodP": "PHL"}
+{"Ciudad": "Baguio", "CodP": "PHL"}
+{"Ciudad": "Batangas", "CodP": "PHL"}
+{"Ciudad": "Cainta", "CodP": "PHL"}
+{"Ciudad": "San Pedro", "CodP": "PHL"}
+{"Ciudad": "Navotas", "CodP": "PHL"}
+{"Ciudad": "Cabanatuan", "CodP": "PHL"}
+{"Ciudad": "San Fernando", "CodP": "PHL"}
+{"Ciudad": "Lipa", "CodP": "PHL"}
+{"Ciudad": "Lapu-Lapu", "CodP": "PHL"}
+{"Ciudad": "San Pablo", "CodP": "PHL"}
+{"Ciudad": "Biñan", "CodP": "PHL"}
+{"Ciudad": "Taytay", "CodP": "PHL"}
+{"Ciudad": "Lucena", "CodP": "PHL"}
+{"Ciudad": "Imus", "CodP": "PHL"}
+{"Ciudad": "Olongapo", "CodP": "PHL"}
+{"Ciudad": "Binangonan", "CodP": "PHL"}
+{"Ciudad": "Santa Rosa", "CodP": "PHL"}
+{"Ciudad": "Tagum", "CodP": "PHL"}
+{"Ciudad": "Tacloban", "CodP": "PHL"}
+{"Ciudad": "Malolos", "CodP": "PHL"}
+{"Ciudad": "Mabalacat", "CodP": "PHL"}
+{"Ciudad": "Cotabato", "CodP": "PHL"}
+{"Ciudad": "Meycauayan", "CodP": "PHL"}
+{"Ciudad": "Puerto Princesa", "CodP": "PHL"}
+{"Ciudad": "Legazpi", "CodP": "PHL"}
+{"Ciudad": "Silang", "CodP": "PHL"}
+{"Ciudad": "Ormoc", "CodP": "PHL"}
+{"Ciudad": "San Carlos", "CodP": "PHL"}
+{"Ciudad": "Kabankalan", "CodP": "PHL"}
+{"Ciudad": "Talisay", "CodP": "PHL"}
+{"Ciudad": "Valencia", "CodP": "PHL"}
+{"Ciudad": "Calbayog", "CodP": "PHL"}
+{"Ciudad": "Santa Maria", "CodP": "PHL"}
+{"Ciudad": "Pagadian", "CodP": "PHL"}
+{"Ciudad": "Cadiz", "CodP": "PHL"}
+{"Ciudad": "Bago", "CodP": "PHL"}
+{"Ciudad": "Toledo", "CodP": "PHL"}
+{"Ciudad": "Naga", "CodP": "PHL"}
+{"Ciudad": "San Mateo", "CodP": "PHL"}
+{"Ciudad": "Panabo", "CodP": "PHL"}
+{"Ciudad": "Koronadal", "CodP": "PHL"}
+{"Ciudad": "Marawi", "CodP": "PHL"}
+{"Ciudad": "Dagupan", "CodP": "PHL"}
+{"Ciudad": "Sagay", "CodP": "PHL"}
+{"Ciudad": "Roxas", "CodP": "PHL"}
+{"Ciudad": "Lubao", "CodP": "PHL"}
+{"Ciudad": "Digos", "CodP": "PHL"}
+{"Ciudad": "San Miguel", "CodP": "PHL"}
+{"Ciudad": "Malaybalay", "CodP": "PHL"}
+{"Ciudad": "Tuguegarao", "CodP": "PHL"}
+{"Ciudad": "Ilagan", "CodP": "PHL"}
+{"Ciudad": "Baliuag", "CodP": "PHL"}
+{"Ciudad": "Surigao", "CodP": "PHL"}
+{"Ciudad": "San Carlos", "CodP": "PHL"}
+{"Ciudad": "San Juan del Monte", "CodP": "PHL"}
+{"Ciudad": "Tanauan", "CodP": "PHL"}
+{"Ciudad": "Concepcion", "CodP": "PHL"}
+{"Ciudad": "Rodriguez (Montalban)", "CodP": "PHL"}
+{"Ciudad": "Sariaya", "CodP": "PHL"}
+{"Ciudad": "Malasiqui", "CodP": "PHL"}
+{"Ciudad": "General Mariano Alvarez", "CodP": "PHL"}
+{"Ciudad": "Urdaneta", "CodP": "PHL"}
+{"Ciudad": "Hagonoy", "CodP": "PHL"}
+{"Ciudad": "San Jose", "CodP": "PHL"}
+{"Ciudad": "Polomolok", "CodP": "PHL"}
+{"Ciudad": "Santiago", "CodP": "PHL"}
+{"Ciudad": "Tanza", "CodP": "PHL"}
+{"Ciudad": "Ozamis", "CodP": "PHL"}
+{"Ciudad": "Mexico", "CodP": "PHL"}
+{"Ciudad": "San Jose", "CodP": "PHL"}
+{"Ciudad": "Silay", "CodP": "PHL"}
+{"Ciudad": "General Trias", "CodP": "PHL"}
+{"Ciudad": "Tabaco", "CodP": "PHL"}
+{"Ciudad": "Cabuyao", "CodP": "PHL"}
+{"Ciudad": "Calapan", "CodP": "PHL"}
+{"Ciudad": "Mati", "CodP": "PHL"}
+{"Ciudad": "Midsayap", "CodP": "PHL"}
+{"Ciudad": "Cauayan", "CodP": "PHL"}
+{"Ciudad": "Gingoog", "CodP": "PHL"}
+{"Ciudad": "Dumaguete", "CodP": "PHL"}
+{"Ciudad": "San Fernando", "CodP": "PHL"}
+{"Ciudad": "Arayat", "CodP": "PHL"}
+{"Ciudad": "Bayawan (Tulong)", "CodP": "PHL"}
+{"Ciudad": "Kidapawan", "CodP": "PHL"}
+{"Ciudad": "Daraga (Locsin)", "CodP": "PHL"}
+{"Ciudad": "Marilao", "CodP": "PHL"}
+{"Ciudad": "Malita", "CodP": "PHL"}
+{"Ciudad": "Dipolog", "CodP": "PHL"}
+{"Ciudad": "Cavite", "CodP": "PHL"}
+{"Ciudad": "Danao", "CodP": "PHL"}
+{"Ciudad": "Bislig", "CodP": "PHL"}
+{"Ciudad": "Talavera", "CodP": "PHL"}
+{"Ciudad": "Guagua", "CodP": "PHL"}
+{"Ciudad": "Bayambang", "CodP": "PHL"}
+{"Ciudad": "Nasugbu", "CodP": "PHL"}
+{"Ciudad": "Baybay", "CodP": "PHL"}
+{"Ciudad": "Capas", "CodP": "PHL"}
+{"Ciudad": "Sultan Kudarat", "CodP": "PHL"}
+{"Ciudad": "Laoag", "CodP": "PHL"}
+{"Ciudad": "Bayugan", "CodP": "PHL"}
+{"Ciudad": "Malungon", "CodP": "PHL"}
+{"Ciudad": "Santa Cruz", "CodP": "PHL"}
+{"Ciudad": "Sorsogon", "CodP": "PHL"}
+{"Ciudad": "Candelaria", "CodP": "PHL"}
+{"Ciudad": "Ligao", "CodP": "PHL"}
+{"Ciudad": "Tórshavn", "CodP": "FRO"}
+{"Ciudad": "Libreville", "CodP": "GAB"}
+{"Ciudad": "Serekunda", "CodP": "GMB"}
+{"Ciudad": "Banjul", "CodP": "GMB"}
+{"Ciudad": "Tbilisi", "CodP": "GEO"}
+{"Ciudad": "Kutaisi", "CodP": "GEO"}
+{"Ciudad": "Rustavi", "CodP": "GEO"}
+{"Ciudad": "Batumi", "CodP": "GEO"}
+{"Ciudad": "Sohumi", "CodP": "GEO"}
+{"Ciudad": "Accra", "CodP": "GHA"}
+{"Ciudad": "Kumasi", "CodP": "GHA"}
+{"Ciudad": "Tamale", "CodP": "GHA"}
+{"Ciudad": "Tema", "CodP": "GHA"}
+{"Ciudad": "Sekondi-Takoradi", "CodP": "GHA"}
+{"Ciudad": "Gibraltar", "CodP": "GIB"}
+{"Ciudad": "Saint George´s", "CodP": "GRD"}
+{"Ciudad": "Nuuk", "CodP": "GRL"}
+{"Ciudad": "Les Abymes", "CodP": "GLP"}
+{"Ciudad": "Basse-Terre", "CodP": "GLP"}
+{"Ciudad": "Tamuning", "CodP": "GUM"}
+{"Ciudad": "Agaña", "CodP": "GUM"}
+{"Ciudad": "Ciudad de Guatemala", "CodP": "GTM"}
+{"Ciudad": "Mixco", "CodP": "GTM"}
+{"Ciudad": "Villa Nueva", "CodP": "GTM"}
+{"Ciudad": "Quetzaltenango", "CodP": "GTM"}
+{"Ciudad": "Conakry", "CodP": "GIN"}
+{"Ciudad": "Bissau", "CodP": "GNB"}
+{"Ciudad": "Georgetown", "CodP": "GUY"}
+{"Ciudad": "Port-au-Prince", "CodP": "HTI"}
+{"Ciudad": "Carrefour", "CodP": "HTI"}
+{"Ciudad": "Delmas", "CodP": "HTI"}
+{"Ciudad": "Le-Cap-Haïtien", "CodP": "HTI"}
+{"Ciudad": "Tegucigalpa", "CodP": "HND"}
+{"Ciudad": "San Pedro Sula", "CodP": "HND"}
+{"Ciudad": "La Ceiba", "CodP": "HND"}
+{"Ciudad": "Kowloon and New Kowloon", "CodP": "HKG"}
+{"Ciudad": "Victoria", "CodP": "HKG"}
+{"Ciudad": "Longyearbyen", "CodP": "SJM"}
+{"Ciudad": "Jakarta", "CodP": "IDN"}
+{"Ciudad": "Surabaya", "CodP": "IDN"}
+{"Ciudad": "Bandung", "CodP": "IDN"}
+{"Ciudad": "Medan", "CodP": "IDN"}
+{"Ciudad": "Palembang", "CodP": "IDN"}
+{"Ciudad": "Tangerang", "CodP": "IDN"}
+{"Ciudad": "Semarang", "CodP": "IDN"}
+{"Ciudad": "Ujung Pandang", "CodP": "IDN"}
+{"Ciudad": "Malang", "CodP": "IDN"}
+{"Ciudad": "Bandar Lampung", "CodP": "IDN"}
+{"Ciudad": "Bekasi", "CodP": "IDN"}
+{"Ciudad": "Padang", "CodP": "IDN"}
+{"Ciudad": "Surakarta", "CodP": "IDN"}
+{"Ciudad": "Banjarmasin", "CodP": "IDN"}
+{"Ciudad": "Pekan Baru", "CodP": "IDN"}
+{"Ciudad": "Denpasar", "CodP": "IDN"}
+{"Ciudad": "Yogyakarta", "CodP": "IDN"}
+{"Ciudad": "Pontianak", "CodP": "IDN"}
+{"Ciudad": "Samarinda", "CodP": "IDN"}
+{"Ciudad": "Jambi", "CodP": "IDN"}
+{"Ciudad": "Depok", "CodP": "IDN"}
+{"Ciudad": "Cimahi", "CodP": "IDN"}
+{"Ciudad": "Balikpapan", "CodP": "IDN"}
+{"Ciudad": "Manado", "CodP": "IDN"}
+{"Ciudad": "Mataram", "CodP": "IDN"}
+{"Ciudad": "Pekalongan", "CodP": "IDN"}
+{"Ciudad": "Tegal", "CodP": "IDN"}
+{"Ciudad": "Bogor", "CodP": "IDN"}
+{"Ciudad": "Ciputat", "CodP": "IDN"}
+{"Ciudad": "Pondokgede", "CodP": "IDN"}
+{"Ciudad": "Cirebon", "CodP": "IDN"}
+{"Ciudad": "Kediri", "CodP": "IDN"}
+{"Ciudad": "Ambon", "CodP": "IDN"}
+{"Ciudad": "Jember", "CodP": "IDN"}
+{"Ciudad": "Cilacap", "CodP": "IDN"}
+{"Ciudad": "Cimanggis", "CodP": "IDN"}
+{"Ciudad": "Pematang Siantar", "CodP": "IDN"}
+{"Ciudad": "Purwokerto", "CodP": "IDN"}
+{"Ciudad": "Ciomas", "CodP": "IDN"}
+{"Ciudad": "Tasikmalaya", "CodP": "IDN"}
+{"Ciudad": "Madiun", "CodP": "IDN"}
+{"Ciudad": "Bengkulu", "CodP": "IDN"}
+{"Ciudad": "Karawang", "CodP": "IDN"}
+{"Ciudad": "Banda Aceh", "CodP": "IDN"}
+{"Ciudad": "Palu", "CodP": "IDN"}
+{"Ciudad": "Pasuruan", "CodP": "IDN"}
+{"Ciudad": "Kupang", "CodP": "IDN"}
+{"Ciudad": "Tebing Tinggi", "CodP": "IDN"}
+{"Ciudad": "Percut Sei Tuan", "CodP": "IDN"}
+{"Ciudad": "Binjai", "CodP": "IDN"}
+{"Ciudad": "Sukabumi", "CodP": "IDN"}
+{"Ciudad": "Waru", "CodP": "IDN"}
+{"Ciudad": "Pangkal Pinang", "CodP": "IDN"}
+{"Ciudad": "Magelang", "CodP": "IDN"}
+{"Ciudad": "Blitar", "CodP": "IDN"}
+{"Ciudad": "Serang", "CodP": "IDN"}
+{"Ciudad": "Probolinggo", "CodP": "IDN"}
+{"Ciudad": "Cilegon", "CodP": "IDN"}
+{"Ciudad": "Cianjur", "CodP": "IDN"}
+{"Ciudad": "Ciparay", "CodP": "IDN"}
+{"Ciudad": "Lhokseumawe", "CodP": "IDN"}
+{"Ciudad": "Taman", "CodP": "IDN"}
+{"Ciudad": "Depok", "CodP": "IDN"}
+{"Ciudad": "Citeureup", "CodP": "IDN"}
+{"Ciudad": "Pemalang", "CodP": "IDN"}
+{"Ciudad": "Klaten", "CodP": "IDN"}
+{"Ciudad": "Salatiga", "CodP": "IDN"}
+{"Ciudad": "Cibinong", "CodP": "IDN"}
+{"Ciudad": "Palangka Raya", "CodP": "IDN"}
+{"Ciudad": "Mojokerto", "CodP": "IDN"}
+{"Ciudad": "Purwakarta", "CodP": "IDN"}
+{"Ciudad": "Garut", "CodP": "IDN"}
+{"Ciudad": "Kudus", "CodP": "IDN"}
+{"Ciudad": "Kendari", "CodP": "IDN"}
+{"Ciudad": "Jaya Pura", "CodP": "IDN"}
+{"Ciudad": "Gorontalo", "CodP": "IDN"}
+{"Ciudad": "Majalaya", "CodP": "IDN"}
+{"Ciudad": "Pondok Aren", "CodP": "IDN"}
+{"Ciudad": "Jombang", "CodP": "IDN"}
+{"Ciudad": "Sunggal", "CodP": "IDN"}
+{"Ciudad": "Batam", "CodP": "IDN"}
+{"Ciudad": "Padang Sidempuan", "CodP": "IDN"}
+{"Ciudad": "Sawangan", "CodP": "IDN"}
+{"Ciudad": "Banyuwangi", "CodP": "IDN"}
+{"Ciudad": "Tanjung Pinang", "CodP": "IDN"}
+{"Ciudad": "Mumbai (Bombay)", "CodP": "IND"}
+{"Ciudad": "Delhi", "CodP": "IND"}
+{"Ciudad": "Calcutta [Kolkata]", "CodP": "IND"}
+{"Ciudad": "Chennai (Madras)", "CodP": "IND"}
+{"Ciudad": "Hyderabad", "CodP": "IND"}
+{"Ciudad": "Ahmedabad", "CodP": "IND"}
+{"Ciudad": "Bangalore", "CodP": "IND"}
+{"Ciudad": "Kanpur", "CodP": "IND"}
+{"Ciudad": "Nagpur", "CodP": "IND"}
+{"Ciudad": "Lucknow", "CodP": "IND"}
+{"Ciudad": "Pune", "CodP": "IND"}
+{"Ciudad": "Surat", "CodP": "IND"}
+{"Ciudad": "Jaipur", "CodP": "IND"}
+{"Ciudad": "Indore", "CodP": "IND"}
+{"Ciudad": "Bhopal", "CodP": "IND"}
+{"Ciudad": "Ludhiana", "CodP": "IND"}
+{"Ciudad": "Vadodara (Baroda)", "CodP": "IND"}
+{"Ciudad": "Kalyan", "CodP": "IND"}
+{"Ciudad": "Madurai", "CodP": "IND"}
+{"Ciudad": "Haora (Howrah)", "CodP": "IND"}
+{"Ciudad": "Varanasi (Benares)", "CodP": "IND"}
+{"Ciudad": "Patna", "CodP": "IND"}
+{"Ciudad": "Srinagar", "CodP": "IND"}
+{"Ciudad": "Agra", "CodP": "IND"}
+{"Ciudad": "Coimbatore", "CodP": "IND"}
+{"Ciudad": "Thane (Thana)", "CodP": "IND"}
+{"Ciudad": "Allahabad", "CodP": "IND"}
+{"Ciudad": "Meerut", "CodP": "IND"}
+{"Ciudad": "Vishakhapatnam", "CodP": "IND"}
+{"Ciudad": "Jabalpur", "CodP": "IND"}
+{"Ciudad": "Amritsar", "CodP": "IND"}
+{"Ciudad": "Faridabad", "CodP": "IND"}
+{"Ciudad": "Vijayawada", "CodP": "IND"}
+{"Ciudad": "Gwalior", "CodP": "IND"}
+{"Ciudad": "Jodhpur", "CodP": "IND"}
+{"Ciudad": "Nashik (Nasik)", "CodP": "IND"}
+{"Ciudad": "Hubli-Dharwad", "CodP": "IND"}
+{"Ciudad": "Solapur (Sholapur)", "CodP": "IND"}
+{"Ciudad": "Ranchi", "CodP": "IND"}
+{"Ciudad": "Bareilly", "CodP": "IND"}
+{"Ciudad": "Guwahati (Gauhati)", "CodP": "IND"}
+{"Ciudad": "Shambajinagar (Aurangabad)", "CodP": "IND"}
+{"Ciudad": "Cochin (Kochi)", "CodP": "IND"}
+{"Ciudad": "Rajkot", "CodP": "IND"}
+{"Ciudad": "Kota", "CodP": "IND"}
+{"Ciudad": "Thiruvananthapuram (Trivandrum", "CodP": "IND"}
+{"Ciudad": "Pimpri-Chinchwad", "CodP": "IND"}
+{"Ciudad": "Jalandhar (Jullundur)", "CodP": "IND"}
+{"Ciudad": "Gorakhpur", "CodP": "IND"}
+{"Ciudad": "Chandigarh", "CodP": "IND"}
+{"Ciudad": "Mysore", "CodP": "IND"}
+{"Ciudad": "Aligarh", "CodP": "IND"}
+{"Ciudad": "Guntur", "CodP": "IND"}
+{"Ciudad": "Jamshedpur", "CodP": "IND"}
+{"Ciudad": "Ghaziabad", "CodP": "IND"}
+{"Ciudad": "Warangal", "CodP": "IND"}
+{"Ciudad": "Raipur", "CodP": "IND"}
+{"Ciudad": "Moradabad", "CodP": "IND"}
+{"Ciudad": "Durgapur", "CodP": "IND"}
+{"Ciudad": "Amravati", "CodP": "IND"}
+{"Ciudad": "Calicut (Kozhikode)", "CodP": "IND"}
+{"Ciudad": "Bikaner", "CodP": "IND"}
+{"Ciudad": "Bhubaneswar", "CodP": "IND"}
+{"Ciudad": "Kolhapur", "CodP": "IND"}
+{"Ciudad": "Kataka (Cuttack)", "CodP": "IND"}
+{"Ciudad": "Ajmer", "CodP": "IND"}
+{"Ciudad": "Bhavnagar", "CodP": "IND"}
+{"Ciudad": "Tiruchirapalli", "CodP": "IND"}
+{"Ciudad": "Bhilai", "CodP": "IND"}
+{"Ciudad": "Bhiwandi", "CodP": "IND"}
+{"Ciudad": "Saharanpur", "CodP": "IND"}
+{"Ciudad": "Ulhasnagar", "CodP": "IND"}
+{"Ciudad": "Salem", "CodP": "IND"}
+{"Ciudad": "Ujjain", "CodP": "IND"}
+{"Ciudad": "Malegaon", "CodP": "IND"}
+{"Ciudad": "Jamnagar", "CodP": "IND"}
+{"Ciudad": "Bokaro Steel City", "CodP": "IND"}
+{"Ciudad": "Akola", "CodP": "IND"}
+{"Ciudad": "Belgaum", "CodP": "IND"}
+{"Ciudad": "Rajahmundry", "CodP": "IND"}
+{"Ciudad": "Nellore", "CodP": "IND"}
+{"Ciudad": "Udaipur", "CodP": "IND"}
+{"Ciudad": "New Bombay", "CodP": "IND"}
+{"Ciudad": "Bhatpara", "CodP": "IND"}
+{"Ciudad": "Gulbarga", "CodP": "IND"}
+{"Ciudad": "New Delhi", "CodP": "IND"}
+{"Ciudad": "Jhansi", "CodP": "IND"}
+{"Ciudad": "Gaya", "CodP": "IND"}
+{"Ciudad": "Kakinada", "CodP": "IND"}
+{"Ciudad": "Dhule (Dhulia)", "CodP": "IND"}
+{"Ciudad": "Panihati", "CodP": "IND"}
+{"Ciudad": "Nanded (Nander)", "CodP": "IND"}
+{"Ciudad": "Mangalore", "CodP": "IND"}
+{"Ciudad": "Dehra Dun", "CodP": "IND"}
+{"Ciudad": "Kamarhati", "CodP": "IND"}
+{"Ciudad": "Davangere", "CodP": "IND"}
+{"Ciudad": "Asansol", "CodP": "IND"}
+{"Ciudad": "Bhagalpur", "CodP": "IND"}
+{"Ciudad": "Bellary", "CodP": "IND"}
+{"Ciudad": "Barddhaman (Burdwan)", "CodP": "IND"}
+{"Ciudad": "Rampur", "CodP": "IND"}
+{"Ciudad": "Jalgaon", "CodP": "IND"}
+{"Ciudad": "Muzaffarpur", "CodP": "IND"}
+{"Ciudad": "Nizamabad", "CodP": "IND"}
+{"Ciudad": "Muzaffarnagar", "CodP": "IND"}
+{"Ciudad": "Patiala", "CodP": "IND"}
+{"Ciudad": "Shahjahanpur", "CodP": "IND"}
+{"Ciudad": "Kurnool", "CodP": "IND"}
+{"Ciudad": "Tiruppur (Tirupper)", "CodP": "IND"}
+{"Ciudad": "Rohtak", "CodP": "IND"}
+{"Ciudad": "South Dum Dum", "CodP": "IND"}
+{"Ciudad": "Mathura", "CodP": "IND"}
+{"Ciudad": "Chandrapur", "CodP": "IND"}
+{"Ciudad": "Barahanagar (Baranagar)", "CodP": "IND"}
+{"Ciudad": "Darbhanga", "CodP": "IND"}
+{"Ciudad": "Siliguri (Shiliguri)", "CodP": "IND"}
+{"Ciudad": "Raurkela", "CodP": "IND"}
+{"Ciudad": "Ambattur", "CodP": "IND"}
+{"Ciudad": "Panipat", "CodP": "IND"}
+{"Ciudad": "Firozabad", "CodP": "IND"}
+{"Ciudad": "Ichalkaranji", "CodP": "IND"}
+{"Ciudad": "Jammu", "CodP": "IND"}
+{"Ciudad": "Ramagundam", "CodP": "IND"}
+{"Ciudad": "Eluru", "CodP": "IND"}
+{"Ciudad": "Brahmapur", "CodP": "IND"}
+{"Ciudad": "Alwar", "CodP": "IND"}
+{"Ciudad": "Pondicherry", "CodP": "IND"}
+{"Ciudad": "Thanjavur", "CodP": "IND"}
+{"Ciudad": "Bihar Sharif", "CodP": "IND"}
+{"Ciudad": "Tuticorin", "CodP": "IND"}
+{"Ciudad": "Imphal", "CodP": "IND"}
+{"Ciudad": "Latur", "CodP": "IND"}
+{"Ciudad": "Sagar", "CodP": "IND"}
+{"Ciudad": "Farrukhabad-cum-Fatehgarh", "CodP": "IND"}
+{"Ciudad": "Sangli", "CodP": "IND"}
+{"Ciudad": "Parbhani", "CodP": "IND"}
+{"Ciudad": "Nagar Coil", "CodP": "IND"}
+{"Ciudad": "Bijapur", "CodP": "IND"}
+{"Ciudad": "Kukatpalle", "CodP": "IND"}
+{"Ciudad": "Bally", "CodP": "IND"}
+{"Ciudad": "Bhilwara", "CodP": "IND"}
+{"Ciudad": "Ratlam", "CodP": "IND"}
+{"Ciudad": "Avadi", "CodP": "IND"}
+{"Ciudad": "Dindigul", "CodP": "IND"}
+{"Ciudad": "Ahmadnagar", "CodP": "IND"}
+{"Ciudad": "Bilaspur", "CodP": "IND"}
+{"Ciudad": "Shimoga", "CodP": "IND"}
+{"Ciudad": "Kharagpur", "CodP": "IND"}
+{"Ciudad": "Mira Bhayandar", "CodP": "IND"}
+{"Ciudad": "Vellore", "CodP": "IND"}
+{"Ciudad": "Jalna", "CodP": "IND"}
+{"Ciudad": "Burnpur", "CodP": "IND"}
+{"Ciudad": "Anantapur", "CodP": "IND"}
+{"Ciudad": "Allappuzha (Alleppey)", "CodP": "IND"}
+{"Ciudad": "Tirupati", "CodP": "IND"}
+{"Ciudad": "Karnal", "CodP": "IND"}
+{"Ciudad": "Burhanpur", "CodP": "IND"}
+{"Ciudad": "Hisar (Hissar)", "CodP": "IND"}
+{"Ciudad": "Tiruvottiyur", "CodP": "IND"}
+{"Ciudad": "Mirzapur-cum-Vindhyachal", "CodP": "IND"}
+{"Ciudad": "Secunderabad", "CodP": "IND"}
+{"Ciudad": "Nadiad", "CodP": "IND"}
+{"Ciudad": "Dewas", "CodP": "IND"}
+{"Ciudad": "Murwara (Katni)", "CodP": "IND"}
+{"Ciudad": "Ganganagar", "CodP": "IND"}
+{"Ciudad": "Vizianagaram", "CodP": "IND"}
+{"Ciudad": "Erode", "CodP": "IND"}
+{"Ciudad": "Machilipatnam (Masulipatam)", "CodP": "IND"}
+{"Ciudad": "Bhatinda (Bathinda)", "CodP": "IND"}
+{"Ciudad": "Raichur", "CodP": "IND"}
+{"Ciudad": "Agartala", "CodP": "IND"}
+{"Ciudad": "Arrah (Ara)", "CodP": "IND"}
+{"Ciudad": "Satna", "CodP": "IND"}
+{"Ciudad": "Lalbahadur Nagar", "CodP": "IND"}
+{"Ciudad": "Aizawl", "CodP": "IND"}
+{"Ciudad": "Uluberia", "CodP": "IND"}
+{"Ciudad": "Katihar", "CodP": "IND"}
+{"Ciudad": "Cuddalore", "CodP": "IND"}
+{"Ciudad": "Hugli-Chinsurah", "CodP": "IND"}
+{"Ciudad": "Dhanbad", "CodP": "IND"}
+{"Ciudad": "Raiganj", "CodP": "IND"}
+{"Ciudad": "Sambhal", "CodP": "IND"}
+{"Ciudad": "Durg", "CodP": "IND"}
+{"Ciudad": "Munger (Monghyr)", "CodP": "IND"}
+{"Ciudad": "Kanchipuram", "CodP": "IND"}
+{"Ciudad": "North Dum Dum", "CodP": "IND"}
+{"Ciudad": "Karimnagar", "CodP": "IND"}
+{"Ciudad": "Bharatpur", "CodP": "IND"}
+{"Ciudad": "Sikar", "CodP": "IND"}
+{"Ciudad": "Hardwar (Haridwar)", "CodP": "IND"}
+{"Ciudad": "Dabgram", "CodP": "IND"}
+{"Ciudad": "Morena", "CodP": "IND"}
+{"Ciudad": "Noida", "CodP": "IND"}
+{"Ciudad": "Hapur", "CodP": "IND"}
+{"Ciudad": "Bhusawal", "CodP": "IND"}
+{"Ciudad": "Khandwa", "CodP": "IND"}
+{"Ciudad": "Yamuna Nagar", "CodP": "IND"}
+{"Ciudad": "Sonipat (Sonepat)", "CodP": "IND"}
+{"Ciudad": "Tenali", "CodP": "IND"}
+{"Ciudad": "Raurkela Civil Township", "CodP": "IND"}
+{"Ciudad": "Kollam (Quilon)", "CodP": "IND"}
+{"Ciudad": "Kumbakonam", "CodP": "IND"}
+{"Ciudad": "Ingraj Bazar (English Bazar)", "CodP": "IND"}
+{"Ciudad": "Timkur", "CodP": "IND"}
+{"Ciudad": "Amroha", "CodP": "IND"}
+{"Ciudad": "Serampore", "CodP": "IND"}
+{"Ciudad": "Chapra", "CodP": "IND"}
+{"Ciudad": "Pali", "CodP": "IND"}
+{"Ciudad": "Maunath Bhanjan", "CodP": "IND"}
+{"Ciudad": "Adoni", "CodP": "IND"}
+{"Ciudad": "Jaunpur", "CodP": "IND"}
+{"Ciudad": "Tirunelveli", "CodP": "IND"}
+{"Ciudad": "Bahraich", "CodP": "IND"}
+{"Ciudad": "Gadag Betigeri", "CodP": "IND"}
+{"Ciudad": "Proddatur", "CodP": "IND"}
+{"Ciudad": "Chittoor", "CodP": "IND"}
+{"Ciudad": "Barrackpur", "CodP": "IND"}
+{"Ciudad": "Bharuch (Broach)", "CodP": "IND"}
+{"Ciudad": "Naihati", "CodP": "IND"}
+{"Ciudad": "Shillong", "CodP": "IND"}
+{"Ciudad": "Sambalpur", "CodP": "IND"}
+{"Ciudad": "Junagadh", "CodP": "IND"}
+{"Ciudad": "Rae Bareli", "CodP": "IND"}
+{"Ciudad": "Rewa", "CodP": "IND"}
+{"Ciudad": "Gurgaon", "CodP": "IND"}
+{"Ciudad": "Khammam", "CodP": "IND"}
+{"Ciudad": "Bulandshahr", "CodP": "IND"}
+{"Ciudad": "Navsari", "CodP": "IND"}
+{"Ciudad": "Malkajgiri", "CodP": "IND"}
+{"Ciudad": "Midnapore (Medinipur)", "CodP": "IND"}
+{"Ciudad": "Miraj", "CodP": "IND"}
+{"Ciudad": "Raj Nandgaon", "CodP": "IND"}
+{"Ciudad": "Alandur", "CodP": "IND"}
+{"Ciudad": "Puri", "CodP": "IND"}
+{"Ciudad": "Navadwip", "CodP": "IND"}
+{"Ciudad": "Sirsa", "CodP": "IND"}
+{"Ciudad": "Korba", "CodP": "IND"}
+{"Ciudad": "Faizabad", "CodP": "IND"}
+{"Ciudad": "Etawah", "CodP": "IND"}
+{"Ciudad": "Pathankot", "CodP": "IND"}
+{"Ciudad": "Gandhinagar", "CodP": "IND"}
+{"Ciudad": "Palghat (Palakkad)", "CodP": "IND"}
+{"Ciudad": "Veraval", "CodP": "IND"}
+{"Ciudad": "Hoshiarpur", "CodP": "IND"}
+{"Ciudad": "Ambala", "CodP": "IND"}
+{"Ciudad": "Sitapur", "CodP": "IND"}
+{"Ciudad": "Bhiwani", "CodP": "IND"}
+{"Ciudad": "Cuddapah", "CodP": "IND"}
+{"Ciudad": "Bhimavaram", "CodP": "IND"}
+{"Ciudad": "Krishnanagar", "CodP": "IND"}
+{"Ciudad": "Chandannagar", "CodP": "IND"}
+{"Ciudad": "Mandya", "CodP": "IND"}
+{"Ciudad": "Dibrugarh", "CodP": "IND"}
+{"Ciudad": "Nandyal", "CodP": "IND"}
+{"Ciudad": "Balurghat", "CodP": "IND"}
+{"Ciudad": "Neyveli", "CodP": "IND"}
+{"Ciudad": "Fatehpur", "CodP": "IND"}
+{"Ciudad": "Mahbubnagar", "CodP": "IND"}
+{"Ciudad": "Budaun", "CodP": "IND"}
+{"Ciudad": "Porbandar", "CodP": "IND"}
+{"Ciudad": "Silchar", "CodP": "IND"}
+{"Ciudad": "Berhampore (Baharampur)", "CodP": "IND"}
+{"Ciudad": "Purnea (Purnia)", "CodP": "IND"}
+{"Ciudad": "Bankura", "CodP": "IND"}
+{"Ciudad": "Rajapalaiyam", "CodP": "IND"}
+{"Ciudad": "Titagarh", "CodP": "IND"}
+{"Ciudad": "Halisahar", "CodP": "IND"}
+{"Ciudad": "Hathras", "CodP": "IND"}
+{"Ciudad": "Bhir (Bid)", "CodP": "IND"}
+{"Ciudad": "Pallavaram", "CodP": "IND"}
+{"Ciudad": "Anand", "CodP": "IND"}
+{"Ciudad": "Mango", "CodP": "IND"}
+{"Ciudad": "Santipur", "CodP": "IND"}
+{"Ciudad": "Bhind", "CodP": "IND"}
+{"Ciudad": "Gondiya", "CodP": "IND"}
+{"Ciudad": "Tiruvannamalai", "CodP": "IND"}
+{"Ciudad": "Yeotmal (Yavatmal)", "CodP": "IND"}
+{"Ciudad": "Kulti-Barakar", "CodP": "IND"}
+{"Ciudad": "Moga", "CodP": "IND"}
+{"Ciudad": "Shivapuri", "CodP": "IND"}
+{"Ciudad": "Bidar", "CodP": "IND"}
+{"Ciudad": "Guntakal", "CodP": "IND"}
+{"Ciudad": "Unnao", "CodP": "IND"}
+{"Ciudad": "Barasat", "CodP": "IND"}
+{"Ciudad": "Tambaram", "CodP": "IND"}
+{"Ciudad": "Abohar", "CodP": "IND"}
+{"Ciudad": "Pilibhit", "CodP": "IND"}
+{"Ciudad": "Valparai", "CodP": "IND"}
+{"Ciudad": "Gonda", "CodP": "IND"}
+{"Ciudad": "Surendranagar", "CodP": "IND"}
+{"Ciudad": "Qutubullapur", "CodP": "IND"}
+{"Ciudad": "Beawar", "CodP": "IND"}
+{"Ciudad": "Hindupur", "CodP": "IND"}
+{"Ciudad": "Gandhidham", "CodP": "IND"}
+{"Ciudad": "Haldwani-cum-Kathgodam", "CodP": "IND"}
+{"Ciudad": "Tellicherry (Thalassery)", "CodP": "IND"}
+{"Ciudad": "Wardha", "CodP": "IND"}
+{"Ciudad": "Rishra", "CodP": "IND"}
+{"Ciudad": "Bhuj", "CodP": "IND"}
+{"Ciudad": "Modinagar", "CodP": "IND"}
+{"Ciudad": "Gudivada", "CodP": "IND"}
+{"Ciudad": "Basirhat", "CodP": "IND"}
+{"Ciudad": "Uttarpara-Kotrung", "CodP": "IND"}
+{"Ciudad": "Ongole", "CodP": "IND"}
+{"Ciudad": "North Barrackpur", "CodP": "IND"}
+{"Ciudad": "Guna", "CodP": "IND"}
+{"Ciudad": "Haldia", "CodP": "IND"}
+{"Ciudad": "Habra", "CodP": "IND"}
+{"Ciudad": "Kanchrapara", "CodP": "IND"}
+{"Ciudad": "Tonk", "CodP": "IND"}
+{"Ciudad": "Champdani", "CodP": "IND"}
+{"Ciudad": "Orai", "CodP": "IND"}
+{"Ciudad": "Pudukkottai", "CodP": "IND"}
+{"Ciudad": "Sasaram", "CodP": "IND"}
+{"Ciudad": "Hazaribag", "CodP": "IND"}
+{"Ciudad": "Palayankottai", "CodP": "IND"}
+{"Ciudad": "Banda", "CodP": "IND"}
+{"Ciudad": "Godhra", "CodP": "IND"}
+{"Ciudad": "Hospet", "CodP": "IND"}
+{"Ciudad": "Ashoknagar-Kalyangarh", "CodP": "IND"}
+{"Ciudad": "Achalpur", "CodP": "IND"}
+{"Ciudad": "Patan", "CodP": "IND"}
+{"Ciudad": "Mandasor", "CodP": "IND"}
+{"Ciudad": "Damoh", "CodP": "IND"}
+{"Ciudad": "Satara", "CodP": "IND"}
+{"Ciudad": "Meerut Cantonment", "CodP": "IND"}
+{"Ciudad": "Dehri", "CodP": "IND"}
+{"Ciudad": "Delhi Cantonment", "CodP": "IND"}
+{"Ciudad": "Chhindwara", "CodP": "IND"}
+{"Ciudad": "Bansberia", "CodP": "IND"}
+{"Ciudad": "Nagaon", "CodP": "IND"}
+{"Ciudad": "Kanpur Cantonment", "CodP": "IND"}
+{"Ciudad": "Vidisha", "CodP": "IND"}
+{"Ciudad": "Bettiah", "CodP": "IND"}
+{"Ciudad": "Purulia", "CodP": "IND"}
+{"Ciudad": "Hassan", "CodP": "IND"}
+{"Ciudad": "Ambala Sadar", "CodP": "IND"}
+{"Ciudad": "Baidyabati", "CodP": "IND"}
+{"Ciudad": "Morvi", "CodP": "IND"}
+{"Ciudad": "Raigarh", "CodP": "IND"}
+{"Ciudad": "Vejalpur", "CodP": "IND"}
+{"Ciudad": "Baghdad", "CodP": "IRQ"}
+{"Ciudad": "Mosul", "CodP": "IRQ"}
+{"Ciudad": "Irbil", "CodP": "IRQ"}
+{"Ciudad": "Kirkuk", "CodP": "IRQ"}
+{"Ciudad": "Basra", "CodP": "IRQ"}
+{"Ciudad": "al-Sulaymaniya", "CodP": "IRQ"}
+{"Ciudad": "al-Najaf", "CodP": "IRQ"}
+{"Ciudad": "Karbala", "CodP": "IRQ"}
+{"Ciudad": "al-Hilla", "CodP": "IRQ"}
+{"Ciudad": "al-Nasiriya", "CodP": "IRQ"}
+{"Ciudad": "al-Amara", "CodP": "IRQ"}
+{"Ciudad": "al-Diwaniya", "CodP": "IRQ"}
+{"Ciudad": "al-Ramadi", "CodP": "IRQ"}
+{"Ciudad": "al-Kut", "CodP": "IRQ"}
+{"Ciudad": "Baquba", "CodP": "IRQ"}
+{"Ciudad": "Teheran", "CodP": "IRN"}
+{"Ciudad": "Mashhad", "CodP": "IRN"}
+{"Ciudad": "Esfahan", "CodP": "IRN"}
+{"Ciudad": "Tabriz", "CodP": "IRN"}
+{"Ciudad": "Shiraz", "CodP": "IRN"}
+{"Ciudad": "Karaj", "CodP": "IRN"}
+{"Ciudad": "Ahvaz", "CodP": "IRN"}
+{"Ciudad": "Qom", "CodP": "IRN"}
+{"Ciudad": "Kermanshah", "CodP": "IRN"}
+{"Ciudad": "Urmia", "CodP": "IRN"}
+{"Ciudad": "Zahedan", "CodP": "IRN"}
+{"Ciudad": "Rasht", "CodP": "IRN"}
+{"Ciudad": "Hamadan", "CodP": "IRN"}
+{"Ciudad": "Kerman", "CodP": "IRN"}
+{"Ciudad": "Arak", "CodP": "IRN"}
+{"Ciudad": "Ardebil", "CodP": "IRN"}
+{"Ciudad": "Yazd", "CodP": "IRN"}
+{"Ciudad": "Qazvin", "CodP": "IRN"}
+{"Ciudad": "Zanjan", "CodP": "IRN"}
+{"Ciudad": "Sanandaj", "CodP": "IRN"}
+{"Ciudad": "Bandar-e-Abbas", "CodP": "IRN"}
+{"Ciudad": "Khorramabad", "CodP": "IRN"}
+{"Ciudad": "Eslamshahr", "CodP": "IRN"}
+{"Ciudad": "Borujerd", "CodP": "IRN"}
+{"Ciudad": "Abadan", "CodP": "IRN"}
+{"Ciudad": "Dezful", "CodP": "IRN"}
+{"Ciudad": "Kashan", "CodP": "IRN"}
+{"Ciudad": "Sari", "CodP": "IRN"}
+{"Ciudad": "Gorgan", "CodP": "IRN"}
+{"Ciudad": "Najafabad", "CodP": "IRN"}
+{"Ciudad": "Sabzevar", "CodP": "IRN"}
+{"Ciudad": "Khomeynishahr", "CodP": "IRN"}
+{"Ciudad": "Amol", "CodP": "IRN"}
+{"Ciudad": "Neyshabur", "CodP": "IRN"}
+{"Ciudad": "Babol", "CodP": "IRN"}
+{"Ciudad": "Khoy", "CodP": "IRN"}
+{"Ciudad": "Malayer", "CodP": "IRN"}
+{"Ciudad": "Bushehr", "CodP": "IRN"}
+{"Ciudad": "Qaemshahr", "CodP": "IRN"}
+{"Ciudad": "Qarchak", "CodP": "IRN"}
+{"Ciudad": "Qods", "CodP": "IRN"}
+{"Ciudad": "Sirjan", "CodP": "IRN"}
+{"Ciudad": "Bojnurd", "CodP": "IRN"}
+{"Ciudad": "Maragheh", "CodP": "IRN"}
+{"Ciudad": "Birjand", "CodP": "IRN"}
+{"Ciudad": "Ilam", "CodP": "IRN"}
+{"Ciudad": "Bukan", "CodP": "IRN"}
+{"Ciudad": "Masjed-e-Soleyman", "CodP": "IRN"}
+{"Ciudad": "Saqqez", "CodP": "IRN"}
+{"Ciudad": "Gonbad-e Qabus", "CodP": "IRN"}
+{"Ciudad": "Saveh", "CodP": "IRN"}
+{"Ciudad": "Mahabad", "CodP": "IRN"}
+{"Ciudad": "Varamin", "CodP": "IRN"}
+{"Ciudad": "Andimeshk", "CodP": "IRN"}
+{"Ciudad": "Khorramshahr", "CodP": "IRN"}
+{"Ciudad": "Shahrud", "CodP": "IRN"}
+{"Ciudad": "Marv Dasht", "CodP": "IRN"}
+{"Ciudad": "Zabol", "CodP": "IRN"}
+{"Ciudad": "Shahr-e Kord", "CodP": "IRN"}
+{"Ciudad": "Bandar-e Anzali", "CodP": "IRN"}
+{"Ciudad": "Rafsanjan", "CodP": "IRN"}
+{"Ciudad": "Marand", "CodP": "IRN"}
+{"Ciudad": "Torbat-e Heydariyeh", "CodP": "IRN"}
+{"Ciudad": "Jahrom", "CodP": "IRN"}
+{"Ciudad": "Semnan", "CodP": "IRN"}
+{"Ciudad": "Miandoab", "CodP": "IRN"}
+{"Ciudad": "Qomsheh", "CodP": "IRN"}
+{"Ciudad": "Dublin", "CodP": "IRL"}
+{"Ciudad": "Cork", "CodP": "IRL"}
+{"Ciudad": "Reykjavík", "CodP": "ISL"}
+{"Ciudad": "Jerusalem", "CodP": "ISR"}
+{"Ciudad": "Tel Aviv-Jaffa", "CodP": "ISR"}
+{"Ciudad": "Haifa", "CodP": "ISR"}
+{"Ciudad": "Rishon Le Ziyyon", "CodP": "ISR"}
+{"Ciudad": "Beerseba", "CodP": "ISR"}
+{"Ciudad": "Holon", "CodP": "ISR"}
+{"Ciudad": "Petah Tiqwa", "CodP": "ISR"}
+{"Ciudad": "Ashdod", "CodP": "ISR"}
+{"Ciudad": "Netanya", "CodP": "ISR"}
+{"Ciudad": "Bat Yam", "CodP": "ISR"}
+{"Ciudad": "Bene Beraq", "CodP": "ISR"}
+{"Ciudad": "Ramat Gan", "CodP": "ISR"}
+{"Ciudad": "Ashqelon", "CodP": "ISR"}
+{"Ciudad": "Rehovot", "CodP": "ISR"}
+{"Ciudad": "Roma", "CodP": "ITA"}
+{"Ciudad": "Milano", "CodP": "ITA"}
+{"Ciudad": "Napoli", "CodP": "ITA"}
+{"Ciudad": "Torino", "CodP": "ITA"}
+{"Ciudad": "Palermo", "CodP": "ITA"}
+{"Ciudad": "Genova", "CodP": "ITA"}
+{"Ciudad": "Bologna", "CodP": "ITA"}
+{"Ciudad": "Firenze", "CodP": "ITA"}
+{"Ciudad": "Catania", "CodP": "ITA"}
+{"Ciudad": "Bari", "CodP": "ITA"}
+{"Ciudad": "Venezia", "CodP": "ITA"}
+{"Ciudad": "Messina", "CodP": "ITA"}
+{"Ciudad": "Verona", "CodP": "ITA"}
+{"Ciudad": "Trieste", "CodP": "ITA"}
+{"Ciudad": "Padova", "CodP": "ITA"}
+{"Ciudad": "Taranto", "CodP": "ITA"}
+{"Ciudad": "Brescia", "CodP": "ITA"}
+{"Ciudad": "Reggio di Calabria", "CodP": "ITA"}
+{"Ciudad": "Modena", "CodP": "ITA"}
+{"Ciudad": "Prato", "CodP": "ITA"}
+{"Ciudad": "Parma", "CodP": "ITA"}
+{"Ciudad": "Cagliari", "CodP": "ITA"}
+{"Ciudad": "Livorno", "CodP": "ITA"}
+{"Ciudad": "Perugia", "CodP": "ITA"}
+{"Ciudad": "Foggia", "CodP": "ITA"}
+{"Ciudad": "Reggio nell´ Emilia", "CodP": "ITA"}
+{"Ciudad": "Salerno", "CodP": "ITA"}
+{"Ciudad": "Ravenna", "CodP": "ITA"}
+{"Ciudad": "Ferrara", "CodP": "ITA"}
+{"Ciudad": "Rimini", "CodP": "ITA"}
+{"Ciudad": "Syrakusa", "CodP": "ITA"}
+{"Ciudad": "Sassari", "CodP": "ITA"}
+{"Ciudad": "Monza", "CodP": "ITA"}
+{"Ciudad": "Bergamo", "CodP": "ITA"}
+{"Ciudad": "Pescara", "CodP": "ITA"}
+{"Ciudad": "Latina", "CodP": "ITA"}
+{"Ciudad": "Vicenza", "CodP": "ITA"}
+{"Ciudad": "Terni", "CodP": "ITA"}
+{"Ciudad": "Forlì", "CodP": "ITA"}
+{"Ciudad": "Trento", "CodP": "ITA"}
+{"Ciudad": "Novara", "CodP": "ITA"}
+{"Ciudad": "Piacenza", "CodP": "ITA"}
+{"Ciudad": "Ancona", "CodP": "ITA"}
+{"Ciudad": "Lecce", "CodP": "ITA"}
+{"Ciudad": "Bolzano", "CodP": "ITA"}
+{"Ciudad": "Catanzaro", "CodP": "ITA"}
+{"Ciudad": "La Spezia", "CodP": "ITA"}
+{"Ciudad": "Udine", "CodP": "ITA"}
+{"Ciudad": "Torre del Greco", "CodP": "ITA"}
+{"Ciudad": "Andria", "CodP": "ITA"}
+{"Ciudad": "Brindisi", "CodP": "ITA"}
+{"Ciudad": "Giugliano in Campania", "CodP": "ITA"}
+{"Ciudad": "Pisa", "CodP": "ITA"}
+{"Ciudad": "Barletta", "CodP": "ITA"}
+{"Ciudad": "Arezzo", "CodP": "ITA"}
+{"Ciudad": "Alessandria", "CodP": "ITA"}
+{"Ciudad": "Cesena", "CodP": "ITA"}
+{"Ciudad": "Pesaro", "CodP": "ITA"}
+{"Ciudad": "Dili", "CodP": "TMP"}
+{"Ciudad": "Wien", "CodP": "AUT"}
+{"Ciudad": "Graz", "CodP": "AUT"}
+{"Ciudad": "Linz", "CodP": "AUT"}
+{"Ciudad": "Salzburg", "CodP": "AUT"}
+{"Ciudad": "Innsbruck", "CodP": "AUT"}
+{"Ciudad": "Klagenfurt", "CodP": "AUT"}
+{"Ciudad": "Spanish Town", "CodP": "JAM"}
+{"Ciudad": "Kingston", "CodP": "JAM"}
+{"Ciudad": "Portmore", "CodP": "JAM"}
+{"Ciudad": "Tokyo", "CodP": "JPN"}
+{"Ciudad": "Jokohama [Yokohama]", "CodP": "JPN"}
+{"Ciudad": "Osaka", "CodP": "JPN"}
+{"Ciudad": "Nagoya", "CodP": "JPN"}
+{"Ciudad": "Sapporo", "CodP": "JPN"}
+{"Ciudad": "Kioto", "CodP": "JPN"}
+{"Ciudad": "Kobe", "CodP": "JPN"}
+{"Ciudad": "Fukuoka", "CodP": "JPN"}
+{"Ciudad": "Kawasaki", "CodP": "JPN"}
+{"Ciudad": "Hiroshima", "CodP": "JPN"}
+{"Ciudad": "Kitakyushu", "CodP": "JPN"}
+{"Ciudad": "Sendai", "CodP": "JPN"}
+{"Ciudad": "Chiba", "CodP": "JPN"}
+{"Ciudad": "Sakai", "CodP": "JPN"}
+{"Ciudad": "Kumamoto", "CodP": "JPN"}
+{"Ciudad": "Okayama", "CodP": "JPN"}
+{"Ciudad": "Sagamihara", "CodP": "JPN"}
+{"Ciudad": "Hamamatsu", "CodP": "JPN"}
+{"Ciudad": "Kagoshima", "CodP": "JPN"}
+{"Ciudad": "Funabashi", "CodP": "JPN"}
+{"Ciudad": "Higashiosaka", "CodP": "JPN"}
+{"Ciudad": "Hachioji", "CodP": "JPN"}
+{"Ciudad": "Niigata", "CodP": "JPN"}
+{"Ciudad": "Amagasaki", "CodP": "JPN"}
+{"Ciudad": "Himeji", "CodP": "JPN"}
+{"Ciudad": "Shizuoka", "CodP": "JPN"}
+{"Ciudad": "Urawa", "CodP": "JPN"}
+{"Ciudad": "Matsuyama", "CodP": "JPN"}
+{"Ciudad": "Matsudo", "CodP": "JPN"}
+{"Ciudad": "Kanazawa", "CodP": "JPN"}
+{"Ciudad": "Kawaguchi", "CodP": "JPN"}
+{"Ciudad": "Ichikawa", "CodP": "JPN"}
+{"Ciudad": "Omiya", "CodP": "JPN"}
+{"Ciudad": "Utsunomiya", "CodP": "JPN"}
+{"Ciudad": "Oita", "CodP": "JPN"}
+{"Ciudad": "Nagasaki", "CodP": "JPN"}
+{"Ciudad": "Yokosuka", "CodP": "JPN"}
+{"Ciudad": "Kurashiki", "CodP": "JPN"}
+{"Ciudad": "Gifu", "CodP": "JPN"}
+{"Ciudad": "Hirakata", "CodP": "JPN"}
+{"Ciudad": "Nishinomiya", "CodP": "JPN"}
+{"Ciudad": "Toyonaka", "CodP": "JPN"}
+{"Ciudad": "Wakayama", "CodP": "JPN"}
+{"Ciudad": "Fukuyama", "CodP": "JPN"}
+{"Ciudad": "Fujisawa", "CodP": "JPN"}
+{"Ciudad": "Asahikawa", "CodP": "JPN"}
+{"Ciudad": "Machida", "CodP": "JPN"}
+{"Ciudad": "Nara", "CodP": "JPN"}
+{"Ciudad": "Takatsuki", "CodP": "JPN"}
+{"Ciudad": "Iwaki", "CodP": "JPN"}
+{"Ciudad": "Nagano", "CodP": "JPN"}
+{"Ciudad": "Toyohashi", "CodP": "JPN"}
+{"Ciudad": "Toyota", "CodP": "JPN"}
+{"Ciudad": "Suita", "CodP": "JPN"}
+{"Ciudad": "Takamatsu", "CodP": "JPN"}
+{"Ciudad": "Koriyama", "CodP": "JPN"}
+{"Ciudad": "Okazaki", "CodP": "JPN"}
+{"Ciudad": "Kawagoe", "CodP": "JPN"}
+{"Ciudad": "Tokorozawa", "CodP": "JPN"}
+{"Ciudad": "Toyama", "CodP": "JPN"}
+{"Ciudad": "Kochi", "CodP": "JPN"}
+{"Ciudad": "Kashiwa", "CodP": "JPN"}
+{"Ciudad": "Akita", "CodP": "JPN"}
+{"Ciudad": "Miyazaki", "CodP": "JPN"}
+{"Ciudad": "Koshigaya", "CodP": "JPN"}
+{"Ciudad": "Naha", "CodP": "JPN"}
+{"Ciudad": "Aomori", "CodP": "JPN"}
+{"Ciudad": "Hakodate", "CodP": "JPN"}
+{"Ciudad": "Akashi", "CodP": "JPN"}
+{"Ciudad": "Yokkaichi", "CodP": "JPN"}
+{"Ciudad": "Fukushima", "CodP": "JPN"}
+{"Ciudad": "Morioka", "CodP": "JPN"}
+{"Ciudad": "Maebashi", "CodP": "JPN"}
+{"Ciudad": "Kasugai", "CodP": "JPN"}
+{"Ciudad": "Otsu", "CodP": "JPN"}
+{"Ciudad": "Ichihara", "CodP": "JPN"}
+{"Ciudad": "Yao", "CodP": "JPN"}
+{"Ciudad": "Ichinomiya", "CodP": "JPN"}
+{"Ciudad": "Tokushima", "CodP": "JPN"}
+{"Ciudad": "Kakogawa", "CodP": "JPN"}
+{"Ciudad": "Ibaraki", "CodP": "JPN"}
+{"Ciudad": "Neyagawa", "CodP": "JPN"}
+{"Ciudad": "Shimonoseki", "CodP": "JPN"}
+{"Ciudad": "Yamagata", "CodP": "JPN"}
+{"Ciudad": "Fukui", "CodP": "JPN"}
+{"Ciudad": "Hiratsuka", "CodP": "JPN"}
+{"Ciudad": "Mito", "CodP": "JPN"}
+{"Ciudad": "Sasebo", "CodP": "JPN"}
+{"Ciudad": "Hachinohe", "CodP": "JPN"}
+{"Ciudad": "Takasaki", "CodP": "JPN"}
+{"Ciudad": "Shimizu", "CodP": "JPN"}
+{"Ciudad": "Kurume", "CodP": "JPN"}
+{"Ciudad": "Fuji", "CodP": "JPN"}
+{"Ciudad": "Soka", "CodP": "JPN"}
+{"Ciudad": "Fuchu", "CodP": "JPN"}
+{"Ciudad": "Chigasaki", "CodP": "JPN"}
+{"Ciudad": "Atsugi", "CodP": "JPN"}
+{"Ciudad": "Numazu", "CodP": "JPN"}
+{"Ciudad": "Ageo", "CodP": "JPN"}
+{"Ciudad": "Yamato", "CodP": "JPN"}
+{"Ciudad": "Matsumoto", "CodP": "JPN"}
+{"Ciudad": "Kure", "CodP": "JPN"}
+{"Ciudad": "Takarazuka", "CodP": "JPN"}
+{"Ciudad": "Kasukabe", "CodP": "JPN"}
+{"Ciudad": "Chofu", "CodP": "JPN"}
+{"Ciudad": "Odawara", "CodP": "JPN"}
+{"Ciudad": "Kofu", "CodP": "JPN"}
+{"Ciudad": "Kushiro", "CodP": "JPN"}
+{"Ciudad": "Kishiwada", "CodP": "JPN"}
+{"Ciudad": "Hitachi", "CodP": "JPN"}
+{"Ciudad": "Nagaoka", "CodP": "JPN"}
+{"Ciudad": "Itami", "CodP": "JPN"}
+{"Ciudad": "Uji", "CodP": "JPN"}
+{"Ciudad": "Suzuka", "CodP": "JPN"}
+{"Ciudad": "Hirosaki", "CodP": "JPN"}
+{"Ciudad": "Ube", "CodP": "JPN"}
+{"Ciudad": "Kodaira", "CodP": "JPN"}
+{"Ciudad": "Takaoka", "CodP": "JPN"}
+{"Ciudad": "Obihiro", "CodP": "JPN"}
+{"Ciudad": "Tomakomai", "CodP": "JPN"}
+{"Ciudad": "Saga", "CodP": "JPN"}
+{"Ciudad": "Sakura", "CodP": "JPN"}
+{"Ciudad": "Kamakura", "CodP": "JPN"}
+{"Ciudad": "Mitaka", "CodP": "JPN"}
+{"Ciudad": "Izumi", "CodP": "JPN"}
+{"Ciudad": "Hino", "CodP": "JPN"}
+{"Ciudad": "Hadano", "CodP": "JPN"}
+{"Ciudad": "Ashikaga", "CodP": "JPN"}
+{"Ciudad": "Tsu", "CodP": "JPN"}
+{"Ciudad": "Sayama", "CodP": "JPN"}
+{"Ciudad": "Yachiyo", "CodP": "JPN"}
+{"Ciudad": "Tsukuba", "CodP": "JPN"}
+{"Ciudad": "Tachikawa", "CodP": "JPN"}
+{"Ciudad": "Kumagaya", "CodP": "JPN"}
+{"Ciudad": "Moriguchi", "CodP": "JPN"}
+{"Ciudad": "Otaru", "CodP": "JPN"}
+{"Ciudad": "Anjo", "CodP": "JPN"}
+{"Ciudad": "Narashino", "CodP": "JPN"}
+{"Ciudad": "Oyama", "CodP": "JPN"}
+{"Ciudad": "Ogaki", "CodP": "JPN"}
+{"Ciudad": "Matsue", "CodP": "JPN"}
+{"Ciudad": "Kawanishi", "CodP": "JPN"}
+{"Ciudad": "Hitachinaka", "CodP": "JPN"}
+{"Ciudad": "Niiza", "CodP": "JPN"}
+{"Ciudad": "Nagareyama", "CodP": "JPN"}
+{"Ciudad": "Tottori", "CodP": "JPN"}
+{"Ciudad": "Tama", "CodP": "JPN"}
+{"Ciudad": "Iruma", "CodP": "JPN"}
+{"Ciudad": "Ota", "CodP": "JPN"}
+{"Ciudad": "Omuta", "CodP": "JPN"}
+{"Ciudad": "Komaki", "CodP": "JPN"}
+{"Ciudad": "Ome", "CodP": "JPN"}
+{"Ciudad": "Kadoma", "CodP": "JPN"}
+{"Ciudad": "Yamaguchi", "CodP": "JPN"}
+{"Ciudad": "Higashimurayama", "CodP": "JPN"}
+{"Ciudad": "Yonago", "CodP": "JPN"}
+{"Ciudad": "Matsubara", "CodP": "JPN"}
+{"Ciudad": "Musashino", "CodP": "JPN"}
+{"Ciudad": "Tsuchiura", "CodP": "JPN"}
+{"Ciudad": "Joetsu", "CodP": "JPN"}
+{"Ciudad": "Miyakonojo", "CodP": "JPN"}
+{"Ciudad": "Misato", "CodP": "JPN"}
+{"Ciudad": "Kakamigahara", "CodP": "JPN"}
+{"Ciudad": "Daito", "CodP": "JPN"}
+{"Ciudad": "Seto", "CodP": "JPN"}
+{"Ciudad": "Kariya", "CodP": "JPN"}
+{"Ciudad": "Urayasu", "CodP": "JPN"}
+{"Ciudad": "Beppu", "CodP": "JPN"}
+{"Ciudad": "Niihama", "CodP": "JPN"}
+{"Ciudad": "Minoo", "CodP": "JPN"}
+{"Ciudad": "Fujieda", "CodP": "JPN"}
+{"Ciudad": "Abiko", "CodP": "JPN"}
+{"Ciudad": "Nobeoka", "CodP": "JPN"}
+{"Ciudad": "Tondabayashi", "CodP": "JPN"}
+{"Ciudad": "Ueda", "CodP": "JPN"}
+{"Ciudad": "Kashihara", "CodP": "JPN"}
+{"Ciudad": "Matsusaka", "CodP": "JPN"}
+{"Ciudad": "Isesaki", "CodP": "JPN"}
+{"Ciudad": "Zama", "CodP": "JPN"}
+{"Ciudad": "Kisarazu", "CodP": "JPN"}
+{"Ciudad": "Noda", "CodP": "JPN"}
+{"Ciudad": "Ishinomaki", "CodP": "JPN"}
+{"Ciudad": "Fujinomiya", "CodP": "JPN"}
+{"Ciudad": "Kawachinagano", "CodP": "JPN"}
+{"Ciudad": "Imabari", "CodP": "JPN"}
+{"Ciudad": "Aizuwakamatsu", "CodP": "JPN"}
+{"Ciudad": "Higashihiroshima", "CodP": "JPN"}
+{"Ciudad": "Habikino", "CodP": "JPN"}
+{"Ciudad": "Ebetsu", "CodP": "JPN"}
+{"Ciudad": "Hofu", "CodP": "JPN"}
+{"Ciudad": "Kiryu", "CodP": "JPN"}
+{"Ciudad": "Okinawa", "CodP": "JPN"}
+{"Ciudad": "Yaizu", "CodP": "JPN"}
+{"Ciudad": "Toyokawa", "CodP": "JPN"}
+{"Ciudad": "Ebina", "CodP": "JPN"}
+{"Ciudad": "Asaka", "CodP": "JPN"}
+{"Ciudad": "Higashikurume", "CodP": "JPN"}
+{"Ciudad": "Ikoma", "CodP": "JPN"}
+{"Ciudad": "Kitami", "CodP": "JPN"}
+{"Ciudad": "Koganei", "CodP": "JPN"}
+{"Ciudad": "Iwatsuki", "CodP": "JPN"}
+{"Ciudad": "Mishima", "CodP": "JPN"}
+{"Ciudad": "Handa", "CodP": "JPN"}
+{"Ciudad": "Muroran", "CodP": "JPN"}
+{"Ciudad": "Komatsu", "CodP": "JPN"}
+{"Ciudad": "Yatsushiro", "CodP": "JPN"}
+{"Ciudad": "Iida", "CodP": "JPN"}
+{"Ciudad": "Tokuyama", "CodP": "JPN"}
+{"Ciudad": "Kokubunji", "CodP": "JPN"}
+{"Ciudad": "Akishima", "CodP": "JPN"}
+{"Ciudad": "Iwakuni", "CodP": "JPN"}
+{"Ciudad": "Kusatsu", "CodP": "JPN"}
+{"Ciudad": "Kuwana", "CodP": "JPN"}
+{"Ciudad": "Sanda", "CodP": "JPN"}
+{"Ciudad": "Hikone", "CodP": "JPN"}
+{"Ciudad": "Toda", "CodP": "JPN"}
+{"Ciudad": "Tajimi", "CodP": "JPN"}
+{"Ciudad": "Ikeda", "CodP": "JPN"}
+{"Ciudad": "Fukaya", "CodP": "JPN"}
+{"Ciudad": "Ise", "CodP": "JPN"}
+{"Ciudad": "Sakata", "CodP": "JPN"}
+{"Ciudad": "Kasuga", "CodP": "JPN"}
+{"Ciudad": "Kamagaya", "CodP": "JPN"}
+{"Ciudad": "Tsuruoka", "CodP": "JPN"}
+{"Ciudad": "Hoya", "CodP": "JPN"}
+{"Ciudad": "Nishio", "CodP": "JPN"}
+{"Ciudad": "Tokai", "CodP": "JPN"}
+{"Ciudad": "Inazawa", "CodP": "JPN"}
+{"Ciudad": "Sakado", "CodP": "JPN"}
+{"Ciudad": "Isehara", "CodP": "JPN"}
+{"Ciudad": "Takasago", "CodP": "JPN"}
+{"Ciudad": "Fujimi", "CodP": "JPN"}
+{"Ciudad": "Urasoe", "CodP": "JPN"}
+{"Ciudad": "Yonezawa", "CodP": "JPN"}
+{"Ciudad": "Konan", "CodP": "JPN"}
+{"Ciudad": "Yamatokoriyama", "CodP": "JPN"}
+{"Ciudad": "Maizuru", "CodP": "JPN"}
+{"Ciudad": "Onomichi", "CodP": "JPN"}
+{"Ciudad": "Higashimatsuyama", "CodP": "JPN"}
+{"Ciudad": "Kimitsu", "CodP": "JPN"}
+{"Ciudad": "Isahaya", "CodP": "JPN"}
+{"Ciudad": "Kanuma", "CodP": "JPN"}
+{"Ciudad": "Izumisano", "CodP": "JPN"}
+{"Ciudad": "Kameoka", "CodP": "JPN"}
+{"Ciudad": "Mobara", "CodP": "JPN"}
+{"Ciudad": "Narita", "CodP": "JPN"}
+{"Ciudad": "Kashiwazaki", "CodP": "JPN"}
+{"Ciudad": "Tsuyama", "CodP": "JPN"}
+{"Ciudad": "Sanaa", "CodP": "YEM"}
+{"Ciudad": "Aden", "CodP": "YEM"}
+{"Ciudad": "Taizz", "CodP": "YEM"}
+{"Ciudad": "Hodeida", "CodP": "YEM"}
+{"Ciudad": "al-Mukalla", "CodP": "YEM"}
+{"Ciudad": "Ibb", "CodP": "YEM"}
+{"Ciudad": "Amman", "CodP": "JOR"}
+{"Ciudad": "al-Zarqa", "CodP": "JOR"}
+{"Ciudad": "Irbid", "CodP": "JOR"}
+{"Ciudad": "al-Rusayfa", "CodP": "JOR"}
+{"Ciudad": "Wadi al-Sir", "CodP": "JOR"}
+{"Ciudad": "Flying Fish Cove", "CodP": "CXR"}
+{"Ciudad": "Beograd", "CodP": "YUG"}
+{"Ciudad": "Novi Sad", "CodP": "YUG"}
+{"Ciudad": "Niš", "CodP": "YUG"}
+{"Ciudad": "Priština", "CodP": "YUG"}
+{"Ciudad": "Kragujevac", "CodP": "YUG"}
+{"Ciudad": "Podgorica", "CodP": "YUG"}
+{"Ciudad": "Subotica", "CodP": "YUG"}
+{"Ciudad": "Prizren", "CodP": "YUG"}
+{"Ciudad": "Phnom Penh", "CodP": "KHM"}
+{"Ciudad": "Battambang", "CodP": "KHM"}
+{"Ciudad": "Siem Reap", "CodP": "KHM"}
+{"Ciudad": "Douala", "CodP": "CMR"}
+{"Ciudad": "Yaoundé", "CodP": "CMR"}
+{"Ciudad": "Garoua", "CodP": "CMR"}
+{"Ciudad": "Maroua", "CodP": "CMR"}
+{"Ciudad": "Bamenda", "CodP": "CMR"}
+{"Ciudad": "Bafoussam", "CodP": "CMR"}
+{"Ciudad": "Nkongsamba", "CodP": "CMR"}
+{"Ciudad": "Montréal", "CodP": "CAN"}
+{"Ciudad": "Calgary", "CodP": "CAN"}
+{"Ciudad": "Toronto", "CodP": "CAN"}
+{"Ciudad": "North York", "CodP": "CAN"}
+{"Ciudad": "Winnipeg", "CodP": "CAN"}
+{"Ciudad": "Edmonton", "CodP": "CAN"}
+{"Ciudad": "Mississauga", "CodP": "CAN"}
+{"Ciudad": "Scarborough", "CodP": "CAN"}
+{"Ciudad": "Vancouver", "CodP": "CAN"}
+{"Ciudad": "Etobicoke", "CodP": "CAN"}
+{"Ciudad": "London", "CodP": "CAN"}
+{"Ciudad": "Hamilton", "CodP": "CAN"}
+{"Ciudad": "Ottawa", "CodP": "CAN"}
+{"Ciudad": "Laval", "CodP": "CAN"}
+{"Ciudad": "Surrey", "CodP": "CAN"}
+{"Ciudad": "Brampton", "CodP": "CAN"}
+{"Ciudad": "Windsor", "CodP": "CAN"}
+{"Ciudad": "Saskatoon", "CodP": "CAN"}
+{"Ciudad": "Kitchener", "CodP": "CAN"}
+{"Ciudad": "Markham", "CodP": "CAN"}
+{"Ciudad": "Regina", "CodP": "CAN"}
+{"Ciudad": "Burnaby", "CodP": "CAN"}
+{"Ciudad": "Québec", "CodP": "CAN"}
+{"Ciudad": "York", "CodP": "CAN"}
+{"Ciudad": "Richmond", "CodP": "CAN"}
+{"Ciudad": "Vaughan", "CodP": "CAN"}
+{"Ciudad": "Burlington", "CodP": "CAN"}
+{"Ciudad": "Oshawa", "CodP": "CAN"}
+{"Ciudad": "Oakville", "CodP": "CAN"}
+{"Ciudad": "Saint Catharines", "CodP": "CAN"}
+{"Ciudad": "Longueuil", "CodP": "CAN"}
+{"Ciudad": "Richmond Hill", "CodP": "CAN"}
+{"Ciudad": "Thunder Bay", "CodP": "CAN"}
+{"Ciudad": "Nepean", "CodP": "CAN"}
+{"Ciudad": "Cape Breton", "CodP": "CAN"}
+{"Ciudad": "East York", "CodP": "CAN"}
+{"Ciudad": "Halifax", "CodP": "CAN"}
+{"Ciudad": "Cambridge", "CodP": "CAN"}
+{"Ciudad": "Gloucester", "CodP": "CAN"}
+{"Ciudad": "Abbotsford", "CodP": "CAN"}
+{"Ciudad": "Guelph", "CodP": "CAN"}
+{"Ciudad": "Saint John´s", "CodP": "CAN"}
+{"Ciudad": "Coquitlam", "CodP": "CAN"}
+{"Ciudad": "Saanich", "CodP": "CAN"}
+{"Ciudad": "Gatineau", "CodP": "CAN"}
+{"Ciudad": "Delta", "CodP": "CAN"}
+{"Ciudad": "Sudbury", "CodP": "CAN"}
+{"Ciudad": "Kelowna", "CodP": "CAN"}
+{"Ciudad": "Barrie", "CodP": "CAN"}
+{"Ciudad": "Praia", "CodP": "CPV"}
+{"Ciudad": "Almaty", "CodP": "KAZ"}
+{"Ciudad": "Qaraghandy", "CodP": "KAZ"}
+{"Ciudad": "Shymkent", "CodP": "KAZ"}
+{"Ciudad": "Taraz", "CodP": "KAZ"}
+{"Ciudad": "Astana", "CodP": "KAZ"}
+{"Ciudad": "Öskemen", "CodP": "KAZ"}
+{"Ciudad": "Pavlodar", "CodP": "KAZ"}
+{"Ciudad": "Semey", "CodP": "KAZ"}
+{"Ciudad": "Aqtöbe", "CodP": "KAZ"}
+{"Ciudad": "Qostanay", "CodP": "KAZ"}
+{"Ciudad": "Petropavl", "CodP": "KAZ"}
+{"Ciudad": "Oral", "CodP": "KAZ"}
+{"Ciudad": "Temirtau", "CodP": "KAZ"}
+{"Ciudad": "Qyzylorda", "CodP": "KAZ"}
+{"Ciudad": "Aqtau", "CodP": "KAZ"}
+{"Ciudad": "Atyrau", "CodP": "KAZ"}
+{"Ciudad": "Ekibastuz", "CodP": "KAZ"}
+{"Ciudad": "Kökshetau", "CodP": "KAZ"}
+{"Ciudad": "Rudnyy", "CodP": "KAZ"}
+{"Ciudad": "Taldyqorghan", "CodP": "KAZ"}
+{"Ciudad": "Zhezqazghan", "CodP": "KAZ"}
+{"Ciudad": "Nairobi", "CodP": "KEN"}
+{"Ciudad": "Mombasa", "CodP": "KEN"}
+{"Ciudad": "Kisumu", "CodP": "KEN"}
+{"Ciudad": "Nakuru", "CodP": "KEN"}
+{"Ciudad": "Machakos", "CodP": "KEN"}
+{"Ciudad": "Eldoret", "CodP": "KEN"}
+{"Ciudad": "Meru", "CodP": "KEN"}
+{"Ciudad": "Nyeri", "CodP": "KEN"}
+{"Ciudad": "Bangui", "CodP": "CAF"}
+{"Ciudad": "Shanghai", "CodP": "CHN"}
+{"Ciudad": "Peking", "CodP": "CHN"}
+{"Ciudad": "Chongqing", "CodP": "CHN"}
+{"Ciudad": "Tianjin", "CodP": "CHN"}
+{"Ciudad": "Wuhan", "CodP": "CHN"}
+{"Ciudad": "Harbin", "CodP": "CHN"}
+{"Ciudad": "Shenyang", "CodP": "CHN"}
+{"Ciudad": "Kanton [Guangzhou]", "CodP": "CHN"}
+{"Ciudad": "Chengdu", "CodP": "CHN"}
+{"Ciudad": "Nanking [Nanjing]", "CodP": "CHN"}
+{"Ciudad": "Changchun", "CodP": "CHN"}
+{"Ciudad": "Xi´an", "CodP": "CHN"}
+{"Ciudad": "Dalian", "CodP": "CHN"}
+{"Ciudad": "Qingdao", "CodP": "CHN"}
+{"Ciudad": "Jinan", "CodP": "CHN"}
+{"Ciudad": "Hangzhou", "CodP": "CHN"}
+{"Ciudad": "Zhengzhou", "CodP": "CHN"}
+{"Ciudad": "Shijiazhuang", "CodP": "CHN"}
+{"Ciudad": "Taiyuan", "CodP": "CHN"}
+{"Ciudad": "Kunming", "CodP": "CHN"}
+{"Ciudad": "Changsha", "CodP": "CHN"}
+{"Ciudad": "Nanchang", "CodP": "CHN"}
+{"Ciudad": "Fuzhou", "CodP": "CHN"}
+{"Ciudad": "Lanzhou", "CodP": "CHN"}
+{"Ciudad": "Guiyang", "CodP": "CHN"}
+{"Ciudad": "Ningbo", "CodP": "CHN"}
+{"Ciudad": "Hefei", "CodP": "CHN"}
+{"Ciudad": "Urumtši [Ürümqi]", "CodP": "CHN"}
+{"Ciudad": "Anshan", "CodP": "CHN"}
+{"Ciudad": "Fushun", "CodP": "CHN"}
+{"Ciudad": "Nanning", "CodP": "CHN"}
+{"Ciudad": "Zibo", "CodP": "CHN"}
+{"Ciudad": "Qiqihar", "CodP": "CHN"}
+{"Ciudad": "Jilin", "CodP": "CHN"}
+{"Ciudad": "Tangshan", "CodP": "CHN"}
+{"Ciudad": "Baotou", "CodP": "CHN"}
+{"Ciudad": "Shenzhen", "CodP": "CHN"}
+{"Ciudad": "Hohhot", "CodP": "CHN"}
+{"Ciudad": "Handan", "CodP": "CHN"}
+{"Ciudad": "Wuxi", "CodP": "CHN"}
+{"Ciudad": "Xuzhou", "CodP": "CHN"}
+{"Ciudad": "Datong", "CodP": "CHN"}
+{"Ciudad": "Yichun", "CodP": "CHN"}
+{"Ciudad": "Benxi", "CodP": "CHN"}
+{"Ciudad": "Luoyang", "CodP": "CHN"}
+{"Ciudad": "Suzhou", "CodP": "CHN"}
+{"Ciudad": "Xining", "CodP": "CHN"}
+{"Ciudad": "Huainan", "CodP": "CHN"}
+{"Ciudad": "Jixi", "CodP": "CHN"}
+{"Ciudad": "Daqing", "CodP": "CHN"}
+{"Ciudad": "Fuxin", "CodP": "CHN"}
+{"Ciudad": "Amoy [Xiamen]", "CodP": "CHN"}
+{"Ciudad": "Liuzhou", "CodP": "CHN"}
+{"Ciudad": "Shantou", "CodP": "CHN"}
+{"Ciudad": "Jinzhou", "CodP": "CHN"}
+{"Ciudad": "Mudanjiang", "CodP": "CHN"}
+{"Ciudad": "Yinchuan", "CodP": "CHN"}
+{"Ciudad": "Changzhou", "CodP": "CHN"}
+{"Ciudad": "Zhangjiakou", "CodP": "CHN"}
+{"Ciudad": "Dandong", "CodP": "CHN"}
+{"Ciudad": "Hegang", "CodP": "CHN"}
+{"Ciudad": "Kaifeng", "CodP": "CHN"}
+{"Ciudad": "Jiamusi", "CodP": "CHN"}
+{"Ciudad": "Liaoyang", "CodP": "CHN"}
+{"Ciudad": "Hengyang", "CodP": "CHN"}
+{"Ciudad": "Baoding", "CodP": "CHN"}
+{"Ciudad": "Hunjiang", "CodP": "CHN"}
+{"Ciudad": "Xinxiang", "CodP": "CHN"}
+{"Ciudad": "Huangshi", "CodP": "CHN"}
+{"Ciudad": "Haikou", "CodP": "CHN"}
+{"Ciudad": "Yantai", "CodP": "CHN"}
+{"Ciudad": "Bengbu", "CodP": "CHN"}
+{"Ciudad": "Xiangtan", "CodP": "CHN"}
+{"Ciudad": "Weifang", "CodP": "CHN"}
+{"Ciudad": "Wuhu", "CodP": "CHN"}
+{"Ciudad": "Pingxiang", "CodP": "CHN"}
+{"Ciudad": "Yingkou", "CodP": "CHN"}
+{"Ciudad": "Anyang", "CodP": "CHN"}
+{"Ciudad": "Panzhihua", "CodP": "CHN"}
+{"Ciudad": "Pingdingshan", "CodP": "CHN"}
+{"Ciudad": "Xiangfan", "CodP": "CHN"}
+{"Ciudad": "Zhuzhou", "CodP": "CHN"}
+{"Ciudad": "Jiaozuo", "CodP": "CHN"}
+{"Ciudad": "Wenzhou", "CodP": "CHN"}
+{"Ciudad": "Zhangjiang", "CodP": "CHN"}
+{"Ciudad": "Zigong", "CodP": "CHN"}
+{"Ciudad": "Shuangyashan", "CodP": "CHN"}
+{"Ciudad": "Zaozhuang", "CodP": "CHN"}
+{"Ciudad": "Yakeshi", "CodP": "CHN"}
+{"Ciudad": "Yichang", "CodP": "CHN"}
+{"Ciudad": "Zhenjiang", "CodP": "CHN"}
+{"Ciudad": "Huaibei", "CodP": "CHN"}
+{"Ciudad": "Qinhuangdao", "CodP": "CHN"}
+{"Ciudad": "Guilin", "CodP": "CHN"}
+{"Ciudad": "Liupanshui", "CodP": "CHN"}
+{"Ciudad": "Panjin", "CodP": "CHN"}
+{"Ciudad": "Yangquan", "CodP": "CHN"}
+{"Ciudad": "Jinxi", "CodP": "CHN"}
+{"Ciudad": "Liaoyuan", "CodP": "CHN"}
+{"Ciudad": "Lianyungang", "CodP": "CHN"}
+{"Ciudad": "Xianyang", "CodP": "CHN"}
+{"Ciudad": "Tai´an", "CodP": "CHN"}
+{"Ciudad": "Chifeng", "CodP": "CHN"}
+{"Ciudad": "Shaoguan", "CodP": "CHN"}
+{"Ciudad": "Nantong", "CodP": "CHN"}
+{"Ciudad": "Leshan", "CodP": "CHN"}
+{"Ciudad": "Baoji", "CodP": "CHN"}
+{"Ciudad": "Linyi", "CodP": "CHN"}
+{"Ciudad": "Tonghua", "CodP": "CHN"}
+{"Ciudad": "Siping", "CodP": "CHN"}
+{"Ciudad": "Changzhi", "CodP": "CHN"}
+{"Ciudad": "Tengzhou", "CodP": "CHN"}
+{"Ciudad": "Chaozhou", "CodP": "CHN"}
+{"Ciudad": "Yangzhou", "CodP": "CHN"}
+{"Ciudad": "Dongwan", "CodP": "CHN"}
+{"Ciudad": "Ma´anshan", "CodP": "CHN"}
+{"Ciudad": "Foshan", "CodP": "CHN"}
+{"Ciudad": "Yueyang", "CodP": "CHN"}
+{"Ciudad": "Xingtai", "CodP": "CHN"}
+{"Ciudad": "Changde", "CodP": "CHN"}
+{"Ciudad": "Shihezi", "CodP": "CHN"}
+{"Ciudad": "Yancheng", "CodP": "CHN"}
+{"Ciudad": "Jiujiang", "CodP": "CHN"}
+{"Ciudad": "Dongying", "CodP": "CHN"}
+{"Ciudad": "Shashi", "CodP": "CHN"}
+{"Ciudad": "Xintai", "CodP": "CHN"}
+{"Ciudad": "Jingdezhen", "CodP": "CHN"}
+{"Ciudad": "Tongchuan", "CodP": "CHN"}
+{"Ciudad": "Zhongshan", "CodP": "CHN"}
+{"Ciudad": "Shiyan", "CodP": "CHN"}
+{"Ciudad": "Tieli", "CodP": "CHN"}
+{"Ciudad": "Jining", "CodP": "CHN"}
+{"Ciudad": "Wuhai", "CodP": "CHN"}
+{"Ciudad": "Mianyang", "CodP": "CHN"}
+{"Ciudad": "Luzhou", "CodP": "CHN"}
+{"Ciudad": "Zunyi", "CodP": "CHN"}
+{"Ciudad": "Shizuishan", "CodP": "CHN"}
+{"Ciudad": "Neijiang", "CodP": "CHN"}
+{"Ciudad": "Tongliao", "CodP": "CHN"}
+{"Ciudad": "Tieling", "CodP": "CHN"}
+{"Ciudad": "Wafangdian", "CodP": "CHN"}
+{"Ciudad": "Anqing", "CodP": "CHN"}
+{"Ciudad": "Shaoyang", "CodP": "CHN"}
+{"Ciudad": "Laiwu", "CodP": "CHN"}
+{"Ciudad": "Chengde", "CodP": "CHN"}
+{"Ciudad": "Tianshui", "CodP": "CHN"}
+{"Ciudad": "Nanyang", "CodP": "CHN"}
+{"Ciudad": "Cangzhou", "CodP": "CHN"}
+{"Ciudad": "Yibin", "CodP": "CHN"}
+{"Ciudad": "Huaiyin", "CodP": "CHN"}
+{"Ciudad": "Dunhua", "CodP": "CHN"}
+{"Ciudad": "Yanji", "CodP": "CHN"}
+{"Ciudad": "Jiangmen", "CodP": "CHN"}
+{"Ciudad": "Tongling", "CodP": "CHN"}
+{"Ciudad": "Suihua", "CodP": "CHN"}
+{"Ciudad": "Gongziling", "CodP": "CHN"}
+{"Ciudad": "Xiantao", "CodP": "CHN"}
+{"Ciudad": "Chaoyang", "CodP": "CHN"}
+{"Ciudad": "Ganzhou", "CodP": "CHN"}
+{"Ciudad": "Huzhou", "CodP": "CHN"}
+{"Ciudad": "Baicheng", "CodP": "CHN"}
+{"Ciudad": "Shangzi", "CodP": "CHN"}
+{"Ciudad": "Yangjiang", "CodP": "CHN"}
+{"Ciudad": "Qitaihe", "CodP": "CHN"}
+{"Ciudad": "Gejiu", "CodP": "CHN"}
+{"Ciudad": "Jiangyin", "CodP": "CHN"}
+{"Ciudad": "Hebi", "CodP": "CHN"}
+{"Ciudad": "Jiaxing", "CodP": "CHN"}
+{"Ciudad": "Wuzhou", "CodP": "CHN"}
+{"Ciudad": "Meihekou", "CodP": "CHN"}
+{"Ciudad": "Xuchang", "CodP": "CHN"}
+{"Ciudad": "Liaocheng", "CodP": "CHN"}
+{"Ciudad": "Haicheng", "CodP": "CHN"}
+{"Ciudad": "Qianjiang", "CodP": "CHN"}
+{"Ciudad": "Baiyin", "CodP": "CHN"}
+{"Ciudad": "Bei´an", "CodP": "CHN"}
+{"Ciudad": "Yixing", "CodP": "CHN"}
+{"Ciudad": "Laizhou", "CodP": "CHN"}
+{"Ciudad": "Qaramay", "CodP": "CHN"}
+{"Ciudad": "Acheng", "CodP": "CHN"}
+{"Ciudad": "Dezhou", "CodP": "CHN"}
+{"Ciudad": "Nanping", "CodP": "CHN"}
+{"Ciudad": "Zhaoqing", "CodP": "CHN"}
+{"Ciudad": "Beipiao", "CodP": "CHN"}
+{"Ciudad": "Fengcheng", "CodP": "CHN"}
+{"Ciudad": "Fuyu", "CodP": "CHN"}
+{"Ciudad": "Xinyang", "CodP": "CHN"}
+{"Ciudad": "Dongtai", "CodP": "CHN"}
+{"Ciudad": "Yuci", "CodP": "CHN"}
+{"Ciudad": "Honghu", "CodP": "CHN"}
+{"Ciudad": "Ezhou", "CodP": "CHN"}
+{"Ciudad": "Heze", "CodP": "CHN"}
+{"Ciudad": "Daxian", "CodP": "CHN"}
+{"Ciudad": "Linfen", "CodP": "CHN"}
+{"Ciudad": "Tianmen", "CodP": "CHN"}
+{"Ciudad": "Yiyang", "CodP": "CHN"}
+{"Ciudad": "Quanzhou", "CodP": "CHN"}
+{"Ciudad": "Rizhao", "CodP": "CHN"}
+{"Ciudad": "Deyang", "CodP": "CHN"}
+{"Ciudad": "Guangyuan", "CodP": "CHN"}
+{"Ciudad": "Changshu", "CodP": "CHN"}
+{"Ciudad": "Zhangzhou", "CodP": "CHN"}
+{"Ciudad": "Hailar", "CodP": "CHN"}
+{"Ciudad": "Nanchong", "CodP": "CHN"}
+{"Ciudad": "Jiutai", "CodP": "CHN"}
+{"Ciudad": "Zhaodong", "CodP": "CHN"}
+{"Ciudad": "Shaoxing", "CodP": "CHN"}
+{"Ciudad": "Fuyang", "CodP": "CHN"}
+{"Ciudad": "Maoming", "CodP": "CHN"}
+{"Ciudad": "Qujing", "CodP": "CHN"}
+{"Ciudad": "Ghulja", "CodP": "CHN"}
+{"Ciudad": "Jiaohe", "CodP": "CHN"}
+{"Ciudad": "Puyang", "CodP": "CHN"}
+{"Ciudad": "Huadian", "CodP": "CHN"}
+{"Ciudad": "Jiangyou", "CodP": "CHN"}
+{"Ciudad": "Qashqar", "CodP": "CHN"}
+{"Ciudad": "Anshun", "CodP": "CHN"}
+{"Ciudad": "Fuling", "CodP": "CHN"}
+{"Ciudad": "Xinyu", "CodP": "CHN"}
+{"Ciudad": "Hanzhong", "CodP": "CHN"}
+{"Ciudad": "Danyang", "CodP": "CHN"}
+{"Ciudad": "Chenzhou", "CodP": "CHN"}
+{"Ciudad": "Xiaogan", "CodP": "CHN"}
+{"Ciudad": "Shangqiu", "CodP": "CHN"}
+{"Ciudad": "Zhuhai", "CodP": "CHN"}
+{"Ciudad": "Qingyuan", "CodP": "CHN"}
+{"Ciudad": "Aqsu", "CodP": "CHN"}
+{"Ciudad": "Jining", "CodP": "CHN"}
+{"Ciudad": "Xiaoshan", "CodP": "CHN"}
+{"Ciudad": "Zaoyang", "CodP": "CHN"}
+{"Ciudad": "Xinghua", "CodP": "CHN"}
+{"Ciudad": "Hami", "CodP": "CHN"}
+{"Ciudad": "Huizhou", "CodP": "CHN"}
+{"Ciudad": "Jinmen", "CodP": "CHN"}
+{"Ciudad": "Sanming", "CodP": "CHN"}
+{"Ciudad": "Ulanhot", "CodP": "CHN"}
+{"Ciudad": "Korla", "CodP": "CHN"}
+{"Ciudad": "Wanxian", "CodP": "CHN"}
+{"Ciudad": "Rui´an", "CodP": "CHN"}
+{"Ciudad": "Zhoushan", "CodP": "CHN"}
+{"Ciudad": "Liangcheng", "CodP": "CHN"}
+{"Ciudad": "Jiaozhou", "CodP": "CHN"}
+{"Ciudad": "Taizhou", "CodP": "CHN"}
+{"Ciudad": "Suzhou", "CodP": "CHN"}
+{"Ciudad": "Yichun", "CodP": "CHN"}
+{"Ciudad": "Taonan", "CodP": "CHN"}
+{"Ciudad": "Pingdu", "CodP": "CHN"}
+{"Ciudad": "Ji´an", "CodP": "CHN"}
+{"Ciudad": "Longkou", "CodP": "CHN"}
+{"Ciudad": "Langfang", "CodP": "CHN"}
+{"Ciudad": "Zhoukou", "CodP": "CHN"}
+{"Ciudad": "Suining", "CodP": "CHN"}
+{"Ciudad": "Yulin", "CodP": "CHN"}
+{"Ciudad": "Jinhua", "CodP": "CHN"}
+{"Ciudad": "Liu´an", "CodP": "CHN"}
+{"Ciudad": "Shuangcheng", "CodP": "CHN"}
+{"Ciudad": "Suizhou", "CodP": "CHN"}
+{"Ciudad": "Ankang", "CodP": "CHN"}
+{"Ciudad": "Weinan", "CodP": "CHN"}
+{"Ciudad": "Longjing", "CodP": "CHN"}
+{"Ciudad": "Da´an", "CodP": "CHN"}
+{"Ciudad": "Lengshuijiang", "CodP": "CHN"}
+{"Ciudad": "Laiyang", "CodP": "CHN"}
+{"Ciudad": "Xianning", "CodP": "CHN"}
+{"Ciudad": "Dali", "CodP": "CHN"}
+{"Ciudad": "Anda", "CodP": "CHN"}
+{"Ciudad": "Jincheng", "CodP": "CHN"}
+{"Ciudad": "Longyan", "CodP": "CHN"}
+{"Ciudad": "Xichang", "CodP": "CHN"}
+{"Ciudad": "Wendeng", "CodP": "CHN"}
+{"Ciudad": "Hailun", "CodP": "CHN"}
+{"Ciudad": "Binzhou", "CodP": "CHN"}
+{"Ciudad": "Linhe", "CodP": "CHN"}
+{"Ciudad": "Wuwei", "CodP": "CHN"}
+{"Ciudad": "Duyun", "CodP": "CHN"}
+{"Ciudad": "Mishan", "CodP": "CHN"}
+{"Ciudad": "Shangrao", "CodP": "CHN"}
+{"Ciudad": "Changji", "CodP": "CHN"}
+{"Ciudad": "Meixian", "CodP": "CHN"}
+{"Ciudad": "Yushu", "CodP": "CHN"}
+{"Ciudad": "Tiefa", "CodP": "CHN"}
+{"Ciudad": "Huai´an", "CodP": "CHN"}
+{"Ciudad": "Leiyang", "CodP": "CHN"}
+{"Ciudad": "Zalantun", "CodP": "CHN"}
+{"Ciudad": "Weihai", "CodP": "CHN"}
+{"Ciudad": "Loudi", "CodP": "CHN"}
+{"Ciudad": "Qingzhou", "CodP": "CHN"}
+{"Ciudad": "Qidong", "CodP": "CHN"}
+{"Ciudad": "Huaihua", "CodP": "CHN"}
+{"Ciudad": "Luohe", "CodP": "CHN"}
+{"Ciudad": "Chuzhou", "CodP": "CHN"}
+{"Ciudad": "Kaiyuan", "CodP": "CHN"}
+{"Ciudad": "Linqing", "CodP": "CHN"}
+{"Ciudad": "Chaohu", "CodP": "CHN"}
+{"Ciudad": "Laohekou", "CodP": "CHN"}
+{"Ciudad": "Dujiangyan", "CodP": "CHN"}
+{"Ciudad": "Zhumadian", "CodP": "CHN"}
+{"Ciudad": "Linchuan", "CodP": "CHN"}
+{"Ciudad": "Jiaonan", "CodP": "CHN"}
+{"Ciudad": "Sanmenxia", "CodP": "CHN"}
+{"Ciudad": "Heyuan", "CodP": "CHN"}
+{"Ciudad": "Manzhouli", "CodP": "CHN"}
+{"Ciudad": "Lhasa", "CodP": "CHN"}
+{"Ciudad": "Lianyuan", "CodP": "CHN"}
+{"Ciudad": "Kuytun", "CodP": "CHN"}
+{"Ciudad": "Puqi", "CodP": "CHN"}
+{"Ciudad": "Hongjiang", "CodP": "CHN"}
+{"Ciudad": "Qinzhou", "CodP": "CHN"}
+{"Ciudad": "Renqiu", "CodP": "CHN"}
+{"Ciudad": "Yuyao", "CodP": "CHN"}
+{"Ciudad": "Guigang", "CodP": "CHN"}
+{"Ciudad": "Kaili", "CodP": "CHN"}
+{"Ciudad": "Yan´an", "CodP": "CHN"}
+{"Ciudad": "Beihai", "CodP": "CHN"}
+{"Ciudad": "Xuangzhou", "CodP": "CHN"}
+{"Ciudad": "Quzhou", "CodP": "CHN"}
+{"Ciudad": "Yong´an", "CodP": "CHN"}
+{"Ciudad": "Zixing", "CodP": "CHN"}
+{"Ciudad": "Liyang", "CodP": "CHN"}
+{"Ciudad": "Yizheng", "CodP": "CHN"}
+{"Ciudad": "Yumen", "CodP": "CHN"}
+{"Ciudad": "Liling", "CodP": "CHN"}
+{"Ciudad": "Yuncheng", "CodP": "CHN"}
+{"Ciudad": "Shanwei", "CodP": "CHN"}
+{"Ciudad": "Cixi", "CodP": "CHN"}
+{"Ciudad": "Yuanjiang", "CodP": "CHN"}
+{"Ciudad": "Bozhou", "CodP": "CHN"}
+{"Ciudad": "Jinchang", "CodP": "CHN"}
+{"Ciudad": "Fu´an", "CodP": "CHN"}
+{"Ciudad": "Suqian", "CodP": "CHN"}
+{"Ciudad": "Shishou", "CodP": "CHN"}
+{"Ciudad": "Hengshui", "CodP": "CHN"}
+{"Ciudad": "Danjiangkou", "CodP": "CHN"}
+{"Ciudad": "Fujin", "CodP": "CHN"}
+{"Ciudad": "Sanya", "CodP": "CHN"}
+{"Ciudad": "Guangshui", "CodP": "CHN"}
+{"Ciudad": "Huangshan", "CodP": "CHN"}
+{"Ciudad": "Xingcheng", "CodP": "CHN"}
+{"Ciudad": "Zhucheng", "CodP": "CHN"}
+{"Ciudad": "Kunshan", "CodP": "CHN"}
+{"Ciudad": "Haining", "CodP": "CHN"}
+{"Ciudad": "Pingliang", "CodP": "CHN"}
+{"Ciudad": "Fuqing", "CodP": "CHN"}
+{"Ciudad": "Xinzhou", "CodP": "CHN"}
+{"Ciudad": "Jieyang", "CodP": "CHN"}
+{"Ciudad": "Zhangjiagang", "CodP": "CHN"}
+{"Ciudad": "Tong Xian", "CodP": "CHN"}
+{"Ciudad": "Ya´an", "CodP": "CHN"}
+{"Ciudad": "Jinzhou", "CodP": "CHN"}
+{"Ciudad": "Emeishan", "CodP": "CHN"}
+{"Ciudad": "Enshi", "CodP": "CHN"}
+{"Ciudad": "Bose", "CodP": "CHN"}
+{"Ciudad": "Yuzhou", "CodP": "CHN"}
+{"Ciudad": "Kaiyuan", "CodP": "CHN"}
+{"Ciudad": "Tumen", "CodP": "CHN"}
+{"Ciudad": "Putian", "CodP": "CHN"}
+{"Ciudad": "Linhai", "CodP": "CHN"}
+{"Ciudad": "Xilin Hot", "CodP": "CHN"}
+{"Ciudad": "Shaowu", "CodP": "CHN"}
+{"Ciudad": "Junan", "CodP": "CHN"}
+{"Ciudad": "Huaying", "CodP": "CHN"}
+{"Ciudad": "Pingyi", "CodP": "CHN"}
+{"Ciudad": "Huangyan", "CodP": "CHN"}
+{"Ciudad": "Bishkek", "CodP": "KGZ"}
+{"Ciudad": "Osh", "CodP": "KGZ"}
+{"Ciudad": "Bikenibeu", "CodP": "KIR"}
+{"Ciudad": "Bairiki", "CodP": "KIR"}
+{"Ciudad": "Santafé de Bogotá", "CodP": "COL"}
+{"Ciudad": "Cali", "CodP": "COL"}
+{"Ciudad": "Medellín", "CodP": "COL"}
+{"Ciudad": "Barranquilla", "CodP": "COL"}
+{"Ciudad": "Cartagena", "CodP": "COL"}
+{"Ciudad": "Cúcuta", "CodP": "COL"}
+{"Ciudad": "Bucaramanga", "CodP": "COL"}
+{"Ciudad": "Ibagué", "CodP": "COL"}
+{"Ciudad": "Pereira", "CodP": "COL"}
+{"Ciudad": "Santa Marta", "CodP": "COL"}
+{"Ciudad": "Manizales", "CodP": "COL"}
+{"Ciudad": "Bello", "CodP": "COL"}
+{"Ciudad": "Pasto", "CodP": "COL"}
+{"Ciudad": "Neiva", "CodP": "COL"}
+{"Ciudad": "Soledad", "CodP": "COL"}
+{"Ciudad": "Armenia", "CodP": "COL"}
+{"Ciudad": "Villavicencio", "CodP": "COL"}
+{"Ciudad": "Soacha", "CodP": "COL"}
+{"Ciudad": "Valledupar", "CodP": "COL"}
+{"Ciudad": "Montería", "CodP": "COL"}
+{"Ciudad": "Itagüí", "CodP": "COL"}
+{"Ciudad": "Palmira", "CodP": "COL"}
+{"Ciudad": "Buenaventura", "CodP": "COL"}
+{"Ciudad": "Floridablanca", "CodP": "COL"}
+{"Ciudad": "Sincelejo", "CodP": "COL"}
+{"Ciudad": "Popayán", "CodP": "COL"}
+{"Ciudad": "Barrancabermeja", "CodP": "COL"}
+{"Ciudad": "Dos Quebradas", "CodP": "COL"}
+{"Ciudad": "Tuluá", "CodP": "COL"}
+{"Ciudad": "Envigado", "CodP": "COL"}
+{"Ciudad": "Cartago", "CodP": "COL"}
+{"Ciudad": "Girardot", "CodP": "COL"}
+{"Ciudad": "Buga", "CodP": "COL"}
+{"Ciudad": "Tunja", "CodP": "COL"}
+{"Ciudad": "Florencia", "CodP": "COL"}
+{"Ciudad": "Maicao", "CodP": "COL"}
+{"Ciudad": "Sogamoso", "CodP": "COL"}
+{"Ciudad": "Giron", "CodP": "COL"}
+{"Ciudad": "Moroni", "CodP": "COM"}
+{"Ciudad": "Brazzaville", "CodP": "COG"}
+{"Ciudad": "Pointe-Noire", "CodP": "COG"}
+{"Ciudad": "Kinshasa", "CodP": "COD"}
+{"Ciudad": "Lubumbashi", "CodP": "COD"}
+{"Ciudad": "Mbuji-Mayi", "CodP": "COD"}
+{"Ciudad": "Kolwezi", "CodP": "COD"}
+{"Ciudad": "Kisangani", "CodP": "COD"}
+{"Ciudad": "Kananga", "CodP": "COD"}
+{"Ciudad": "Likasi", "CodP": "COD"}
+{"Ciudad": "Bukavu", "CodP": "COD"}
+{"Ciudad": "Kikwit", "CodP": "COD"}
+{"Ciudad": "Tshikapa", "CodP": "COD"}
+{"Ciudad": "Matadi", "CodP": "COD"}
+{"Ciudad": "Mbandaka", "CodP": "COD"}
+{"Ciudad": "Mwene-Ditu", "CodP": "COD"}
+{"Ciudad": "Boma", "CodP": "COD"}
+{"Ciudad": "Uvira", "CodP": "COD"}
+{"Ciudad": "Butembo", "CodP": "COD"}
+{"Ciudad": "Goma", "CodP": "COD"}
+{"Ciudad": "Kalemie", "CodP": "COD"}
+{"Ciudad": "Bantam", "CodP": "CCK"}
+{"Ciudad": "West Island", "CodP": "CCK"}
+{"Ciudad": "Pyongyang", "CodP": "PRK"}
+{"Ciudad": "Hamhung", "CodP": "PRK"}
+{"Ciudad": "Chongjin", "CodP": "PRK"}
+{"Ciudad": "Nampo", "CodP": "PRK"}
+{"Ciudad": "Sinuiju", "CodP": "PRK"}
+{"Ciudad": "Wonsan", "CodP": "PRK"}
+{"Ciudad": "Phyongsong", "CodP": "PRK"}
+{"Ciudad": "Sariwon", "CodP": "PRK"}
+{"Ciudad": "Haeju", "CodP": "PRK"}
+{"Ciudad": "Kanggye", "CodP": "PRK"}
+{"Ciudad": "Kimchaek", "CodP": "PRK"}
+{"Ciudad": "Hyesan", "CodP": "PRK"}
+{"Ciudad": "Kaesong", "CodP": "PRK"}
+{"Ciudad": "Seoul", "CodP": "KOR"}
+{"Ciudad": "Pusan", "CodP": "KOR"}
+{"Ciudad": "Inchon", "CodP": "KOR"}
+{"Ciudad": "Taegu", "CodP": "KOR"}
+{"Ciudad": "Taejon", "CodP": "KOR"}
+{"Ciudad": "Kwangju", "CodP": "KOR"}
+{"Ciudad": "Ulsan", "CodP": "KOR"}
+{"Ciudad": "Songnam", "CodP": "KOR"}
+{"Ciudad": "Puchon", "CodP": "KOR"}
+{"Ciudad": "Suwon", "CodP": "KOR"}
+{"Ciudad": "Anyang", "CodP": "KOR"}
+{"Ciudad": "Chonju", "CodP": "KOR"}
+{"Ciudad": "Chongju", "CodP": "KOR"}
+{"Ciudad": "Koyang", "CodP": "KOR"}
+{"Ciudad": "Ansan", "CodP": "KOR"}
+{"Ciudad": "Pohang", "CodP": "KOR"}
+{"Ciudad": "Chang-won", "CodP": "KOR"}
+{"Ciudad": "Masan", "CodP": "KOR"}
+{"Ciudad": "Kwangmyong", "CodP": "KOR"}
+{"Ciudad": "Chonan", "CodP": "KOR"}
+{"Ciudad": "Chinju", "CodP": "KOR"}
+{"Ciudad": "Iksan", "CodP": "KOR"}
+{"Ciudad": "Pyongtaek", "CodP": "KOR"}
+{"Ciudad": "Kumi", "CodP": "KOR"}
+{"Ciudad": "Uijongbu", "CodP": "KOR"}
+{"Ciudad": "Kyongju", "CodP": "KOR"}
+{"Ciudad": "Kunsan", "CodP": "KOR"}
+{"Ciudad": "Cheju", "CodP": "KOR"}
+{"Ciudad": "Kimhae", "CodP": "KOR"}
+{"Ciudad": "Sunchon", "CodP": "KOR"}
+{"Ciudad": "Mokpo", "CodP": "KOR"}
+{"Ciudad": "Yong-in", "CodP": "KOR"}
+{"Ciudad": "Wonju", "CodP": "KOR"}
+{"Ciudad": "Kunpo", "CodP": "KOR"}
+{"Ciudad": "Chunchon", "CodP": "KOR"}
+{"Ciudad": "Namyangju", "CodP": "KOR"}
+{"Ciudad": "Kangnung", "CodP": "KOR"}
+{"Ciudad": "Chungju", "CodP": "KOR"}
+{"Ciudad": "Andong", "CodP": "KOR"}
+{"Ciudad": "Yosu", "CodP": "KOR"}
+{"Ciudad": "Kyongsan", "CodP": "KOR"}
+{"Ciudad": "Paju", "CodP": "KOR"}
+{"Ciudad": "Yangsan", "CodP": "KOR"}
+{"Ciudad": "Ichon", "CodP": "KOR"}
+{"Ciudad": "Asan", "CodP": "KOR"}
+{"Ciudad": "Koje", "CodP": "KOR"}
+{"Ciudad": "Kimchon", "CodP": "KOR"}
+{"Ciudad": "Nonsan", "CodP": "KOR"}
+{"Ciudad": "Kuri", "CodP": "KOR"}
+{"Ciudad": "Chong-up", "CodP": "KOR"}
+{"Ciudad": "Chechon", "CodP": "KOR"}
+{"Ciudad": "Sosan", "CodP": "KOR"}
+{"Ciudad": "Shihung", "CodP": "KOR"}
+{"Ciudad": "Tong-yong", "CodP": "KOR"}
+{"Ciudad": "Kongju", "CodP": "KOR"}
+{"Ciudad": "Yongju", "CodP": "KOR"}
+{"Ciudad": "Chinhae", "CodP": "KOR"}
+{"Ciudad": "Sangju", "CodP": "KOR"}
+{"Ciudad": "Poryong", "CodP": "KOR"}
+{"Ciudad": "Kwang-yang", "CodP": "KOR"}
+{"Ciudad": "Miryang", "CodP": "KOR"}
+{"Ciudad": "Hanam", "CodP": "KOR"}
+{"Ciudad": "Kimje", "CodP": "KOR"}
+{"Ciudad": "Yongchon", "CodP": "KOR"}
+{"Ciudad": "Sachon", "CodP": "KOR"}
+{"Ciudad": "Uiwang", "CodP": "KOR"}
+{"Ciudad": "Naju", "CodP": "KOR"}
+{"Ciudad": "Namwon", "CodP": "KOR"}
+{"Ciudad": "Tonghae", "CodP": "KOR"}
+{"Ciudad": "Mun-gyong", "CodP": "KOR"}
+{"Ciudad": "Athenai", "CodP": "GRC"}
+{"Ciudad": "Thessaloniki", "CodP": "GRC"}
+{"Ciudad": "Pireus", "CodP": "GRC"}
+{"Ciudad": "Patras", "CodP": "GRC"}
+{"Ciudad": "Peristerion", "CodP": "GRC"}
+{"Ciudad": "Herakleion", "CodP": "GRC"}
+{"Ciudad": "Kallithea", "CodP": "GRC"}
+{"Ciudad": "Larisa", "CodP": "GRC"}
+{"Ciudad": "Zagreb", "CodP": "HRV"}
+{"Ciudad": "Split", "CodP": "HRV"}
+{"Ciudad": "Rijeka", "CodP": "HRV"}
+{"Ciudad": "Osijek", "CodP": "HRV"}
+{"Ciudad": "La Habana", "CodP": "CUB"}
+{"Ciudad": "Santiago de Cuba", "CodP": "CUB"}
+{"Ciudad": "Camagüey", "CodP": "CUB"}
+{"Ciudad": "Holguín", "CodP": "CUB"}
+{"Ciudad": "Santa Clara", "CodP": "CUB"}
+{"Ciudad": "Guantánamo", "CodP": "CUB"}
+{"Ciudad": "Pinar del Río", "CodP": "CUB"}
+{"Ciudad": "Bayamo", "CodP": "CUB"}
+{"Ciudad": "Cienfuegos", "CodP": "CUB"}
+{"Ciudad": "Victoria de las Tunas", "CodP": "CUB"}
+{"Ciudad": "Matanzas", "CodP": "CUB"}
+{"Ciudad": "Manzanillo", "CodP": "CUB"}
+{"Ciudad": "Sancti-Spíritus", "CodP": "CUB"}
+{"Ciudad": "Ciego de Ávila", "CodP": "CUB"}
+{"Ciudad": "al-Salimiya", "CodP": "KWT"}
+{"Ciudad": "Jalib al-Shuyukh", "CodP": "KWT"}
+{"Ciudad": "Kuwait", "CodP": "KWT"}
+{"Ciudad": "Nicosia", "CodP": "CYP"}
+{"Ciudad": "Limassol", "CodP": "CYP"}
+{"Ciudad": "Vientiane", "CodP": "LAO"}
+{"Ciudad": "Savannakhet", "CodP": "LAO"}
+{"Ciudad": "Riga", "CodP": "LVA"}
+{"Ciudad": "Daugavpils", "CodP": "LVA"}
+{"Ciudad": "Liepaja", "CodP": "LVA"}
+{"Ciudad": "Maseru", "CodP": "LSO"}
+{"Ciudad": "Beirut", "CodP": "LBN"}
+{"Ciudad": "Tripoli", "CodP": "LBN"}
+{"Ciudad": "Monrovia", "CodP": "LBR"}
+{"Ciudad": "Tripoli", "CodP": "LBY"}
+{"Ciudad": "Bengasi", "CodP": "LBY"}
+{"Ciudad": "Misrata", "CodP": "LBY"}
+{"Ciudad": "al-Zawiya", "CodP": "LBY"}
+{"Ciudad": "Schaan", "CodP": "LIE"}
+{"Ciudad": "Vaduz", "CodP": "LIE"}
+{"Ciudad": "Vilnius", "CodP": "LTU"}
+{"Ciudad": "Kaunas", "CodP": "LTU"}
+{"Ciudad": "Klaipeda", "CodP": "LTU"}
+{"Ciudad": "Šiauliai", "CodP": "LTU"}
+{"Ciudad": "Panevezys", "CodP": "LTU"}
+{"Ciudad": "Luxembourg [Luxemburg/Lëtzebuerg]", "CodP": "LUX"}
+{"Ciudad": "El-Aaiún", "CodP": "ESH"}
+{"Ciudad": "Macao", "CodP": "MAC"}
+{"Ciudad": "Antananarivo", "CodP": "MDG"}
+{"Ciudad": "Toamasina", "CodP": "MDG"}
+{"Ciudad": "Antsirabé", "CodP": "MDG"}
+{"Ciudad": "Mahajanga", "CodP": "MDG"}
+{"Ciudad": "Fianarantsoa", "CodP": "MDG"}
+{"Ciudad": "Skopje", "CodP": "MKD"}
+{"Ciudad": "Blantyre", "CodP": "MWI"}
+{"Ciudad": "Lilongwe", "CodP": "MWI"}
+{"Ciudad": "Male", "CodP": "MDV"}
+{"Ciudad": "Kuala Lumpur", "CodP": "MYS"}
+{"Ciudad": "Ipoh", "CodP": "MYS"}
+{"Ciudad": "Johor Baharu", "CodP": "MYS"}
+{"Ciudad": "Petaling Jaya", "CodP": "MYS"}
+{"Ciudad": "Kelang", "CodP": "MYS"}
+{"Ciudad": "Kuala Terengganu", "CodP": "MYS"}
+{"Ciudad": "Pinang", "CodP": "MYS"}
+{"Ciudad": "Kota Bharu", "CodP": "MYS"}
+{"Ciudad": "Kuantan", "CodP": "MYS"}
+{"Ciudad": "Taiping", "CodP": "MYS"}
+{"Ciudad": "Seremban", "CodP": "MYS"}
+{"Ciudad": "Kuching", "CodP": "MYS"}
+{"Ciudad": "Sibu", "CodP": "MYS"}
+{"Ciudad": "Sandakan", "CodP": "MYS"}
+{"Ciudad": "Alor Setar", "CodP": "MYS"}
+{"Ciudad": "Selayang Baru", "CodP": "MYS"}
+{"Ciudad": "Sungai Petani", "CodP": "MYS"}
+{"Ciudad": "Shah Alam", "CodP": "MYS"}
+{"Ciudad": "Bamako", "CodP": "MLI"}
+{"Ciudad": "Birkirkara", "CodP": "MLT"}
+{"Ciudad": "Valletta", "CodP": "MLT"}
+{"Ciudad": "Casablanca", "CodP": "MAR"}
+{"Ciudad": "Rabat", "CodP": "MAR"}
+{"Ciudad": "Marrakech", "CodP": "MAR"}
+{"Ciudad": "Fès", "CodP": "MAR"}
+{"Ciudad": "Tanger", "CodP": "MAR"}
+{"Ciudad": "Salé", "CodP": "MAR"}
+{"Ciudad": "Meknès", "CodP": "MAR"}
+{"Ciudad": "Oujda", "CodP": "MAR"}
+{"Ciudad": "Kénitra", "CodP": "MAR"}
+{"Ciudad": "Tétouan", "CodP": "MAR"}
+{"Ciudad": "Safi", "CodP": "MAR"}
+{"Ciudad": "Agadir", "CodP": "MAR"}
+{"Ciudad": "Mohammedia", "CodP": "MAR"}
+{"Ciudad": "Khouribga", "CodP": "MAR"}
+{"Ciudad": "Beni-Mellal", "CodP": "MAR"}
+{"Ciudad": "Témara", "CodP": "MAR"}
+{"Ciudad": "El Jadida", "CodP": "MAR"}
+{"Ciudad": "Nador", "CodP": "MAR"}
+{"Ciudad": "Ksar el Kebir", "CodP": "MAR"}
+{"Ciudad": "Settat", "CodP": "MAR"}
+{"Ciudad": "Taza", "CodP": "MAR"}
+{"Ciudad": "El Araich", "CodP": "MAR"}
+{"Ciudad": "Dalap-Uliga-Darrit", "CodP": "MHL"}
+{"Ciudad": "Fort-de-France", "CodP": "MTQ"}
+{"Ciudad": "Nouakchott", "CodP": "MRT"}
+{"Ciudad": "Nouâdhibou", "CodP": "MRT"}
+{"Ciudad": "Port-Louis", "CodP": "MUS"}
+{"Ciudad": "Beau Bassin-Rose Hill", "CodP": "MUS"}
+{"Ciudad": "Vacoas-Phoenix", "CodP": "MUS"}
+{"Ciudad": "Mamoutzou", "CodP": "MYT"}
+{"Ciudad": "Ciudad de México", "CodP": "MEX"}
+{"Ciudad": "Guadalajara", "CodP": "MEX"}
+{"Ciudad": "Ecatepec de Morelos", "CodP": "MEX"}
+{"Ciudad": "Puebla", "CodP": "MEX"}
+{"Ciudad": "Nezahualcóyotl", "CodP": "MEX"}
+{"Ciudad": "Juárez", "CodP": "MEX"}
+{"Ciudad": "Tijuana", "CodP": "MEX"}
+{"Ciudad": "León", "CodP": "MEX"}
+{"Ciudad": "Monterrey", "CodP": "MEX"}
+{"Ciudad": "Zapopan", "CodP": "MEX"}
+{"Ciudad": "Naucalpan de Juárez", "CodP": "MEX"}
+{"Ciudad": "Mexicali", "CodP": "MEX"}
+{"Ciudad": "Culiacán", "CodP": "MEX"}
+{"Ciudad": "Acapulco de Juárez", "CodP": "MEX"}
+{"Ciudad": "Tlalnepantla de Baz", "CodP": "MEX"}
+{"Ciudad": "Mérida", "CodP": "MEX"}
+{"Ciudad": "Chihuahua", "CodP": "MEX"}
+{"Ciudad": "San Luis Potosí", "CodP": "MEX"}
+{"Ciudad": "Guadalupe", "CodP": "MEX"}
+{"Ciudad": "Toluca", "CodP": "MEX"}
+{"Ciudad": "Aguascalientes", "CodP": "MEX"}
+{"Ciudad": "Querétaro", "CodP": "MEX"}
+{"Ciudad": "Morelia", "CodP": "MEX"}
+{"Ciudad": "Hermosillo", "CodP": "MEX"}
+{"Ciudad": "Saltillo", "CodP": "MEX"}
+{"Ciudad": "Torreón", "CodP": "MEX"}
+{"Ciudad": "Centro (Villahermosa)", "CodP": "MEX"}
+{"Ciudad": "San Nicolás de los Garza", "CodP": "MEX"}
+{"Ciudad": "Durango", "CodP": "MEX"}
+{"Ciudad": "Chimalhuacán", "CodP": "MEX"}
+{"Ciudad": "Tlaquepaque", "CodP": "MEX"}
+{"Ciudad": "Atizapán de Zaragoza", "CodP": "MEX"}
+{"Ciudad": "Veracruz", "CodP": "MEX"}
+{"Ciudad": "Cuautitlán Izcalli", "CodP": "MEX"}
+{"Ciudad": "Irapuato", "CodP": "MEX"}
+{"Ciudad": "Tuxtla Gutiérrez", "CodP": "MEX"}
+{"Ciudad": "Tultitlán", "CodP": "MEX"}
+{"Ciudad": "Reynosa", "CodP": "MEX"}
+{"Ciudad": "Benito Juárez", "CodP": "MEX"}
+{"Ciudad": "Matamoros", "CodP": "MEX"}
+{"Ciudad": "Xalapa", "CodP": "MEX"}
+{"Ciudad": "Celaya", "CodP": "MEX"}
+{"Ciudad": "Mazatlán", "CodP": "MEX"}
+{"Ciudad": "Ensenada", "CodP": "MEX"}
+{"Ciudad": "Ahome", "CodP": "MEX"}
+{"Ciudad": "Cajeme", "CodP": "MEX"}
+{"Ciudad": "Cuernavaca", "CodP": "MEX"}
+{"Ciudad": "Tonalá", "CodP": "MEX"}
+{"Ciudad": "Valle de Chalco Solidaridad", "CodP": "MEX"}
+{"Ciudad": "Nuevo Laredo", "CodP": "MEX"}
+{"Ciudad": "Tepic", "CodP": "MEX"}
+{"Ciudad": "Tampico", "CodP": "MEX"}
+{"Ciudad": "Ixtapaluca", "CodP": "MEX"}
+{"Ciudad": "Apodaca", "CodP": "MEX"}
+{"Ciudad": "Guasave", "CodP": "MEX"}
+{"Ciudad": "Gómez Palacio", "CodP": "MEX"}
+{"Ciudad": "Tapachula", "CodP": "MEX"}
+{"Ciudad": "Nicolás Romero", "CodP": "MEX"}
+{"Ciudad": "Coatzacoalcos", "CodP": "MEX"}
+{"Ciudad": "Uruapan", "CodP": "MEX"}
+{"Ciudad": "Victoria", "CodP": "MEX"}
+{"Ciudad": "Oaxaca de Juárez", "CodP": "MEX"}
+{"Ciudad": "Coacalco de Berriozábal", "CodP": "MEX"}
+{"Ciudad": "Pachuca de Soto", "CodP": "MEX"}
+{"Ciudad": "General Escobedo", "CodP": "MEX"}
+{"Ciudad": "Salamanca", "CodP": "MEX"}
+{"Ciudad": "Santa Catarina", "CodP": "MEX"}
+{"Ciudad": "Tehuacán", "CodP": "MEX"}
+{"Ciudad": "Chalco", "CodP": "MEX"}
+{"Ciudad": "Cárdenas", "CodP": "MEX"}
+{"Ciudad": "Campeche", "CodP": "MEX"}
+{"Ciudad": "La Paz", "CodP": "MEX"}
+{"Ciudad": "Othón P. Blanco (Chetumal)", "CodP": "MEX"}
+{"Ciudad": "Texcoco", "CodP": "MEX"}
+{"Ciudad": "La Paz", "CodP": "MEX"}
+{"Ciudad": "Metepec", "CodP": "MEX"}
+{"Ciudad": "Monclova", "CodP": "MEX"}
+{"Ciudad": "Huixquilucan", "CodP": "MEX"}
+{"Ciudad": "Chilpancingo de los Bravo", "CodP": "MEX"}
+{"Ciudad": "Puerto Vallarta", "CodP": "MEX"}
+{"Ciudad": "Fresnillo", "CodP": "MEX"}
+{"Ciudad": "Ciudad Madero", "CodP": "MEX"}
+{"Ciudad": "Soledad de Graciano Sánchez", "CodP": "MEX"}
+{"Ciudad": "San Juan del Río", "CodP": "MEX"}
+{"Ciudad": "San Felipe del Progreso", "CodP": "MEX"}
+{"Ciudad": "Córdoba", "CodP": "MEX"}
+{"Ciudad": "Tecámac", "CodP": "MEX"}
+{"Ciudad": "Ocosingo", "CodP": "MEX"}
+{"Ciudad": "Carmen", "CodP": "MEX"}
+{"Ciudad": "Lázaro Cárdenas", "CodP": "MEX"}
+{"Ciudad": "Jiutepec", "CodP": "MEX"}
+{"Ciudad": "Papantla", "CodP": "MEX"}
+{"Ciudad": "Comalcalco", "CodP": "MEX"}
+{"Ciudad": "Zamora", "CodP": "MEX"}
+{"Ciudad": "Nogales", "CodP": "MEX"}
+{"Ciudad": "Huimanguillo", "CodP": "MEX"}
+{"Ciudad": "Cuautla", "CodP": "MEX"}
+{"Ciudad": "Minatitlán", "CodP": "MEX"}
+{"Ciudad": "Poza Rica de Hidalgo", "CodP": "MEX"}
+{"Ciudad": "Ciudad Valles", "CodP": "MEX"}
+{"Ciudad": "Navolato", "CodP": "MEX"}
+{"Ciudad": "San Luis Río Colorado", "CodP": "MEX"}
+{"Ciudad": "Pénjamo", "CodP": "MEX"}
+{"Ciudad": "San Andrés Tuxtla", "CodP": "MEX"}
+{"Ciudad": "Guanajuato", "CodP": "MEX"}
+{"Ciudad": "Navojoa", "CodP": "MEX"}
+{"Ciudad": "Zitácuaro", "CodP": "MEX"}
+{"Ciudad": "Boca del Río", "CodP": "MEX"}
+{"Ciudad": "Allende", "CodP": "MEX"}
+{"Ciudad": "Silao", "CodP": "MEX"}
+{"Ciudad": "Macuspana", "CodP": "MEX"}
+{"Ciudad": "San Juan Bautista Tuxtepec", "CodP": "MEX"}
+{"Ciudad": "San Cristóbal de las Casas", "CodP": "MEX"}
+{"Ciudad": "Valle de Santiago", "CodP": "MEX"}
+{"Ciudad": "Guaymas", "CodP": "MEX"}
+{"Ciudad": "Colima", "CodP": "MEX"}
+{"Ciudad": "Dolores Hidalgo", "CodP": "MEX"}
+{"Ciudad": "Lagos de Moreno", "CodP": "MEX"}
+{"Ciudad": "Piedras Negras", "CodP": "MEX"}
+{"Ciudad": "Altamira", "CodP": "MEX"}
+{"Ciudad": "Túxpam", "CodP": "MEX"}
+{"Ciudad": "San Pedro Garza García", "CodP": "MEX"}
+{"Ciudad": "Cuauhtémoc", "CodP": "MEX"}
+{"Ciudad": "Manzanillo", "CodP": "MEX"}
+{"Ciudad": "Iguala de la Independencia", "CodP": "MEX"}
+{"Ciudad": "Zacatecas", "CodP": "MEX"}
+{"Ciudad": "Tlajomulco de Zúñiga", "CodP": "MEX"}
+{"Ciudad": "Tulancingo de Bravo", "CodP": "MEX"}
+{"Ciudad": "Zinacantepec", "CodP": "MEX"}
+{"Ciudad": "San Martín Texmelucan", "CodP": "MEX"}
+{"Ciudad": "Tepatitlán de Morelos", "CodP": "MEX"}
+{"Ciudad": "Martínez de la Torre", "CodP": "MEX"}
+{"Ciudad": "Orizaba", "CodP": "MEX"}
+{"Ciudad": "Apatzingán", "CodP": "MEX"}
+{"Ciudad": "Atlixco", "CodP": "MEX"}
+{"Ciudad": "Delicias", "CodP": "MEX"}
+{"Ciudad": "Ixtlahuaca", "CodP": "MEX"}
+{"Ciudad": "El Mante", "CodP": "MEX"}
+{"Ciudad": "Lerdo", "CodP": "MEX"}
+{"Ciudad": "Almoloya de Juárez", "CodP": "MEX"}
+{"Ciudad": "Acámbaro", "CodP": "MEX"}
+{"Ciudad": "Acuña", "CodP": "MEX"}
+{"Ciudad": "Guadalupe", "CodP": "MEX"}
+{"Ciudad": "Huejutla de Reyes", "CodP": "MEX"}
+{"Ciudad": "Hidalgo", "CodP": "MEX"}
+{"Ciudad": "Los Cabos", "CodP": "MEX"}
+{"Ciudad": "Comitán de Domínguez", "CodP": "MEX"}
+{"Ciudad": "Cunduacán", "CodP": "MEX"}
+{"Ciudad": "Río Bravo", "CodP": "MEX"}
+{"Ciudad": "Temapache", "CodP": "MEX"}
+{"Ciudad": "Chilapa de Alvarez", "CodP": "MEX"}
+{"Ciudad": "Hidalgo del Parral", "CodP": "MEX"}
+{"Ciudad": "San Francisco del Rincón", "CodP": "MEX"}
+{"Ciudad": "Taxco de Alarcón", "CodP": "MEX"}
+{"Ciudad": "Zumpango", "CodP": "MEX"}
+{"Ciudad": "San Pedro Cholula", "CodP": "MEX"}
+{"Ciudad": "Lerma", "CodP": "MEX"}
+{"Ciudad": "Tecomán", "CodP": "MEX"}
+{"Ciudad": "Las Margaritas", "CodP": "MEX"}
+{"Ciudad": "Cosoleacaque", "CodP": "MEX"}
+{"Ciudad": "San Luis de la Paz", "CodP": "MEX"}
+{"Ciudad": "José Azueta", "CodP": "MEX"}
+{"Ciudad": "Santiago Ixcuintla", "CodP": "MEX"}
+{"Ciudad": "San Felipe", "CodP": "MEX"}
+{"Ciudad": "Tejupilco", "CodP": "MEX"}
+{"Ciudad": "Tantoyuca", "CodP": "MEX"}
+{"Ciudad": "Salvatierra", "CodP": "MEX"}
+{"Ciudad": "Tultepec", "CodP": "MEX"}
+{"Ciudad": "Temixco", "CodP": "MEX"}
+{"Ciudad": "Matamoros", "CodP": "MEX"}
+{"Ciudad": "Pánuco", "CodP": "MEX"}
+{"Ciudad": "El Fuerte", "CodP": "MEX"}
+{"Ciudad": "Tierra Blanca", "CodP": "MEX"}
+{"Ciudad": "Weno", "CodP": "FSM"}
+{"Ciudad": "Palikir", "CodP": "FSM"}
+{"Ciudad": "Chisinau", "CodP": "MDA"}
+{"Ciudad": "Tiraspol", "CodP": "MDA"}
+{"Ciudad": "Balti", "CodP": "MDA"}
+{"Ciudad": "Bender (Tîghina)", "CodP": "MDA"}
+{"Ciudad": "Monte-Carlo", "CodP": "MCO"}
+{"Ciudad": "Monaco-Ville", "CodP": "MCO"}
+{"Ciudad": "Ulan Bator", "CodP": "MNG"}
+{"Ciudad": "Plymouth", "CodP": "MSR"}
+{"Ciudad": "Maputo", "CodP": "MOZ"}
+{"Ciudad": "Matola", "CodP": "MOZ"}
+{"Ciudad": "Beira", "CodP": "MOZ"}
+{"Ciudad": "Nampula", "CodP": "MOZ"}
+{"Ciudad": "Chimoio", "CodP": "MOZ"}
+{"Ciudad": "Naçala-Porto", "CodP": "MOZ"}
+{"Ciudad": "Quelimane", "CodP": "MOZ"}
+{"Ciudad": "Mocuba", "CodP": "MOZ"}
+{"Ciudad": "Tete", "CodP": "MOZ"}
+{"Ciudad": "Xai-Xai", "CodP": "MOZ"}
+{"Ciudad": "Gurue", "CodP": "MOZ"}
+{"Ciudad": "Maxixe", "CodP": "MOZ"}
+{"Ciudad": "Rangoon (Yangon)", "CodP": "MMR"}
+{"Ciudad": "Mandalay", "CodP": "MMR"}
+{"Ciudad": "Moulmein (Mawlamyine)", "CodP": "MMR"}
+{"Ciudad": "Pegu (Bago)", "CodP": "MMR"}
+{"Ciudad": "Bassein (Pathein)", "CodP": "MMR"}
+{"Ciudad": "Monywa", "CodP": "MMR"}
+{"Ciudad": "Sittwe (Akyab)", "CodP": "MMR"}
+{"Ciudad": "Taunggyi (Taunggye)", "CodP": "MMR"}
+{"Ciudad": "Meikhtila", "CodP": "MMR"}
+{"Ciudad": "Mergui (Myeik)", "CodP": "MMR"}
+{"Ciudad": "Lashio (Lasho)", "CodP": "MMR"}
+{"Ciudad": "Prome (Pyay)", "CodP": "MMR"}
+{"Ciudad": "Henzada (Hinthada)", "CodP": "MMR"}
+{"Ciudad": "Myingyan", "CodP": "MMR"}
+{"Ciudad": "Tavoy (Dawei)", "CodP": "MMR"}
+{"Ciudad": "Pagakku (Pakokku)", "CodP": "MMR"}
+{"Ciudad": "Windhoek", "CodP": "NAM"}
+{"Ciudad": "Yangor", "CodP": "NRU"}
+{"Ciudad": "Yaren", "CodP": "NRU"}
+{"Ciudad": "Kathmandu", "CodP": "NPL"}
+{"Ciudad": "Biratnagar", "CodP": "NPL"}
+{"Ciudad": "Pokhara", "CodP": "NPL"}
+{"Ciudad": "Lalitapur", "CodP": "NPL"}
+{"Ciudad": "Birgunj", "CodP": "NPL"}
+{"Ciudad": "Managua", "CodP": "NIC"}
+{"Ciudad": "León", "CodP": "NIC"}
+{"Ciudad": "Chinandega", "CodP": "NIC"}
+{"Ciudad": "Masaya", "CodP": "NIC"}
+{"Ciudad": "Niamey", "CodP": "NER"}
+{"Ciudad": "Zinder", "CodP": "NER"}
+{"Ciudad": "Maradi", "CodP": "NER"}
+{"Ciudad": "Lagos", "CodP": "NGA"}
+{"Ciudad": "Ibadan", "CodP": "NGA"}
+{"Ciudad": "Ogbomosho", "CodP": "NGA"}
+{"Ciudad": "Kano", "CodP": "NGA"}
+{"Ciudad": "Oshogbo", "CodP": "NGA"}
+{"Ciudad": "Ilorin", "CodP": "NGA"}
+{"Ciudad": "Abeokuta", "CodP": "NGA"}
+{"Ciudad": "Port Harcourt", "CodP": "NGA"}
+{"Ciudad": "Zaria", "CodP": "NGA"}
+{"Ciudad": "Ilesha", "CodP": "NGA"}
+{"Ciudad": "Onitsha", "CodP": "NGA"}
+{"Ciudad": "Iwo", "CodP": "NGA"}
+{"Ciudad": "Ado-Ekiti", "CodP": "NGA"}
+{"Ciudad": "Abuja", "CodP": "NGA"}
+{"Ciudad": "Kaduna", "CodP": "NGA"}
+{"Ciudad": "Mushin", "CodP": "NGA"}
+{"Ciudad": "Maiduguri", "CodP": "NGA"}
+{"Ciudad": "Enugu", "CodP": "NGA"}
+{"Ciudad": "Ede", "CodP": "NGA"}
+{"Ciudad": "Aba", "CodP": "NGA"}
+{"Ciudad": "Ife", "CodP": "NGA"}
+{"Ciudad": "Ila", "CodP": "NGA"}
+{"Ciudad": "Oyo", "CodP": "NGA"}
+{"Ciudad": "Ikerre", "CodP": "NGA"}
+{"Ciudad": "Benin City", "CodP": "NGA"}
+{"Ciudad": "Iseyin", "CodP": "NGA"}
+{"Ciudad": "Katsina", "CodP": "NGA"}
+{"Ciudad": "Jos", "CodP": "NGA"}
+{"Ciudad": "Sokoto", "CodP": "NGA"}
+{"Ciudad": "Ilobu", "CodP": "NGA"}
+{"Ciudad": "Offa", "CodP": "NGA"}
+{"Ciudad": "Ikorodu", "CodP": "NGA"}
+{"Ciudad": "Ilawe-Ekiti", "CodP": "NGA"}
+{"Ciudad": "Owo", "CodP": "NGA"}
+{"Ciudad": "Ikirun", "CodP": "NGA"}
+{"Ciudad": "Shaki", "CodP": "NGA"}
+{"Ciudad": "Calabar", "CodP": "NGA"}
+{"Ciudad": "Ondo", "CodP": "NGA"}
+{"Ciudad": "Akure", "CodP": "NGA"}
+{"Ciudad": "Gusau", "CodP": "NGA"}
+{"Ciudad": "Ijebu-Ode", "CodP": "NGA"}
+{"Ciudad": "Effon-Alaiye", "CodP": "NGA"}
+{"Ciudad": "Kumo", "CodP": "NGA"}
+{"Ciudad": "Shomolu", "CodP": "NGA"}
+{"Ciudad": "Oka-Akoko", "CodP": "NGA"}
+{"Ciudad": "Ikare", "CodP": "NGA"}
+{"Ciudad": "Sapele", "CodP": "NGA"}
+{"Ciudad": "Deba Habe", "CodP": "NGA"}
+{"Ciudad": "Minna", "CodP": "NGA"}
+{"Ciudad": "Warri", "CodP": "NGA"}
+{"Ciudad": "Bida", "CodP": "NGA"}
+{"Ciudad": "Ikire", "CodP": "NGA"}
+{"Ciudad": "Makurdi", "CodP": "NGA"}
+{"Ciudad": "Lafia", "CodP": "NGA"}
+{"Ciudad": "Inisa", "CodP": "NGA"}
+{"Ciudad": "Shagamu", "CodP": "NGA"}
+{"Ciudad": "Awka", "CodP": "NGA"}
+{"Ciudad": "Gombe", "CodP": "NGA"}
+{"Ciudad": "Igboho", "CodP": "NGA"}
+{"Ciudad": "Ejigbo", "CodP": "NGA"}
+{"Ciudad": "Agege", "CodP": "NGA"}
+{"Ciudad": "Ise-Ekiti", "CodP": "NGA"}
+{"Ciudad": "Ugep", "CodP": "NGA"}
+{"Ciudad": "Epe", "CodP": "NGA"}
+{"Ciudad": "Alofi", "CodP": "NIU"}
+{"Ciudad": "Kingston", "CodP": "NFK"}
+{"Ciudad": "Oslo", "CodP": "NOR"}
+{"Ciudad": "Bergen", "CodP": "NOR"}
+{"Ciudad": "Trondheim", "CodP": "NOR"}
+{"Ciudad": "Stavanger", "CodP": "NOR"}
+{"Ciudad": "Bærum", "CodP": "NOR"}
+{"Ciudad": "Abidjan", "CodP": "CIV"}
+{"Ciudad": "Bouaké", "CodP": "CIV"}
+{"Ciudad": "Yamoussoukro", "CodP": "CIV"}
+{"Ciudad": "Daloa", "CodP": "CIV"}
+{"Ciudad": "Korhogo", "CodP": "CIV"}
+{"Ciudad": "al-Sib", "CodP": "OMN"}
+{"Ciudad": "Salala", "CodP": "OMN"}
+{"Ciudad": "Bawshar", "CodP": "OMN"}
+{"Ciudad": "Suhar", "CodP": "OMN"}
+{"Ciudad": "Masqat", "CodP": "OMN"}
+{"Ciudad": "Karachi", "CodP": "PAK"}
+{"Ciudad": "Lahore", "CodP": "PAK"}
+{"Ciudad": "Faisalabad", "CodP": "PAK"}
+{"Ciudad": "Rawalpindi", "CodP": "PAK"}
+{"Ciudad": "Multan", "CodP": "PAK"}
+{"Ciudad": "Hyderabad", "CodP": "PAK"}
+{"Ciudad": "Gujranwala", "CodP": "PAK"}
+{"Ciudad": "Peshawar", "CodP": "PAK"}
+{"Ciudad": "Quetta", "CodP": "PAK"}
+{"Ciudad": "Islamabad", "CodP": "PAK"}
+{"Ciudad": "Sargodha", "CodP": "PAK"}
+{"Ciudad": "Sialkot", "CodP": "PAK"}
+{"Ciudad": "Bahawalpur", "CodP": "PAK"}
+{"Ciudad": "Sukkur", "CodP": "PAK"}
+{"Ciudad": "Jhang", "CodP": "PAK"}
+{"Ciudad": "Sheikhupura", "CodP": "PAK"}
+{"Ciudad": "Larkana", "CodP": "PAK"}
+{"Ciudad": "Gujrat", "CodP": "PAK"}
+{"Ciudad": "Mardan", "CodP": "PAK"}
+{"Ciudad": "Kasur", "CodP": "PAK"}
+{"Ciudad": "Rahim Yar Khan", "CodP": "PAK"}
+{"Ciudad": "Sahiwal", "CodP": "PAK"}
+{"Ciudad": "Okara", "CodP": "PAK"}
+{"Ciudad": "Wah", "CodP": "PAK"}
+{"Ciudad": "Dera Ghazi Khan", "CodP": "PAK"}
+{"Ciudad": "Mirpur Khas", "CodP": "PAK"}
+{"Ciudad": "Nawabshah", "CodP": "PAK"}
+{"Ciudad": "Mingora", "CodP": "PAK"}
+{"Ciudad": "Chiniot", "CodP": "PAK"}
+{"Ciudad": "Kamoke", "CodP": "PAK"}
+{"Ciudad": "Mandi Burewala", "CodP": "PAK"}
+{"Ciudad": "Jhelum", "CodP": "PAK"}
+{"Ciudad": "Sadiqabad", "CodP": "PAK"}
+{"Ciudad": "Jacobabad", "CodP": "PAK"}
+{"Ciudad": "Shikarpur", "CodP": "PAK"}
+{"Ciudad": "Khanewal", "CodP": "PAK"}
+{"Ciudad": "Hafizabad", "CodP": "PAK"}
+{"Ciudad": "Kohat", "CodP": "PAK"}
+{"Ciudad": "Muzaffargarh", "CodP": "PAK"}
+{"Ciudad": "Khanpur", "CodP": "PAK"}
+{"Ciudad": "Gojra", "CodP": "PAK"}
+{"Ciudad": "Bahawalnagar", "CodP": "PAK"}
+{"Ciudad": "Muridke", "CodP": "PAK"}
+{"Ciudad": "Pak Pattan", "CodP": "PAK"}
+{"Ciudad": "Abottabad", "CodP": "PAK"}
+{"Ciudad": "Tando Adam", "CodP": "PAK"}
+{"Ciudad": "Jaranwala", "CodP": "PAK"}
+{"Ciudad": "Khairpur", "CodP": "PAK"}
+{"Ciudad": "Chishtian Mandi", "CodP": "PAK"}
+{"Ciudad": "Daska", "CodP": "PAK"}
+{"Ciudad": "Dadu", "CodP": "PAK"}
+{"Ciudad": "Mandi Bahauddin", "CodP": "PAK"}
+{"Ciudad": "Ahmadpur East", "CodP": "PAK"}
+{"Ciudad": "Kamalia", "CodP": "PAK"}
+{"Ciudad": "Khuzdar", "CodP": "PAK"}
+{"Ciudad": "Vihari", "CodP": "PAK"}
+{"Ciudad": "Dera Ismail Khan", "CodP": "PAK"}
+{"Ciudad": "Wazirabad", "CodP": "PAK"}
+{"Ciudad": "Nowshera", "CodP": "PAK"}
+{"Ciudad": "Koror", "CodP": "PLW"}
+{"Ciudad": "Ciudad de Panamá", "CodP": "PAN"}
+{"Ciudad": "San Miguelito", "CodP": "PAN"}
+{"Ciudad": "Port Moresby", "CodP": "PNG"}
+{"Ciudad": "Asunción", "CodP": "PRY"}
+{"Ciudad": "Ciudad del Este", "CodP": "PRY"}
+{"Ciudad": "San Lorenzo", "CodP": "PRY"}
+{"Ciudad": "Lambaré", "CodP": "PRY"}
+{"Ciudad": "Fernando de la Mora", "CodP": "PRY"}
+{"Ciudad": "Lima", "CodP": "PER"}
+{"Ciudad": "Arequipa", "CodP": "PER"}
+{"Ciudad": "Trujillo", "CodP": "PER"}
+{"Ciudad": "Chiclayo", "CodP": "PER"}
+{"Ciudad": "Callao", "CodP": "PER"}
+{"Ciudad": "Iquitos", "CodP": "PER"}
+{"Ciudad": "Chimbote", "CodP": "PER"}
+{"Ciudad": "Huancayo", "CodP": "PER"}
+{"Ciudad": "Piura", "CodP": "PER"}
+{"Ciudad": "Cusco", "CodP": "PER"}
+{"Ciudad": "Pucallpa", "CodP": "PER"}
+{"Ciudad": "Tacna", "CodP": "PER"}
+{"Ciudad": "Ica", "CodP": "PER"}
+{"Ciudad": "Sullana", "CodP": "PER"}
+{"Ciudad": "Juliaca", "CodP": "PER"}
+{"Ciudad": "Huánuco", "CodP": "PER"}
+{"Ciudad": "Ayacucho", "CodP": "PER"}
+{"Ciudad": "Chincha Alta", "CodP": "PER"}
+{"Ciudad": "Cajamarca", "CodP": "PER"}
+{"Ciudad": "Puno", "CodP": "PER"}
+{"Ciudad": "Ventanilla", "CodP": "PER"}
+{"Ciudad": "Castilla", "CodP": "PER"}
+{"Ciudad": "Adamstown", "CodP": "PCN"}
+{"Ciudad": "Garapan", "CodP": "MNP"}
+{"Ciudad": "Lisboa", "CodP": "PRT"}
+{"Ciudad": "Porto", "CodP": "PRT"}
+{"Ciudad": "Amadora", "CodP": "PRT"}
+{"Ciudad": "Coímbra", "CodP": "PRT"}
+{"Ciudad": "Braga", "CodP": "PRT"}
+{"Ciudad": "San Juan", "CodP": "PRI"}
+{"Ciudad": "Bayamón", "CodP": "PRI"}
+{"Ciudad": "Ponce", "CodP": "PRI"}
+{"Ciudad": "Carolina", "CodP": "PRI"}
+{"Ciudad": "Caguas", "CodP": "PRI"}
+{"Ciudad": "Arecibo", "CodP": "PRI"}
+{"Ciudad": "Guaynabo", "CodP": "PRI"}
+{"Ciudad": "Mayagüez", "CodP": "PRI"}
+{"Ciudad": "Toa Baja", "CodP": "PRI"}
+{"Ciudad": "Warszawa", "CodP": "POL"}
+{"Ciudad": "Lódz", "CodP": "POL"}
+{"Ciudad": "Kraków", "CodP": "POL"}
+{"Ciudad": "Wroclaw", "CodP": "POL"}
+{"Ciudad": "Poznan", "CodP": "POL"}
+{"Ciudad": "Gdansk", "CodP": "POL"}
+{"Ciudad": "Szczecin", "CodP": "POL"}
+{"Ciudad": "Bydgoszcz", "CodP": "POL"}
+{"Ciudad": "Lublin", "CodP": "POL"}
+{"Ciudad": "Katowice", "CodP": "POL"}
+{"Ciudad": "Bialystok", "CodP": "POL"}
+{"Ciudad": "Czestochowa", "CodP": "POL"}
+{"Ciudad": "Gdynia", "CodP": "POL"}
+{"Ciudad": "Sosnowiec", "CodP": "POL"}
+{"Ciudad": "Radom", "CodP": "POL"}
+{"Ciudad": "Kielce", "CodP": "POL"}
+{"Ciudad": "Gliwice", "CodP": "POL"}
+{"Ciudad": "Torun", "CodP": "POL"}
+{"Ciudad": "Bytom", "CodP": "POL"}
+{"Ciudad": "Zabrze", "CodP": "POL"}
+{"Ciudad": "Bielsko-Biala", "CodP": "POL"}
+{"Ciudad": "Olsztyn", "CodP": "POL"}
+{"Ciudad": "Rzeszów", "CodP": "POL"}
+{"Ciudad": "Ruda Slaska", "CodP": "POL"}
+{"Ciudad": "Rybnik", "CodP": "POL"}
+{"Ciudad": "Walbrzych", "CodP": "POL"}
+{"Ciudad": "Tychy", "CodP": "POL"}
+{"Ciudad": "Dabrowa Górnicza", "CodP": "POL"}
+{"Ciudad": "Plock", "CodP": "POL"}
+{"Ciudad": "Elblag", "CodP": "POL"}
+{"Ciudad": "Opole", "CodP": "POL"}
+{"Ciudad": "Gorzów Wielkopolski", "CodP": "POL"}
+{"Ciudad": "Wloclawek", "CodP": "POL"}
+{"Ciudad": "Chorzów", "CodP": "POL"}
+{"Ciudad": "Tarnów", "CodP": "POL"}
+{"Ciudad": "Zielona Góra", "CodP": "POL"}
+{"Ciudad": "Koszalin", "CodP": "POL"}
+{"Ciudad": "Legnica", "CodP": "POL"}
+{"Ciudad": "Kalisz", "CodP": "POL"}
+{"Ciudad": "Grudziadz", "CodP": "POL"}
+{"Ciudad": "Slupsk", "CodP": "POL"}
+{"Ciudad": "Jastrzebie-Zdrój", "CodP": "POL"}
+{"Ciudad": "Jaworzno", "CodP": "POL"}
+{"Ciudad": "Jelenia Góra", "CodP": "POL"}
+{"Ciudad": "Malabo", "CodP": "GNQ"}
+{"Ciudad": "Doha", "CodP": "QAT"}
+{"Ciudad": "Paris", "CodP": "FRA"}
+{"Ciudad": "Marseille", "CodP": "FRA"}
+{"Ciudad": "Lyon", "CodP": "FRA"}
+{"Ciudad": "Toulouse", "CodP": "FRA"}
+{"Ciudad": "Nice", "CodP": "FRA"}
+{"Ciudad": "Nantes", "CodP": "FRA"}
+{"Ciudad": "Strasbourg", "CodP": "FRA"}
+{"Ciudad": "Montpellier", "CodP": "FRA"}
+{"Ciudad": "Bordeaux", "CodP": "FRA"}
+{"Ciudad": "Rennes", "CodP": "FRA"}
+{"Ciudad": "Le Havre", "CodP": "FRA"}
+{"Ciudad": "Reims", "CodP": "FRA"}
+{"Ciudad": "Lille", "CodP": "FRA"}
+{"Ciudad": "St-Étienne", "CodP": "FRA"}
+{"Ciudad": "Toulon", "CodP": "FRA"}
+{"Ciudad": "Grenoble", "CodP": "FRA"}
+{"Ciudad": "Angers", "CodP": "FRA"}
+{"Ciudad": "Dijon", "CodP": "FRA"}
+{"Ciudad": "Brest", "CodP": "FRA"}
+{"Ciudad": "Le Mans", "CodP": "FRA"}
+{"Ciudad": "Clermont-Ferrand", "CodP": "FRA"}
+{"Ciudad": "Amiens", "CodP": "FRA"}
+{"Ciudad": "Aix-en-Provence", "CodP": "FRA"}
+{"Ciudad": "Limoges", "CodP": "FRA"}
+{"Ciudad": "Nîmes", "CodP": "FRA"}
+{"Ciudad": "Tours", "CodP": "FRA"}
+{"Ciudad": "Villeurbanne", "CodP": "FRA"}
+{"Ciudad": "Metz", "CodP": "FRA"}
+{"Ciudad": "Besançon", "CodP": "FRA"}
+{"Ciudad": "Caen", "CodP": "FRA"}
+{"Ciudad": "Orléans", "CodP": "FRA"}
+{"Ciudad": "Mulhouse", "CodP": "FRA"}
+{"Ciudad": "Rouen", "CodP": "FRA"}
+{"Ciudad": "Boulogne-Billancourt", "CodP": "FRA"}
+{"Ciudad": "Perpignan", "CodP": "FRA"}
+{"Ciudad": "Nancy", "CodP": "FRA"}
+{"Ciudad": "Roubaix", "CodP": "FRA"}
+{"Ciudad": "Argenteuil", "CodP": "FRA"}
+{"Ciudad": "Tourcoing", "CodP": "FRA"}
+{"Ciudad": "Montreuil", "CodP": "FRA"}
+{"Ciudad": "Cayenne", "CodP": "GUF"}
+{"Ciudad": "Faaa", "CodP": "PYF"}
+{"Ciudad": "Papeete", "CodP": "PYF"}
+{"Ciudad": "Saint-Denis", "CodP": "REU"}
+{"Ciudad": "Bucuresti", "CodP": "ROM"}
+{"Ciudad": "Iasi", "CodP": "ROM"}
+{"Ciudad": "Constanta", "CodP": "ROM"}
+{"Ciudad": "Cluj-Napoca", "CodP": "ROM"}
+{"Ciudad": "Galati", "CodP": "ROM"}
+{"Ciudad": "Timisoara", "CodP": "ROM"}
+{"Ciudad": "Brasov", "CodP": "ROM"}
+{"Ciudad": "Craiova", "CodP": "ROM"}
+{"Ciudad": "Ploiesti", "CodP": "ROM"}
+{"Ciudad": "Braila", "CodP": "ROM"}
+{"Ciudad": "Oradea", "CodP": "ROM"}
+{"Ciudad": "Bacau", "CodP": "ROM"}
+{"Ciudad": "Pitesti", "CodP": "ROM"}
+{"Ciudad": "Arad", "CodP": "ROM"}
+{"Ciudad": "Sibiu", "CodP": "ROM"}
+{"Ciudad": "Târgu Mures", "CodP": "ROM"}
+{"Ciudad": "Baia Mare", "CodP": "ROM"}
+{"Ciudad": "Buzau", "CodP": "ROM"}
+{"Ciudad": "Satu Mare", "CodP": "ROM"}
+{"Ciudad": "Botosani", "CodP": "ROM"}
+{"Ciudad": "Piatra Neamt", "CodP": "ROM"}
+{"Ciudad": "Râmnicu Vâlcea", "CodP": "ROM"}
+{"Ciudad": "Suceava", "CodP": "ROM"}
+{"Ciudad": "Drobeta-Turnu Severin", "CodP": "ROM"}
+{"Ciudad": "Târgoviste", "CodP": "ROM"}
+{"Ciudad": "Focsani", "CodP": "ROM"}
+{"Ciudad": "Târgu Jiu", "CodP": "ROM"}
+{"Ciudad": "Tulcea", "CodP": "ROM"}
+{"Ciudad": "Resita", "CodP": "ROM"}
+{"Ciudad": "Kigali", "CodP": "RWA"}
+{"Ciudad": "Stockholm", "CodP": "SWE"}
+{"Ciudad": "Gothenburg [Göteborg]", "CodP": "SWE"}
+{"Ciudad": "Malmö", "CodP": "SWE"}
+{"Ciudad": "Uppsala", "CodP": "SWE"}
+{"Ciudad": "Linköping", "CodP": "SWE"}
+{"Ciudad": "Västerås", "CodP": "SWE"}
+{"Ciudad": "Örebro", "CodP": "SWE"}
+{"Ciudad": "Norrköping", "CodP": "SWE"}
+{"Ciudad": "Helsingborg", "CodP": "SWE"}
+{"Ciudad": "Jönköping", "CodP": "SWE"}
+{"Ciudad": "Umeå", "CodP": "SWE"}
+{"Ciudad": "Lund", "CodP": "SWE"}
+{"Ciudad": "Borås", "CodP": "SWE"}
+{"Ciudad": "Sundsvall", "CodP": "SWE"}
+{"Ciudad": "Gävle", "CodP": "SWE"}
+{"Ciudad": "Jamestown", "CodP": "SHN"}
+{"Ciudad": "Basseterre", "CodP": "KNA"}
+{"Ciudad": "Castries", "CodP": "LCA"}
+{"Ciudad": "Kingstown", "CodP": "VCT"}
+{"Ciudad": "Saint-Pierre", "CodP": "SPM"}
+{"Ciudad": "Berlin", "CodP": "DEU"}
+{"Ciudad": "Hamburg", "CodP": "DEU"}
+{"Ciudad": "Munich [München]", "CodP": "DEU"}
+{"Ciudad": "Köln", "CodP": "DEU"}
+{"Ciudad": "Frankfurt am Main", "CodP": "DEU"}
+{"Ciudad": "Essen", "CodP": "DEU"}
+{"Ciudad": "Dortmund", "CodP": "DEU"}
+{"Ciudad": "Stuttgart", "CodP": "DEU"}
+{"Ciudad": "Düsseldorf", "CodP": "DEU"}
+{"Ciudad": "Bremen", "CodP": "DEU"}
+{"Ciudad": "Duisburg", "CodP": "DEU"}
+{"Ciudad": "Hannover", "CodP": "DEU"}
+{"Ciudad": "Leipzig", "CodP": "DEU"}
+{"Ciudad": "Nürnberg", "CodP": "DEU"}
+{"Ciudad": "Dresden", "CodP": "DEU"}
+{"Ciudad": "Bochum", "CodP": "DEU"}
+{"Ciudad": "Wuppertal", "CodP": "DEU"}
+{"Ciudad": "Bielefeld", "CodP": "DEU"}
+{"Ciudad": "Mannheim", "CodP": "DEU"}
+{"Ciudad": "Bonn", "CodP": "DEU"}
+{"Ciudad": "Gelsenkirchen", "CodP": "DEU"}
+{"Ciudad": "Karlsruhe", "CodP": "DEU"}
+{"Ciudad": "Wiesbaden", "CodP": "DEU"}
+{"Ciudad": "Münster", "CodP": "DEU"}
+{"Ciudad": "Mönchengladbach", "CodP": "DEU"}
+{"Ciudad": "Chemnitz", "CodP": "DEU"}
+{"Ciudad": "Augsburg", "CodP": "DEU"}
+{"Ciudad": "Halle/Saale", "CodP": "DEU"}
+{"Ciudad": "Braunschweig", "CodP": "DEU"}
+{"Ciudad": "Aachen", "CodP": "DEU"}
+{"Ciudad": "Krefeld", "CodP": "DEU"}
+{"Ciudad": "Magdeburg", "CodP": "DEU"}
+{"Ciudad": "Kiel", "CodP": "DEU"}
+{"Ciudad": "Oberhausen", "CodP": "DEU"}
+{"Ciudad": "Lübeck", "CodP": "DEU"}
+{"Ciudad": "Hagen", "CodP": "DEU"}
+{"Ciudad": "Rostock", "CodP": "DEU"}
+{"Ciudad": "Freiburg im Breisgau", "CodP": "DEU"}
+{"Ciudad": "Erfurt", "CodP": "DEU"}
+{"Ciudad": "Kassel", "CodP": "DEU"}
+{"Ciudad": "Saarbrücken", "CodP": "DEU"}
+{"Ciudad": "Mainz", "CodP": "DEU"}
+{"Ciudad": "Hamm", "CodP": "DEU"}
+{"Ciudad": "Herne", "CodP": "DEU"}
+{"Ciudad": "Mülheim an der Ruhr", "CodP": "DEU"}
+{"Ciudad": "Solingen", "CodP": "DEU"}
+{"Ciudad": "Osnabrück", "CodP": "DEU"}
+{"Ciudad": "Ludwigshafen am Rhein", "CodP": "DEU"}
+{"Ciudad": "Leverkusen", "CodP": "DEU"}
+{"Ciudad": "Oldenburg", "CodP": "DEU"}
+{"Ciudad": "Neuss", "CodP": "DEU"}
+{"Ciudad": "Heidelberg", "CodP": "DEU"}
+{"Ciudad": "Darmstadt", "CodP": "DEU"}
+{"Ciudad": "Paderborn", "CodP": "DEU"}
+{"Ciudad": "Potsdam", "CodP": "DEU"}
+{"Ciudad": "Würzburg", "CodP": "DEU"}
+{"Ciudad": "Regensburg", "CodP": "DEU"}
+{"Ciudad": "Recklinghausen", "CodP": "DEU"}
+{"Ciudad": "Göttingen", "CodP": "DEU"}
+{"Ciudad": "Bremerhaven", "CodP": "DEU"}
+{"Ciudad": "Wolfsburg", "CodP": "DEU"}
+{"Ciudad": "Bottrop", "CodP": "DEU"}
+{"Ciudad": "Remscheid", "CodP": "DEU"}
+{"Ciudad": "Heilbronn", "CodP": "DEU"}
+{"Ciudad": "Pforzheim", "CodP": "DEU"}
+{"Ciudad": "Offenbach am Main", "CodP": "DEU"}
+{"Ciudad": "Ulm", "CodP": "DEU"}
+{"Ciudad": "Ingolstadt", "CodP": "DEU"}
+{"Ciudad": "Gera", "CodP": "DEU"}
+{"Ciudad": "Salzgitter", "CodP": "DEU"}
+{"Ciudad": "Cottbus", "CodP": "DEU"}
+{"Ciudad": "Reutlingen", "CodP": "DEU"}
+{"Ciudad": "Fürth", "CodP": "DEU"}
+{"Ciudad": "Siegen", "CodP": "DEU"}
+{"Ciudad": "Koblenz", "CodP": "DEU"}
+{"Ciudad": "Moers", "CodP": "DEU"}
+{"Ciudad": "Bergisch Gladbach", "CodP": "DEU"}
+{"Ciudad": "Zwickau", "CodP": "DEU"}
+{"Ciudad": "Hildesheim", "CodP": "DEU"}
+{"Ciudad": "Witten", "CodP": "DEU"}
+{"Ciudad": "Schwerin", "CodP": "DEU"}
+{"Ciudad": "Erlangen", "CodP": "DEU"}
+{"Ciudad": "Kaiserslautern", "CodP": "DEU"}
+{"Ciudad": "Trier", "CodP": "DEU"}
+{"Ciudad": "Jena", "CodP": "DEU"}
+{"Ciudad": "Iserlohn", "CodP": "DEU"}
+{"Ciudad": "Gütersloh", "CodP": "DEU"}
+{"Ciudad": "Marl", "CodP": "DEU"}
+{"Ciudad": "Lünen", "CodP": "DEU"}
+{"Ciudad": "Düren", "CodP": "DEU"}
+{"Ciudad": "Ratingen", "CodP": "DEU"}
+{"Ciudad": "Velbert", "CodP": "DEU"}
+{"Ciudad": "Esslingen am Neckar", "CodP": "DEU"}
+{"Ciudad": "Honiara", "CodP": "SLB"}
+{"Ciudad": "Lusaka", "CodP": "ZMB"}
+{"Ciudad": "Ndola", "CodP": "ZMB"}
+{"Ciudad": "Kitwe", "CodP": "ZMB"}
+{"Ciudad": "Kabwe", "CodP": "ZMB"}
+{"Ciudad": "Chingola", "CodP": "ZMB"}
+{"Ciudad": "Mufulira", "CodP": "ZMB"}
+{"Ciudad": "Luanshya", "CodP": "ZMB"}
+{"Ciudad": "Apia", "CodP": "WSM"}
+{"Ciudad": "Serravalle", "CodP": "SMR"}
+{"Ciudad": "San Marino", "CodP": "SMR"}
+{"Ciudad": "São Tomé", "CodP": "STP"}
+{"Ciudad": "Riyadh", "CodP": "SAU"}
+{"Ciudad": "Jedda", "CodP": "SAU"}
+{"Ciudad": "Mekka", "CodP": "SAU"}
+{"Ciudad": "Medina", "CodP": "SAU"}
+{"Ciudad": "al-Dammam", "CodP": "SAU"}
+{"Ciudad": "al-Taif", "CodP": "SAU"}
+{"Ciudad": "Tabuk", "CodP": "SAU"}
+{"Ciudad": "Burayda", "CodP": "SAU"}
+{"Ciudad": "al-Hufuf", "CodP": "SAU"}
+{"Ciudad": "al-Mubarraz", "CodP": "SAU"}
+{"Ciudad": "Khamis Mushayt", "CodP": "SAU"}
+{"Ciudad": "Hail", "CodP": "SAU"}
+{"Ciudad": "al-Kharj", "CodP": "SAU"}
+{"Ciudad": "al-Khubar", "CodP": "SAU"}
+{"Ciudad": "Jubayl", "CodP": "SAU"}
+{"Ciudad": "Hafar al-Batin", "CodP": "SAU"}
+{"Ciudad": "al-Tuqba", "CodP": "SAU"}
+{"Ciudad": "Yanbu", "CodP": "SAU"}
+{"Ciudad": "Abha", "CodP": "SAU"}
+{"Ciudad": "Ara´ar", "CodP": "SAU"}
+{"Ciudad": "al-Qatif", "CodP": "SAU"}
+{"Ciudad": "al-Hawiya", "CodP": "SAU"}
+{"Ciudad": "Unayza", "CodP": "SAU"}
+{"Ciudad": "Najran", "CodP": "SAU"}
+{"Ciudad": "Pikine", "CodP": "SEN"}
+{"Ciudad": "Dakar", "CodP": "SEN"}
+{"Ciudad": "Thiès", "CodP": "SEN"}
+{"Ciudad": "Kaolack", "CodP": "SEN"}
+{"Ciudad": "Ziguinchor", "CodP": "SEN"}
+{"Ciudad": "Rufisque", "CodP": "SEN"}
+{"Ciudad": "Saint-Louis", "CodP": "SEN"}
+{"Ciudad": "Mbour", "CodP": "SEN"}
+{"Ciudad": "Diourbel", "CodP": "SEN"}
+{"Ciudad": "Victoria", "CodP": "SYC"}
+{"Ciudad": "Freetown", "CodP": "SLE"}
+{"Ciudad": "Singapore", "CodP": "SGP"}
+{"Ciudad": "Bratislava", "CodP": "SVK"}
+{"Ciudad": "Košice", "CodP": "SVK"}
+{"Ciudad": "Prešov", "CodP": "SVK"}
+{"Ciudad": "Ljubljana", "CodP": "SVN"}
+{"Ciudad": "Maribor", "CodP": "SVN"}
+{"Ciudad": "Mogadishu", "CodP": "SOM"}
+{"Ciudad": "Hargeysa", "CodP": "SOM"}
+{"Ciudad": "Kismaayo", "CodP": "SOM"}
+{"Ciudad": "Colombo", "CodP": "LKA"}
+{"Ciudad": "Dehiwala", "CodP": "LKA"}
+{"Ciudad": "Moratuwa", "CodP": "LKA"}
+{"Ciudad": "Jaffna", "CodP": "LKA"}
+{"Ciudad": "Kandy", "CodP": "LKA"}
+{"Ciudad": "Sri Jayawardenepura Kotte", "CodP": "LKA"}
+{"Ciudad": "Negombo", "CodP": "LKA"}
+{"Ciudad": "Omdurman", "CodP": "SDN"}
+{"Ciudad": "Khartum", "CodP": "SDN"}
+{"Ciudad": "Sharq al-Nil", "CodP": "SDN"}
+{"Ciudad": "Port Sudan", "CodP": "SDN"}
+{"Ciudad": "Kassala", "CodP": "SDN"}
+{"Ciudad": "Obeid", "CodP": "SDN"}
+{"Ciudad": "Nyala", "CodP": "SDN"}
+{"Ciudad": "Wad Madani", "CodP": "SDN"}
+{"Ciudad": "al-Qadarif", "CodP": "SDN"}
+{"Ciudad": "Kusti", "CodP": "SDN"}
+{"Ciudad": "al-Fashir", "CodP": "SDN"}
+{"Ciudad": "Juba", "CodP": "SDN"}
+{"Ciudad": "Helsinki [Helsingfors]", "CodP": "FIN"}
+{"Ciudad": "Espoo", "CodP": "FIN"}
+{"Ciudad": "Tampere", "CodP": "FIN"}
+{"Ciudad": "Vantaa", "CodP": "FIN"}
+{"Ciudad": "Turku [Åbo]", "CodP": "FIN"}
+{"Ciudad": "Oulu", "CodP": "FIN"}
+{"Ciudad": "Lahti", "CodP": "FIN"}
+{"Ciudad": "Paramaribo", "CodP": "SUR"}
+{"Ciudad": "Mbabane", "CodP": "SWZ"}
+{"Ciudad": "Zürich", "CodP": "CHE"}
+{"Ciudad": "Geneve", "CodP": "CHE"}
+{"Ciudad": "Basel", "CodP": "CHE"}
+{"Ciudad": "Bern", "CodP": "CHE"}
+{"Ciudad": "Lausanne", "CodP": "CHE"}
+{"Ciudad": "Damascus", "CodP": "SYR"}
+{"Ciudad": "Aleppo", "CodP": "SYR"}
+{"Ciudad": "Hims", "CodP": "SYR"}
+{"Ciudad": "Hama", "CodP": "SYR"}
+{"Ciudad": "Latakia", "CodP": "SYR"}
+{"Ciudad": "al-Qamishliya", "CodP": "SYR"}
+{"Ciudad": "Dayr al-Zawr", "CodP": "SYR"}
+{"Ciudad": "Jaramana", "CodP": "SYR"}
+{"Ciudad": "Duma", "CodP": "SYR"}
+{"Ciudad": "al-Raqqa", "CodP": "SYR"}
+{"Ciudad": "Idlib", "CodP": "SYR"}
+{"Ciudad": "Dushanbe", "CodP": "TJK"}
+{"Ciudad": "Khujand", "CodP": "TJK"}
+{"Ciudad": "Taipei", "CodP": "TWN"}
+{"Ciudad": "Kaohsiung", "CodP": "TWN"}
+{"Ciudad": "Taichung", "CodP": "TWN"}
+{"Ciudad": "Tainan", "CodP": "TWN"}
+{"Ciudad": "Panchiao", "CodP": "TWN"}
+{"Ciudad": "Chungho", "CodP": "TWN"}
+{"Ciudad": "Keelung (Chilung)", "CodP": "TWN"}
+{"Ciudad": "Sanchung", "CodP": "TWN"}
+{"Ciudad": "Hsinchuang", "CodP": "TWN"}
+{"Ciudad": "Hsinchu", "CodP": "TWN"}
+{"Ciudad": "Chungli", "CodP": "TWN"}
+{"Ciudad": "Fengshan", "CodP": "TWN"}
+{"Ciudad": "Taoyuan", "CodP": "TWN"}
+{"Ciudad": "Chiayi", "CodP": "TWN"}
+{"Ciudad": "Hsintien", "CodP": "TWN"}
+{"Ciudad": "Changhwa", "CodP": "TWN"}
+{"Ciudad": "Yungho", "CodP": "TWN"}
+{"Ciudad": "Tucheng", "CodP": "TWN"}
+{"Ciudad": "Pingtung", "CodP": "TWN"}
+{"Ciudad": "Yungkang", "CodP": "TWN"}
+{"Ciudad": "Pingchen", "CodP": "TWN"}
+{"Ciudad": "Tali", "CodP": "TWN"}
+{"Ciudad": "Taiping", "CodP": "TWN"}
+{"Ciudad": "Pate", "CodP": "TWN"}
+{"Ciudad": "Fengyuan", "CodP": "TWN"}
+{"Ciudad": "Luchou", "CodP": "TWN"}
+{"Ciudad": "Hsichuh", "CodP": "TWN"}
+{"Ciudad": "Shulin", "CodP": "TWN"}
+{"Ciudad": "Yuanlin", "CodP": "TWN"}
+{"Ciudad": "Yangmei", "CodP": "TWN"}
+{"Ciudad": "Taliao", "CodP": "TWN"}
+{"Ciudad": "Kueishan", "CodP": "TWN"}
+{"Ciudad": "Tanshui", "CodP": "TWN"}
+{"Ciudad": "Taitung", "CodP": "TWN"}
+{"Ciudad": "Hualien", "CodP": "TWN"}
+{"Ciudad": "Nantou", "CodP": "TWN"}
+{"Ciudad": "Lungtan", "CodP": "TWN"}
+{"Ciudad": "Touliu", "CodP": "TWN"}
+{"Ciudad": "Tsaotun", "CodP": "TWN"}
+{"Ciudad": "Kangshan", "CodP": "TWN"}
+{"Ciudad": "Ilan", "CodP": "TWN"}
+{"Ciudad": "Miaoli", "CodP": "TWN"}
+{"Ciudad": "Dar es Salaam", "CodP": "TZA"}
+{"Ciudad": "Dodoma", "CodP": "TZA"}
+{"Ciudad": "Mwanza", "CodP": "TZA"}
+{"Ciudad": "Zanzibar", "CodP": "TZA"}
+{"Ciudad": "Tanga", "CodP": "TZA"}
+{"Ciudad": "Mbeya", "CodP": "TZA"}
+{"Ciudad": "Morogoro", "CodP": "TZA"}
+{"Ciudad": "Arusha", "CodP": "TZA"}
+{"Ciudad": "Moshi", "CodP": "TZA"}
+{"Ciudad": "Tabora", "CodP": "TZA"}
+{"Ciudad": "København", "CodP": "DNK"}
+{"Ciudad": "Århus", "CodP": "DNK"}
+{"Ciudad": "Odense", "CodP": "DNK"}
+{"Ciudad": "Aalborg", "CodP": "DNK"}
+{"Ciudad": "Frederiksberg", "CodP": "DNK"}
+{"Ciudad": "Bangkok", "CodP": "THA"}
+{"Ciudad": "Nonthaburi", "CodP": "THA"}
+{"Ciudad": "Nakhon Ratchasima", "CodP": "THA"}
+{"Ciudad": "Chiang Mai", "CodP": "THA"}
+{"Ciudad": "Udon Thani", "CodP": "THA"}
+{"Ciudad": "Hat Yai", "CodP": "THA"}
+{"Ciudad": "Khon Kaen", "CodP": "THA"}
+{"Ciudad": "Pak Kret", "CodP": "THA"}
+{"Ciudad": "Nakhon Sawan", "CodP": "THA"}
+{"Ciudad": "Ubon Ratchathani", "CodP": "THA"}
+{"Ciudad": "Songkhla", "CodP": "THA"}
+{"Ciudad": "Nakhon Pathom", "CodP": "THA"}
+{"Ciudad": "Lomé", "CodP": "TGO"}
+{"Ciudad": "Fakaofo", "CodP": "TKL"}
+{"Ciudad": "Nuku´alofa", "CodP": "TON"}
+{"Ciudad": "Chaguanas", "CodP": "TTO"}
+{"Ciudad": "Port-of-Spain", "CodP": "TTO"}
+{"Ciudad": "N´Djaména", "CodP": "TCD"}
+{"Ciudad": "Moundou", "CodP": "TCD"}
+{"Ciudad": "Praha", "CodP": "CZE"}
+{"Ciudad": "Brno", "CodP": "CZE"}
+{"Ciudad": "Ostrava", "CodP": "CZE"}
+{"Ciudad": "Plzen", "CodP": "CZE"}
+{"Ciudad": "Olomouc", "CodP": "CZE"}
+{"Ciudad": "Liberec", "CodP": "CZE"}
+{"Ciudad": "Ceské Budejovice", "CodP": "CZE"}
+{"Ciudad": "Hradec Králové", "CodP": "CZE"}
+{"Ciudad": "Ústí nad Labem", "CodP": "CZE"}
+{"Ciudad": "Pardubice", "CodP": "CZE"}
+{"Ciudad": "Tunis", "CodP": "TUN"}
+{"Ciudad": "Sfax", "CodP": "TUN"}
+{"Ciudad": "Ariana", "CodP": "TUN"}
+{"Ciudad": "Ettadhamen", "CodP": "TUN"}
+{"Ciudad": "Sousse", "CodP": "TUN"}
+{"Ciudad": "Kairouan", "CodP": "TUN"}
+{"Ciudad": "Biserta", "CodP": "TUN"}
+{"Ciudad": "Gabès", "CodP": "TUN"}
+{"Ciudad": "Istanbul", "CodP": "TUR"}
+{"Ciudad": "Ankara", "CodP": "TUR"}
+{"Ciudad": "Izmir", "CodP": "TUR"}
+{"Ciudad": "Adana", "CodP": "TUR"}
+{"Ciudad": "Bursa", "CodP": "TUR"}
+{"Ciudad": "Gaziantep", "CodP": "TUR"}
+{"Ciudad": "Konya", "CodP": "TUR"}
+{"Ciudad": "Mersin (Içel)", "CodP": "TUR"}
+{"Ciudad": "Antalya", "CodP": "TUR"}
+{"Ciudad": "Diyarbakir", "CodP": "TUR"}
+{"Ciudad": "Kayseri", "CodP": "TUR"}
+{"Ciudad": "Eskisehir", "CodP": "TUR"}
+{"Ciudad": "Sanliurfa", "CodP": "TUR"}
+{"Ciudad": "Samsun", "CodP": "TUR"}
+{"Ciudad": "Malatya", "CodP": "TUR"}
+{"Ciudad": "Gebze", "CodP": "TUR"}
+{"Ciudad": "Denizli", "CodP": "TUR"}
+{"Ciudad": "Sivas", "CodP": "TUR"}
+{"Ciudad": "Erzurum", "CodP": "TUR"}
+{"Ciudad": "Tarsus", "CodP": "TUR"}
+{"Ciudad": "Kahramanmaras", "CodP": "TUR"}
+{"Ciudad": "Elâzig", "CodP": "TUR"}
+{"Ciudad": "Van", "CodP": "TUR"}
+{"Ciudad": "Sultanbeyli", "CodP": "TUR"}
+{"Ciudad": "Izmit (Kocaeli)", "CodP": "TUR"}
+{"Ciudad": "Manisa", "CodP": "TUR"}
+{"Ciudad": "Batman", "CodP": "TUR"}
+{"Ciudad": "Balikesir", "CodP": "TUR"}
+{"Ciudad": "Sakarya (Adapazari)", "CodP": "TUR"}
+{"Ciudad": "Iskenderun", "CodP": "TUR"}
+{"Ciudad": "Osmaniye", "CodP": "TUR"}
+{"Ciudad": "Çorum", "CodP": "TUR"}
+{"Ciudad": "Kütahya", "CodP": "TUR"}
+{"Ciudad": "Hatay (Antakya)", "CodP": "TUR"}
+{"Ciudad": "Kirikkale", "CodP": "TUR"}
+{"Ciudad": "Adiyaman", "CodP": "TUR"}
+{"Ciudad": "Trabzon", "CodP": "TUR"}
+{"Ciudad": "Ordu", "CodP": "TUR"}
+{"Ciudad": "Aydin", "CodP": "TUR"}
+{"Ciudad": "Usak", "CodP": "TUR"}
+{"Ciudad": "Edirne", "CodP": "TUR"}
+{"Ciudad": "Çorlu", "CodP": "TUR"}
+{"Ciudad": "Isparta", "CodP": "TUR"}
+{"Ciudad": "Karabük", "CodP": "TUR"}
+{"Ciudad": "Kilis", "CodP": "TUR"}
+{"Ciudad": "Alanya", "CodP": "TUR"}
+{"Ciudad": "Kiziltepe", "CodP": "TUR"}
+{"Ciudad": "Zonguldak", "CodP": "TUR"}
+{"Ciudad": "Siirt", "CodP": "TUR"}
+{"Ciudad": "Viransehir", "CodP": "TUR"}
+{"Ciudad": "Tekirdag", "CodP": "TUR"}
+{"Ciudad": "Karaman", "CodP": "TUR"}
+{"Ciudad": "Afyon", "CodP": "TUR"}
+{"Ciudad": "Aksaray", "CodP": "TUR"}
+{"Ciudad": "Ceyhan", "CodP": "TUR"}
+{"Ciudad": "Erzincan", "CodP": "TUR"}
+{"Ciudad": "Bismil", "CodP": "TUR"}
+{"Ciudad": "Nazilli", "CodP": "TUR"}
+{"Ciudad": "Tokat", "CodP": "TUR"}
+{"Ciudad": "Kars", "CodP": "TUR"}
+{"Ciudad": "Inegöl", "CodP": "TUR"}
+{"Ciudad": "Bandirma", "CodP": "TUR"}
+{"Ciudad": "Ashgabat", "CodP": "TKM"}
+{"Ciudad": "Chärjew", "CodP": "TKM"}
+{"Ciudad": "Dashhowuz", "CodP": "TKM"}
+{"Ciudad": "Mary", "CodP": "TKM"}
+{"Ciudad": "Cockburn Town", "CodP": "TCA"}
+{"Ciudad": "Funafuti", "CodP": "TUV"}
+{"Ciudad": "Kampala", "CodP": "UGA"}
+{"Ciudad": "Kyiv", "CodP": "UKR"}
+{"Ciudad": "Harkova [Harkiv]", "CodP": "UKR"}
+{"Ciudad": "Dnipropetrovsk", "CodP": "UKR"}
+{"Ciudad": "Donetsk", "CodP": "UKR"}
+{"Ciudad": "Odesa", "CodP": "UKR"}
+{"Ciudad": "Zaporizzja", "CodP": "UKR"}
+{"Ciudad": "Lviv", "CodP": "UKR"}
+{"Ciudad": "Kryvyi Rig", "CodP": "UKR"}
+{"Ciudad": "Mykolajiv", "CodP": "UKR"}
+{"Ciudad": "Mariupol", "CodP": "UKR"}
+{"Ciudad": "Lugansk", "CodP": "UKR"}
+{"Ciudad": "Vinnytsja", "CodP": "UKR"}
+{"Ciudad": "Makijivka", "CodP": "UKR"}
+{"Ciudad": "Herson", "CodP": "UKR"}
+{"Ciudad": "Sevastopol", "CodP": "UKR"}
+{"Ciudad": "Simferopol", "CodP": "UKR"}
+{"Ciudad": "Pultava [Poltava]", "CodP": "UKR"}
+{"Ciudad": "Tšernigiv", "CodP": "UKR"}
+{"Ciudad": "Tšerkasy", "CodP": "UKR"}
+{"Ciudad": "Gorlivka", "CodP": "UKR"}
+{"Ciudad": "Zytomyr", "CodP": "UKR"}
+{"Ciudad": "Sumy", "CodP": "UKR"}
+{"Ciudad": "Dniprodzerzynsk", "CodP": "UKR"}
+{"Ciudad": "Kirovograd", "CodP": "UKR"}
+{"Ciudad": "Hmelnytskyi", "CodP": "UKR"}
+{"Ciudad": "Tšernivtsi", "CodP": "UKR"}
+{"Ciudad": "Rivne", "CodP": "UKR"}
+{"Ciudad": "Krementšuk", "CodP": "UKR"}
+{"Ciudad": "Ivano-Frankivsk", "CodP": "UKR"}
+{"Ciudad": "Ternopil", "CodP": "UKR"}
+{"Ciudad": "Lutsk", "CodP": "UKR"}
+{"Ciudad": "Bila Tserkva", "CodP": "UKR"}
+{"Ciudad": "Kramatorsk", "CodP": "UKR"}
+{"Ciudad": "Melitopol", "CodP": "UKR"}
+{"Ciudad": "Kertš", "CodP": "UKR"}
+{"Ciudad": "Nikopol", "CodP": "UKR"}
+{"Ciudad": "Berdjansk", "CodP": "UKR"}
+{"Ciudad": "Pavlograd", "CodP": "UKR"}
+{"Ciudad": "Sjeverodonetsk", "CodP": "UKR"}
+{"Ciudad": "Slovjansk", "CodP": "UKR"}
+{"Ciudad": "Uzgorod", "CodP": "UKR"}
+{"Ciudad": "Altševsk", "CodP": "UKR"}
+{"Ciudad": "Lysytšansk", "CodP": "UKR"}
+{"Ciudad": "Jevpatorija", "CodP": "UKR"}
+{"Ciudad": "Kamjanets-Podilskyi", "CodP": "UKR"}
+{"Ciudad": "Jenakijeve", "CodP": "UKR"}
+{"Ciudad": "Krasnyi Lutš", "CodP": "UKR"}
+{"Ciudad": "Stahanov", "CodP": "UKR"}
+{"Ciudad": "Oleksandrija", "CodP": "UKR"}
+{"Ciudad": "Konotop", "CodP": "UKR"}
+{"Ciudad": "Kostjantynivka", "CodP": "UKR"}
+{"Ciudad": "Berdytšiv", "CodP": "UKR"}
+{"Ciudad": "Izmajil", "CodP": "UKR"}
+{"Ciudad": "Šostka", "CodP": "UKR"}
+{"Ciudad": "Uman", "CodP": "UKR"}
+{"Ciudad": "Brovary", "CodP": "UKR"}
+{"Ciudad": "Mukatševe", "CodP": "UKR"}
+{"Ciudad": "Budapest", "CodP": "HUN"}
+{"Ciudad": "Debrecen", "CodP": "HUN"}
+{"Ciudad": "Miskolc", "CodP": "HUN"}
+{"Ciudad": "Szeged", "CodP": "HUN"}
+{"Ciudad": "Pécs", "CodP": "HUN"}
+{"Ciudad": "Györ", "CodP": "HUN"}
+{"Ciudad": "Nyiregyháza", "CodP": "HUN"}
+{"Ciudad": "Kecskemét", "CodP": "HUN"}
+{"Ciudad": "Székesfehérvár", "CodP": "HUN"}
+{"Ciudad": "Montevideo", "CodP": "URY"}
+{"Ciudad": "Nouméa", "CodP": "NCL"}
+{"Ciudad": "Auckland", "CodP": "NZL"}
+{"Ciudad": "Christchurch", "CodP": "NZL"}
+{"Ciudad": "Manukau", "CodP": "NZL"}
+{"Ciudad": "North Shore", "CodP": "NZL"}
+{"Ciudad": "Waitakere", "CodP": "NZL"}
+{"Ciudad": "Wellington", "CodP": "NZL"}
+{"Ciudad": "Dunedin", "CodP": "NZL"}
+{"Ciudad": "Hamilton", "CodP": "NZL"}
+{"Ciudad": "Lower Hutt", "CodP": "NZL"}
+{"Ciudad": "Toskent", "CodP": "UZB"}
+{"Ciudad": "Namangan", "CodP": "UZB"}
+{"Ciudad": "Samarkand", "CodP": "UZB"}
+{"Ciudad": "Andijon", "CodP": "UZB"}
+{"Ciudad": "Buhoro", "CodP": "UZB"}
+{"Ciudad": "Karsi", "CodP": "UZB"}
+{"Ciudad": "Nukus", "CodP": "UZB"}
+{"Ciudad": "Kükon", "CodP": "UZB"}
+{"Ciudad": "Fargona", "CodP": "UZB"}
+{"Ciudad": "Circik", "CodP": "UZB"}
+{"Ciudad": "Margilon", "CodP": "UZB"}
+{"Ciudad": "Ürgenc", "CodP": "UZB"}
+{"Ciudad": "Angren", "CodP": "UZB"}
+{"Ciudad": "Cizah", "CodP": "UZB"}
+{"Ciudad": "Navoi", "CodP": "UZB"}
+{"Ciudad": "Olmalik", "CodP": "UZB"}
+{"Ciudad": "Termiz", "CodP": "UZB"}
+{"Ciudad": "Minsk", "CodP": "BLR"}
+{"Ciudad": "Gomel", "CodP": "BLR"}
+{"Ciudad": "Mogiljov", "CodP": "BLR"}
+{"Ciudad": "Vitebsk", "CodP": "BLR"}
+{"Ciudad": "Grodno", "CodP": "BLR"}
+{"Ciudad": "Brest", "CodP": "BLR"}
+{"Ciudad": "Bobruisk", "CodP": "BLR"}
+{"Ciudad": "Baranovitši", "CodP": "BLR"}
+{"Ciudad": "Borisov", "CodP": "BLR"}
+{"Ciudad": "Pinsk", "CodP": "BLR"}
+{"Ciudad": "Orša", "CodP": "BLR"}
+{"Ciudad": "Mozyr", "CodP": "BLR"}
+{"Ciudad": "Novopolotsk", "CodP": "BLR"}
+{"Ciudad": "Lida", "CodP": "BLR"}
+{"Ciudad": "Soligorsk", "CodP": "BLR"}
+{"Ciudad": "Molodetšno", "CodP": "BLR"}
+{"Ciudad": "Mata-Utu", "CodP": "WLF"}
+{"Ciudad": "Port-Vila", "CodP": "VUT"}
+{"Ciudad": "Città del Vaticano", "CodP": "VAT"}
+{"Ciudad": "Caracas", "CodP": "VEN"}
+{"Ciudad": "Maracaíbo", "CodP": "VEN"}
+{"Ciudad": "Barquisimeto", "CodP": "VEN"}
+{"Ciudad": "Valencia", "CodP": "VEN"}
+{"Ciudad": "Ciudad Guayana", "CodP": "VEN"}
+{"Ciudad": "Petare", "CodP": "VEN"}
+{"Ciudad": "Maracay", "CodP": "VEN"}
+{"Ciudad": "Barcelona", "CodP": "VEN"}
+{"Ciudad": "Maturín", "CodP": "VEN"}
+{"Ciudad": "San Cristóbal", "CodP": "VEN"}
+{"Ciudad": "Ciudad Bolívar", "CodP": "VEN"}
+{"Ciudad": "Cumaná", "CodP": "VEN"}
+{"Ciudad": "Mérida", "CodP": "VEN"}
+{"Ciudad": "Cabimas", "CodP": "VEN"}
+{"Ciudad": "Barinas", "CodP": "VEN"}
+{"Ciudad": "Turmero", "CodP": "VEN"}
+{"Ciudad": "Baruta", "CodP": "VEN"}
+{"Ciudad": "Puerto Cabello", "CodP": "VEN"}
+{"Ciudad": "Santa Ana de Coro", "CodP": "VEN"}
+{"Ciudad": "Los Teques", "CodP": "VEN"}
+{"Ciudad": "Punto Fijo", "CodP": "VEN"}
+{"Ciudad": "Guarenas", "CodP": "VEN"}
+{"Ciudad": "Acarigua", "CodP": "VEN"}
+{"Ciudad": "Puerto La Cruz", "CodP": "VEN"}
+{"Ciudad": "Ciudad Losada", "CodP": "VEN"}
+{"Ciudad": "Guacara", "CodP": "VEN"}
+{"Ciudad": "Valera", "CodP": "VEN"}
+{"Ciudad": "Guanare", "CodP": "VEN"}
+{"Ciudad": "Carúpano", "CodP": "VEN"}
+{"Ciudad": "Catia La Mar", "CodP": "VEN"}
+{"Ciudad": "El Tigre", "CodP": "VEN"}
+{"Ciudad": "Guatire", "CodP": "VEN"}
+{"Ciudad": "Calabozo", "CodP": "VEN"}
+{"Ciudad": "Pozuelos", "CodP": "VEN"}
+{"Ciudad": "Ciudad Ojeda", "CodP": "VEN"}
+{"Ciudad": "Ocumare del Tuy", "CodP": "VEN"}
+{"Ciudad": "Valle de la Pascua", "CodP": "VEN"}
+{"Ciudad": "Araure", "CodP": "VEN"}
+{"Ciudad": "San Fernando de Apure", "CodP": "VEN"}
+{"Ciudad": "San Felipe", "CodP": "VEN"}
+{"Ciudad": "El Limón", "CodP": "VEN"}
+{"Ciudad": "Moscow", "CodP": "RUS"}
+{"Ciudad": "St Petersburg", "CodP": "RUS"}
+{"Ciudad": "Novosibirsk", "CodP": "RUS"}
+{"Ciudad": "Nizni Novgorod", "CodP": "RUS"}
+{"Ciudad": "Jekaterinburg", "CodP": "RUS"}
+{"Ciudad": "Samara", "CodP": "RUS"}
+{"Ciudad": "Omsk", "CodP": "RUS"}
+{"Ciudad": "Kazan", "CodP": "RUS"}
+{"Ciudad": "Ufa", "CodP": "RUS"}
+{"Ciudad": "Tšeljabinsk", "CodP": "RUS"}
+{"Ciudad": "Rostov-na-Donu", "CodP": "RUS"}
+{"Ciudad": "Perm", "CodP": "RUS"}
+{"Ciudad": "Volgograd", "CodP": "RUS"}
+{"Ciudad": "Voronez", "CodP": "RUS"}
+{"Ciudad": "Krasnojarsk", "CodP": "RUS"}
+{"Ciudad": "Saratov", "CodP": "RUS"}
+{"Ciudad": "Toljatti", "CodP": "RUS"}
+{"Ciudad": "Uljanovsk", "CodP": "RUS"}
+{"Ciudad": "Izevsk", "CodP": "RUS"}
+{"Ciudad": "Krasnodar", "CodP": "RUS"}
+{"Ciudad": "Jaroslavl", "CodP": "RUS"}
+{"Ciudad": "Habarovsk", "CodP": "RUS"}
+{"Ciudad": "Vladivostok", "CodP": "RUS"}
+{"Ciudad": "Irkutsk", "CodP": "RUS"}
+{"Ciudad": "Barnaul", "CodP": "RUS"}
+{"Ciudad": "Novokuznetsk", "CodP": "RUS"}
+{"Ciudad": "Penza", "CodP": "RUS"}
+{"Ciudad": "Rjazan", "CodP": "RUS"}
+{"Ciudad": "Orenburg", "CodP": "RUS"}
+{"Ciudad": "Lipetsk", "CodP": "RUS"}
+{"Ciudad": "Nabereznyje Tšelny", "CodP": "RUS"}
+{"Ciudad": "Tula", "CodP": "RUS"}
+{"Ciudad": "Tjumen", "CodP": "RUS"}
+{"Ciudad": "Kemerovo", "CodP": "RUS"}
+{"Ciudad": "Astrahan", "CodP": "RUS"}
+{"Ciudad": "Tomsk", "CodP": "RUS"}
+{"Ciudad": "Kirov", "CodP": "RUS"}
+{"Ciudad": "Ivanovo", "CodP": "RUS"}
+{"Ciudad": "Tšeboksary", "CodP": "RUS"}
+{"Ciudad": "Brjansk", "CodP": "RUS"}
+{"Ciudad": "Tver", "CodP": "RUS"}
+{"Ciudad": "Kursk", "CodP": "RUS"}
+{"Ciudad": "Magnitogorsk", "CodP": "RUS"}
+{"Ciudad": "Kaliningrad", "CodP": "RUS"}
+{"Ciudad": "Nizni Tagil", "CodP": "RUS"}
+{"Ciudad": "Murmansk", "CodP": "RUS"}
+{"Ciudad": "Ulan-Ude", "CodP": "RUS"}
+{"Ciudad": "Kurgan", "CodP": "RUS"}
+{"Ciudad": "Arkangeli", "CodP": "RUS"}
+{"Ciudad": "Sotši", "CodP": "RUS"}
+{"Ciudad": "Smolensk", "CodP": "RUS"}
+{"Ciudad": "Orjol", "CodP": "RUS"}
+{"Ciudad": "Stavropol", "CodP": "RUS"}
+{"Ciudad": "Belgorod", "CodP": "RUS"}
+{"Ciudad": "Kaluga", "CodP": "RUS"}
+{"Ciudad": "Vladimir", "CodP": "RUS"}
+{"Ciudad": "Mahatškala", "CodP": "RUS"}
+{"Ciudad": "Tšerepovets", "CodP": "RUS"}
+{"Ciudad": "Saransk", "CodP": "RUS"}
+{"Ciudad": "Tambov", "CodP": "RUS"}
+{"Ciudad": "Vladikavkaz", "CodP": "RUS"}
+{"Ciudad": "Tšita", "CodP": "RUS"}
+{"Ciudad": "Vologda", "CodP": "RUS"}
+{"Ciudad": "Veliki Novgorod", "CodP": "RUS"}
+{"Ciudad": "Komsomolsk-na-Amure", "CodP": "RUS"}
+{"Ciudad": "Kostroma", "CodP": "RUS"}
+{"Ciudad": "Volzski", "CodP": "RUS"}
+{"Ciudad": "Taganrog", "CodP": "RUS"}
+{"Ciudad": "Petroskoi", "CodP": "RUS"}
+{"Ciudad": "Bratsk", "CodP": "RUS"}
+{"Ciudad": "Dzerzinsk", "CodP": "RUS"}
+{"Ciudad": "Surgut", "CodP": "RUS"}
+{"Ciudad": "Orsk", "CodP": "RUS"}
+{"Ciudad": "Sterlitamak", "CodP": "RUS"}
+{"Ciudad": "Angarsk", "CodP": "RUS"}
+{"Ciudad": "Joškar-Ola", "CodP": "RUS"}
+{"Ciudad": "Rybinsk", "CodP": "RUS"}
+{"Ciudad": "Prokopjevsk", "CodP": "RUS"}
+{"Ciudad": "Niznevartovsk", "CodP": "RUS"}
+{"Ciudad": "Naltšik", "CodP": "RUS"}
+{"Ciudad": "Syktyvkar", "CodP": "RUS"}
+{"Ciudad": "Severodvinsk", "CodP": "RUS"}
+{"Ciudad": "Bijsk", "CodP": "RUS"}
+{"Ciudad": "Niznekamsk", "CodP": "RUS"}
+{"Ciudad": "Blagoveštšensk", "CodP": "RUS"}
+{"Ciudad": "Šahty", "CodP": "RUS"}
+{"Ciudad": "Staryi Oskol", "CodP": "RUS"}
+{"Ciudad": "Zelenograd", "CodP": "RUS"}
+{"Ciudad": "Balakovo", "CodP": "RUS"}
+{"Ciudad": "Novorossijsk", "CodP": "RUS"}
+{"Ciudad": "Pihkova", "CodP": "RUS"}
+{"Ciudad": "Zlatoust", "CodP": "RUS"}
+{"Ciudad": "Jakutsk", "CodP": "RUS"}
+{"Ciudad": "Podolsk", "CodP": "RUS"}
+{"Ciudad": "Petropavlovsk-Kamtšatski", "CodP": "RUS"}
+{"Ciudad": "Kamensk-Uralski", "CodP": "RUS"}
+{"Ciudad": "Engels", "CodP": "RUS"}
+{"Ciudad": "Syzran", "CodP": "RUS"}
+{"Ciudad": "Grozny", "CodP": "RUS"}
+{"Ciudad": "Novotšerkassk", "CodP": "RUS"}
+{"Ciudad": "Berezniki", "CodP": "RUS"}
+{"Ciudad": "Juzno-Sahalinsk", "CodP": "RUS"}
+{"Ciudad": "Volgodonsk", "CodP": "RUS"}
+{"Ciudad": "Abakan", "CodP": "RUS"}
+{"Ciudad": "Maikop", "CodP": "RUS"}
+{"Ciudad": "Miass", "CodP": "RUS"}
+{"Ciudad": "Armavir", "CodP": "RUS"}
+{"Ciudad": "Ljubertsy", "CodP": "RUS"}
+{"Ciudad": "Rubtsovsk", "CodP": "RUS"}
+{"Ciudad": "Kovrov", "CodP": "RUS"}
+{"Ciudad": "Nahodka", "CodP": "RUS"}
+{"Ciudad": "Ussurijsk", "CodP": "RUS"}
+{"Ciudad": "Salavat", "CodP": "RUS"}
+{"Ciudad": "Mytištši", "CodP": "RUS"}
+{"Ciudad": "Kolomna", "CodP": "RUS"}
+{"Ciudad": "Elektrostal", "CodP": "RUS"}
+{"Ciudad": "Murom", "CodP": "RUS"}
+{"Ciudad": "Kolpino", "CodP": "RUS"}
+{"Ciudad": "Norilsk", "CodP": "RUS"}
+{"Ciudad": "Almetjevsk", "CodP": "RUS"}
+{"Ciudad": "Novomoskovsk", "CodP": "RUS"}
+{"Ciudad": "Dimitrovgrad", "CodP": "RUS"}
+{"Ciudad": "Pervouralsk", "CodP": "RUS"}
+{"Ciudad": "Himki", "CodP": "RUS"}
+{"Ciudad": "Balašiha", "CodP": "RUS"}
+{"Ciudad": "Nevinnomyssk", "CodP": "RUS"}
+{"Ciudad": "Pjatigorsk", "CodP": "RUS"}
+{"Ciudad": "Korolev", "CodP": "RUS"}
+{"Ciudad": "Serpuhov", "CodP": "RUS"}
+{"Ciudad": "Odintsovo", "CodP": "RUS"}
+{"Ciudad": "Orehovo-Zujevo", "CodP": "RUS"}
+{"Ciudad": "Kamyšin", "CodP": "RUS"}
+{"Ciudad": "Novotšeboksarsk", "CodP": "RUS"}
+{"Ciudad": "Tšerkessk", "CodP": "RUS"}
+{"Ciudad": "Atšinsk", "CodP": "RUS"}
+{"Ciudad": "Magadan", "CodP": "RUS"}
+{"Ciudad": "Mitšurinsk", "CodP": "RUS"}
+{"Ciudad": "Kislovodsk", "CodP": "RUS"}
+{"Ciudad": "Jelets", "CodP": "RUS"}
+{"Ciudad": "Seversk", "CodP": "RUS"}
+{"Ciudad": "Noginsk", "CodP": "RUS"}
+{"Ciudad": "Velikije Luki", "CodP": "RUS"}
+{"Ciudad": "Novokuibyševsk", "CodP": "RUS"}
+{"Ciudad": "Neftekamsk", "CodP": "RUS"}
+{"Ciudad": "Leninsk-Kuznetski", "CodP": "RUS"}
+{"Ciudad": "Oktjabrski", "CodP": "RUS"}
+{"Ciudad": "Sergijev Posad", "CodP": "RUS"}
+{"Ciudad": "Arzamas", "CodP": "RUS"}
+{"Ciudad": "Kiseljovsk", "CodP": "RUS"}
+{"Ciudad": "Novotroitsk", "CodP": "RUS"}
+{"Ciudad": "Obninsk", "CodP": "RUS"}
+{"Ciudad": "Kansk", "CodP": "RUS"}
+{"Ciudad": "Glazov", "CodP": "RUS"}
+{"Ciudad": "Solikamsk", "CodP": "RUS"}
+{"Ciudad": "Sarapul", "CodP": "RUS"}
+{"Ciudad": "Ust-Ilimsk", "CodP": "RUS"}
+{"Ciudad": "Štšolkovo", "CodP": "RUS"}
+{"Ciudad": "Mezduretšensk", "CodP": "RUS"}
+{"Ciudad": "Usolje-Sibirskoje", "CodP": "RUS"}
+{"Ciudad": "Elista", "CodP": "RUS"}
+{"Ciudad": "Novošahtinsk", "CodP": "RUS"}
+{"Ciudad": "Votkinsk", "CodP": "RUS"}
+{"Ciudad": "Kyzyl", "CodP": "RUS"}
+{"Ciudad": "Serov", "CodP": "RUS"}
+{"Ciudad": "Zelenodolsk", "CodP": "RUS"}
+{"Ciudad": "Zeleznodoroznyi", "CodP": "RUS"}
+{"Ciudad": "Kinešma", "CodP": "RUS"}
+{"Ciudad": "Kuznetsk", "CodP": "RUS"}
+{"Ciudad": "Uhta", "CodP": "RUS"}
+{"Ciudad": "Jessentuki", "CodP": "RUS"}
+{"Ciudad": "Tobolsk", "CodP": "RUS"}
+{"Ciudad": "Neftejugansk", "CodP": "RUS"}
+{"Ciudad": "Bataisk", "CodP": "RUS"}
+{"Ciudad": "Nojabrsk", "CodP": "RUS"}
+{"Ciudad": "Balašov", "CodP": "RUS"}
+{"Ciudad": "Zeleznogorsk", "CodP": "RUS"}
+{"Ciudad": "Zukovski", "CodP": "RUS"}
+{"Ciudad": "Anzero-Sudzensk", "CodP": "RUS"}
+{"Ciudad": "Bugulma", "CodP": "RUS"}
+{"Ciudad": "Zeleznogorsk", "CodP": "RUS"}
+{"Ciudad": "Novouralsk", "CodP": "RUS"}
+{"Ciudad": "Puškin", "CodP": "RUS"}
+{"Ciudad": "Vorkuta", "CodP": "RUS"}
+{"Ciudad": "Derbent", "CodP": "RUS"}
+{"Ciudad": "Kirovo-Tšepetsk", "CodP": "RUS"}
+{"Ciudad": "Krasnogorsk", "CodP": "RUS"}
+{"Ciudad": "Klin", "CodP": "RUS"}
+{"Ciudad": "Tšaikovski", "CodP": "RUS"}
+{"Ciudad": "Novyi Urengoi", "CodP": "RUS"}
+{"Ciudad": "Ho Chi Minh City", "CodP": "VNM"}
+{"Ciudad": "Hanoi", "CodP": "VNM"}
+{"Ciudad": "Haiphong", "CodP": "VNM"}
+{"Ciudad": "Da Nang", "CodP": "VNM"}
+{"Ciudad": "Biên Hoa", "CodP": "VNM"}
+{"Ciudad": "Nha Trang", "CodP": "VNM"}
+{"Ciudad": "Hue", "CodP": "VNM"}
+{"Ciudad": "Can Tho", "CodP": "VNM"}
+{"Ciudad": "Cam Pha", "CodP": "VNM"}
+{"Ciudad": "Nam Dinh", "CodP": "VNM"}
+{"Ciudad": "Quy Nhon", "CodP": "VNM"}
+{"Ciudad": "Vung Tau", "CodP": "VNM"}
+{"Ciudad": "Rach Gia", "CodP": "VNM"}
+{"Ciudad": "Long Xuyen", "CodP": "VNM"}
+{"Ciudad": "Thai Nguyen", "CodP": "VNM"}
+{"Ciudad": "Hong Gai", "CodP": "VNM"}
+{"Ciudad": "Phan Thiêt", "CodP": "VNM"}
+{"Ciudad": "Cam Ranh", "CodP": "VNM"}
+{"Ciudad": "Vinh", "CodP": "VNM"}
+{"Ciudad": "My Tho", "CodP": "VNM"}
+{"Ciudad": "Da Lat", "CodP": "VNM"}
+{"Ciudad": "Buon Ma Thuot", "CodP": "VNM"}
+{"Ciudad": "Tallinn", "CodP": "EST"}
+{"Ciudad": "Tartu", "CodP": "EST"}
+{"Ciudad": "New York", "CodP": "USA"}
+{"Ciudad": "Los Angeles", "CodP": "USA"}
+{"Ciudad": "Chicago", "CodP": "USA"}
+{"Ciudad": "Houston", "CodP": "USA"}
+{"Ciudad": "Philadelphia", "CodP": "USA"}
+{"Ciudad": "Phoenix", "CodP": "USA"}
+{"Ciudad": "San Diego", "CodP": "USA"}
+{"Ciudad": "Dallas", "CodP": "USA"}
+{"Ciudad": "San Antonio", "CodP": "USA"}
+{"Ciudad": "Detroit", "CodP": "USA"}
+{"Ciudad": "San Jose", "CodP": "USA"}
+{"Ciudad": "Indianapolis", "CodP": "USA"}
+{"Ciudad": "San Francisco", "CodP": "USA"}
+{"Ciudad": "Jacksonville", "CodP": "USA"}
+{"Ciudad": "Columbus", "CodP": "USA"}
+{"Ciudad": "Austin", "CodP": "USA"}
+{"Ciudad": "Baltimore", "CodP": "USA"}
+{"Ciudad": "Memphis", "CodP": "USA"}
+{"Ciudad": "Milwaukee", "CodP": "USA"}
+{"Ciudad": "Boston", "CodP": "USA"}
+{"Ciudad": "Washington", "CodP": "USA"}
+{"Ciudad": "Nashville-Davidson", "CodP": "USA"}
+{"Ciudad": "El Paso", "CodP": "USA"}
+{"Ciudad": "Seattle", "CodP": "USA"}
+{"Ciudad": "Denver", "CodP": "USA"}
+{"Ciudad": "Charlotte", "CodP": "USA"}
+{"Ciudad": "Fort Worth", "CodP": "USA"}
+{"Ciudad": "Portland", "CodP": "USA"}
+{"Ciudad": "Oklahoma City", "CodP": "USA"}
+{"Ciudad": "Tucson", "CodP": "USA"}
+{"Ciudad": "New Orleans", "CodP": "USA"}
+{"Ciudad": "Las Vegas", "CodP": "USA"}
+{"Ciudad": "Cleveland", "CodP": "USA"}
+{"Ciudad": "Long Beach", "CodP": "USA"}
+{"Ciudad": "Albuquerque", "CodP": "USA"}
+{"Ciudad": "Kansas City", "CodP": "USA"}
+{"Ciudad": "Fresno", "CodP": "USA"}
+{"Ciudad": "Virginia Beach", "CodP": "USA"}
+{"Ciudad": "Atlanta", "CodP": "USA"}
+{"Ciudad": "Sacramento", "CodP": "USA"}
+{"Ciudad": "Oakland", "CodP": "USA"}
+{"Ciudad": "Mesa", "CodP": "USA"}
+{"Ciudad": "Tulsa", "CodP": "USA"}
+{"Ciudad": "Omaha", "CodP": "USA"}
+{"Ciudad": "Minneapolis", "CodP": "USA"}
+{"Ciudad": "Honolulu", "CodP": "USA"}
+{"Ciudad": "Miami", "CodP": "USA"}
+{"Ciudad": "Colorado Springs", "CodP": "USA"}
+{"Ciudad": "Saint Louis", "CodP": "USA"}
+{"Ciudad": "Wichita", "CodP": "USA"}
+{"Ciudad": "Santa Ana", "CodP": "USA"}
+{"Ciudad": "Pittsburgh", "CodP": "USA"}
+{"Ciudad": "Arlington", "CodP": "USA"}
+{"Ciudad": "Cincinnati", "CodP": "USA"}
+{"Ciudad": "Anaheim", "CodP": "USA"}
+{"Ciudad": "Toledo", "CodP": "USA"}
+{"Ciudad": "Tampa", "CodP": "USA"}
+{"Ciudad": "Buffalo", "CodP": "USA"}
+{"Ciudad": "Saint Paul", "CodP": "USA"}
+{"Ciudad": "Corpus Christi", "CodP": "USA"}
+{"Ciudad": "Aurora", "CodP": "USA"}
+{"Ciudad": "Raleigh", "CodP": "USA"}
+{"Ciudad": "Newark", "CodP": "USA"}
+{"Ciudad": "Lexington-Fayette", "CodP": "USA"}
+{"Ciudad": "Anchorage", "CodP": "USA"}
+{"Ciudad": "Louisville", "CodP": "USA"}
+{"Ciudad": "Riverside", "CodP": "USA"}
+{"Ciudad": "Saint Petersburg", "CodP": "USA"}
+{"Ciudad": "Bakersfield", "CodP": "USA"}
+{"Ciudad": "Stockton", "CodP": "USA"}
+{"Ciudad": "Birmingham", "CodP": "USA"}
+{"Ciudad": "Jersey City", "CodP": "USA"}
+{"Ciudad": "Norfolk", "CodP": "USA"}
+{"Ciudad": "Baton Rouge", "CodP": "USA"}
+{"Ciudad": "Hialeah", "CodP": "USA"}
+{"Ciudad": "Lincoln", "CodP": "USA"}
+{"Ciudad": "Greensboro", "CodP": "USA"}
+{"Ciudad": "Plano", "CodP": "USA"}
+{"Ciudad": "Rochester", "CodP": "USA"}
+{"Ciudad": "Glendale", "CodP": "USA"}
+{"Ciudad": "Akron", "CodP": "USA"}
+{"Ciudad": "Garland", "CodP": "USA"}
+{"Ciudad": "Madison", "CodP": "USA"}
+{"Ciudad": "Fort Wayne", "CodP": "USA"}
+{"Ciudad": "Fremont", "CodP": "USA"}
+{"Ciudad": "Scottsdale", "CodP": "USA"}
+{"Ciudad": "Montgomery", "CodP": "USA"}
+{"Ciudad": "Shreveport", "CodP": "USA"}
+{"Ciudad": "Augusta-Richmond County", "CodP": "USA"}
+{"Ciudad": "Lubbock", "CodP": "USA"}
+{"Ciudad": "Chesapeake", "CodP": "USA"}
+{"Ciudad": "Mobile", "CodP": "USA"}
+{"Ciudad": "Des Moines", "CodP": "USA"}
+{"Ciudad": "Grand Rapids", "CodP": "USA"}
+{"Ciudad": "Richmond", "CodP": "USA"}
+{"Ciudad": "Yonkers", "CodP": "USA"}
+{"Ciudad": "Spokane", "CodP": "USA"}
+{"Ciudad": "Glendale", "CodP": "USA"}
+{"Ciudad": "Tacoma", "CodP": "USA"}
+{"Ciudad": "Irving", "CodP": "USA"}
+{"Ciudad": "Huntington Beach", "CodP": "USA"}
+{"Ciudad": "Modesto", "CodP": "USA"}
+{"Ciudad": "Durham", "CodP": "USA"}
+{"Ciudad": "Columbus", "CodP": "USA"}
+{"Ciudad": "Orlando", "CodP": "USA"}
+{"Ciudad": "Boise City", "CodP": "USA"}
+{"Ciudad": "Winston-Salem", "CodP": "USA"}
+{"Ciudad": "San Bernardino", "CodP": "USA"}
+{"Ciudad": "Jackson", "CodP": "USA"}
+{"Ciudad": "Little Rock", "CodP": "USA"}
+{"Ciudad": "Salt Lake City", "CodP": "USA"}
+{"Ciudad": "Reno", "CodP": "USA"}
+{"Ciudad": "Newport News", "CodP": "USA"}
+{"Ciudad": "Chandler", "CodP": "USA"}
+{"Ciudad": "Laredo", "CodP": "USA"}
+{"Ciudad": "Henderson", "CodP": "USA"}
+{"Ciudad": "Arlington", "CodP": "USA"}
+{"Ciudad": "Knoxville", "CodP": "USA"}
+{"Ciudad": "Amarillo", "CodP": "USA"}
+{"Ciudad": "Providence", "CodP": "USA"}
+{"Ciudad": "Chula Vista", "CodP": "USA"}
+{"Ciudad": "Worcester", "CodP": "USA"}
+{"Ciudad": "Oxnard", "CodP": "USA"}
+{"Ciudad": "Dayton", "CodP": "USA"}
+{"Ciudad": "Garden Grove", "CodP": "USA"}
+{"Ciudad": "Oceanside", "CodP": "USA"}
+{"Ciudad": "Tempe", "CodP": "USA"}
+{"Ciudad": "Huntsville", "CodP": "USA"}
+{"Ciudad": "Ontario", "CodP": "USA"}
+{"Ciudad": "Chattanooga", "CodP": "USA"}
+{"Ciudad": "Fort Lauderdale", "CodP": "USA"}
+{"Ciudad": "Springfield", "CodP": "USA"}
+{"Ciudad": "Springfield", "CodP": "USA"}
+{"Ciudad": "Santa Clarita", "CodP": "USA"}
+{"Ciudad": "Salinas", "CodP": "USA"}
+{"Ciudad": "Tallahassee", "CodP": "USA"}
+{"Ciudad": "Rockford", "CodP": "USA"}
+{"Ciudad": "Pomona", "CodP": "USA"}
+{"Ciudad": "Metairie", "CodP": "USA"}
+{"Ciudad": "Paterson", "CodP": "USA"}
+{"Ciudad": "Overland Park", "CodP": "USA"}
+{"Ciudad": "Santa Rosa", "CodP": "USA"}
+{"Ciudad": "Syracuse", "CodP": "USA"}
+{"Ciudad": "Kansas City", "CodP": "USA"}
+{"Ciudad": "Hampton", "CodP": "USA"}
+{"Ciudad": "Lakewood", "CodP": "USA"}
+{"Ciudad": "Vancouver", "CodP": "USA"}
+{"Ciudad": "Irvine", "CodP": "USA"}
+{"Ciudad": "Aurora", "CodP": "USA"}
+{"Ciudad": "Moreno Valley", "CodP": "USA"}
+{"Ciudad": "Pasadena", "CodP": "USA"}
+{"Ciudad": "Hayward", "CodP": "USA"}
+{"Ciudad": "Brownsville", "CodP": "USA"}
+{"Ciudad": "Bridgeport", "CodP": "USA"}
+{"Ciudad": "Hollywood", "CodP": "USA"}
+{"Ciudad": "Warren", "CodP": "USA"}
+{"Ciudad": "Torrance", "CodP": "USA"}
+{"Ciudad": "Eugene", "CodP": "USA"}
+{"Ciudad": "Pembroke Pines", "CodP": "USA"}
+{"Ciudad": "Salem", "CodP": "USA"}
+{"Ciudad": "Pasadena", "CodP": "USA"}
+{"Ciudad": "Escondido", "CodP": "USA"}
+{"Ciudad": "Sunnyvale", "CodP": "USA"}
+{"Ciudad": "Savannah", "CodP": "USA"}
+{"Ciudad": "Fontana", "CodP": "USA"}
+{"Ciudad": "Orange", "CodP": "USA"}
+{"Ciudad": "Naperville", "CodP": "USA"}
+{"Ciudad": "Alexandria", "CodP": "USA"}
+{"Ciudad": "Rancho Cucamonga", "CodP": "USA"}
+{"Ciudad": "Grand Prairie", "CodP": "USA"}
+{"Ciudad": "East Los Angeles", "CodP": "USA"}
+{"Ciudad": "Fullerton", "CodP": "USA"}
+{"Ciudad": "Corona", "CodP": "USA"}
+{"Ciudad": "Flint", "CodP": "USA"}
+{"Ciudad": "Paradise", "CodP": "USA"}
+{"Ciudad": "Mesquite", "CodP": "USA"}
+{"Ciudad": "Sterling Heights", "CodP": "USA"}
+{"Ciudad": "Sioux Falls", "CodP": "USA"}
+{"Ciudad": "New Haven", "CodP": "USA"}
+{"Ciudad": "Topeka", "CodP": "USA"}
+{"Ciudad": "Concord", "CodP": "USA"}
+{"Ciudad": "Evansville", "CodP": "USA"}
+{"Ciudad": "Hartford", "CodP": "USA"}
+{"Ciudad": "Fayetteville", "CodP": "USA"}
+{"Ciudad": "Cedar Rapids", "CodP": "USA"}
+{"Ciudad": "Elizabeth", "CodP": "USA"}
+{"Ciudad": "Lansing", "CodP": "USA"}
+{"Ciudad": "Lancaster", "CodP": "USA"}
+{"Ciudad": "Fort Collins", "CodP": "USA"}
+{"Ciudad": "Coral Springs", "CodP": "USA"}
+{"Ciudad": "Stamford", "CodP": "USA"}
+{"Ciudad": "Thousand Oaks", "CodP": "USA"}
+{"Ciudad": "Vallejo", "CodP": "USA"}
+{"Ciudad": "Palmdale", "CodP": "USA"}
+{"Ciudad": "Columbia", "CodP": "USA"}
+{"Ciudad": "El Monte", "CodP": "USA"}
+{"Ciudad": "Abilene", "CodP": "USA"}
+{"Ciudad": "North Las Vegas", "CodP": "USA"}
+{"Ciudad": "Ann Arbor", "CodP": "USA"}
+{"Ciudad": "Beaumont", "CodP": "USA"}
+{"Ciudad": "Waco", "CodP": "USA"}
+{"Ciudad": "Macon", "CodP": "USA"}
+{"Ciudad": "Independence", "CodP": "USA"}
+{"Ciudad": "Peoria", "CodP": "USA"}
+{"Ciudad": "Inglewood", "CodP": "USA"}
+{"Ciudad": "Springfield", "CodP": "USA"}
+{"Ciudad": "Simi Valley", "CodP": "USA"}
+{"Ciudad": "Lafayette", "CodP": "USA"}
+{"Ciudad": "Gilbert", "CodP": "USA"}
+{"Ciudad": "Carrollton", "CodP": "USA"}
+{"Ciudad": "Bellevue", "CodP": "USA"}
+{"Ciudad": "West Valley City", "CodP": "USA"}
+{"Ciudad": "Clarksville", "CodP": "USA"}
+{"Ciudad": "Costa Mesa", "CodP": "USA"}
+{"Ciudad": "Peoria", "CodP": "USA"}
+{"Ciudad": "South Bend", "CodP": "USA"}
+{"Ciudad": "Downey", "CodP": "USA"}
+{"Ciudad": "Waterbury", "CodP": "USA"}
+{"Ciudad": "Manchester", "CodP": "USA"}
+{"Ciudad": "Allentown", "CodP": "USA"}
+{"Ciudad": "McAllen", "CodP": "USA"}
+{"Ciudad": "Joliet", "CodP": "USA"}
+{"Ciudad": "Lowell", "CodP": "USA"}
+{"Ciudad": "Provo", "CodP": "USA"}
+{"Ciudad": "West Covina", "CodP": "USA"}
+{"Ciudad": "Wichita Falls", "CodP": "USA"}
+{"Ciudad": "Erie", "CodP": "USA"}
+{"Ciudad": "Daly City", "CodP": "USA"}
+{"Ciudad": "Citrus Heights", "CodP": "USA"}
+{"Ciudad": "Norwalk", "CodP": "USA"}
+{"Ciudad": "Gary", "CodP": "USA"}
+{"Ciudad": "Berkeley", "CodP": "USA"}
+{"Ciudad": "Santa Clara", "CodP": "USA"}
+{"Ciudad": "Green Bay", "CodP": "USA"}
+{"Ciudad": "Cape Coral", "CodP": "USA"}
+{"Ciudad": "Arvada", "CodP": "USA"}
+{"Ciudad": "Pueblo", "CodP": "USA"}
+{"Ciudad": "Sandy", "CodP": "USA"}
+{"Ciudad": "Athens-Clarke County", "CodP": "USA"}
+{"Ciudad": "Cambridge", "CodP": "USA"}
+{"Ciudad": "Westminster", "CodP": "USA"}
+{"Ciudad": "San Buenaventura", "CodP": "USA"}
+{"Ciudad": "Portsmouth", "CodP": "USA"}
+{"Ciudad": "Livonia", "CodP": "USA"}
+{"Ciudad": "Burbank", "CodP": "USA"}
+{"Ciudad": "Clearwater", "CodP": "USA"}
+{"Ciudad": "Midland", "CodP": "USA"}
+{"Ciudad": "Davenport", "CodP": "USA"}
+{"Ciudad": "Mission Viejo", "CodP": "USA"}
+{"Ciudad": "Miami Beach", "CodP": "USA"}
+{"Ciudad": "Sunrise Manor", "CodP": "USA"}
+{"Ciudad": "New Bedford", "CodP": "USA"}
+{"Ciudad": "El Cajon", "CodP": "USA"}
+{"Ciudad": "Norman", "CodP": "USA"}
+{"Ciudad": "Richmond", "CodP": "USA"}
+{"Ciudad": "Albany", "CodP": "USA"}
+{"Ciudad": "Brockton", "CodP": "USA"}
+{"Ciudad": "Roanoke", "CodP": "USA"}
+{"Ciudad": "Billings", "CodP": "USA"}
+{"Ciudad": "Compton", "CodP": "USA"}
+{"Ciudad": "Gainesville", "CodP": "USA"}
+{"Ciudad": "Fairfield", "CodP": "USA"}
+{"Ciudad": "Arden-Arcade", "CodP": "USA"}
+{"Ciudad": "San Mateo", "CodP": "USA"}
+{"Ciudad": "Visalia", "CodP": "USA"}
+{"Ciudad": "Boulder", "CodP": "USA"}
+{"Ciudad": "Cary", "CodP": "USA"}
+{"Ciudad": "Santa Monica", "CodP": "USA"}
+{"Ciudad": "Fall River", "CodP": "USA"}
+{"Ciudad": "Kenosha", "CodP": "USA"}
+{"Ciudad": "Elgin", "CodP": "USA"}
+{"Ciudad": "Odessa", "CodP": "USA"}
+{"Ciudad": "Carson", "CodP": "USA"}
+{"Ciudad": "Charleston", "CodP": "USA"}
+{"Ciudad": "Charlotte Amalie", "CodP": "VIR"}
+{"Ciudad": "Harare", "CodP": "ZWE"}
+{"Ciudad": "Bulawayo", "CodP": "ZWE"}
+{"Ciudad": "Chitungwiza", "CodP": "ZWE"}
+{"Ciudad": "Mount Darwin", "CodP": "ZWE"}
+{"Ciudad": "Mutare", "CodP": "ZWE"}
+{"Ciudad": "Gweru", "CodP": "ZWE"}
+{"Ciudad": "Gaza", "CodP": "PSE"}
+{"Ciudad": "Khan Yunis", "CodP": "PSE"}
+{"Ciudad": "Hebron", "CodP": "PSE"}
+{"Ciudad": "Jabaliya", "CodP": "PSE"}
+{"Ciudad": "Nablus", "CodP": "PSE"}
+{"Ciudad": "Rafah", "CodP": "PSE"}

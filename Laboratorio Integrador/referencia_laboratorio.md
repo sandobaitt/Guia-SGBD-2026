@@ -2,9 +2,9 @@
 
 > **Para qué sirve este archivo.** Reúne lo que el grupo usó en las Unidades 1 a 8 y 10 (MySQL y MongoDB) para resolver cualquier consigna del laboratorio integrador sobre la VM del grupo y MongoDB Atlas. Está pensado para que **una persona o un agente** busque una tarea y copie el procedimiento.
 >
-> **Cómo buscar.** Cada sección tiene un código estable: `E` entorno, `R` router de tareas, `M` MySQL, `D` MongoDB en la VM, `A` Atlas, `B` bitácora, `T` trampas, `F` fuentes. Con `grep -n "^## \|^### " referencia_laboratorio.md` se ve el índice completo. Empezá por **R. Router**.
+> **Cómo buscar.** Cada sección tiene un código estable: `E` entorno, `R` router de tareas, `M` MySQL, `D` MongoDB en la VM, `A` Atlas, `B` entrega (informe `GrupoN.pdf`), `T` trampas, `F` fuentes. Con `grep -n "^## \|^### " referencia_laboratorio.md` se ve el índice completo. Empezá por **R. Router**.
 >
-> **Verificación.** Los comandos marcados **[VERIFICADO]** se ejecutaron el 16/11/2026 en MySQL 9.7.4 y MongoDB 8.0.38 (mismas series que la VM), en instancias aisladas. Los marcados **[DOC]** salen de la documentación oficial. Los marcados **[REPO]** son los que usó el grupo en la unidad indicada.
+> **Verificación.** Los comandos marcados **[VERIFICADO]** se ejecutaron el 16/11/2026 en MySQL 9.7.4 y MongoDB 8.0.38 (mismas series que la VM), en instancias aisladas. Los marcados **[DOC]** salen de la documentación oficial. Los marcados **[REPO]** son los que usó el grupo en la unidad indicada. Los marcados **[CONSIGNA]** salen de la consigna y la guía oficiales del laboratorio (17/11/2026).
 
 ---
 
@@ -91,7 +91,10 @@ mongosh "mongodb+srv://sgbd-u10-grupo11.ryeyzsk.mongodb.net/" --apiVersion 1 --u
 | Atlas: conectar, CRUD, permisos, respaldo | A1 a A4 | U10 |
 | Comparar VM contra DBaaS | A5 | U10 |
 | Migrar datos entre la VM y Atlas | A6 | U8 + U10 |
-| Redactar la bitácora o el informe | B | Todas |
+| Formato del PDF `Grupo11.pdf`, carátula, estructura por ejercicio | B1 | Consigna del laboratorio |
+| Matriz de roles, notas DBA (ej. 5 y 6), declaración de IA | B2 | Consigna del laboratorio |
+| Mínimos y límites de cada ejercicio (qué exige la guía) | B3 | Guía del laboratorio |
+| Estilo de redacción y reglas de evidencia | B4, B5 | Todas |
 | Algo falla y no se sabe por qué | T | Todas |
 
 ---
@@ -835,9 +838,87 @@ Verificar con recuentos en origen y destino. Vigilar el límite de 512 MB del pl
 
 ---
 
-## B. Bitácora e informe
+## B. Entrega: informe `GrupoN.pdf`
 
-### B1. Plantilla oficial de la cátedra (Parcial 1, usada en todas las unidades)
+### B1. Formato de entrega del laboratorio integrador [CONSIGNA]
+
+**Qué se entrega:** **un único archivo PDF** subido a la tarea del laboratorio en Moodle, con el nombre exacto `GrupoN.pdf`. Para este grupo: **`Grupo11.pdf`** (ejemplos de la cátedra: `Grupo01.pdf`, `Grupo05.pdf`). Tiempo máximo orientativo: **4 horas (240 min)**.
+
+**Contenido exigido** (consigna, apartado *Contenido exigido en `GrupoN.pdf`*):
+
+| # | Elemento | Qué debe incluir |
+| :-: | :--- | :--- |
+| 1 | **Carátula** | Nombre del grupo y **apellido y nombre de los integrantes presentes** |
+| 2 | **Enunciados** | El enunciado **completo** de cada ejercicio (copiado de la guía) |
+| 3 | **Código y comandos** | Sentencias SQL, scripts `.sql` / `.js` / `.sh` e instrucciones o comandos de terminal ejecutados |
+| 4 | **Evidencias** | Capturas de pantalla **legibles** con los resultados de cada ejecución y/o imágenes que permitan **comprobar objetivamente** que la solución resuelve el problema |
+| 5 | **Nota aclaratoria** *(opcional)* | Al final de **cada ejercicio**: aclaraciones, inconvenientes técnicos o casos límite encontrados |
+
+**Estructura del PDF** (orden de la guía; los ejercicios van numerados del 1 al 12 y el Bloque 4 como 4.1 a 4.3):
+
+```
+Carátula
+Bloque 1 · Administración y rendimiento relacional (MySQL 9.7)      Ejercicios 1 a 6
+Bloque 2 · Datos semiestructurados en MySQL (JSON)                   Ejercicios 7 y 8
+Bloque 3 · NoSQL documental (MongoDB 8.0)                            Ejercicios 9 a 12
+Bloque 4 · Competencias CGSPA y transparencia                        4.1 Matriz de roles · 4.2 Notas DBA · 4.3 Declaración de IA
+```
+
+**Bloque de cada ejercicio** (repetir en cada uno, sin saltear ninguno):
+
+```
+Ejercicio N.x — <título>
+  Enunciado  : texto completo de la guía
+  Código     : sentencias / script / comandos ejecutados
+  Evidencias : captura(s) legible(s) + una frase de qué demuestra cada una
+  Nota aclaratoria (opcional): inconvenientes o casos límite
+```
+
+### B2. Bloque 4: qué hay que redactar [CONSIGNA]
+
+**4.1 Matriz de distribución de roles y coevaluación (Cap. 5.1).** Indicar qué integrante **lideró** o **colaboró** en cada función durante las 4 horas, más **un texto de máximo 5 líneas** sobre cómo el grupo resolvió los desacuerdos técnicos. La consigna recomienda **hacer las asignaciones al inicio** del laboratorio.
+
+| Función / dimensión técnica | Integrante que lanza / lidera | Integrante colaborador | Evidencia / entregable |
+| :--- | :--- | :--- | :--- |
+| Navegación de fuentes oficiales | *Nombre y apellido* | *Nombre y apellido* | Comandos y sintaxis verificada |
+| Operación técnica en VM Ubuntu | *Nombre y apellido* | *Nombre y apellido* | Capturas de terminal y scripts SQL/Bash |
+| Verificación y análisis de métricas | *Nombre y apellido* | *Nombre y apellido* | Planes `EXPLAIN` y logs de auditoría |
+| Documentación y redacción final | *Nombre y apellido* | *Nombre y apellido* | Consolidación del PDF `GrupoN.pdf` |
+
+**4.2 Notas de diagnóstico para Operaciones / DBA (Cap. 6.1).** Nota técnica **profesional** sobre la incidencia del **Ejercicio 5 (bloqueos)** y del **Ejercicio 6 (restauración PITR)**. Cada una con tres partes: **a) causa raíz**, **b) solución técnica aplicada**, **c) recomendaciones de prevención**.
+
+**4.3 Declaración de transparencia de herramientas de apoyo e IA.** Incluir: **tareas en las que se usó asistencia tecnológica** (por ejemplo depuración de sintaxis SQL, optimización de comandos bash, estructura del informe) y **al menos un caso de verificación y corrección**: una sugerencia o comando que hubo que corregir respecto de la versión oficial del motor, con cómo se detectó y cómo se validó en la documentación. Casos reales ya ocurridos del grupo: `SHOW MASTER STATUS` no existe en MySQL 9.7 (usar `SHOW BINARY LOG STATUS`), `\G` dentro de `mysql -e` (usar `-E`), y `use base` dentro de un `.js` con `mongosh --file` (ver **T**).
+
+### B3. Mínimos y límites que fija la guía [CONSIGNA]
+
+| Ejercicio | Exigencia explícita |
+| :--- | :--- |
+| 1.2 | Justificar **en comentarios** la necesidad de cada privilegio de `usr_backup` |
+| 2.3 | Registrar **tiempo y filas procesadas** de la carga masiva |
+| 3.e | Comparar **filas, tiempo (ms) y costo**, antes y después de los índices |
+| 3.g | Tabla comparativa + informe de rendimiento de **máximo 15 renglones** |
+| 6.4 | **5 modificaciones identificables** entre el backup y la pérdida |
+| 8.2 | **2 inserciones válidas y 2 inválidas** documentadas |
+| 10.1 | Modelo documental **justificando** *embedding* frente a *referencing* |
+| 12.1 | **2 inserciones válidas y 2 rechazadas** |
+| 4.1 | Texto de desacuerdos de **máximo 5 líneas** |
+
+### B4. Estilo del grupo
+- Redactada como el grupo: "decidimos", "comprobamos", "notamos". Nada de instrucciones al lector.
+- Cada resultado con su **interpretación** (qué demuestra), no solo la salida.
+- Capturas con marcador `*[INSERTAR CAPTURA N: qué muestra]*` mientras se arma el borrador; **ninguno puede quedar en el PDF final**.
+- Errores con el formato **Falla / Detección / Corrección** (alimenta las notas 4.2 y el caso de 4.3).
+- Pruebas de permisos como tabla: identidad, acción, esperado, obtenido.
+
+### B5. Reglas de evidencia
+- **No inventar salidas.** Toda salida pegada sale de una ejecución real.
+- **No mostrar contraseñas** en capturas ni archivos (`-p` sin valor, `passwordPrompt()`, `<clave>`).
+- Cada captura debe **permitir comprobar objetivamente** el resultado: mostrar el **prompt, el comando y la salida** juntos, con texto legible (sin cortes ni recuadros partidos).
+- Una captura de "backup activado" **no prueba** una restauración: hay que restaurar y comparar.
+- Medir con repeticiones (mediana de 3, o 5 con la primera separada) y declarar el entorno.
+
+### B6. Plantilla de las bitácoras por unidad (Parcial 1, usada en las Unidades 1 a 10)
+No es el formato del laboratorio integrador (ver **B1**), pero sirve como guía para ordenar un ejercicio largo:
 1. **Problema a resolver.**
 2. **Decisiones técnicas:** qué construcciones u objetos se eligieron y por qué.
 3. **Comandos y evidencias:** comandos, resultados, planes o capturas.
@@ -846,21 +927,7 @@ Verificar con recuentos en origen y destino. Vigilar el límite de 512 MB del pl
 6. **Uso de IA:** para qué, qué se validó y qué se descartó.
 7. **Aprendizajes.**
 
-Si la consigna trae su propia numeración (1, 2, 3… o Fase 1, Fase 2…), **seguir la de la consigna**.
-
-### B2. Estilo del grupo
-- Redactada como el grupo: "decidimos", "comprobamos", "notamos". Nada de instrucciones al lector.
-- Encabezado con grupo, integrantes, motor y versión, y archivos entregados.
-- Cada resultado con su **interpretación** (qué demuestra), no solo la salida.
-- Capturas con marcador `*[INSERTAR CAPTURA N: qué muestra]*` mientras se arma.
-- Errores con el formato **Falla / Detección / Corrección**.
-- Pruebas de permisos como tabla: identidad, acción, esperado, obtenido.
-
-### B3. Reglas de evidencia
-- **No inventar salidas.** Toda salida pegada sale de una ejecución real.
-- **No mostrar contraseñas** en capturas ni archivos (`-p` sin valor, `passwordPrompt()`, `<clave>`).
-- Una captura de "backup activado" **no prueba** una restauración: hay que restaurar y comparar.
-- Medir con repeticiones (mediana de 3, o 5 con la primera separada) y declarar el entorno.
+Si la consigna trae su propia numeración, **seguir la de la consigna**.
 
 ---
 

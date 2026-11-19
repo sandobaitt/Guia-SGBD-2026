@@ -1,0 +1,5 @@
+$ sw_vers -productVersion; mongod --version | head -1; mongosh --version; mongoimport --version | head -1
+13.7.8
+db version v7.0.14
+2.4.0
+mongoimport version: 100.20.0

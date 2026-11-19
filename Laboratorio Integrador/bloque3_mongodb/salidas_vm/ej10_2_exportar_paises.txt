@@ -1,0 +1,7 @@
+$ mysql -h 127.0.0.1 -u usr_g11 -N -B -r -e "SELECT doc FROM world_x.countryinfo ORDER BY doc->>'$.Code'" > paises.json
+
+$ wc -l paises.json
+239 paises.json
+
+$ grep "\"Code\": \"ARG\"" paises.json
+{"GNP": 340238, "_id": "00005de917d80000000000000008", "Code": "ARG", "Name": "Argentina", "IndepYear": 1816, "geography": {"Region": "South America", "Continent": "South America", "SurfaceArea": 2780400}, "government": {"HeadOfState": "Fernando de la Rúa", "GovernmentForm": "Federal Republic"}, "demographics": {"Population": 37032000, "LifeExpectancy": 75.0999984741211}}

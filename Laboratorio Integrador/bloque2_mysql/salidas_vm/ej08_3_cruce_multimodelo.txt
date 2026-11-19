@@ -1,0 +1,117 @@
+$ mysql -t -h 127.0.0.1 -u usr_g11 < ej08_3_cruce_multimodelo.sql
+
+mysql> SET NAMES utf8mb4;
+Query OK, 0 rows affected (0.000 sec)
+
+mysql> SELECT ci.doc->>'$.Name' AS pais, ci.doc->>'$.Code' AS codigo, COUNT(c.id) AS clientes
+    -> FROM world_x.countryinfo AS ci
+    -> LEFT JOIN zakila_json.customers AS c ON c.doc->>'$.Country' = ci.doc->>'$.Name'
+    -> WHERE ci.doc->>'$.geography.Continent' = 'South America'
+    -> GROUP BY pais, codigo
+    -> ORDER BY clientes DESC, pais;
++------------------+--------+----------+
+| pais             | codigo | clientes |
++------------------+--------+----------+
+| Brazil           | BRA    |       28 |
+| Argentina        | ARG    |       13 |
+| Venezuela        | VEN    |        7 |
+| Colombia         | COL    |        6 |
+| Peru             | PER    |        4 |
+| Chile            | CHL    |        3 |
+| Ecuador          | ECU    |        3 |
+| Paraguay         | PRY    |        3 |
+| Bolivia          | BOL    |        2 |
+| French Guiana    | GUF    |        1 |
+| Falkland Islands | FLK    |        0 |
+| Guyana           | GUY    |        0 |
+| Suriname         | SUR    |        0 |
+| Uruguay          | URY    |        0 |
++------------------+--------+----------+
+14 rows in set (1.432 sec)
+
+mysql> WITH alquileres_sa AS (
+    ->   SELECT r.film_id, r.titulo, ci.doc->>'$.Name' AS pais
+    ->   FROM zakila_json.customers AS c
+    ->   JOIN world_x.countryinfo AS ci
+    ->     ON ci.doc->>'$.Name' = c.doc->>'$.Country'
+    ->    AND ci.doc->>'$.geography.Continent' = 'South America'
+    ->   JOIN JSON_TABLE(c.doc, '$.Rentals[*]' COLUMNS (
+    ->          film_id INT          PATH '$.filmId',
+    ->          titulo  VARCHAR(100) PATH '$."Film Title"'
+    ->        )) AS r
+    -> )
+    -> SELECT ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC, a.titulo) AS puesto,
+    ->        a.titulo AS pelicula,
+    ->        f.doc->>'$.Category' AS categoria,
+    ->        COUNT(*) AS alquileres,
+    ->        COUNT(DISTINCT a.pais) AS paises
+    -> FROM alquileres_sa AS a
+    -> JOIN zakila_json.films AS f ON f.id = a.film_id
+    -> GROUP BY a.film_id, a.titulo, categoria
+    -> ORDER BY alquileres DESC, pelicula
+    -> LIMIT 10;
++--------+------------------------+-------------+------------+--------+
+| puesto | pelicula               | categoria   | alquileres | paises |
++--------+------------------------+-------------+------------+--------+
+|      1 | CONGENIALITY QUEST     | Sports      |          8 |      5 |
+|      2 | DOGMA FAMILY           | Animation   |          8 |      5 |
+|      3 | CONFIDENTIAL INTERVIEW | Music       |          7 |      5 |
+|      4 | DISCIPLE MOTHER        | Travel      |          7 |      3 |
+|      5 | ROCKETEER MOTHER       | Foreign     |          7 |      3 |
+|      6 | ROMAN PUNK             | Music       |          7 |      3 |
+|      7 | SLUMS DUCK             | Family      |          7 |      4 |
+|      8 | ACADEMY DINOSAUR       | Documentary |          6 |      5 |
+|      9 | AFFAIR PREJUDICE       | Horror      |          6 |      4 |
+|     10 | ALIEN CENTER           | Foreign     |          6 |      4 |
++--------+------------------------+-------------+------------+--------+
+10 rows in set (0.265 sec)
+
+mysql> WITH alquileres_sa AS (
+    ->   SELECT r.titulo
+    ->   FROM zakila_json.customers AS c
+    ->   JOIN world_x.countryinfo AS ci
+    ->     ON ci.doc->>'$.Name' = c.doc->>'$.Country'
+    ->    AND ci.doc->>'$.geography.Continent' = 'South America'
+    ->   JOIN JSON_TABLE(c.doc, '$.Rentals[*]' COLUMNS (titulo VARCHAR(100) PATH '$."Film Title"')) AS r
+    -> ),
+    -> ranking AS (
+    ->   SELECT titulo, COUNT(*) AS alquileres,
+    ->          RANK() OVER (ORDER BY COUNT(*) DESC) AS rango
+    ->   FROM alquileres_sa GROUP BY titulo
+    -> )
+    -> SELECT rango, titulo AS pelicula, alquileres
+    -> FROM ranking
+    -> WHERE alquileres = (SELECT alquileres FROM ranking ORDER BY alquileres DESC, titulo LIMIT 9, 1)
+    -> ORDER BY titulo;
++-------+------------------+------------+
+| rango | pelicula         | alquileres |
++-------+------------------+------------+
+|     8 | ACADEMY DINOSAUR |          6 |
+|     8 | AFFAIR PREJUDICE |          6 |
+|     8 | ALIEN CENTER     |          6 |
+|     8 | CANYON STOCK     |          6 |
+|     8 | DEVIL DESIRE     |          6 |
+|     8 | GRIT CLOCKWORK   |          6 |
+|     8 | JUGGLER HARDLY   |          6 |
+|     8 | MALLRATS UNITED  |          6 |
+|     8 | MUSKETEERS WAIT  |          6 |
+|     8 | SAMURAI LION     |          6 |
+|     8 | TAXI KICK        |          6 |
+|     8 | VIRGINIAN PLUTO  |          6 |
+|     8 | VOYAGE LEGALLY   |          6 |
++-------+------------------+------------+
+13 rows in set (0.026 sec)
+
+mysql> SELECT COUNT(DISTINCT c.id) AS clientes_sa, COUNT(*) AS alquileres_sa,
+    ->        COUNT(DISTINCT r.titulo) AS peliculas_distintas
+    -> FROM zakila_json.customers AS c
+    -> JOIN world_x.countryinfo AS ci
+    ->   ON ci.doc->>'$.Name' = c.doc->>'$.Country'
+    ->  AND ci.doc->>'$.geography.Continent' = 'South America'
+    -> JOIN JSON_TABLE(c.doc, '$.Rentals[*]' COLUMNS (titulo VARCHAR(100) PATH '$."Film Title"')) AS r;
++-------------+---------------+---------------------+
+| clientes_sa | alquileres_sa | peliculas_distintas |
++-------------+---------------+---------------------+
+|          70 |          1830 |                 787 |
++-------------+---------------+---------------------+
+1 row in set (0.036 sec)

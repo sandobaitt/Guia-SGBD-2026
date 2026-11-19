@@ -1,0 +1,28 @@
+
+
+$ mysqlsh --mysqlx -u usr_g11 -h 127.0.0.1 -P 33060 --file ej07_2_importar.js
+
+=== customers.json -> zakila_json.customers(doc)
+Importing from file "/home/vboxuser/lab_integrador_g11/datos/customers.json" to table `zakila_json`.`customers` in MySQL Server at 127.0.0.1:33060
+
+.. 599.. 599
+Processed 4.10 MB in 599 documents in 2.4987 sec (239.72 documents/s)
+Total successfully imported documents 599 (239.72 documents/s)
+
+=== films.json -> zakila_json.films(doc)
+Importing from file "/home/vboxuser/lab_integrador_g11/datos/films.json" to table `zakila_json`.`films` in MySQL Server at 127.0.0.1:33060
+
+.. 1000.. 1000
+Processed 624.84 KB in 1000 documents in 0.6569 sec (1000.00 documents/s)
+Total successfully imported documents 1000 (1000.00 documents/s)
+
+=== stores.json -> zakila_json.stores(doc)
+Importing from file "/home/vboxuser/lab_integrador_g11/datos/stores.json" to table `zakila_json`.`stores` in MySQL Server at 127.0.0.1:33060
+
+.. 2.. 2
+Processed 293.49 KB in 2 documents in 0.3663 sec (2.00 documents/s)
+Total successfully imported documents 2 (2.00 documents/s)
+
+real	0m10.302s
+user	0m3.399s
+sys	0m2.189s

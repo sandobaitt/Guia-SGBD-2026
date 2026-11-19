@@ -1,0 +1,38 @@
+$ mongosh --quiet --file ej09_1_crear_admin.js
+Usuario adminG11 creado en la base admin.
+{
+  _id: 'admin.adminG11',
+  userId: UUID('17ea977b-bee6-427c-b698-690796660e6f'),
+  user: 'adminG11',
+  db: 'admin',
+  roles: [
+    {
+      role: 'userAdminAnyDatabase',
+      db: 'admin'
+    },
+    {
+      role: 'readWriteAnyDatabase',
+      db: 'admin'
+    },
+    {
+      role: 'dbAdminAnyDatabase',
+      db: 'admin'
+    },
+    {
+      role: 'clusterMonitor',
+      db: 'admin'
+    },
+    {
+      role: 'backup',
+      db: 'admin'
+    },
+    {
+      role: 'restore',
+      db: 'admin'
+    }
+  ],
+  mechanisms: [
+    'SCRAM-SHA-1',
+    'SCRAM-SHA-256'
+  ]
+}

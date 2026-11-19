@@ -1,0 +1,13 @@
+
+
+$ mysql -t -h 127.0.0.1 -u usr_g11 < ej07_1_tablas_json.sql
++------------+-------------+-----------+------------+------------------+
+| TABLE_NAME | COLUMN_NAME | DATA_TYPE | COLUMN_KEY | EXTRA            |
++------------+-------------+-----------+------------+------------------+
+| customers  | doc         | json      |            |                  |
+| customers  | id          | int       | PRI        | STORED GENERATED |
+| films      | doc         | json      |            |                  |
+| films      | id          | int       | PRI        | STORED GENERATED |
+| stores     | doc         | json      |            |                  |
+| stores     | id          | int       | PRI        | STORED GENERATED |
++------------+-------------+-----------+------------+------------------+

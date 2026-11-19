@@ -1,0 +1,57 @@
+$ grep -A1 "^security" ~/lab_mongodb_g11/mongod.conf
+security:
+  authorization: enabled
+
+$ mongosh --quiet --file ej09_1_verificar_auth.js
+--- 1. Conexión SIN autenticar ---
+{
+  authenticatedUsers: [],
+  authenticatedUserRoles: []
+}
+listDatabases sin autenticar -> Unauthorized: Command listDatabases requires authentication
+
+--- 2. Autenticación como adminG11 ---
+db.auth() -> {"ok":1}
+
+--- 3. connectionStatus autenticado ---
+{
+  authenticatedUsers: [
+    {
+      user: 'adminG11',
+      db: 'admin'
+    }
+  ],
+  authenticatedUserRoles: [
+    {
+      role: 'backup',
+      db: 'admin'
+    },
+    {
+      role: 'clusterMonitor',
+      db: 'admin'
+    },
+    {
+      role: 'dbAdminAnyDatabase',
+      db: 'admin'
+    },
+    {
+      role: 'readWriteAnyDatabase',
+      db: 'admin'
+    },
+    {
+      role: 'restore',
+      db: 'admin'
+    },
+    {
+      role: 'userAdminAnyDatabase',
+      db: 'admin'
+    }
+  ]
+}
+
+--- 4. Comando administrativo permitido ---
+[
+  'admin',
+  'config',
+  'local'
+]

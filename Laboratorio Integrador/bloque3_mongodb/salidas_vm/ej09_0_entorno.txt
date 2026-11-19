@@ -1,0 +1,6 @@
+$ lsb_release -ds; hostname; mongod --version | head -1; mongosh --version; mongoimport --version | head -1
+Ubuntu 24.04.4 LTS
+LinuxE
+db version v8.0.34
+2.14.0
+mongoimport version: 100.20.0
