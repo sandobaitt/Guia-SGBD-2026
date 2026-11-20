@@ -3,7 +3,7 @@
 // Ejercicio 9.1 - Verificación de la autenticación (con authorization: enabled)
 //   mongosh --quiet --file ej09_1_verificar_auth.js
 // Forma interactiva equivalente (pide la clave):
-//   mongosh "mongodb://127.0.0.1:27017" --authenticationDatabase admin -u admin_g11
+//   mongosh "mongodb://127.0.0.1:27017" --authenticationDatabase admin -u adminG11
 // =============================================================================
 
 // 1. Sin credenciales: el servidor rechaza los comandos que requieren autorización
@@ -16,8 +16,8 @@ try {
 }
 
 // 2. Autenticación contra la base admin
-print("\n--- 2. Autenticación como admin_g11 ---");
-const ok = db.getSiblingDB("admin").auth("admin_g11", process.env.MONGO_ADMIN_PWD || passwordPrompt());
+print("\n--- 2. Autenticación como adminG11 ---");
+const ok = db.getSiblingDB("admin").auth("adminG11", process.env.MONGO_ADMIN_PWD || passwordPrompt());
 print("db.auth() -> " + JSON.stringify(ok));
 
 // 3. Identidad y roles de la sesión autenticada

@@ -1,0 +1,138 @@
+$ ./ej06_pitr.sh
+
+
+=== 6.1 Binary logs activos
++---------+-------------------------------------------------------------------------------------------------------------------+---------+-----------+----------------+
+| log_bin | ubicacion                                                                                                         | formato | gtid_mode | retencion_dias |
++---------+-------------------------------------------------------------------------------------------------------------------+---------+-----------+----------------+
+|       1 | /tmp/claude-1000/-home-sando-Documents-SGBD/0ce5590b-ec47-428c-8c2f-e149b6545714/scratchpad/labint/my/data/binlog | ROW     | ON        |        30.0000 |
++---------+-------------------------------------------------------------------------------------------------------------------+---------+-----------+----------------+
++---------------+-----------+-----------+
+| Log_name      | File_size | Encrypted |
++---------------+-----------+-----------+
+| binlog.000001 |      4698 | No        |
+| binlog.000002 |    959075 | No        |
+| binlog.000003 |  66386333 | No        |
+| binlog.000004 |       687 | No        |
+| binlog.000005 |  61007537 | No        |
+| binlog.000006 |  61026556 | No        |
+| binlog.000007 |       638 | No        |
+| binlog.000008 |       242 | No        |
+| binlog.000009 |  66409400 | No        |
++---------------+-----------+-----------+
+
+=== 6.2 Evento que rota el binlog cada 10 minutos
++-----------------+
+| event_scheduler |
++-----------------+
+| ON              |
++-----------------+
++-----------------+-----------+----------------+----------------+---------+---------------+
+| EVENT_NAME      | DEFINER   | INTERVAL_VALUE | INTERVAL_FIELD | STATUS  | LAST_EXECUTED |
++-----------------+-----------+----------------+----------------+---------+---------------+
+| ev_rotar_binlog | usr_g11@% | 10             | MINUTE         | ENABLED | NULL          |
++-----------------+-----------+----------------+----------------+---------+---------------+
+
+=== 6.3 Backup base con usr_backup
+$ mysqldump -u usr_backup -p --single-transaction --flush-logs --source-data=2 --set-gtid-purged=OFF --skip-masking-policies --routines --triggers --events --databases employees > /tmp/backup_employees_pitr.sql
+código de salida: 0 · tamaño: 161M
+-- CHANGE REPLICATION SOURCE TO SOURCE_LOG_FILE='binlog.000010', SOURCE_LOG_POS=198;
+Estado en el momento del backup:
++---------------+-----------+--------+--------------+---------------+
+| departamentos | empleados | cargos | sueldo_10001 | cargos_500001 |
++---------------+-----------+--------+--------------+---------------+
+|             9 |    300024 | 443309 |        88958 |             0 |
++---------------+-----------+--------+--------------+---------------+
+
+=== 6.4 Cinco modificaciones identificables posteriores al backup
+--------------
+INSERT INTO departments VALUES ('d010', 'PITR Ciberseguridad')
+--------------
+
+Query OK, 1 row affected (0.009 sec)
+
+Bye
+--------------
+INSERT INTO employees VALUES (500001, '1995-05-05', 'Lautaro', 'Pitr', 'M', '2026-11-17')
+--------------
+
+Query OK, 1 row affected (0.010 sec)
+
+Bye
+--------------
+INSERT INTO titles VALUES (500001, 'Engineer', '2026-11-17', '9999-01-01')
+--------------
+
+Query OK, 1 row affected (0.003 sec)
+
+Bye
+--------------
+INSERT INTO salaries VALUES (500001, 70000, '2026-11-17', '9999-01-01')
+--------------
+
+Query OK, 1 row affected (0.003 sec)
+
+Bye
+--------------
+UPDATE salaries SET salary = salary + 1111 WHERE emp_no = 10001 AND to_date = '9999-01-01'
+--------------
+
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Bye
+Estado OBJETIVO de la recuperación:
++---------------+-----------+--------+--------------+---------------+
+| departamentos | empleados | cargos | sueldo_10001 | cargos_500001 |
++---------------+-----------+--------+--------------+---------------+
+|            10 |    300025 | 443310 |        90069 |             1 |
++---------------+-----------+--------+--------------+---------------+
+
+=== 6.5 Incidente: borrado accidental de la tabla crítica titles
+--------------
+DROP TABLE titles
+--------------
+
+Query OK, 0 rows affected (0.023 sec)
+
+Bye
+ERROR 1146 (42S02) at line 1: Table 'employees.titles' doesn't exist
+
+=== 6.6 PITR
+--- Coordenadas de inicio (del backup): binlog.000010 posición 198
+--- Búsqueda del DROP en los binlogs posteriores al backup (como administrador:
+    SHOW BINLOG EVENTS exige REPLICATION SLAVE, que usr_g11 no tiene a propósito)
+Archivos a reaplicar: binlog.000010
+El DROP empieza en binlog.000010 posición 1795 (se corta justo antes)
+| binlog.000010 | 1076 | Write_rows     |         1 |        1131 | table_id: 312 flags: STMT_END_F USE_SQL_FOREIGN_KEY_F                         |
+| binlog.000010 | 1131 | Xid            |         1 |        1162 | COMMIT /* xid=1902 */                                                         |
+| binlog.000010 | 1162 | Gtid           |         1 |        1241 | SET @@SESSION.GTID_NEXT= '97d17fe6-e477-11f1-acb4-7cf17e691fa1:545'           |
+| binlog.000010 | 1241 | Query          |         1 |        1323 | BEGIN                                                                         |
+| binlog.000010 | 1385 | Write_rows     |         1 |        1435 | table_id: 310 flags: STMT_END_F USE_SQL_FOREIGN_KEY_F                         |
+| binlog.000010 | 1435 | Xid            |         1 |        1466 | COMMIT /* xid=1906 */                                                         |
+| binlog.000010 | 1466 | Gtid           |         1 |        1545 | SET @@SESSION.GTID_NEXT= '97d17fe6-e477-11f1-acb4-7cf17e691fa1:546'           |
+| binlog.000010 | 1545 | Query          |         1 |        1636 | BEGIN                                                                         |
+| binlog.000010 | 1698 | Update_rows    |         1 |        1764 | table_id: 310 flags: STMT_END_F USE_SQL_FOREIGN_KEY_F                         |
+| binlog.000010 | 1764 | Xid            |         1 |        1795 | COMMIT /* xid=1910 */                                                         |
+| binlog.000010 | 1795 | Gtid           |         1 |        1872 | SET @@SESSION.GTID_NEXT= '97d17fe6-e477-11f1-acb4-7cf17e691fa1:547'           |
+| binlog.000010 | 1872 | Query          |         1 |        2013 | use `employees`; DROP TABLE `titles` /* generated by server */ /* xid=1918 */ |
+
+--- Paso 1: restaurar el backup base
+$ mysql --socket=/tmp/sgbd_li.sock -uroot < /tmp/backup_employees_pitr.sql
+restaurado
+--- Paso 2: reaplicar el binlog desde el backup hasta justo antes del DROP
+$ mysqlbinlog --skip-gtids --start-position=198 --stop-position=1795 binlog.000010 | mysql --socket=/tmp/sgbd_li.sock -uroot
+binlog reaplicado
+
+--- Validación: estado recuperado frente al objetivo
++---------------+-----------+--------+--------------+---------------+
+| departamentos | empleados | cargos | sueldo_10001 | cargos_500001 |
++---------------+-----------+--------+--------------+---------------+
+|            10 |    300025 | 443310 |        90069 |             1 |
++---------------+-----------+--------+--------------+---------------+
+RECUPERACIÓN EXACTA: coincide con el estado previo al incidente (las 5 modificaciones están y titles existe)
++--------+------------+-----------+----------+--------+
+| emp_no | first_name | last_name | title    | salary |
++--------+------------+-----------+----------+--------+
+| 500001 | Lautaro    | Pitr      | Engineer |  70000 |
++--------+------------+-----------+----------+--------+

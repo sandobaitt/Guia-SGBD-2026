@@ -10,11 +10,11 @@
 const admin = db.getSiblingDB("admin");
 const clave = process.env.MONGO_ADMIN_PWD || passwordPrompt();
 
-if (admin.getUser("admin_g11")) {
-  print("El usuario admin_g11 ya existe: no se vuelve a crear.");
+if (admin.getUser("adminG11")) {
+  print("El usuario adminG11 ya existe: no se vuelve a crear.");
 } else {
   admin.createUser({
-    user: "admin_g11",
+    user: "adminG11",
     pwd: clave,
     roles: [
       // Crear y administrar usuarios y roles en cualquier base
@@ -30,7 +30,7 @@ if (admin.getUser("admin_g11")) {
       { role: "restore", db: "admin" }
     ]
   });
-  print("Usuario admin_g11 creado en la base admin.");
+  print("Usuario adminG11 creado en la base admin.");
 }
 
-printjson(admin.getUser("admin_g11", { showPrivileges: false }));
+printjson(admin.getUser("adminG11", { showPrivileges: false }));

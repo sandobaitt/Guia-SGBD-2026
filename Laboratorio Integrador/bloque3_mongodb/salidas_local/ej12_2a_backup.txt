@@ -1,0 +1,54 @@
+$ ./ej12_2_backup.sh
+=== 1. Respaldo de LabMongoDB
+2026-11-19T21:29:46.870-0300	writing `LabMongoDB.paises` to `/home/sando/backup_labmongodb/LabMongoDB/paises.bson`
+2026-11-19T21:29:46.871-0300	writing `LabMongoDB.clientes` to `/home/sando/backup_labmongodb/LabMongoDB/clientes.bson`
+2026-11-19T21:29:46.871-0300	writing `LabMongoDB.peliculas` to `/home/sando/backup_labmongodb/LabMongoDB/peliculas.bson`
+2026-11-19T21:29:46.871-0300	writing `LabMongoDB.ciudades` to `/home/sando/backup_labmongodb/LabMongoDB/ciudades.bson`
+2026-11-19T21:29:46.875-0300	done dumping `LabMongoDB.paises` (239 documents)
+2026-11-19T21:29:46.875-0300	writing `LabMongoDB.tiendas` to `/home/sando/backup_labmongodb/LabMongoDB/tiendas.bson`
+2026-11-19T21:29:46.877-0300	done dumping `LabMongoDB.tiendas` (2 documents)
+2026-11-19T21:29:46.877-0300	done dumping `LabMongoDB.peliculas` (1000 documents)
+2026-11-19T21:29:46.878-0300	done dumping `LabMongoDB.ciudades` (4079 documents)
+2026-11-19T21:29:46.886-0300	done dumping `LabMongoDB.clientes` (599 documents)
+
+=== 2. Archivos generados (.bson = datos, .metadata.json = índices y opciones)
+total 5,3M
+-rw-rw-r-- 1 sando sando 230K nov 19 21:29 ciudades.bson
+-rw-rw-r-- 1 sando sando  250 nov 19 21:29 ciudades.metadata.json
+-rw-rw-r-- 1 sando sando 4,0M nov 19 21:29 clientes.bson
+-rw-rw-r-- 1 sando sando  175 nov 19 21:29 clientes.metadata.json
+-rw-rw-r-- 1 sando sando  77K nov 19 21:29 paises.bson
+-rw-rw-r-- 1 sando sando  248 nov 19 21:29 paises.metadata.json
+-rw-rw-r-- 1 sando sando 663K nov 19 21:29 peliculas.bson
+-rw-rw-r-- 1 sando sando  176 nov 19 21:29 peliculas.metadata.json
+-rw-rw-r-- 1 sando sando   51 nov 19 21:29 prelude.json
+-rw-rw-r-- 1 sando sando 318K nov 19 21:29 tiendas.bson
+-rw-rw-r-- 1 sando sando  959 nov 19 21:29 tiendas.metadata.json
+documentos en tiendas.bson: 2
+
+=== 3. Restauración en LabMongoDB_Restore (no pisa la base original)
+2026-11-19T21:29:46.988-0300	preparing collections to restore from
+2026-11-19T21:29:46.988-0300	don't know what to do with file `/home/sando/backup_labmongodb/LabMongoDB/prelude.json`, skipping...
+2026-11-19T21:29:46.988-0300	reading metadata for `LabMongoDB_Restore.paises` from `/home/sando/backup_labmongodb/LabMongoDB/paises.metadata.json`
+2026-11-19T21:29:46.989-0300	reading metadata for `LabMongoDB_Restore.peliculas` from `/home/sando/backup_labmongodb/LabMongoDB/peliculas.metadata.json`
+2026-11-19T21:29:46.989-0300	reading metadata for `LabMongoDB_Restore.tiendas` from `/home/sando/backup_labmongodb/LabMongoDB/tiendas.metadata.json`
+2026-11-19T21:29:46.989-0300	reading metadata for `LabMongoDB_Restore.ciudades` from `/home/sando/backup_labmongodb/LabMongoDB/ciudades.metadata.json`
+2026-11-19T21:29:46.989-0300	reading metadata for `LabMongoDB_Restore.clientes` from `/home/sando/backup_labmongodb/LabMongoDB/clientes.metadata.json`
+2026-11-19T21:29:47.014-0300	restoring `LabMongoDB_Restore.peliculas` from `/home/sando/backup_labmongodb/LabMongoDB/peliculas.bson`
+2026-11-19T21:29:47.018-0300	restoring `LabMongoDB_Restore.clientes` from `/home/sando/backup_labmongodb/LabMongoDB/clientes.bson`
+2026-11-19T21:29:47.023-0300	restoring `LabMongoDB_Restore.tiendas` from `/home/sando/backup_labmongodb/LabMongoDB/tiendas.bson`
+2026-11-19T21:29:47.027-0300	restoring `LabMongoDB_Restore.ciudades` from `/home/sando/backup_labmongodb/LabMongoDB/ciudades.bson`
+2026-11-19T21:29:47.033-0300	finished restoring `LabMongoDB_Restore.tiendas` (2 documents, 0 failures)
+2026-11-19T21:29:47.036-0300	finished restoring `LabMongoDB_Restore.peliculas` (1000 documents, 0 failures)
+2026-11-19T21:29:47.045-0300	restoring `LabMongoDB_Restore.paises` from `/home/sando/backup_labmongodb/LabMongoDB/paises.bson`
+2026-11-19T21:29:47.063-0300	finished restoring `LabMongoDB_Restore.paises` (239 documents, 0 failures)
+2026-11-19T21:29:47.064-0300	finished restoring `LabMongoDB_Restore.clientes` (599 documents, 0 failures)
+2026-11-19T21:29:47.070-0300	finished restoring `LabMongoDB_Restore.ciudades` (4079 documents, 0 failures)
+2026-11-19T21:29:47.071-0300	restoring indexes for collection `LabMongoDB_Restore.paises` from metadata
+2026-11-19T21:29:47.071-0300	index: &idx.IndexDocument{Options:bson.M{"name":"Name_1", "v":2}, Key:bson.D{bson.E{Key:"Name", Value:1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-11-19T21:29:47.071-0300	no indexes to restore for collection `LabMongoDB_Restore.peliculas`
+2026-11-19T21:29:47.071-0300	no indexes to restore for collection `LabMongoDB_Restore.tiendas`
+2026-11-19T21:29:47.071-0300	restoring indexes for collection `LabMongoDB_Restore.ciudades` from metadata
+2026-11-19T21:29:47.071-0300	index: &idx.IndexDocument{Options:bson.M{"name":"CodP_1", "v":2}, Key:bson.D{bson.E{Key:"CodP", Value:1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-11-19T21:29:47.071-0300	no indexes to restore for collection `LabMongoDB_Restore.clientes`
+2026-11-19T21:29:47.098-0300	5919 document(s) restored successfully. 0 document(s) failed to restore.

@@ -1,7 +1,7 @@
 // =============================================================================
 // LABORATORIO INTEGRADOR SGBD 2026 - GRUPO 11
 // Ejercicio 10.2 - Verificación de las colecciones auxiliares ciudades y paises
-//   mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u admin_g11 --file ej10_2_verificar.js
+//   mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 --file ej10_2_verificar.js
 // =============================================================================
 db = db.getSiblingDB("LabMongoDB");   // en un script, "use LabMongoDB" no tiene efecto
 
@@ -18,7 +18,7 @@ db.paises.find({ "geography.Continent": "South America" }, { _id: 0, Code: 1, Na
   .sort({ Name: 1 }).forEach(p => print("  " + p.Code + "  " + p.Name));
 
 print("\n--- Clientes cuyo Country no tiene país en paises (esperado: solo Runion) ---");
-printjson(db.customers.aggregate([
+printjson(db.clientes.aggregate([
   { $lookup: { from: "paises", localField: "Country", foreignField: "Name", as: "p" } },
   { $match: { p: { $size: 0 } } },
   { $group: { _id: "$Country", clientes: { $sum: 1 } } }

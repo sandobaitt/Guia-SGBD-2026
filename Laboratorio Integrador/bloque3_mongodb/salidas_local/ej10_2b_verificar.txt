@@ -1,0 +1,46 @@
+$ mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 -p ******** --quiet --file ej10_2_verificar.js
+Colecciones: ["ciudades","clientes","paises","peliculas","tiendas"]
+ciudades: 4079   (esperado 4079)
+paises:   239   (esperado 239)
+
+--- Una ciudad y su país (referencia CodP -> Code) ---
+{
+  Ciudad: 'Resistencia',
+  CodP: 'ARG'
+}
+{
+  Code: 'ARG',
+  Name: 'Argentina',
+  geography: {
+    Region: 'South America',
+    Continent: 'South America',
+    SurfaceArea: 2780400
+  }
+}
+
+--- Países de América del Sur (filtro del Ejercicio 11) ---
+  ARG  Argentina
+  BOL  Bolivia
+  BRA  Brazil
+  CHL  Chile
+  COL  Colombia
+  ECU  Ecuador
+  FLK  Falkland Islands
+  GUF  French Guiana
+  GUY  Guyana
+  PRY  Paraguay
+  PER  Peru
+  SUR  Suriname
+  URY  Uruguay
+  VEN  Venezuela
+
+--- Clientes cuyo Country no tiene país en paises (esperado: solo Runion) ---
+[
+  {
+    _id: 'Runion',
+    clientes: 1
+  }
+]
+
+--- Índices de apoyo ---
+Name_1 / CodP_1

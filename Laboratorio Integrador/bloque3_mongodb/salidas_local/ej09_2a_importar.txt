@@ -1,0 +1,20 @@
+$ ./ej09_2_importar.sh datos
+=== customers.json -> LabMongoDB.clientes
+2026-11-19T21:29:23.792-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-19T21:29:23.793-0300	dropping: `LabMongoDB.clientes`
+2026-11-19T21:29:23.905-0300	599 document(s) imported successfully. 0 document(s) failed to import.
+
+=== films.json -> LabMongoDB.peliculas
+2026-11-19T21:29:23.923-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-19T21:29:23.923-0300	dropping: `LabMongoDB.peliculas`
+2026-11-19T21:29:23.966-0300	1000 document(s) imported successfully. 0 document(s) failed to import.
+
+=== stores.json -> LabMongoDB.tiendas
+2026-11-19T21:29:23.980-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-19T21:29:23.981-0300	dropping: `LabMongoDB.tiendas`
+2026-11-19T21:29:24.008-0300	2 document(s) imported successfully. 0 document(s) failed to import.
+
+
+real	0m0,237s
+user	0m0,620s
+sys	0m0,143s

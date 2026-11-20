@@ -1,0 +1,16 @@
+$ mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 -p ******** --quiet --file ej11_pipeline.js
+Top 10 de películas más alquiladas en América del Sur
+
+Pos  Película                  Categoría     Alq  Países
+  1  CONGENIALITY QUEST        Sports          8      5
+  2  DOGMA FAMILY              Animation       8      5
+  3  CONFIDENTIAL INTERVIEW    Music           7      5
+  4  DISCIPLE MOTHER           Travel          7      3
+  5  ROCKETEER MOTHER          Foreign         7      3
+  6  ROMAN PUNK                Music           7      3
+  7  SLUMS DUCK                Family          7      4
+  8  ACADEMY DINOSAUR          Documentary     6      5
+  9  AFFAIR PREJUDICE          Horror          6      4
+ 10  ALIEN CENTER              Foreign         6      4
+
+Películas con 6 alquileres (empate en el corte): 13

@@ -8,7 +8,7 @@
 # - Colecciones con los nombres en castellano que usa la guía (clientes,
 #   peliculas, tiendas), para el $lookup del Ejercicio 11 y el $jsonSchema del 12.1.
 # - --drop hace la carga repetible (vacía la colección antes de importar).
-# - La clave de admin_g11 se lee de un archivo de opciones (--config, YAML con
+# - La clave de adminG11 se lee de un archivo de opciones (--config, YAML con
 #   "password: ...") con permisos 600: no queda en la línea de comandos ni en el
 #   historial. Sin --config, mongoimport la pide por teclado.
 # =============================================================================
@@ -21,7 +21,7 @@ DB="LabMongoDB"
 importar() {   # $1 = archivo, $2 = colección
   echo "=== $1 -> $DB.$2"
   mongoimport --host 127.0.0.1:27017 \
-    --username admin_g11 --authenticationDatabase admin --config "$CONFIG" \
+    --username adminG11 --authenticationDatabase admin --config "$CONFIG" \
     --db "$DB" --collection "$2" --drop \
     --file "$DATOS/$1"
   echo

@@ -1,0 +1,58 @@
+$ mysql -h 127.0.0.1 -u usr_g11 -p --skip-comments -t -vvv employees < ej03_indices.sql
+--------------
+USE employees
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+CREATE INDEX idx_employees_last_name ON employees (last_name)
+--------------
+
+Query OK, 0 rows affected (0.726 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+CREATE INDEX idx_salaries_salary     ON salaries (salary)
+--------------
+
+Query OK, 0 rows affected (4.603 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+CREATE INDEX idx_titles_title        ON titles (title)
+--------------
+
+Query OK, 0 rows affected (1.352 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+ANALYZE TABLE employees, salaries, titles
+--------------
+
++---------------------+---------+----------+----------+
+| Table               | Op      | Msg_type | Msg_text |
++---------------------+---------+----------+----------+
+| employees.employees | analyze | status   | OK       |
+| employees.salaries  | analyze | status   | OK       |
+| employees.titles    | analyze | status   | OK       |
++---------------------+---------+----------+----------+
+3 rows in set (0.039 sec)
+
+--------------
+SELECT TABLE_NAME, INDEX_NAME, COLUMN_NAME, CARDINALITY, INDEX_TYPE
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = 'employees' AND INDEX_NAME LIKE 'idx\_%'
+ORDER BY TABLE_NAME, INDEX_NAME
+--------------
+
++------------+-------------------------+-------------+-------------+------------+
+| TABLE_NAME | INDEX_NAME              | COLUMN_NAME | CARDINALITY | INDEX_TYPE |
++------------+-------------------------+-------------+-------------+------------+
+| employees  | idx_employees_last_name | last_name   |        1667 | BTREE      |
+| salaries   | idx_salaries_salary     | salary      |      100200 | BTREE      |
+| titles     | idx_titles_title        | title       |           6 | BTREE      |
++------------+-------------------------+-------------+-------------+------------+
+3 rows in set (0.001 sec)
+
+Bye

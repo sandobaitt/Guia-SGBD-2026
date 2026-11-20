@@ -1,0 +1,41 @@
+$ ./ej01_pruebas.sh
+
+
+=== usr_g11: conectado desde un host remoto (@'%') ===
++-----------+-------------------+
+| cuenta    | conectado_como    |
++-----------+-------------------+
+| usr_g11@% | usr_g11@localhost |
++-----------+-------------------+
+--- PERMITIDO: crear y borrar una tabla en una base del laboratorio
++----------------------+
+| resultado            |
++----------------------+
+| DDL en employees: OK |
++----------------------+
+--- RECHAZADO: leer la base de sistema mysql (no es súper-usuario)
+ERROR 1142 (42000) at line 1: SELECT command denied to user 'usr_g11'@'localhost' for table 'user'
+--- RECHAZADO: crear usuarios
+ERROR 1227 (42000) at line 1: Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+--- RECHAZADO: apagar el servidor
+ERROR 1227 (42000) at line 1: Access denied; you need (at least one of) the SHUTDOWN privilege(s) for this operation
+
+=== usr_backup: solo lectura y respaldo de employees ===
++----------------------+
+| cuenta               |
++----------------------+
+| usr_backup@localhost |
++----------------------+
+--- PERMITIDO: leer employees
++-----------+
+| empleados |
++-----------+
+|    300024 |
++-----------+
+--- RECHAZADO: modificar employees
+ERROR 1142 (42000) at line 1: UPDATE command denied to user 'usr_backup'@'localhost' for table 'salaries'
+--- RECHAZADO: leer otra base
+ERROR 1142 (42000) at line 1: SELECT command denied to user 'usr_backup'@'localhost' for table 'city'
+--- PERMITIDO: respaldo completo de employees con mysqldump
+mysqldump terminó con código 0 · tamaño: 161M
+-- CHANGE REPLICATION SOURCE TO SOURCE_LOG_FILE='binlog.000007', SOURCE_LOG_POS=198;

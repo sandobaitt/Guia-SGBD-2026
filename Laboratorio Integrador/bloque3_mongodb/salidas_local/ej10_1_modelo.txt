@@ -1,0 +1,22 @@
+$ mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 -p ******** --quiet --file ej10_1_modelo.js
+1. EMBEBIDOS: tamaño de documentos y arreglos (límite de un documento BSON: 16 MB)
+
+Colección  Arreglo embebido  Docs  Elem.prom  Elem.max  KB prom  KB max
+clientes    Rentals            599       26.8        46      6.8    11.5
+peliculas   Actors            1000        5.5        15      0.7     1.3
+tiendas     Inventory            2     2290.5      2311    158.7   160.2
+Pagos por alquiler (máximo): 1
+
+2. REFERENCIAS: ¿apuntan a documentos existentes?
+
+clientes.Rentals.filmId -> peliculas._id   valores distintos: 958   sin destino: 0
+tiendas.Inventory.filmId  -> peliculas._id   valores distintos: 958   sin destino: 0
+clientes.Country         -> paises.Name   valores distintos: 108   sin destino: 1
+ciudades.CodP            -> paises.Code   valores distintos: 232   sin destino: 0
+
+3. Veces que se repite cada película en los alquileres (si se embebiera completa)
+{
+  alquileres: 16044,
+  peliculas: 958,
+  max_repeticiones: 34
+}

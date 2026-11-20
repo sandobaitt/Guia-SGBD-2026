@@ -1,0 +1,87 @@
+$ ./ej05_bloqueos.sh
+
+=== 5.1 SESIÓN 1 (transacción abierta, sin COMMIT):
+SELECT CONNECTION_ID() AS hilo_sesion1;
+START TRANSACTION;
+UPDATE salaries SET salary = ROUND(salary * 1.10)
+WHERE emp_no BETWEEN 10001 AND 10010 AND to_date = '9999-01-01';
+SELECT ROW_COUNT() AS sueldos_incrementados_sin_confirmar;
+SELECT SLEEP(15) AS transaccion_abierta_15s;
+ROLLBACK;
+SELECT emp_no, salary FROM salaries WHERE emp_no = 10005 AND to_date = '9999-01-01';
+
+=== 5.2 SESIÓN 2 (modifica un registro ya bloqueado por la Sesión 1):
+SELECT CONNECTION_ID() AS hilo_sesion2;
+UPDATE salaries SET salary = salary + 500
+WHERE emp_no = 10005 AND to_date = '9999-01-01';
+
+=== 5.3 DIAGNÓSTICO (tercera conexión, mientras la Sesión 2 espera)
++--------+------+-----------+---------------------+---------------------+------------------+------------------------------------------------------------------------+
+| trx_id | hilo | estado    | inicio              | espera_desde        | filas_bloqueadas | sentencia                                                              |
++--------+------+-----------+---------------------+---------------------+------------------+------------------------------------------------------------------------+
+|   3133 |   49 | RUNNING   | 2026-11-19 21:25:22 | NULL                |              113 | SELECT SLEEP(15) AS transaccion_abierta_15s                            |
+|   3134 |   50 | LOCK WAIT | 2026-11-19 21:25:24 | 2026-11-19 21:25:24 |                1 | UPDATE salaries SET salary = salary + 500
+WHERE emp_no = 10005 AND to_ |
++--------+------+-----------+---------------------+---------------------+------------------+------------------------------------------------------------------------+
++------+-----------+----------+---------+-----------+-----------+-------------+----------------+
+| trx  | THREAD_ID | tabla    | indice  | LOCK_TYPE | LOCK_MODE | LOCK_STATUS | LOCK_DATA      |
++------+-----------+----------+---------+-----------+-----------+-------------+----------------+
+| 3133 |       173 | salaries | NULL    | TABLE     | IX        | GRANTED     | NULL           |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1018668 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1019180 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1019692 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1020203 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1020715 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1021227 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1021739 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1022250 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1022762 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1023274 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1023786 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1024297 |
+| 3133 |       173 | salaries | PRIMARY | RECORD    | X         | GRANTED     | 10005, 1024809 |
+| 3134 |       174 | salaries | NULL    | TABLE     | IX        | GRANTED     | NULL           |
+| 3134 |       174 | salaries | PRIMARY | RECORD    | X         | WAITING     | 10005, 1018668 |
++------+-----------+----------+---------+-----------+-----------+-------------+----------------+
++----------------+-----------------+
+| trx_que_espera | trx_que_bloquea |
++----------------+-----------------+
+|           3134 |            3133 |
++----------------+-----------------+
+=== 5.4 RESOLUCIÓN: se interrumpe la sesión bloqueada (hilo 50)
+KILL 50;
++-------------------------+
+| transacciones_esperando |
++-------------------------+
+|                       0 |
++-------------------------+
+
+=== Salida de la SESIÓN 2 (interrumpida)
++--------------+
+| hilo_sesion2 |
++--------------+
+|           50 |
++--------------+
+ERROR 2013 (HY000) at line 2: Lost connection to MySQL server during query
+
+=== Salida de la SESIÓN 1 (termina con ROLLBACK: los sueldos no cambian)
++--------------+
+| hilo_sesion1 |
++--------------+
+|           49 |
++--------------+
++-------------------------------------+
+| sueldos_incrementados_sin_confirmar |
++-------------------------------------+
+|                                   9 |
++-------------------------------------+
++-------------------------+
+| transaccion_abierta_15s |
++-------------------------+
+|                       0 |
++-------------------------+
++--------+--------+
+| emp_no | salary |
++--------+--------+
+|  10005 |  94692 |
++--------+--------+

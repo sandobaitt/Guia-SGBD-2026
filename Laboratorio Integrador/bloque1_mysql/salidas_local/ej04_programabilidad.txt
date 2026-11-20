@@ -1,0 +1,355 @@
+$ mysql -h 127.0.0.1 -u usr_g11 -p --commands --skip-comments -t -vvv employees < ej04_programabilidad.sql
+--------------
+DROP PROCEDURE IF EXISTS sp_verificar_gerente
+--------------
+
+Query OK, 0 rows affected (0.010 sec)
+
+--------------
+DROP PROCEDURE IF EXISTS sp_calcular_ayuda_escolar
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.008 sec)
+
+--------------
+DROP TRIGGER   IF EXISTS trg_dept_manager_alta
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.009 sec)
+
+--------------
+DROP TABLE     IF EXISTS asignaciones_familiares
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.008 sec)
+
+--------------
+DROP TABLE     IF EXISTS ayuda_escolar_montos
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.008 sec)
+
+--------------
+CREATE PROCEDURE sp_verificar_gerente(IN p_emp_no INT, IN p_limite INT)
+BEGIN
+  DECLARE v_dept CHAR(4);
+  DECLARE v_hasta DATE;
+
+  SELECT dept_no INTO v_dept FROM dept_manager
+  WHERE emp_no = p_emp_no AND to_date = '9999-01-01' LIMIT 1;
+
+  IF v_dept IS NULL THEN
+    SELECT MAX(to_date) INTO v_hasta FROM dept_manager WHERE emp_no = p_emp_no;
+    SELECT p_emp_no AS emp_no,
+           CASE WHEN v_hasta IS NULL THEN 'NO es ni fue gerente'
+                ELSE CONCAT('NO es gerente vigente (lo fue hasta ', v_hasta, ')') END AS resultado;
+  ELSE
+    SELECT p_emp_no AS gerente, CONCAT(g.first_name, ' ', g.last_name) AS nombre,
+           d.dept_no, d.dept_name AS departamento,
+           COUNT(*) AS empleados_asignados,
+           ROUND(AVG(TIMESTAMPDIFF(YEAR, e.hire_date, CURDATE())), 1) AS antiguedad_promedio
+    FROM dept_emp de
+    JOIN employees e   ON e.emp_no = de.emp_no
+    JOIN departments d ON d.dept_no = de.dept_no
+    JOIN employees g   ON g.emp_no = p_emp_no
+    WHERE de.dept_no = v_dept AND de.to_date = '9999-01-01'
+    GROUP BY d.dept_no, d.dept_name, g.first_name, g.last_name;
+
+    SELECT e.emp_no, e.first_name, e.last_name, e.hire_date,
+           TIMESTAMPDIFF(YEAR, e.hire_date, CURDATE()) AS antiguedad_anios
+    FROM dept_emp de
+    JOIN employees e ON e.emp_no = de.emp_no
+    WHERE de.dept_no = v_dept AND de.to_date = '9999-01-01'
+    ORDER BY e.hire_date, e.emp_no
+    LIMIT p_limite;
+  END IF;
+END
+--------------
+
+Query OK, 0 rows affected (0.010 sec)
+
+--------------
+CREATE TRIGGER trg_dept_manager_alta
+AFTER INSERT ON dept_manager
+FOR EACH ROW
+BEGIN
+  IF NEW.to_date = '9999-01-01' THEN
+    UPDATE titles SET to_date = NEW.from_date
+    WHERE emp_no = NEW.emp_no AND to_date = '9999-01-01' AND title <> 'Manager';
+    INSERT INTO titles (emp_no, title, from_date, to_date)
+    VALUES (NEW.emp_no, 'Manager', NEW.from_date, '9999-01-01')
+    ON DUPLICATE KEY UPDATE to_date = '9999-01-01';
+
+    UPDATE dept_emp SET to_date = NEW.from_date
+    WHERE emp_no = NEW.emp_no AND to_date = '9999-01-01' AND dept_no <> NEW.dept_no;
+    INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
+    VALUES (NEW.emp_no, NEW.dept_no, NEW.from_date, '9999-01-01')
+    ON DUPLICATE KEY UPDATE to_date = '9999-01-01';
+  END IF;
+END
+--------------
+
+Query OK, 0 rows affected (0.011 sec)
+
+--------------
+CREATE TABLE ayuda_escolar_montos (
+  nivel ENUM('INICIAL','PRIMARIO','SECUNDARIO') NOT NULL PRIMARY KEY,
+  monto DECIMAL(10,2) NOT NULL CHECK (monto > 0)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected (0.019 sec)
+
+--------------
+CREATE TABLE asignaciones_familiares (
+  asignacion_id   INT AUTO_INCREMENT PRIMARY KEY,
+  emp_no          INT NOT NULL,
+  hijo_nombre     VARCHAR(40) NOT NULL,
+  hijo_nacimiento DATE NOT NULL,
+  nivel           ENUM('INICIAL','PRIMARIO','SECUNDARIO') NOT NULL,
+  ciclo_lectivo   YEAR NOT NULL,
+  certificado     BOOLEAN NOT NULL DEFAULT FALSE,
+  CONSTRAINT fk_asignaciones_employees FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
+  CONSTRAINT fk_asignaciones_nivel     FOREIGN KEY (nivel)  REFERENCES ayuda_escolar_montos (nivel),
+  CONSTRAINT uq_hijo_ciclo UNIQUE (emp_no, hijo_nombre, ciclo_lectivo)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected (0.025 sec)
+
+--------------
+CREATE PROCEDURE sp_calcular_ayuda_escolar(IN p_ciclo YEAR, IN p_tope INT)
+BEGIN
+  SELECT a.emp_no, CONCAT(e.first_name, ' ', e.last_name) AS empleado, s.salary AS sueldo_vigente,
+         COUNT(*) AS hijos_beneficiarios, SUM(m.monto) AS beneficio_total
+  FROM asignaciones_familiares a
+  JOIN employees e            ON e.emp_no = a.emp_no
+  JOIN salaries s             ON s.emp_no = a.emp_no AND s.to_date = '9999-01-01'
+  JOIN ayuda_escolar_montos m ON m.nivel = a.nivel
+  WHERE a.ciclo_lectivo = p_ciclo AND a.certificado AND s.salary <= p_tope
+  GROUP BY a.emp_no, e.first_name, e.last_name, s.salary
+  ORDER BY a.emp_no;
+
+  SELECT COUNT(DISTINCT a.emp_no) AS empleados_beneficiarios, COUNT(*) AS hijos,
+         COALESCE(SUM(m.monto), 0) AS total_a_pagar
+  FROM asignaciones_familiares a
+  JOIN salaries s             ON s.emp_no = a.emp_no AND s.to_date = '9999-01-01'
+  JOIN ayuda_escolar_montos m ON m.nivel = a.nivel
+  WHERE a.ciclo_lectivo = p_ciclo AND a.certificado AND s.salary <= p_tope;
+END
+--------------
+
+Query OK, 0 rows affected (0.009 sec)
+
+--------------
+CALL sp_verificar_gerente(110039, 5)
+--------------
+
++---------+-------------------+---------+--------------+---------------------+---------------------+
+| gerente | nombre            | dept_no | departamento | empleados_asignados | antiguedad_promedio |
++---------+-------------------+---------+--------------+---------------------+---------------------+
+|  110039 | Vishwani Minakawa | d001    | Marketing    |               14842 |                36.3 |
++---------+-------------------+---------+--------------+---------------------+---------------------+
+1 row in set (0.064 sec)
+
++--------+------------+------------+------------+------------------+
+| emp_no | first_name | last_name  | hire_date  | antiguedad_anios |
++--------+------------+------------+------------+------------------+
+| 110022 | Margareta  | Markovitch | 1985-01-01 |               41 |
+|  51773 | Eric       | Piazza     | 1985-02-02 |               41 |
+|  65515 | Phillip    | Teitelbaum | 1985-02-02 |               41 |
+|  95867 | Shakhar    | Meszaros   | 1985-02-02 |               41 |
+|  98351 | Florina    | Setia      | 1985-02-02 |               41 |
++--------+------------+------------+------------+------------------+
+5 rows in set (0.129 sec)
+
+Query OK, 0 rows affected (0.129 sec)
+
+--------------
+CALL sp_verificar_gerente(110022, 5)
+--------------
+
++--------+-------------------------------------------------+
+| emp_no | resultado                                       |
++--------+-------------------------------------------------+
+| 110022 | NO es gerente vigente (lo fue hasta 1991-10-01) |
++--------+-------------------------------------------------+
+1 row in set (0.000 sec)
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+CALL sp_verificar_gerente(10001, 5)
+--------------
+
++--------+----------------------+
+| emp_no | resultado            |
++--------+----------------------+
+|  10001 | NO es ni fue gerente |
++--------+----------------------+
+1 row in set (0.000 sec)
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+SELECT emp_no, title, from_date, to_date FROM titles   WHERE emp_no = 10002 ORDER BY from_date
+--------------
+
++--------+-------+------------+------------+
+| emp_no | title | from_date  | to_date    |
++--------+-------+------------+------------+
+|  10002 | Staff | 1996-08-03 | 9999-01-01 |
++--------+-------+------------+------------+
+1 row in set (0.000 sec)
+
+--------------
+SELECT emp_no, dept_no, from_date, to_date FROM dept_emp WHERE emp_no = 10002 ORDER BY from_date
+--------------
+
++--------+---------+------------+------------+
+| emp_no | dept_no | from_date  | to_date    |
++--------+---------+------------+------------+
+|  10002 | d007    | 1996-08-03 | 9999-01-01 |
++--------+---------+------------+------------+
+1 row in set (0.000 sec)
+
+--------------
+INSERT INTO dept_manager (emp_no, dept_no, from_date, to_date) VALUES (10002, 'd003', '2026-11-17', '9999-01-01')
+--------------
+
+Query OK, 1 row affected (0.005 sec)
+
+--------------
+SELECT emp_no, title, from_date, to_date FROM titles   WHERE emp_no = 10002 ORDER BY from_date
+--------------
+
++--------+---------+------------+------------+
+| emp_no | title   | from_date  | to_date    |
++--------+---------+------------+------------+
+|  10002 | Staff   | 1996-08-03 | 2026-11-17 |
+|  10002 | Manager | 2026-11-17 | 9999-01-01 |
++--------+---------+------------+------------+
+2 rows in set (0.000 sec)
+
+--------------
+SELECT emp_no, dept_no, from_date, to_date FROM dept_emp WHERE emp_no = 10002 ORDER BY from_date
+--------------
+
++--------+---------+------------+------------+
+| emp_no | dept_no | from_date  | to_date    |
++--------+---------+------------+------------+
+|  10002 | d007    | 1996-08-03 | 2026-11-17 |
+|  10002 | d003    | 2026-11-17 | 9999-01-01 |
++--------+---------+------------+------------+
+2 rows in set (0.000 sec)
+
+--------------
+CALL sp_verificar_gerente(10002, 3)
+--------------
+
++---------+----------------+---------+-----------------+---------------------+---------------------+
+| gerente | nombre         | dept_no | departamento    | empleados_asignados | antiguedad_promedio |
++---------+----------------+---------+-----------------+---------------------+---------------------+
+|   10002 | Bezalel Simmel | d003    | Human Resources |               12899 |                36.3 |
++---------+----------------+---------+-----------------+---------------------+---------------------+
+1 row in set (0.054 sec)
+
++--------+------------+--------------+------------+------------------+
+| emp_no | first_name | last_name    | hire_date  | antiguedad_anios |
++--------+------------+--------------+------------+------------------+
+| 110183 | Shirish    | Ossenbruggen | 1985-01-01 |               41 |
+|  57584 | Candida    | Zolotykh     | 1985-02-02 |               41 |
+|  63232 | Vidya      | Reghbati     | 1985-02-02 |               41 |
++--------+------------+--------------+------------+------------------+
+3 rows in set (0.111 sec)
+
+Query OK, 0 rows affected (0.111 sec)
+
+--------------
+INSERT INTO ayuda_escolar_montos VALUES ('INICIAL', 15000), ('PRIMARIO', 20000), ('SECUNDARIO', 25000)
+--------------
+
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+--------------
+INSERT INTO asignaciones_familiares (emp_no, hijo_nombre, hijo_nacimiento, nivel, ciclo_lectivo, certificado) VALUES
+  (10003, 'Lucía Bamford',     '2015-03-10', 'PRIMARIO',   2026, TRUE),   
+  (10003, 'Tomás Bamford',     '2011-07-22', 'SECUNDARIO', 2026, TRUE),   
+  (10006, 'Sofía Preusig',     '2021-01-05', 'INICIAL',    2026, TRUE),   
+  (10012, 'Mateo Bridgland',   '2016-09-30', 'PRIMARIO',   2026, FALSE),  
+  (10001, 'Valentina Facello', '2014-05-18', 'PRIMARIO',   2026, TRUE)
+--------------
+
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+--------------
+CALL sp_calcular_ayuda_escolar(2026, 60000)
+--------------
+
++--------+----------------+----------------+---------------------+-----------------+
+| emp_no | empleado       | sueldo_vigente | hijos_beneficiarios | beneficio_total |
++--------+----------------+----------------+---------------------+-----------------+
+|  10003 | Parto Bamford  |          43311 |                   2 |        45000.00 |
+|  10006 | Anneke Preusig |          59755 |                   1 |        15000.00 |
++--------+----------------+----------------+---------------------+-----------------+
+2 rows in set (0.001 sec)
+
++-------------------------+-------+---------------+
+| empleados_beneficiarios | hijos | total_a_pagar |
++-------------------------+-------+---------------+
+|                       2 |     3 |      60000.00 |
++-------------------------+-------+---------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
+--------------
+CALL sp_calcular_ayuda_escolar(2026, 59755)
+--------------
+
++--------+----------------+----------------+---------------------+-----------------+
+| emp_no | empleado       | sueldo_vigente | hijos_beneficiarios | beneficio_total |
++--------+----------------+----------------+---------------------+-----------------+
+|  10003 | Parto Bamford  |          43311 |                   2 |        45000.00 |
+|  10006 | Anneke Preusig |          59755 |                   1 |        15000.00 |
++--------+----------------+----------------+---------------------+-----------------+
+2 rows in set (0.001 sec)
+
++-------------------------+-------+---------------+
+| empleados_beneficiarios | hijos | total_a_pagar |
++-------------------------+-------+---------------+
+|                       2 |     3 |      60000.00 |
++-------------------------+-------+---------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
+--------------
+CALL sp_calcular_ayuda_escolar(2026, 59754)
+--------------
+
++--------+---------------+----------------+---------------------+-----------------+
+| emp_no | empleado      | sueldo_vigente | hijos_beneficiarios | beneficio_total |
++--------+---------------+----------------+---------------------+-----------------+
+|  10003 | Parto Bamford |          43311 |                   2 |        45000.00 |
++--------+---------------+----------------+---------------------+-----------------+
+1 row in set (0.000 sec)
+
++-------------------------+-------+---------------+
+| empleados_beneficiarios | hijos | total_a_pagar |
++-------------------------+-------+---------------+
+|                       1 |     2 |      45000.00 |
++-------------------------+-------+---------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
+--------------
+INSERT INTO asignaciones_familiares (emp_no, hijo_nombre, hijo_nacimiento, nivel, ciclo_lectivo, certificado)
+VALUES (999999, 'Sin Empleado', '2015-01-01', 'PRIMARIO', 2026, TRUE)
+--------------
+
+ERROR 1452 (23000) at line 173: Cannot add or update a child row: a foreign key constraint fails (`employees`.`asignaciones_familiares`, CONSTRAINT `fk_asignaciones_employees` FOREIGN KEY (`emp_no`) REFERENCES `employees` (`emp_no`) ON DELETE CASCADE)
+Bye

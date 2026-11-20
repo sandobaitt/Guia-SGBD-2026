@@ -1,0 +1,206 @@
+$ ./ej02_carga_masiva.sh
+
+secure_file_priv = /tmp/mysql-files/
+
+=== 2.1 Exportación a texto delimitado (CSV) con SELECT ... INTO OUTFILE
+--------------
+SELECT * FROM employees.employees INTO OUTFILE '/tmp/mysql-files/employees_20261119_212019.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
+--------------
+
+Query OK, 300024 rows affected (0.240 sec)
+
+--------------
+SELECT * FROM employees.salaries  INTO OUTFILE '/tmp/mysql-files/salaries_20261119_212019.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
+--------------
+
+Query OK, 2844047 rows affected (1.268 sec)
+
+--------------
+SELECT * FROM employees.titles    INTO OUTFILE '/tmp/mysql-files/titles_20261119_212019.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
+--------------
+
+Query OK, 443308 rows affected (0.240 sec)
+
+Bye
+
+=== 2.2 Base empleados con nombres en castellano e integridad referencial
+--------------
+DROP DATABASE IF EXISTS empleados
+--------------
+
+Query OK, 3 rows affected (0.033 sec)
+
+--------------
+CREATE DATABASE empleados CHARACTER SET utf8mb4
+--------------
+
+Query OK, 1 row affected (0.004 sec)
+
+--------------
+USE empleados
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+CREATE TABLE empleados (
+  nro_empleado     INT          NOT NULL,
+  fecha_nacimiento DATE         NOT NULL,
+  nombre           VARCHAR(14)  NOT NULL,
+  apellido         VARCHAR(16)  NOT NULL,
+  genero           ENUM('M','F') NOT NULL,
+  fecha_ingreso    DATE         NOT NULL,
+  PRIMARY KEY (nro_empleado)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected (0.012 sec)
+
+--------------
+CREATE TABLE salarios (
+  nro_empleado INT  NOT NULL,
+  salario      INT  NOT NULL,
+  desde        DATE NOT NULL,
+  hasta        DATE NOT NULL,
+  PRIMARY KEY (nro_empleado, desde),
+  CONSTRAINT fk_salarios_empleados FOREIGN KEY (nro_empleado)
+    REFERENCES empleados (nro_empleado) ON DELETE CASCADE
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected (0.014 sec)
+
+--------------
+CREATE TABLE cargos (
+  nro_empleado INT         NOT NULL,
+  cargo        VARCHAR(50) NOT NULL,
+  desde        DATE        NOT NULL,
+  hasta        DATE,
+  PRIMARY KEY (nro_empleado, cargo, desde),
+  CONSTRAINT fk_cargos_empleados FOREIGN KEY (nro_empleado)
+    REFERENCES empleados (nro_empleado) ON DELETE CASCADE
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected (0.016 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++---------------------+
+| Tables_in_empleados |
++---------------------+
+| cargos              |
+| empleados           |
+| salarios            |
++---------------------+
+3 rows in set (0.002 sec)
+
+Bye
+
+=== 2.3 Carga masiva con LOAD DATA INFILE (primero la tabla padre)
+--------------
+USE empleados
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+SET @t0 := NOW(6)
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+LOAD DATA INFILE '/tmp/mysql-files/employees_20261119_212019.csv' INTO TABLE empleados FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
+  (nro_empleado, fecha_nacimiento, nombre, apellido, genero, fecha_ingreso)
+--------------
+
+Query OK, 300024 rows affected (1.509 sec)
+Records: 300024  Deleted: 0  Skipped: 0  Warnings: 0
+
+--------------
+LOAD DATA INFILE '/tmp/mysql-files/salaries_20261119_212019.csv' INTO TABLE salarios  FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' (nro_empleado, salario, desde, hasta)
+--------------
+
+Query OK, 2844047 rows affected (17.091 sec)
+Records: 2844047  Deleted: 0  Skipped: 0  Warnings: 0
+
+--------------
+LOAD DATA INFILE '/tmp/mysql-files/titles_20261119_212019.csv' INTO TABLE cargos    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' (nro_empleado, cargo, desde, hasta)
+--------------
+
+Query OK, 443308 rows affected (3.314 sec)
+Records: 443308  Deleted: 0  Skipped: 0  Warnings: 0
+
+--------------
+SELECT ROUND(TIMESTAMPDIFF(MICROSECOND, @t0, NOW(6)) / 1000000, 2) AS segundos_carga_total
+--------------
+
++----------------------+
+| segundos_carga_total |
++----------------------+
+|                21.91 |
++----------------------+
+1 row in set (0.000 sec)
+
+Bye
+
+=== Verificación: filas en origen y destino, e integridad referencial
+--------------
+SELECT 'empleados' AS tabla, (SELECT COUNT(*) FROM employees.employees) AS origen, (SELECT COUNT(*) FROM empleados.empleados) AS destino
+UNION ALL SELECT 'salarios', (SELECT COUNT(*) FROM employees.salaries), (SELECT COUNT(*) FROM empleados.salarios)
+UNION ALL SELECT 'cargos',   (SELECT COUNT(*) FROM employees.titles),   (SELECT COUNT(*) FROM empleados.cargos)
+--------------
+
++-----------+---------+---------+
+| tabla     | origen  | destino |
++-----------+---------+---------+
+| empleados |  300024 |  300024 |
+| salarios  | 2844047 | 2844047 |
+| cargos    |  443308 |  443308 |
++-----------+---------+---------+
+3 rows in set (0.113 sec)
+
+--------------
+SELECT COUNT(*) AS salarios_sin_empleado FROM empleados.salarios s
+  LEFT JOIN empleados.empleados e ON e.nro_empleado = s.nro_empleado WHERE e.nro_empleado IS NULL
+--------------
+
++-----------------------+
+| salarios_sin_empleado |
++-----------------------+
+|                     0 |
++-----------------------+
+1 row in set (0.887 sec)
+
+--------------
+SELECT e.nro_empleado, e.nombre, e.apellido, c.cargo, s.salario
+FROM empleados.empleados e
+JOIN empleados.cargos c   ON c.nro_empleado = e.nro_empleado AND c.hasta = '9999-01-01'
+JOIN empleados.salarios s ON s.nro_empleado = e.nro_empleado AND s.hasta = '9999-01-01'
+ORDER BY e.nro_empleado LIMIT 3
+--------------
+
++--------------+---------+----------+-----------------+---------+
+| nro_empleado | nombre  | apellido | cargo           | salario |
++--------------+---------+----------+-----------------+---------+
+|        10001 | Georgi  | Facello  | Senior Engineer |   88958 |
+|        10002 | Bezalel | Simmel   | Staff           |   72527 |
+|        10003 | Parto   | Bamford  | Senior Engineer |   43311 |
++--------------+---------+----------+-----------------+---------+
+3 rows in set (1.419 sec)
+
+--------------
+-- La integridad referencial rechaza un salario de un empleado inexistente
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+INSERT INTO empleados.salarios VALUES (999999, 1000, '2026-01-01', '9999-01-01')
+--------------
+
+ERROR 1452 (23000) at line 12: Cannot add or update a child row: a foreign key constraint fails (`empleados`.`salarios`, CONSTRAINT `fk_salarios_empleados` FOREIGN KEY (`nro_empleado`) REFERENCES `empleados` (`nro_empleado`) ON DELETE CASCADE)
+Bye

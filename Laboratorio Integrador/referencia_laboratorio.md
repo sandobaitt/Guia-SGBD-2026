@@ -887,7 +887,7 @@ Ejercicio N.x — <título>
 
 **4.2 Notas de diagnóstico para Operaciones / DBA (Cap. 6.1).** Nota técnica **profesional** sobre la incidencia del **Ejercicio 5 (bloqueos)** y del **Ejercicio 6 (restauración PITR)**. Cada una con tres partes: **a) causa raíz**, **b) solución técnica aplicada**, **c) recomendaciones de prevención**.
 
-**4.3 Declaración de transparencia de herramientas de apoyo e IA.** Incluir: **tareas en las que se usó asistencia tecnológica** (por ejemplo depuración de sintaxis SQL, optimización de comandos bash, estructura del informe) y **al menos un caso de verificación y corrección**: una sugerencia o comando que hubo que corregir respecto de la versión oficial del motor, con cómo se detectó y cómo se validó en la documentación. Casos reales ya ocurridos del grupo: `SHOW MASTER STATUS` no existe en MySQL 9.7 (usar `SHOW BINARY LOG STATUS`), `\G` dentro de `mysql -e` (usar `-E`), y `use base` dentro de un `.js` con `mongosh --file` (ver **T**).
+**4.3 Declaración de transparencia de herramientas de apoyo e IA.** Incluir: **tareas en las que se usó asistencia tecnológica** (por ejemplo depuración de sintaxis SQL, optimización de comandos bash, estructura del informe) y **al menos un caso de verificación y corrección**: una sugerencia o comando que hubo que corregir respecto de la versión oficial del motor, con cómo se detectó y cómo se validó en la documentación. Casos reales ya ocurridos del grupo: `SHOW MASTER STATUS` no existe en MySQL 9.7 (usar `SHOW BINARY LOG STATUS`), `source`/`DELIMITER`/`\G` que fallan porque el cliente 9.7 trae `--commands` desactivado (usar `mysql --commands`), el PITR con GTID activo que pierde transacciones sin avisar (`--set-gtid-purged=OFF` + `--skip-gtids`), y `use base` dentro de un `.js` con `mongosh --file` (ver **T**).
 
 ### B3. Mínimos y límites que fija la guía [CONSIGNA]
 
@@ -938,7 +938,14 @@ Si la consigna trae su propia numeración, **seguir la de la consigna**.
 | `gtid_mode=ON` en MySQL 9.7 | `ERROR 3546 ... GTID_PURGED` al restaurar; o PITR que "funciona" pero pierde las operaciones válidas sin avisar | `mysqldump --set-gtid-purged=OFF` y `mysqlbinlog --skip-gtids` (M10) |
 | `SHOW MASTER STATUS` | `ERROR 1064` en 9.7 | `SHOW BINARY LOG STATUS` |
 | `EXPLAIN` sale en árbol | No aparecen las columnas `type`, `key`, `Extra` | `EXPLAIN FORMAT=TRADITIONAL` |
-| `\G` en `mysql -e "..."` | `Unknown command '\G'` | Usar `mysql -E -e "..."` (salida vertical) |
+| Comandos del cliente en un script (`source`, `DELIMITER`, `\G`) con el cliente `mysql` 9.7 | `ERROR 1064 near 'source …'`, `Unknown command '\G'`; `employees.sql` no carga | La opción `--commands` viene en `FALSE`: ejecutar `mysql --commands < script.sql` (o `-E` para salida vertical) |
+| Comentarios del script con `-vvv` | Cada línea `-- …` aparece como sentencia con `Query OK` | `mysql --skip-comments` (en 9.7 `--comments` viene activado) |
+| Crear un trigger o función con el binlog activo | `ERROR 1419 … SUPER privilege and binary logging is enabled` | Como administrador: `SET PERSIST log_bin_trust_function_creators = ON;` (obsoleta pero vigente en 9.7) |
+| `SHOW BINLOG EVENTS` con un usuario de la base | `ERROR 1227 … REPLICATION SLAVE` | Inspeccionar el binlog como administrador (`sudo mysql`); no dar ese privilegio a cuentas comunes |
+| Leer `performance_schema.data_locks` | `ERROR 1142 … SELECT command denied … 'data_locks'` (`PROCESS` solo alcanza para `innodb_trx`) | `GRANT SELECT ON performance_schema.* TO …` |
+| `mysqldump` 9.7 con un usuario de respaldo mínimo | `Error: … 'column_masking_policy' when trying to dump masking policies` (termina con código 0) | `--skip-masking-policies` si la base no usa políticas de enmascaramiento |
+| Script oficial `test_employees_md5.sql` | `FUNCTION employees.MD5 does not exist` | Verificar la carga con recuentos (`SELECT COUNT(*)` por tabla) |
+| `INTO OUTFILE` / `LOAD DATA INFILE` | `--secure-file-priv option so it cannot execute`; o el archivo ya existe | Usar la carpeta de `SELECT @@secure_file_priv` (Ubuntu: `/var/lib/mysql-files/`) y nombres nuevos; `LOAD DATA` no acepta la ruta en una variable |
 | Binlog en `/var/log/mysql` | `mysqlbinlog` no encuentra el archivo | `SELECT @@log_bin_basename;` → `/var/lib/mysql/binlog.*` |
 | Rol creado pero sin efecto | El usuario sigue sin permisos | `SET DEFAULT ROLE ALL TO 'u'@'%';` |
 | `blocking_query` engañosa | Muestra otra sentencia o `NULL` | La prueba del bloqueo es `performance_schema.data_locks` |

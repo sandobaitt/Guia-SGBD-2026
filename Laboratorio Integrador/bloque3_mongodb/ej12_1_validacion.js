@@ -1,7 +1,7 @@
 // =============================================================================
 // LABORATORIO INTEGRADOR SGBD 2026 - GRUPO 11
 // Ejercicio 12.1 - Regla de validación $jsonSchema sobre la colección de tiendas
-//   mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u admin_g11 --file ej12_1_validacion.js
+//   mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 --file ej12_1_validacion.js
 // =============================================================================
 db = db.getSiblingDB("LabMongoDB");
 
@@ -34,17 +34,17 @@ const esquema = {
 
 // 1. Antes de aplicar la regla: las tiendas existentes deben cumplirla (esperado 0).
 //    Si no, mongorestore (12.2) crea la regla antes de cargar los datos y las rechaza.
-print("Tiendas que NO cumplen el esquema: " + db.stores.countDocuments({ $nor: [{ $jsonSchema: esquema }] }));
+print("Tiendas que NO cumplen el esquema: " + db.tiendas.countDocuments({ $nor: [{ $jsonSchema: esquema }] }));
 
 // 2. Aplicar la regla a la colección existente
-printjson(db.runCommand({ collMod: "stores", validator: { $jsonSchema: esquema },
+printjson(db.runCommand({ collMod: "tiendas", validator: { $jsonSchema: esquema },
                           validationLevel: "strict", validationAction: "error" }));
-printjson(db.getCollectionInfos({ name: "stores" })[0].options.validationAction);
+printjson(db.getCollectionInfos({ name: "tiendas" })[0].options.validationAction);
 
 const probar = (titulo, doc) => {
   print("\n--- " + titulo + " ---");
   try {
-    printjson(db.stores.insertOne(doc));
+    printjson(db.tiendas.insertOne(doc));
   } catch (e) {
     print(e.name + ": " + e.message);
     const det = e.errInfo && e.errInfo.details && e.errInfo.details.schemaRulesNotSatisfied;
@@ -68,6 +68,6 @@ probar("INVÁLIDA 2: filmId del inventario como texto", {
   Inventory: [{ filmId: "uno", inventoryId: 9002, "Film Title": "ACADEMY DINOSAUR" }] });
 
 // 5. Resultado y limpieza (se borran las de prueba; la regla queda activa)
-print("\nTiendas: " + JSON.stringify(db.stores.find({}, { _id: 1, City: 1 }).sort({ _id: 1 }).toArray()));
-print("Borradas las de prueba: " + db.stores.deleteMany({ _id: { $in: [3, 4] } }).deletedCount +
-      " | tiendas finales: " + db.stores.countDocuments());
+print("\nTiendas: " + JSON.stringify(db.tiendas.find({}, { _id: 1, City: 1 }).sort({ _id: 1 }).toArray()));
+print("Borradas las de prueba: " + db.tiendas.deleteMany({ _id: { $in: [3, 4] } }).deletedCount +
+      " | tiendas finales: " + db.tiendas.countDocuments());

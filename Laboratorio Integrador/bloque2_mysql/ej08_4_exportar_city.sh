@@ -5,9 +5,9 @@
 #                 {"Ciudad": "Resistencia", "CodP": "ARG"}
 # Uso: ./ej08_4_exportar_city.sh [archivo_salida]
 #
-# - usr_g11 no tiene el privilegio global FILE (SELECT ... INTO OUTFILE), así que
-#   se exporta desde el cliente: -N sin encabezados, -B una fila por línea,
-#   -r sin escapar barras ni comillas (el JSON sale tal cual).
+# - Se exporta desde el cliente (no con SELECT ... INTO OUTFILE): el archivo queda
+#   en la carpeta del usuario y no en secure_file_priv, listo para el Ej. 10.2.
+#   -N sin encabezados, -B una fila por línea, -r sin escapar barras ni comillas.
 # - Resultado en formato JSON Lines (un documento por línea): es el que acepta
 #   mongoimport en el Ejercicio 10.2.
 # - JSON_OBJECT() devuelve las claves ordenadas por longitud ({"CodP":..,"Ciudad":..}),

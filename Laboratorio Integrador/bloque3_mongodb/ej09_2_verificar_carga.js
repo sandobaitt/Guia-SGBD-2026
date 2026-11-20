@@ -1,11 +1,11 @@
 // =============================================================================
 // LABORATORIO INTEGRADOR SGBD 2026 - GRUPO 11
 // Ejercicio 9.2 - Verificación de la carga en LabMongoDB
-//   mongosh "mongodb://127.0.0.1:27017" --authenticationDatabase admin -u admin_g11 --quiet --file ej09_2_verificar_carga.js
+//   mongosh "mongodb://127.0.0.1:27017" --authenticationDatabase admin -u adminG11 --quiet --file ej09_2_verificar_carga.js
 // =============================================================================
 
 if (!db.runCommand({ connectionStatus: 1 }).authInfo.authenticatedUsers.length) {
-  db.getSiblingDB("admin").auth("admin_g11", process.env.MONGO_ADMIN_PWD || passwordPrompt());
+  db.getSiblingDB("admin").auth("adminG11", process.env.MONGO_ADMIN_PWD || passwordPrompt());
 }
 db = db.getSiblingDB("LabMongoDB");   // en un script, "use LabMongoDB" no tiene efecto
 

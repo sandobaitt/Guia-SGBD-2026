@@ -1,0 +1,16 @@
+$ ./ej10_2_importar.sh datos_ej10
+Documentos en los archivos (JSON Lines: uno por línea):
+   239 datos_ej10/paises.json
+  4079 datos_ej10/ciudades.json
+  4318 total
+
+=== paises.json -> LabMongoDB.paises
+2026-11-19T21:29:32.358-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-19T21:29:32.358-0300	dropping: `LabMongoDB.paises`
+2026-11-19T21:29:32.375-0300	239 document(s) imported successfully. 0 document(s) failed to import.
+
+=== ciudades.json -> LabMongoDB.ciudades
+2026-11-19T21:29:32.387-0300	connected to: mongodb://127.0.0.1:27017/
+2026-11-19T21:29:32.387-0300	dropping: `LabMongoDB.ciudades`
+2026-11-19T21:29:32.427-0300	4079 document(s) imported successfully. 0 document(s) failed to import.
+

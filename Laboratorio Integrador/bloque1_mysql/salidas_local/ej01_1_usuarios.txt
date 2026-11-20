@@ -1,0 +1,153 @@
+$ sudo mysql --skip-comments -t -vvv --init-command="SET @clave_g11=..., @clave_backup=..." < ej01_usuarios.sql
+--------------
+SET @sql = CONCAT("CREATE USER IF NOT EXISTS 'usr_g11'@'%' IDENTIFIED BY ", QUOTE(@clave_g11))
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+PREPARE st FROM @sql
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+Statement prepared
+
+--------------
+EXECUTE st
+--------------
+
+Query OK, 0 rows affected, 3 warnings (0.013 sec)
+
+--------------
+DEALLOCATE PREPARE st
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON employees.*   TO 'usr_g11'@'%' WITH GRANT OPTION
+--------------
+
+Query OK, 0 rows affected (0.007 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON empleados.*   TO 'usr_g11'@'%' WITH GRANT OPTION
+--------------
+
+Query OK, 0 rows affected (0.007 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON world_x.*     TO 'usr_g11'@'%' WITH GRANT OPTION
+--------------
+
+Query OK, 0 rows affected (0.008 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON zakila_json.* TO 'usr_g11'@'%' WITH GRANT OPTION
+--------------
+
+Query OK, 0 rows affected (0.007 sec)
+
+--------------
+GRANT FILE, PROCESS, RELOAD, REPLICATION CLIENT ON *.* TO 'usr_g11'@'%'
+--------------
+
+Query OK, 0 rows affected (0.008 sec)
+
+--------------
+GRANT SELECT ON performance_schema.* TO 'usr_g11'@'%'
+--------------
+
+Query OK, 0 rows affected (0.009 sec)
+
+--------------
+SET PERSIST log_bin_trust_function_creators = ON
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.001 sec)
+
+--------------
+SET @sql = CONCAT("CREATE USER IF NOT EXISTS 'usr_backup'@'localhost' IDENTIFIED BY ", QUOTE(@clave_backup))
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+PREPARE st FROM @sql
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+Statement prepared
+
+--------------
+EXECUTE st
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.011 sec)
+
+--------------
+DEALLOCATE PREPARE st
+--------------
+
+Query OK, 0 rows affected (0.000 sec)
+
+--------------
+GRANT SELECT, SHOW VIEW, TRIGGER, EVENT ON employees.* TO 'usr_backup'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.008 sec)
+
+--------------
+GRANT RELOAD, REPLICATION CLIENT, PROCESS ON *.* TO 'usr_backup'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.008 sec)
+
+--------------
+GRANT SHOW_ROUTINE ON *.* TO 'usr_backup'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.009 sec)
+
+--------------
+SELECT user, host, plugin, account_locked FROM mysql.user WHERE user IN ('usr_g11', 'usr_backup')
+--------------
+
++------------+-----------+-----------------------+----------------+
+| user       | host      | plugin                | account_locked |
++------------+-----------+-----------------------+----------------+
+| usr_g11    | %         | caching_sha2_password | N              |
+| usr_backup | localhost | caching_sha2_password | N              |
++------------+-----------+-----------------------+----------------+
+2 rows in set (0.000 sec)
+
+--------------
+SHOW GRANTS FOR 'usr_g11'@'%'
+--------------
+
++----------------------------------------------------------------------------+
+| Grants for usr_g11@%                                                       |
++----------------------------------------------------------------------------+
+| GRANT RELOAD, PROCESS, FILE, REPLICATION CLIENT ON *.* TO `usr_g11`@`%`    |
+| GRANT ALL PRIVILEGES ON `empleados`.* TO `usr_g11`@`%` WITH GRANT OPTION   |
+| GRANT ALL PRIVILEGES ON `employees`.* TO `usr_g11`@`%` WITH GRANT OPTION   |
+| GRANT SELECT ON `performance_schema`.* TO `usr_g11`@`%`                    |
+| GRANT ALL PRIVILEGES ON `world_x`.* TO `usr_g11`@`%` WITH GRANT OPTION     |
+| GRANT ALL PRIVILEGES ON `zakila_json`.* TO `usr_g11`@`%` WITH GRANT OPTION |
++----------------------------------------------------------------------------+
+6 rows in set (0.000 sec)
+
+--------------
+SHOW GRANTS FOR 'usr_backup'@'localhost'
+--------------
+
++--------------------------------------------------------------------------------------+
+| Grants for usr_backup@localhost                                                      |
++--------------------------------------------------------------------------------------+
+| GRANT RELOAD, PROCESS, REPLICATION CLIENT ON *.* TO `usr_backup`@`localhost`         |
+| GRANT SHOW_ROUTINE ON *.* TO `usr_backup`@`localhost`                                |
+| GRANT SELECT, SHOW VIEW, EVENT, TRIGGER ON `employees`.* TO `usr_backup`@`localhost` |
++--------------------------------------------------------------------------------------+
+3 rows in set (0.000 sec)
+
+Bye

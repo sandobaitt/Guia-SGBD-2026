@@ -1,0 +1,82 @@
+$ mongosh "mongodb://127.0.0.1:27017/LabMongoDB" --authenticationDatabase admin -u adminG11 -p ******** --quiet --file ej12_1_validacion.js
+Tiendas que NO cumplen el esquema: 0
+{
+  ok: 1
+}
+error
+
+--- VÁLIDA 1: tienda nueva con un ítem de inventario ---
+{
+  acknowledged: true,
+  insertedId: 3
+}
+
+--- VÁLIDA 2: tienda nueva con inventario vacío ---
+{
+  acknowledged: true,
+  insertedId: 4
+}
+
+--- INVÁLIDA 1: falta el campo obligatorio City ---
+MongoServerError: Document failed validation
+[
+  {
+    operatorName: 'required',
+    specifiedAs: {
+      required: [
+        '_id',
+        'Address',
+        'City',
+        'Country',
+        'Inventory'
+      ]
+    },
+    missingProperties: [
+      'City'
+    ]
+  }
+]
+
+--- INVÁLIDA 2: filmId del inventario como texto ---
+MongoServerError: Document failed validation
+[
+  {
+    operatorName: 'properties',
+    propertiesNotSatisfied: [
+      {
+        propertyName: 'Inventory',
+        details: [
+          {
+            operatorName: 'items',
+            reason: 'At least one item did not match the sub-schema',
+            itemIndex: 0,
+            details: [
+              {
+                operatorName: 'properties',
+                propertiesNotSatisfied: [
+                  {
+                    propertyName: 'filmId',
+                    details: [
+                      {
+                        operatorName: 'bsonType',
+                        specifiedAs: {
+                          bsonType: 'int'
+                        },
+                        reason: 'type did not match',
+                        consideredValue: 'uno',
+                        consideredType: 'string'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+Tiendas: [{"_id":1,"City":"Lethbridge"},{"_id":2,"City":"Woodridge"},{"_id":3,"City":"Resistencia"},{"_id":4,"City":"Corrientes"}]
+Borradas las de prueba: 2 | tiendas finales: 2

@@ -1,0 +1,15 @@
+$ mongosh "mongodb://127.0.0.1:27017/admin" --authenticationDatabase admin -u adminG11 -p ******** --quiet --file ej12_2_verificar.js
+Colección     LabMongoDB  LabMongoDB_Restore  Índices(orig/rest)  ¿Igual?
+ciudades           4079                4079                 2/2  SÍ
+clientes            599                 599                 1/1  SÍ
+paises              239                 239                 2/2  SÍ
+peliculas          1000                1000                 1/1  SÍ
+tiendas               2                   2                 1/1  SÍ
+
+Validador en LabMongoDB_Restore.tiendas: presente (error)
+[
+  {
+    _id: 'CONGENIALITY QUEST',
+    alquileres: 8
+  }
+]
