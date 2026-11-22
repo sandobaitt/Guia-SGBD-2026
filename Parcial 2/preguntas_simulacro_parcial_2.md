@@ -769,14 +769,14 @@ Un equipo creó las colecciones `clientes`, `pedidos`, `items`, `productos` y `d
 Para un catálogo con producto, categorías y stock, ¿qué decisión da la clase en el microdesafío?
 
 - a) Híbrida: referenciar las categorías y embeber el stock.
-- b) Embeber las categorías completas en cada producto y guardar el stock en otra colección, porque el stock cambia más seguido que las categorías.
+- b) Embeber las categorías completas en cada producto, aunque se comparten entre muchos productos y cambian por separado.
 - c) Una colección *time series* para el stock, porque cambia con el tiempo.
 - d) Referenciar todo, porque el catálogo es una entidad con vida propia.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** El microdesafío resuelve tres casos: **perfil de usuario → embeber**, **catálogo → híbrido** (referenciar categorías + embeber stock) e **IoT → colección separada** (*bucket* o *time series*). La b invierte la lógica; la c confunde un valor que cambia con una serie de mediciones; la d vuelve a la traducción 1:1.
+**Respuesta: a.** El microdesafío resuelve tres casos: **perfil de usuario → embeber**, **catálogo → híbrido** (referenciar categorías + embeber stock) e **IoT → colección separada** (*bucket* o *time series*). La b duplica en cada producto categorías compartidas que cambian por separado; la c confunde un valor que cambia con una serie de mediciones; la d vuelve a la traducción 1:1.
 
 </details>
 
