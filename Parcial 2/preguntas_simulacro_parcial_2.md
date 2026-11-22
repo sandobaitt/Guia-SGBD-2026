@@ -1,1331 +1,1974 @@
 # Preguntas tipo simulacro · Parcial 2
 
 **Sistemas de Gestión de Bases de Datos 2026 · Bloque temático 2**
-80 preguntas de opción múltiple sobre las Unidades 7 a 10, con una sola respuesta correcta en cada una.
+120 preguntas de opción múltiple sobre las Unidades 7 a 10, con una sola respuesta correcta en cada una.
 
 ---
 
 ## Cómo usar este cuestionario
 
-- El formato sigue el del simulacro de la cátedra: una situación concreta, cuatro opciones y una sola correcta. Muchas situaciones salen de las actividades de laboratorio y del laboratorio integrador.
+- El formato sigue el del simulacro de la cátedra: una situación concreta, cuatro opciones y una sola correcta.
+- **La base son las clases de la cátedra** (clases 7 a 10 de 2026): sus preguntas disparadoras, conceptos, tablas comparativas, ejemplos de código y criterios de logro. La mayoría de las preguntas sale de ahí y no depende de haber hecho una actividad en particular.
+- Algunas preguntas, sobre todo de nivel Desafío, retoman situaciones que aparecieron al resolver las actividades (búsqueda de texto completo, seguridad y respaldo en MongoDB, ACL de Redis, servicios gratuitos en la nube). Están planteadas en forma general, para cualquier grupo.
 - Cada pregunta indica unidad, **nivel** y tema:
   - **Básica:** un concepto central bien aplicado.
   - **Intermedia:** hay que relacionar dos ideas o descartar distractores plausibles.
   - **Desafío:** las opciones se parecen mucho o hace falta entender el mecanismo, no recordar una definición.
 - Respondé antes de abrir **"Ver respuesta"**. Cada explicación dice por qué la opción correcta lo es y por qué fallan las demás.
-- La base son las actividades resueltas de las Unidades 7 a 10 (MySQL, MongoDB, Redis, Cassandra, Neo4j y MongoDB Atlas) y su teoría: [Unidad 7](Unidad%207/Actividad%202/explicacion_teorica.md), [Unidad 8 · Actividad 1](Unidad%208/Actividad%201/explicacion_teorica.md), [Unidad 8 · Actividad 2](Unidad%208/Actividad%202/explicacion_teorica.md), [Unidad 9 · Actividad 1](Unidad%209/Actividad%201/explicacion_teorica.md), [Unidad 9 · Actividad 2](Unidad%209/Actividad%202/explicacion_teorica.md) y [Unidad 10](Unidad%2010/Actividad%201/explicacion_teorica.md). Algunas preguntas de nivel Desafío van un poco más allá de lo que se ejecutó (por ejemplo, la 44 sobre `MULTI`/`EXEC`, la 46 sobre la política de memoria de Redis o la 52 sobre `QUORUM`). Están para entender el mecanismo.
+- La teoría de cada pregunta está en el [apunte del Parcial 2](apunte_parcial_2.md), que sigue el mismo orden de las clases.
 - Al final hay una **clave de respuestas** para corregir rápido.
 
-| Unidad | Preguntas | Tema |
+| Unidad | Preguntas | Tema (clase) |
 | :--- | :--- | :--- |
-| U7 | 1 a 17 | El relacional multimodelo: JSON, índices multivaluados y Full-Text Search |
-| U8 | 18 a 39 | MongoDB: modelado, consultas, índices, seguridad y respaldo |
-| U9 | 40 a 71 | Redis, Cassandra, Neo4j y persistencia políglota |
-| U10 | 72 a 80 | Bases de datos como servicio (MongoDB Atlas) |
+| U7 | 1 a 33 | Cuando el modelo relacional empieza a quedar corto: tensiones, semiestructurados, MySQL 9.7 y PostgreSQL 18 multimodelo, escala, CAP y familias NoSQL |
+| U8 | 34 a 63 | MongoDB: documento y BSON, agregados, embeber o referenciar, CRUD, índices, `explain`, *pipeline*, validación, réplicas y seguridad |
+| U9 | 64 a 97 | Redis, Cassandra, Neo4j y CAP: tres modelos, ACID en NoSQL, distribución, matriz de decisión y persistencia políglota |
+| U10 | 98 a 120 | Operar como servicio: DBaaS, responsabilidad compartida, endpoint, backup y HA, observabilidad, costos, seguridad y migración |
 
 ### Cómo reconocer la opción correcta
 
 | Señal en una opción | Suele indicar |
 | :--- | :--- |
 | Absolutos: "siempre", "nunca", "el más rápido", "se eligen dos de tres de una vez" | Opción incorrecta: casi todo depende del patrón de acceso y de la configuración |
-| Argumentos de moda: "es el más usado", "NoSQL es más rápido", "más motores, más preparada" | Opción incorrecta: no son requisitos del negocio |
+| Argumentos de moda: "es el más usado", "NoSQL es más rápido", "más motores, más preparada", "en la nube es más barato" | Opción incorrecta: no son requisitos del negocio |
+| Etiquetas fijas: "SQL = ACID", "NoSQL = BASE", "Cassandra es AP", "DBaaS = sin administración" | Opción incorrecta: la clase las desarma una por una |
 | "Depende del patrón de acceso" más una verificación con evidencia (`explain`, recuentos, restaurar y comparar) | Opción correcta típica |
 | El mecanismo del propio motor que garantiza la regla (operación atómica, restricción, `MERGE` idempotente) | Opción correcta típica |
-| Dos opciones casi iguales | Buscá la palabra que cambia: `$elemMatch` o notación con punto, `CREATE` o `MERGE`, `QUORUM` o `ONE`, `-1` o `-2`, `->` o `->>` |
+| Dos opciones casi iguales | Buscá la palabra que cambia: `$elemMatch` o notación con punto, `CREATE` o `MERGE`, `QUORUM` o `ONE`, `-1` o `-2`, `json` o `jsonb` |
 
 ---
 
-## Unidad 7 · El relacional multimodelo: JSON y búsqueda de texto
+## Unidad 7 · Cuando el modelo relacional empieza a quedar corto
 
-**Pregunta 1** · Básica · *Atributos que varían por categoría*
+**Pregunta 1** · Básica · *Las cinco tensiones*
 
-Un catálogo multirubro vende notebooks (RAM, GPU), heladeras (litros, *no frost*) y ropa (talle, material). Cada categoría tiene atributos distintos y aparecen categorías nuevas seguido. ¿Qué diseño recomienda la unidad en MySQL?
+Un sistema antifraude necesita encontrar qué caminos conectan clientes, cuentas, comercios y direcciones IP. Cada consulta encadena seis o siete `JOIN` y el tiempo crece con cada salto. Según la clase, ¿qué tensión del modelo relacional aparece?
 
-- a) Una tabla con una columna por cada atributo posible de todas las categorías, aunque en cada fila la mayoría quede en `NULL`.
-- b) Una tabla `(producto_id, atributo, valor)` con todos los valores en `VARCHAR`, para no tener que modificar el esquema nunca.
-- c) Columnas tipadas para lo estable (precio, stock, categoría) y una columna `JSON` para lo que varía por categoría.
-- d) Una tabla por categoría, que se crea con un `CREATE TABLE` nuevo cada vez que aparece un rubro.
+- a) Estructura: la forma de los datos cambia con frecuencia.
+- b) Escala: una sola instancia deja de alcanzar para el volumen.
+- c) Relaciones: hay recorridos con demasiados `JOIN`.
+- d) Jerarquía: los datos llegan naturalmente anidados.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Es el **esquema híbrido**: lo que se filtra, ordena o agrega seguido va en columnas con tipos, restricciones e índices B-Tree, y lo variable va en `JSON` con `CHECK` mínimos (por ejemplo `JSON_TYPE(tags) = 'ARRAY'`). Las otras son los tres antipatrones de la unidad: la tabla ancha llena de `NULL` (a), el modelo EAV sin tipos ni restricciones, que necesita un `JOIN` por cada atributo que se filtra (b), y las migraciones constantes (d).
+**Respuesta: c.** La clase plantea cinco tensiones: estructura, jerarquía, relaciones, escala y acceso. Cuando el valor está en **recorrer conexiones** y cada salto es un `JOIN` más, la tensión es de **relaciones**, y el modelo que la resuelve mejor es el de grafos. No hay atributos cambiantes (a), el problema no es el volumen (b) ni la forma anidada del dato (d).
 
 </details>
 
-**Pregunta 2** · Intermedia · *Multimodelo o persistencia políglota*
+**Pregunta 2** · Básica · *El relacional sigue siendo excelente*
 
-¿Qué situación describe una base de datos **multimodelo**?
+¿Cuál es, según la clase, el punto de partida profesional para pensar la transición hacia NoSQL?
 
-- a) Usar MySQL para los pedidos, Redis para las sesiones y Neo4j para las recomendaciones, sincronizados entre sí por eventos.
-- b) Un mismo motor que maneja varios modelos de datos (relacional, JSON, texto, espacial) con una sola seguridad, respaldo y optimizador.
-- c) Un motor NoSQL que acepta consultas SQL mediante un conector externo, de modo que las aplicaciones relacionales no cambian.
-- d) Una base relacional con varias réplicas, donde cada réplica guarda los mismos datos con un modelo distinto según quién la consulte.
+- a) Reemplazar el motor relacional apenas aparece un dato semiestructurado, porque ACID limita la escala y la flexibilidad del esquema.
+- b) Preguntarse qué parte del problema representa mejor cada modelo, sin descartar lo que el relacional ya resuelve.
+- c) Elegir entre SQL y NoSQL al inicio del proyecto, porque mezclar modelos en un mismo sistema es un antipatrón.
+- d) Usar NoSQL para todo lo nuevo y dejar el relacional solo para los sistemas heredados que no se pueden migrar.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** MySQL 9 es relacional en su núcleo, pero suma `JSON` nativo, índices multivaluados, Document Store, datos espaciales y Full-Text Search dentro del mismo motor. La opción a es **persistencia políglota**: varios motores, cada uno donde mejor encaja (Unidad 9). Un conector SQL no convierte a un motor en multimodelo (c), y las réplicas guardan los mismos datos con el mismo modelo (d).
+**Respuesta: b.** La clase insiste en que NoSQL **no invalida** lo aprendido: ACID, integridad, SQL y una operación madura siguen siendo fortalezas. La pregunta no es "SQL contra NoSQL", sino **qué parte del problema representa mejor cada modelo**. Las demás opciones parten de un reemplazo total (a, d) o niegan la persistencia políglota, que la clase presenta como una arquitectura válida (c).
 
 </details>
 
-**Pregunta 3** · Básica · *`->` y `->>`*
+**Pregunta 3** · Intermedia · *Caso A y caso B*
 
-En MySQL, `SELECT atributos->'$.marca', atributos->>'$.marca' FROM producto WHERE id = 1;` sobre un producto de marca Acme devuelve:
+Dos sistemas tienen columnas opcionales. En el primero, la estructura casi no cambia y lo importante son las relaciones y las reglas entre entidades. En el segundo, cada entidad trae atributos distintos, aparecen atributos nuevos cada semana y el registro se consume completo. ¿Qué concluye la clase?
 
-- a) `"Acme"` y `Acme`: `->` devuelve un valor JSON (con sus comillas) y `->>` devuelve ese valor como texto.
-- b) `Acme` y `"Acme"`: `->>` agrega las comillas para que el resultado siga siendo un valor JSON válido.
-- c) Lo mismo en las dos columnas: `->>` es una forma abreviada de `->` que se mantiene por compatibilidad.
-- d) Un error: `->>` solo acepta rutas que apuntan a arreglos, y `$.marca` apunta a una cadena de texto.
+- a) Los dos deberían migrar a un motor documental, porque ambos tienen columnas que quedan en `NULL`.
+- b) Ninguno necesita cambios: los `NULL` y los `ALTER TABLE` frecuentes son el costo normal del modelo relacional.
+- c) El primero conviene flexibilizarlo con JSON y el segundo mantenerlo en tablas, porque las reglas exigen documentos.
+- d) En el primero el relacional funciona muy bien; en el segundo conviene flexibilizar esa parte del esquema.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** `->` equivale a `JSON_EXTRACT()` y devuelve JSON (por eso las comillas). `->>` equivale a `JSON_UNQUOTE(JSON_EXTRACT())` y devuelve texto, que es lo que conviene para comparar o mostrar. La b invierte los operadores; no son sinónimos (c) y ninguno se limita a arreglos (d).
+**Respuesta: d.** Es la distinción entre el **caso A** (esquema estable, dominan las relaciones y las invariantes: el relacional funciona muy bien) y el **caso B** (atributos que cambian por entidad y un agregado que se consume como unidad: conviene flexibilizar). "No todo dato variable exige NoSQL" (a), pero tampoco hay que convivir con migraciones constantes (b). La opción c invierte los casos.
 
 </details>
 
-**Pregunta 4** · Desafío · *Claves ausentes en un documento JSON*
+**Pregunta 4** · Básica · *El modelo EAV*
 
-Hay tres notebooks: una con `"gpu": "integrada"`, otra con `"gpu": "RTX 4060"` y un ultrabook cuyo documento **no tiene** la clave `gpu`. ¿Qué devuelve `WHERE atributos->>'$.gpu' <> 'integrada'`?
+Para un catálogo con atributos distintos por categoría, alguien propone una tabla `(producto_id, atributo, valor)` con todos los valores en texto. ¿Cuál es el problema principal de ese diseño?
 
-- a) La de RTX y el ultrabook: una clave ausente cuenta como distinta de `'integrada'`, así que la condición se cumple.
-- b) Las tres, porque cuando la clave falta, `<>` no evalúa la condición y deja pasar la fila sin filtrarla.
-- c) Un error de ruta inválida, porque `->>` exige que todos los documentos de la tabla tengan la clave `gpu`.
-- d) Solo la de RTX: en el ultrabook la ruta da `NULL`, y `NULL <> 'integrada'` no es verdadero.
+- a) Pierde tipos y restricciones, y cada atributo filtrado exige un `JOIN`.
+- b) Obliga a ejecutar un `ALTER TABLE` cada vez que aparece una categoría nueva en el catálogo.
+- c) Deja la mayoría de las celdas en `NULL`, porque cada fila tiene una columna por atributo posible.
+- d) No se puede indexar, porque los motores relacionales no admiten índices sobre tablas de tres columnas.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Una clave ausente devuelve `NULL`, y cualquier comparación con `NULL` da `NULL` (desconocido), que el `WHERE` descarta. Pasó en la actividad de la Unidad 7. Para incluir el ultrabook hay que pedirlo explícitamente: `... OR atributos->>'$.gpu' IS NULL`, o usar `JSON_CONTAINS_PATH`. No da error (c), y la fila del ultrabook no cumple la condición, así que no aparece (a, b).
+**Respuesta: a.** El modelo **entidad-atributo-valor** guarda todo como texto (sin tipos ni `CHECK`) y convierte cada filtro en un `JOIN` contra la misma tabla. La opción b describe la tabla por categoría, y la c, la tabla ancha de 80 columnas. La d es falsa: la tabla EAV se puede indexar, el problema es otro.
 
 </details>
 
-**Pregunta 5** · Intermedia · *Índice multivaluado*
+**Pregunta 5** · Básica · *Datos semiestructurados*
 
-Se crea `CREATE INDEX idx_tags_mv ON producto ((CAST(tags AS CHAR(30) ARRAY)));` sobre un arreglo JSON de etiquetas. ¿Qué condición puede aprovecharlo?
+¿Qué significa que un dato sea **semiestructurado**?
 
-- a) `WHERE tags LIKE '%gaming%'`
-- b) `WHERE JSON_LENGTH(tags) > 2`
-- c) `WHERE 'gaming' MEMBER OF (tags)`
-- d) `WHERE tags->>'$[0]' = 'gaming'`
+- a) Que no tiene ninguna estructura interna y requiere técnicas de interpretación, como el texto libre o el audio.
+- b) Que tiene estructura, pero flexible, anidada o autocontenida, como XML, JSON o un evento.
+- c) Que tiene un esquema explícito y estable, con tablas, columnas, tipos y restricciones declaradas.
+- d) Que está incompleto: le faltan columnas obligatorias y debe normalizarse antes de guardarse.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** El índice multivaluado guarda **una entrada por cada elemento** del arreglo, y el optimizador lo usa con `MEMBER OF()`, `JSON_CONTAINS()` y `JSON_OVERLAPS()`. En la actividad, `'gaming' MEMBER OF (tags)` pasó de `Table scan` a `Index lookup ... using idx_tags_mv`. Las otras condiciones no coinciden con la expresión indexada: buscan texto dentro del JSON (a), calculan una función sobre el arreglo completo (b) o miran solo la primera posición (d).
+**Respuesta: b.** La clase distingue tres formas: **estructurados** (esquema explícito y estable, c), **semiestructurados** (estructura presente pero flexible, anidada o autocontenida) y **no estructurados** (texto libre, imagen, audio, a). "Semiestructurado no significa sin estructura". La d no es ninguna de las categorías.
 
 </details>
 
-**Pregunta 6** · Básica · *B-Tree y búsqueda por subcadena*
+**Pregunta 6** · Intermedia · *XML*
 
-¿Por qué un índice B-Tree sobre `descripcion` no ayuda en `WHERE descripcion LIKE '%inalambrico%'`?
+¿Qué afirmación sobre XML coincide con la clase?
 
-- a) Porque sin un prefijo fijo no hay por dónde entrar al árbol ordenado, y se termina recorriendo toda la tabla.
-- b) Porque los índices B-Tree solo admiten columnas numéricas o de fecha; para texto, MySQL usa siempre un recorrido completo.
-- c) Porque cualquier `LIKE` desactiva los índices de la columna, incluso con un prefijo fijo como `LIKE 'inal%'`.
-- d) Porque MySQL deja de usar los índices en columnas de texto de más de 255 caracteres, como suele ser una descripción.
+- a) Fue reemplazado por JSON en todos los ámbitos y hoy solo tiene interés histórico.
+- b) Es un formato tabular: cada elemento equivale a una columna y cada documento, a una fila.
+- c) Es un árbol autodescriptivo que un XSD puede validar, y sigue vigente en integraciones y sistemas heredados.
+- d) No admite anidamiento: para representar jerarquías hay que usar atributos con identificadores que apunten a otros elementos del documento.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Un B-Tree ordena valores completos: sirve para `=`, rangos y prefijos (`LIKE 'inal%'` se resuelve como rango, por eso c es falsa). Con el comodín al inicio no hay por dónde entrar. El B-Tree indexa texto sin problema (b), y el largo de la columna no es lo que impide usarlo (d). Para buscar palabras dentro del texto existe el **índice invertido** (`FULLTEXT`), que guarda cada término con la lista de documentos donde aparece.
+**Respuesta: c.** XML es el **antecedente importante**: estructura **jerárquica** (elementos anidados y atributos), **autodescriptiva** y **validable** con un esquema **XSD**. La clase aclara que sigue siendo relevante en integraciones empresariales, mensajería y sistemas heredados, así que la a es falsa. La b y la d contradicen su naturaleza de árbol.
 
 </details>
 
-**Pregunta 7** · Intermedia · *`MATCH` y su índice*
+**Pregunta 7** · Intermedia · *JSON es una representación*
 
-La tabla tiene `FULLTEXT KEY ft_desc (descripcion)`. La consulta `WHERE MATCH(nombre, descripcion) AGAINST('gaming')` falla con `ERROR 1191`. ¿Por qué?
+Un compañero dice: "Si guardamos JSON, ya somos NoSQL". ¿Qué le respondería la clase?
 
-- a) Porque InnoDB no admite índices `FULLTEXT` sobre varias columnas: hay que convertir la tabla a MyISAM.
-- b) Porque el modo de lenguaje natural necesita al menos tres palabras en `AGAINST` para calcular la relevancia.
-- c) Porque la tabla tiene menos de 50 filas, y el índice no se activa hasta superar ese umbral.
-- d) Porque `MATCH()` exige un índice `FULLTEXT` con exactamente las mismas columnas que se le pasan.
+- a) Tiene razón: guardar JSON convierte a cualquier motor en una base documental, con sus garantías y sus límites.
+- b) Tiene razón solo si el motor guarda el JSON en binario, como `jsonb` o BSON.
+- c) Se equivoca, porque los motores relacionales no pueden almacenar JSON y deberían usar XML.
+- d) Se equivoca: JSON es una representación, no un modelo ni una arquitectura NoSQL.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Para buscar en `nombre` y `descripcion` juntas hace falta `FULLTEXT (nombre, descripcion)`: el índice sobre una sola columna no sirve para esa combinación. InnoDB admite `FULLTEXT`, también sobre varias columnas (a). Ni la cantidad de palabras (b) ni la de filas (c) producen ese error.
+**Respuesta: d.** La clase lo dice textual: **JSON es una representación**; no es por sí mismo un modelo de base de datos ni una arquitectura NoSQL. MySQL y PostgreSQL guardan JSON sin dejar de ser relacionales, y un motor NoSQL puede no usar JSON. El formato interno (b) no cambia eso, y la c es falsa.
 
 </details>
 
-**Pregunta 8** · Intermedia · *Términos de dos letras*
+**Pregunta 8** · Intermedia · *Relación frente a agregado*
 
-Las descripciones dicen "Smart TV 4K", pero `MATCH(descripcion) AGAINST('TV')` no devuelve nada. ¿Cuál es la causa más probable y su solución?
+Al pasar de pensar en **relaciones** a pensar en **agregados**, ¿cuál es la pregunta de diseño que cambia?
 
-- a) La colación de la columna distingue mayúsculas y minúsculas, así que hay que buscar `'tv'` en minúsculas.
-- b) Los términos más cortos que `innodb_ft_min_token_size` (3) no se indexan: hay que bajarlo a 2, reiniciar y reconstruir el índice.
-- c) Hay que usar modo booleano, porque el modo de lenguaje natural descarta las siglas escritas en mayúsculas, como `TV`.
-- d) El índice `FULLTEXT` se actualiza una vez por día: hay que esperar al proceso nocturno o forzar la actualización con `ANALYZE TABLE`.
+- a) Pasa de "¿cómo evito redundancia?" a "¿qué datos se usan juntos y qué hay que preservar?".
+- b) Pasa de "¿qué índices necesito?" a "¿qué motor es el más rápido para este volumen?".
+- c) Pasa de "¿qué clave primaria uso?" a "¿cómo elimino todas las claves para ganar flexibilidad?".
+- d) Pasa de "¿qué tablas uno?" a "¿cómo replico cada tabla en una colección con el mismo nombre?".
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** `innodb_ft_min_token_size` es de solo lectura: se cambia en el `.cnf`, se reinicia, y **no afecta a los índices existentes** hasta reconstruirlos. Al bajarlo a 2 conviene una lista de *stopwords* en español, para no indexar `el`, `un` o `al`. Con `utf8mb4_0900_ai_ci` la búsqueda no distingue mayúsculas ni acentos (a), el modo no cambia los términos indexados (c) y el índice se actualiza en cada `COMMIT` (d).
+**Respuesta: a.** El relacional reparte el pedido en `CLIENTE`, `PEDIDO`, `ITEM` y `PRODUCTO` y lo reconstruye con `JOIN` y reglas entre tablas. El agregado es **un objeto autocontenido para un patrón de acceso**: la pregunta es qué datos se usan juntos. La d es justamente el antipatrón de traducir tablas 1:1; la b y la c no tienen relación con el agregado.
 
 </details>
 
-**Pregunta 9** · Desafío · *Reconstruir el índice FULLTEXT*
+**Pregunta 9** · Intermedia · *JSON no resuelve todo*
 
-Después de bajar `innodb_ft_min_token_size` a 2 y reiniciar, se ejecutó `ALTER TABLE producto DROP INDEX ft_desc, ADD FULLTEXT ft_desc (descripcion);`, y `TV` siguió sin aparecer. ¿Qué pasó?
+Una plataforma ya guarda sus atributos variables en JSON, pero ahora necesita repartir varios terabytes de eventos entre muchos nodos y responder con baja latencia en tres continentes. ¿Qué dice la clase?
 
-- a) Ningún índice `FULLTEXT` de InnoDB indexa palabras de dos letras: el mínimo de 3 es fijo, aunque la variable acepte otro valor.
-- b) Faltó ejecutar `ANALYZE TABLE` después del `ALTER`, que es la sentencia que vuelve a dividir el texto en términos.
-- c) Con la misma definición, la forma combinada solo cambia metadatos: hay que hacer `DROP INDEX` y `ADD FULLTEXT` por separado.
-- d) El reinicio devolvió la variable a su valor por defecto, porque solo queda fija si se cambia con `SET PERSIST`.
+- a) Con JSON alcanza: al no tener esquema fijo, el motor reparte los documentos entre nodos sin configuración adicional ni decisiones de partición.
+- b) JSON ayuda con la estructura, pero no resuelve la distribución ni la escala: esas tensiones piden otros mecanismos.
+- c) Hay que volver a columnas tipadas, porque JSON es incompatible con la replicación y el sharding.
+- d) Alcanza con agregar un índice `GIN` o una columna generada sobre los atributos más consultados.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Se comprobó en la actividad de la Unidad 7: con `DROP` y `ADD` en la misma sentencia, InnoDB no reconstruye el índice y conserva los términos viejos. En sentencias separadas, el índice se rearma con el nuevo tamaño mínimo. Las palabras de dos letras sí se indexan con la variable en 2 (a); `ANALYZE TABLE` actualiza estadísticas, no términos (b); y la variable es de solo lectura, se fija en el archivo de configuración (d).
+**Respuesta: b.** JSON resuelve atributos variables, jerarquía y propiedades opcionales. **No resuelve** distribución, recorridos, caché ni escala: "NoSQL no puede reducirse a guardar JSON". Un índice (d) acelera consultas, no reparte datos; JSON no se distribuye solo (a) ni es incompatible con la replicación (c).
 
 </details>
 
-**Pregunta 10** · Intermedia · *Modo booleano*
+**Pregunta 10** · Básica · *Multimodelo o persistencia políglota*
 
-¿Qué devuelve `MATCH(nombre, descripcion) AGAINST('+gaming -notebook' IN BOOLEAN MODE)`?
+¿Qué situación describe una base **multimodelo**?
 
-- a) Los productos que contienen `gaming` y no contienen `notebook`.
-- b) Los productos que contienen `gaming` o `notebook`, ordenados por relevancia.
-- c) Los productos que contienen la frase exacta "gaming notebook".
-- d) Los productos con palabras que empiezan con `gaming` o con `notebook`.
+- a) Un relacional para los pedidos, Redis para las sesiones y Neo4j para las recomendaciones, sincronizados por eventos.
+- b) Dos instancias del mismo motor, una para lectura y otra para escritura, con replicación entre ellas.
+- c) Un solo motor que soporta varios modelos: tablas, JSON, texto y espacial.
+- d) Un motor relacional que guarda imágenes, audio y video en columnas binarias junto a los datos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** `+` hace obligatorio un término y `-` lo excluye: en la actividad solo quedó el Monitor Game 32. La frase exacta se pide entre comillas (`"alta frecuencia"`, c) y el prefijo con `*` (`inalambr*`, d). La b describe el modo de lenguaje natural, sin operadores.
+**Respuesta: c.** **Multimodelo** es **un motor** con varios modelos, como MySQL con `JSON`, Document Store, `FULLTEXT` y Spatial, o PostgreSQL con `jsonb`, arrays, `hstore` y `tsvector`. La a es **persistencia políglota** (varios motores). La b es replicación y la d, almacenamiento de datos no estructurados.
 
 </details>
 
-**Pregunta 11** · Intermedia · *Relevancia*
+**Pregunta 11** · Intermedia · *Columna generada sobre JSON*
 
-Se busca `notebook gaming RTX` en modo de lenguaje natural. En la colección, `rtx` aparece en un solo producto, mientras que otros términos, como `pulgadas`, aparecen en siete. ¿Por qué el producto con `rtx` queda primero?
+En MySQL 9.7, la propiedad `marca` dentro de una columna `JSON` se filtra en casi todas las consultas. ¿Qué propone la clase?
 
-- a) Porque InnoDB devuelve primero los productos insertados primero, y el de `rtx` fue de los primeros en cargarse.
-- b) Porque las palabras cortas pesan más en la relevancia, y `rtx` es el término más corto de la consulta.
-- c) Porque los términos escritos en mayúsculas en la consulta (`RTX`) reciben más peso que los escritos en minúsculas.
-- d) Porque la relevancia es una variante de TF-IDF: un término raro en la colección pesa más que uno frecuente.
+- a) Convertir toda la columna `JSON` en texto y crear un índice `FULLTEXT` sobre ella.
+- b) Crear una columna generada con `atributos->>'$.marca'` y un índice sobre esa columna.
+- c) Crear un índice B-Tree directamente sobre la columna `JSON` completa.
+- d) Pasar la propiedad a una tabla EAV, que se puede indexar mejor que un documento.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** TF es la frecuencia del término en el documento e IDF, su rareza en la colección. Un término que aparece en un solo producto discrimina mucho más que uno presente en siete. El orden de inserción (a), el largo de la palabra (b) y las mayúsculas (c) no intervienen.
+**Respuesta: b.** La propiedad interna se convierte en una **decisión de diseño físico**: `GENERATED ALWAYS AS (atributos->>'$.marca')` y un índice común. Así el optimizador tiene un índice para ese patrón de consulta, con su costo de escritura (conexión con la Unidad 2). MySQL no permite un índice B-Tree sobre la columna `JSON` entera (c); `FULLTEXT` es para buscar palabras (a) y EAV es un antipatrón (d).
 
 </details>
 
-**Pregunta 12** · Básica · *Lo que el FTS de InnoDB no hace*
+**Pregunta 12** · Intermedia · *Las piezas del Document Store*
 
-Los usuarios buscan `notebok` (con error de tipeo) y `juego` esperando encontrar "juegos". ¿Qué es correcto?
+¿Qué combinación describe correctamente el Document Store de MySQL?
 
-- a) El modo de lenguaje natural de InnoDB corrige errores de tipeo y reconoce plurales, así que basta con no usar modo booleano.
-- b) `WITH QUERY EXPANSION` resuelve los errores de tipeo: la segunda pasada encuentra la palabra correcta sin agregar ruido.
-- c) InnoDB no tiene *stemming* ni búsqueda difusa: `juego*` cubre el prefijo, y lo demás pide un motor de búsqueda aparte.
-- d) Hay que cambiar al parser `ngram`, que está pensado para el español y reconoce variantes de una misma palabra.
+- a) El X Plugin del servidor atiende el X Protocol en el puerto 33060, y los clientes usan la X DevAPI (MySQL Shell o conectores).
+- b) El X Protocol reemplaza al protocolo clásico en el puerto 3306, y por eso los clientes SQL dejan de funcionar al activarlo.
+- c) La X DevAPI se instala en el servidor y traduce cada documento a una tabla nueva con una columna por campo.
+- d) Es un motor separado que se instala aparte de MySQL y sincroniza sus colecciones con las tablas InnoDB.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** *Stemming*, tolerancia a errores, sinónimos y facetas son lo que justifica Elasticsearch u OpenSearch, normalmente como **proyección de lectura** de MySQL. La expansión de consulta agrega ruido: en la actividad, `espresso` trajo heladeras (b). `ngram` está pensado para idiomas sin separador de palabras, como chino o japonés (d).
+**Respuesta: a.** Cliente → **X DevAPI** (MySQL Shell, conectores) → **X Protocol** (33060) → **X Plugin** en el mismo servidor → colecciones y documentos. El protocolo clásico sigue en el **3306** (b). No es un motor aparte (d), y una colección no crea una columna por campo (c): es una tabla con una columna `JSON`.
 
 </details>
 
-**Pregunta 13** · Desafío · *Costo de escritura con FULLTEXT*
+**Pregunta 13** · Desafío · *"MySQL no se convierte en MongoDB"*
 
-Tras un `UPDATE` de 20.000 descripciones, el tiempo se multiplicó por 4,7 e `INNODB_FT_DELETED` muestra 20.000 doc_id. ¿Qué está pasando?
+¿Qué quiere decir la clase con que el Document Store "no convierte a MySQL en MongoDB"?
 
-- a) Cada `UPDATE` se registra como borrado lógico más inserción con un doc_id nuevo; lo viejo se purga con `OPTIMIZE TABLE`.
-- b) El índice quedó dañado por el volumen del `UPDATE`, y hay que recrear la tabla completa a partir del último respaldo.
-- c) MySQL reescribe el índice `FULLTEXT` entero en cada `UPDATE`, sin importar cuántas filas cambien ni qué columnas toque.
-- d) Los doc_id de `INNODB_FT_DELETED` son filas que el `UPDATE` perdió por error y que hay que recuperar desde el binlog.
+- a) Que el Document Store solo admite lecturas: las escrituras documentales siguen haciéndose con SQL sobre las tablas de InnoDB.
+- b) Que es otra interfaz sobre el mismo motor, con las garantías ACID del servidor.
+- c) Que el Document Store pierde las transacciones, porque los documentos no tienen esquema fijo.
+- d) Que hay que migrar los datos a MongoDB para usar colecciones, porque MySQL solo las emula en memoria.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Así funciona el FTS de InnoDB: el doc_id viejo se marca como borrado y el texto nuevo se vuelve a dividir en términos. Las entradas obsoletas se purgan con `OPTIMIZE TABLE` (activando `innodb_optimize_fulltext_only`), que procesa una cantidad limitada de términos por pasada (`innodb_ft_num_word_optimize`). No hay daño (b) ni filas perdidas (d), y el índice no se reescribe completo (c): el costo es proporcional a lo modificado.
+**Respuesta: b.** El Document Store ofrece **CRUD documental sin abandonar las capacidades ACID** del servidor: por dentro, cada colección es una tabla InnoDB. Por eso es una interfaz **adicional**, no otro motor. Admite altas, modificaciones y bajas (`add`, `modify`, `remove`), así que la a es falsa; no pierde transacciones (c) ni vive en memoria (d).
 
 </details>
 
-**Pregunta 14** · Intermedia · *Medir con pocos datos*
+**Pregunta 14** · Intermedia · *JSON Duality Views*
 
-Con 20 productos, `LIKE '%gaming%'` y `MATCH ... AGAINST('gaming')` tardan menos de 2 ms. ¿Qué conclusión y qué paso siguiente son correctos?
+¿Qué resuelven las **JSON Duality Views** de MySQL 9?
 
-- a) El índice `FULLTEXT` no aporta nada a esta tabla: conviene eliminarlo para ahorrar el costo extra de las escrituras.
-- b) El tiempo es ruido con ese volumen: hay que comparar el plan y las filas leídas, y escalar los datos.
-- c) Hay que reiniciar el servidor antes de cada consulta para vaciar la caché, y repetir hasta que aparezca una diferencia.
-- d) Conviene usar `EXPLAIN` sin `ANALYZE`, porque `EXPLAIN ANALYZE` ejecuta la consulta y eso altera los tiempos medidos.
+- a) Copian los datos de las tablas a una colección documental aparte y la mantienen sincronizada con un proceso programado que corre cada pocos minutos.
+- b) Permiten guardar dos versiones de cada documento JSON para comparar cambios en el tiempo.
+- c) Convierten una columna `JSON` en varias columnas relacionales de forma permanente.
+- d) Exponen tablas relacionales como documentos JSON jerárquicos, que se leen y se escriben con los dos modelos sin duplicar datos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Con 20 filas todo entra en una o dos páginas que ya están en memoria. Lo que importa es el **cambio de plan** (`Table scan` frente a `Full-text index search`) y el trabajo del motor (`Handler_read_rnd_next`); por eso la actividad escaló a 200.000 filas, donde el costo estimado bajó de 22.541 a 1,10. Reiniciar no reproduce una carga real (c), y `EXPLAIN ANALYZE` es justamente lo que mide tiempos reales (d).
+**Respuesta: d.** Los datos viven en **tablas normalizadas** (con PK y FK) y la vista los expone como documentos; con la anotación `WITH (INSERT, UPDATE, DELETE)` también se escribe a través del documento. Por eso la clase dice que unifican la representación relacional y la jerárquica **sin duplicar** los datos, a diferencia de una copia sincronizada (a). La b y la c no describen la característica.
 
 </details>
 
-**Pregunta 15** · Desafío · *JSON en MySQL y JSONB en PostgreSQL*
+**Pregunta 15** · Básica · *`json` y `jsonb`*
 
-Un catálogo debe filtrar por muchos atributos dentro de una columna JSON, y algunos no se pueden prever. ¿Qué afirmación es correcta?
+¿Por qué la documentación de PostgreSQL recomienda `jsonb` para la mayoría de las aplicaciones?
 
-- a) En MySQL, un único índice sobre la columna `JSON` acelera los filtros sobre cualquier clave, igual que un `GIN` en PostgreSQL.
-- b) PostgreSQL no puede indexar `JSONB`, así que hay que pasar a columnas comunes los atributos por los que se filtra.
-- c) Ninguno de los dos motores indexa JSON, de modo que cualquier filtro sobre un atributo del documento recorre toda la tabla.
-- d) MySQL necesita un índice por cada atributo filtrado; en PostgreSQL, un único `GIN` sobre `JSONB` cubre cualquier clave.
+- a) Porque conserva exactamente el texto de entrada, con espacios, orden de claves y claves duplicadas.
+- b) Porque es el único de los dos tipos que valida que el contenido sea JSON válido al insertarlo.
+- c) Porque guarda una representación binaria descompuesta: se procesa más rápido y admite indexación con `GIN`.
+- d) Porque ocupa siempre menos espacio en disco que `json`, aunque a cambio no permite consultar claves internas ni usar operadores.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Es la diferencia que se analizó para el catálogo en la Unidad 9 (Actividad 2): con atributos impredecibles, PostgreSQL tiene ventaja, porque un `GIN` sobre `JSONB` sirve para filtros de contención (`@>`) sobre cualquier clave. En MySQL hay que prever el índice de cada atributo filtrado (columna generada, índice funcional o multivaluado); con 150.000 productos, un atributo sin índice tardó ≈ 88 ms y con índice, menos de 1 ms. La a le atribuye a MySQL un índice general que no tiene, y la b y la c niegan capacidades que sí existen.
+**Respuesta: c.** `json` guarda una **copia del texto** y lo reprocesa en muchas operaciones; `jsonb` guarda una representación **descompuesta y binaria**, más eficiente, que admite índices `GIN`. La a describe a `json`, no a `jsonb`. Los dos validan el contenido (b), y `jsonb` sí permite consultar claves internas (d).
 
 </details>
 
-**Pregunta 16** · Intermedia · *Clasificar capacidades (radar multimodelo)*
+**Pregunta 16** · Intermedia · *El índice `GIN`*
 
-El radar multimodelo clasificaba cada capacidad como *Core*, *Habilitable*, *Extensión/Plugin/Cliente* o *No disponible*. En MySQL 9.7, `SHOW PLUGINS` muestra `mysqlx` activo (puerto 33060). ¿Cómo se clasifica el Document Store, es decir, trabajar con colecciones mediante X DevAPI?
+¿Qué tiene de distinto un índice `GIN` sobre una columna `jsonb` respecto de un B-Tree sobre una columna común?
 
-- a) *Core*: con el plugin activo alcanza, porque el cliente clásico `mysql` ya puede trabajar con colecciones JSON.
-- b) *Extensión/Plugin/Cliente*: el servidor lo trae activo, pero hace falta un cliente adicional (MySQL Shell).
-- c) *Habilitable*: viene incluido, pero hay que instalarlo con `INSTALL PLUGIN` y reiniciar el servidor.
-- d) *No disponible*: el Document Store y X DevAPI solo se incluyen en la edición Enterprise, no en Community.
+- a) Ordena los documentos completos de menor a mayor, y por eso sirve para rangos y `ORDER BY`.
+- b) Es un índice invertido: guarda cada componente del documento con la lista de filas donde aparece.
+- c) Guarda un resumen de cada página de la tabla, para descartar bloques enteros en un recorrido.
+- d) Solo indexa la primera clave de cada documento, como un prefijo izquierdo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Para trabajar con colecciones hace falta MySQL Shell (`mysqlsh`) o un conector que hable X Protocol: el cliente clásico `mysql` usa el protocolo clásico (puerto 3306) y no sirve para X DevAPI (a). Desde MySQL 8.0, el plugin `mysqlx` viene compilado y activo (c), y es parte de la edición Community (d). Para comparar: el tipo `JSON` es *Core*, y Full-Text Search es *Core/Habilitable*, porque los índices funcionan de fábrica, pero ajustar `innodb_ft_min_token_size` o las *stopwords* requiere configuración. En el laboratorio integrador, `util.importJson` también exigió una sesión de MySQL Shell por X Protocol.
+**Respuesta: b.** `GIN` (*Generalized Inverted Index*) es un **índice invertido**: "marca → filas", "rojo → filas", "portable → filas". Por eso sirve para buscar claves, valores y **contención** en muchos documentos con un solo índice. "El documento sigue en una fila, pero el acceso ya no se parece a un B-Tree por columna" (a). La c describe un índice BRIN y la d no existe.
 
 </details>
 
-**Pregunta 17** · Intermedia · *Validar la forma de un documento en MySQL*
+**Pregunta 17** · Desafío · *Operadores que usa el `GIN`*
 
-En el laboratorio integrador se agregó a la tabla `customers` la restricción `CHECK (JSON_SCHEMA_VALID('<esquema>', doc))`, con un JSON Schema escrito literal que exige la clave `"Last Name"`. ¿Qué pasa al insertar un documento sin esa clave?
+Existe `CREATE INDEX ON productos USING gin (atributos jsonb_path_ops)`. ¿Qué consulta puede usar ese índice?
 
-- a) Se inserta igual, porque MySQL solo verifica que el JSON esté bien formado, no qué claves contiene.
-- b) Se inserta con una advertencia, y la regla se aplica recién en la próxima reconstrucción de la tabla.
-- c) Se rechaza con `ERROR 3819`, y `JSON_SCHEMA_VALIDATION_REPORT()` informa qué regla falló (`required`).
-- d) Se rechaza solo si se importa con `util.importJson`; un `INSERT` común no se valida.
+- a) `WHERE atributos->>'ram_gb' = '16'`
+- b) `WHERE atributos ? 'gpu'`
+- c) `WHERE (atributos->>'litros')::int BETWEEN 300 AND 400`
+- d) `WHERE atributos @> '{"ram_gb": 16}'`
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Un `CHECK` con `JSON_SCHEMA_VALID()` aplica un JSON Schema a cada fila (el esquema va literal porque un `CHECK` no admite variables). En el laboratorio, las dos inserciones inválidas dieron `ERROR 3819`, y el informe de validación mostró `required` y `enum`. Sin ese `CHECK`, MySQL solo valida que el JSON esté bien formado (a). La regla rige desde que se crea (b) y para cualquier forma de inserción (d).
+**Respuesta: d.** El `GIN` acelera **operadores**, no expresiones: con `jsonb_path_ops` solo atiende `@>`, `@?` y `@@`. La a compara un texto extraído con `->>` y no lo usa. La b (existencia de clave) necesitaría la clase por defecto `jsonb_ops`. Un rango numérico (c) necesita un índice B-Tree de expresión.
 
 </details>
 
----
+**Pregunta 18** · Intermedia · *La extensibilidad de PostgreSQL*
 
-## Unidad 8 · MongoDB: modelado, consultas, seguridad y respaldo
+¿Cómo se acerca PostgreSQL al multimodelo, según la clase?
 
-**Pregunta 18** · Básica · *Diseñar desde los patrones de acceso*
-
-Un equipo lleva su modelo relacional de logística a MongoDB creando una colección por tabla y un `$lookup` por cada `JOIN`. ¿Qué evaluación es correcta?
-
-- a) Es lo recomendado: conserva la normalización, y MongoDB optimiza cada `$lookup` igual que un `JOIN` relacional.
-- b) Es correcto, siempre que se declaren claves foráneas entre las colecciones para mantener la integridad referencial.
-- c) Es imposible: MongoDB no permite combinar dos colecciones en una misma consulta, ni siquiera en un pipeline.
-- d) Es el error típico: el modelo documental parte de las consultas y agrupa en un documento lo que se lee junto.
+- a) Con una API documental separada que escucha en otro puerto, para trabajar con colecciones fuera del SQL.
+- b) Con tipos, operadores, índices y extensiones integradas al SQL.
+- c) Incorporando un motor clave-valor en memoria que reemplaza al almacenamiento en disco.
+- d) Convirtiendo cada tabla en un grafo de propiedades cuando se activa una extensión.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** El modelo documental parte de los **patrones de acceso**: qué se consulta, con qué filtros y con qué frecuencia; con eso se decide qué embeber y qué referenciar. Traducir tabla por colección da lo peor de los dos modelos. MongoDB no tiene claves foráneas (b; para validar la forma existe `$jsonSchema`), y `$lookup` sí existe (c), pero es menos expresivo que un `JOIN` (a).
+**Respuesta: b.** PostgreSQL se extiende **dentro del SQL**: arrays nativos, `hstore` (extensión clave-valor), texto completo con `tsvector` y extensiones como `pg_trgm` o PostGIS. La API documental separada (a) es el camino de MySQL con el Document Store. La c y la d no describen nada de PostgreSQL.
 
 </details>
 
-**Pregunta 19** · Intermedia · *Embeber o referenciar*
+**Pregunta 19** · Intermedia · *Dos caminos*
 
-Un envío tiene de 1 a 4 paquetes, y genera eventos de seguimiento mientras el camión está en ruta (decenas o cientos por envío). ¿Qué modelo es el adecuado?
+¿Cuál de estos pares MySQL 9.7 / PostgreSQL 18 coincide con la tabla "dos caminos" de la clase?
 
-- a) Embeber los paquetes en el envío y guardar los eventos en otra colección, con `envio_id` como referencia.
-- b) Embeber paquetes y eventos en el envío, para leer todo el seguimiento con una sola consulta.
-- c) Guardar paquetes y eventos en colecciones separadas, como en el modelo relacional, para no repetir nada.
-- d) Embeber los eventos en el envío, que se consultan seguido, y guardar los paquetes en otra colección.
+- a) Clave-valor: Document Store con X DevAPI en MySQL; arrays nativos con operadores de contención en PostgreSQL.
+- b) Spatial: sin soporte en MySQL; nativo en el núcleo de PostgreSQL.
+- c) Índice documental: columnas generadas o índices de expresión en MySQL; `GIN` sobre `jsonb` en PostgreSQL.
+- d) API documental: SQL con tipos y extensiones en MySQL; Document Store con X DevAPI y colecciones en PostgreSQL.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Lo que se lee junto y está **acotado** se embebe: los paquetes nacen y mueren con el envío. Lo que **crece sin cota** se referencia: los eventos embebidos formarían un arreglo ilimitado (b, d). Separar todo (c) obliga a un `$lookup` para algo que siempre se lee con el envío.
+**Respuesta: c.** En la tabla, el índice documental es "generadas, expresiones y otros" en MySQL y "`GIN` sobre `jsonb`" en PostgreSQL. Clave-valor es un documento JSON en MySQL y `hstore` en PostgreSQL (a). Spatial es nativo en MySQL y va por tipos y extensiones (PostGIS) en PostgreSQL (b). La d invierte los motores. Lema: "comparar capacidades, no memorizar nombres".
 
 </details>
 
-**Pregunta 20** · Desafío · *Arreglo sin cota*
+**Pregunta 20** · Básica · *Escalar vertical u horizontalmente*
 
-¿Por qué un arreglo embebido que crece sin límite es un problema en MongoDB con WiredTiger?
+¿Qué diferencia hay entre *scale up* y *scale out*?
 
-- a) Porque WiredTiger mueve el documento a otra zona del disco cada vez que crece y deja de entrar en su espacio reservado.
-- b) Porque MongoDB rechaza los arreglos de más de 100 elementos, y el `$push` siguiente falla con un error de validación.
-- c) Porque se acerca al límite de 16 MB por documento, y cada lectura trae el arreglo entero a la caché.
-- d) Porque un campo que es un arreglo no se puede indexar, y las consultas por evento terminan recorriendo la colección.
+- a) *Scale up* agrega nodos que comparten los datos; *scale out* agrega CPU y RAM al mismo servidor.
+- b) *Scale up* agrega CPU, RAM o disco al mismo servidor; *scale out* agrega nodos que comparten datos y carga.
+- c) Son sinónimos: los dos describen la replicación de un servidor primario en varias réplicas.
+- d) *Scale up* es exclusivo de los motores NoSQL y *scale out* es exclusivo de los relacionales, porque solo ellos tienen transacciones.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Mover el documento por falta de espacio era el problema del motor viejo MMAPv1; WiredTiger genera una versión nueva en cada actualización (a). No hay un límite de 100 elementos (b), y los arreglos sí se indexan con índices multiclave (d). Los argumentos actuales son el tamaño máximo, la presión sobre la caché (*working set*) y el costo de mantener arreglos grandes.
+**Respuesta: b.** Escalar **verticalmente** es agrandar el mismo servidor; **horizontalmente**, sumar nodos. La segunda opción trae la pregunta nueva de la clase: cómo particionar, replicar y mantener una visión consistente. La a invierte los términos, no son sinónimos (c) y ninguno es exclusivo de una familia (d).
 
 </details>
 
-**Pregunta 21** · Intermedia · *Referencia extendida*
+**Pregunta 21** · Intermedia · *Replicación y sharding*
 
-En cada envío se copia `transportista: { id, nombre, cuit }` en lugar de guardar solo el `id`. ¿Qué se gana y qué cuesta?
+¿Qué afirmación distingue correctamente replicación y sharding?
 
-- a) Se gana integridad referencial automática: MongoDB rechaza un envío cuyo transportista no exista en su colección.
-- b) Se evita un `$lookup` al calcular demoras por transportista; si cambia un nombre, hay que corregir las copias con `updateMany`.
-- c) No cuesta nada: cuando cambia el nombre de un transportista, MongoDB propaga solo el cambio a todas las copias.
-- d) Se puede borrar la colección de transportistas, porque todos sus datos ya quedan copiados dentro de los envíos.
+- a) En la replicación cada nodo guarda solo una parte de los datos; en el sharding cada nodo guarda una copia completa para tolerar fallas.
+- b) La replicación reparte la escritura entre nodos y el sharding solo sirve para respaldos.
+- c) La replicación mantiene copias para disponibilidad y lectura; el sharding reparte fragmentos según una clave de partición.
+- d) Son alternativas excluyentes: un sistema que usa sharding no puede replicar sus fragmentos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Es el patrón de **referencia extendida**: se copian los campos más consultados de un dato casi inmutable. El costo es mantener las copias cuando ese dato cambia: no hay propagación automática (c) ni integridad referencial (a). La colección original sigue siendo la fuente de verdad del transportista (d).
+**Respuesta: c.** La **replicación** (primario y réplicas) da disponibilidad, lectura y recuperación; el **sharding** reparte volumen y carga entre fragmentos según una *shard key*. La a los invierte. En la práctica se combinan: cada fragmento suele ser un conjunto replicado (d). La b es falsa en las dos mitades.
 
 </details>
 
-**Pregunta 22** · Desafío · *`$elemMatch`*
+**Pregunta 22** · Desafío · *Una mala shard key*
 
-Se buscan los envíos con **un paquete** frágil que pese más de 10 kg. `{ "paquetes.fragil": true, "paquetes.peso_kg": { $gt: 10 } }` devuelve 5 envíos y `{ paquetes: { $elemMatch: { fragil: true, peso_kg: { $gt: 10 } } } }` devuelve 2. ¿Cuál es la correcta?
+Una tienda fragmenta sus pedidos por `fecha_pedido` en rangos. ¿Qué riesgo señala la clase?
 
-- a) La primera: la notación con punto aplica las dos condiciones al mismo paquete, y `$elemMatch` admite paquetes distintos.
-- b) Son equivalentes: devuelven cantidades distintas solo porque una de las dos consultas usa el índice y la otra no.
-- c) Ninguna de las dos: para filtrar dentro de un arreglo hace falta un `$unwind` antes del filtro, en un pipeline.
-- d) La segunda: `$elemMatch` exige que un mismo paquete cumpla las dos condiciones a la vez.
+- a) Ninguno: cualquier campo con muchos valores distintos es una buena clave de partición.
+- b) Que los pedidos de un mismo cliente queden en el mismo fragmento y se pierda la integridad referencial.
+- c) Que el motor rechace la fragmentación, porque las fechas no se pueden usar como clave.
+- d) Que todas las escrituras nuevas caigan en el fragmento de las fechas recientes y concentren el tráfico.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Con la notación con punto, cada condición puede cumplirla un paquete distinto (a). En el laboratorio, el envío 001 tenía un paquete frágil de 3,2 kg y **otro** de 12,5 kg: la primera consulta lo devuelve aunque ningún paquete sea frágil y pesado a la vez. El índice no cambia el resultado (b), y `find` filtra arreglos sin necesidad de `$unwind` (c).
+**Respuesta: d.** Una *shard key* **mala** concentra el tráfico o complica las consultas. Con una fecha creciente, todo pedido nuevo va al último rango: un fragmento caliente mientras los demás descansan. Tener muchos valores no alcanza (a). La b no es un riesgo del sharding y la c es falsa.
 
 </details>
 
-**Pregunta 23** · Básica · *Operadores de actualización*
+**Pregunta 23** · Intermedia · *ACID y BASE*
 
-¿Qué operador agrega una etiqueta al arreglo `etiquetas` sin repetirla si ya está?
+¿Por qué la clase dice que ACID y BASE "no son etiquetas de familias"?
 
-- a) `$push`
-- b) `$set`
-- c) `$addToSet`
-- d) `$inc`
+- a) Porque hay motores NoSQL con transacciones fuertes y motores relacionales distribuidos con distintos compromisos de consistencia.
+- b) Porque ACID y BASE son sinónimos en la práctica: los dos garantizan consistencia inmediata entre todas las réplicas del sistema.
+- c) Porque BASE es una norma ISO que todos los motores deben cumplir, igual que SQL.
+- d) Porque los motores relacionales no ofrecen ACID cuando se ejecutan en la nube.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** `$addToSet` agrega solo si el valor no existe. `$push` agrega siempre, aunque se repita (a); `$set` reemplaza el valor del campo (b), e `$inc` suma a un número (d).
+**Respuesta: a.** ACID describe propiedades de **transacciones**; BASE es un **enfoque histórico** de algunos sistemas distribuidos (disponibilidad básica, estado flexible, consistencia eventual). La simplificación "SQL = ACID / NoSQL = BASE" falla: MongoDB o Neo4j tienen transacciones, y hay relacionales distribuidos con consistencia ajustable. La b, la c y la d son falsas.
 
 </details>
 
-**Pregunta 24** · Intermedia · *Atomicidad en MongoDB*
+**Pregunta 24** · Intermedia · *La decisión de CAP*
 
-En un `mongod` *standalone*, registrar un evento implica insertarlo en `eventos_seguimiento` y actualizar `estado_actual` en `envios`. ¿Qué es correcto?
+Según la clase, ¿cuándo aparece la decisión que plantea el teorema CAP?
 
-- a) Cada operación es atómica por separado, pero no las dos juntas: para eso hacen falta transacciones, que piden un *replica set*.
-- b) Las dos operaciones son atómicas juntas, porque MongoDB envuelve automáticamente cada sesión de `mongosh` en una transacción.
-- c) Ni siquiera la actualización de un solo documento es atómica cuando modifica varios campos o elementos de un arreglo.
-- d) Si las dos escrituras se envían juntas con `insertMany`, quedan dentro de la misma transacción y se confirman a la vez.
+- a) Al diseñar el esquema: hay que elegir dos de las tres propiedades antes de crear las tablas, y esa elección ya no se puede cambiar.
+- b) Cuando la red separa nodos: responder con datos quizá viejos o rechazar operaciones.
+- c) Cuando el motor se queda sin memoria y debe elegir qué claves expulsar.
+- d) Solo en los motores relacionales, porque los NoSQL ya eligieron disponibilidad por diseño.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** La atomicidad por documento es lo que hace atractivo **embeber**: un `updateOne` que toca varios campos y arreglos es indivisible (c es falsa). Para atomicidad entre documentos hacen falta transacciones, que requieren un *replica set* o un clúster fragmentado: en un *standalone* no existen (b). `insertMany` inserta en una sola colección y no es transaccional (d).
+**Respuesta: b.** La decisión aparece **en presencia de una partición real** de la red. La pregunta útil de la clase: si dos grupos de nodos no se comunican, ¿respondemos con datos potencialmente desactualizados, o esperamos y rechazamos operaciones para proteger la consistencia? No es un menú previo (a), no tiene que ver con la memoria (c) y no hay una elección fija por familia (d).
 
 </details>
 
-**Pregunta 25** · Intermedia · *Orden de las etapas*
+**Pregunta 25** · Intermedia · *Qué significa NoSQL*
 
-Un pipeline hace `$lookup` de los eventos de cada envío, luego `$unwind`, y recién al final `$match: { estado_actual: "DEMORADO" }`. ¿Qué mejora corresponde?
+¿Cuál de estas afirmaciones sobre NoSQL es correcta según la clase?
 
-- a) Ninguna: el optimizador reordena siempre las etapas, así que el orden en que se escriben no cambia el trabajo del motor.
-- b) Escribir el `$match` primero: filtra antes del `$lookup`, achica lo que llega a las etapas y puede usar un índice.
-- c) Poner un `$sort` al principio del pipeline, porque ordenar los documentos acelera siempre las etapas siguientes.
-- d) Reemplazar el `$match` por un segundo `$lookup` filtrado, que descarta los envíos no demorados al unir.
+- a) Significa "sin SQL": ningún motor NoSQL ofrece un lenguaje de consulta declarativo.
+- b) Garantiza que no hay transacciones entre registros, y justamente por eso escala mejor que cualquier motor relacional.
+- c) Elimina el diseño: como no hay esquema fijo, el modelo se ajusta solo a las consultas.
+- d) Es una familia de sistemas con modelos distintos del relacional, que exige pensar desde el patrón de datos y de acceso.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** `$match` al comienzo es la etapa que puede aprovechar un índice y achica lo que reciben las demás: hacer `$lookup` de todos los envíos para descartarlos después es trabajo desperdiciado. No conviene depender de que el optimizador reordene (a). Un `$sort` sin filtro previo ordena todo (c), y un `$lookup` no filtra la colección de origen (d).
+**Respuesta: d.** NoSQL **no significa** "sin SQL" necesariamente (Cassandra tiene CQL), **no garantiza** que no existan transacciones y **no elimina** el diseño ni los *trade-offs*. Lo que **sí exige** es pensar desde el patrón de datos y de acceso. Las opciones a, b y c son las tres simplificaciones que la clase desarma.
 
 </details>
 
-**Pregunta 26** · Desafío · *Regla ESR*
+**Pregunta 26** · Intermedia · *Las cuatro familias*
 
-Consulta: `ruta` igual a un valor y `fecha_despacho` en un rango, sobre 200.000 envíos. Con `{ ruta: 1, fecha_despacho: 1 }` se examinan 811 claves para 811 resultados; con `{ fecha_despacho: 1, ruta: 1 }`, 1.531 claves. ¿Por qué?
+Un comercio necesita: sesiones que expiran, un catálogo de forma variable, millones de eventos por usuario y detección de fraude por conexiones. ¿Qué asignación hace la clase?
 
-- a) Porque el segundo índice es en realidad mejor: poner primero el rango descarta más documentos, aunque examine más claves.
-- b) Porque los dos índices son equivalentes, y la diferencia en las claves examinadas se debe a lo que había en la caché.
-- c) Porque con la igualdad primero, el índice se acota a esa ruta y el rango recorre un tramo contiguo.
-- d) Porque MongoDB reordena alfabéticamente los campos de un índice compuesto, y `fecha_despacho` queda antes que `ruta`.
+- a) Clave-valor, documental, *wide-column* y grafo, en ese orden.
+- b) Documental, clave-valor, grafo y *wide-column*, en ese orden.
+- c) Un relacional para todo, porque cuatro motores son siempre demasiados.
+- d) *Wide-column* para todo, porque es la única familia que escala horizontalmente.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Es la regla **ESR**: *Equality*, *Sort*, *Range*. Con la igualdad primero, 811 claves para 811 resultados es el caso ideal; con el rango primero, se recorren las claves de todas las rutas en esas fechas y se descartan las de otras rutas. La a contradice la medición, la b la atribuye a la caché (la cantidad de claves examinadas no depende de ella) y la d es falsa: el orden de los campos lo decide quien crea el índice.
+**Respuesta: a.** La tabla "un mismo sistema puede tener varios problemas": sesión y carrito → **clave-valor**; catálogo flexible → **documental**; eventos masivos → **wide-column**; fraude y conexiones → **grafo**; y pedidos y pagos se quedan en el **relacional**. La clase no impone un motor único (c, d): la tecnología se elige por patrón, no por moda.
 
 </details>
 
-**Pregunta 27** · Intermedia · *Leer un `explain`*
+**Pregunta 27** · Desafío · *Wide-column no es column-store*
 
-`explain("executionStats")` muestra `COLLSCAN`, `totalDocsExamined: 200000` y `nReturned: 811`. ¿Qué diagnóstico es correcto?
+¿Qué aclara la clase sobre el modelo *wide-column*?
 
-- a) Es el plan ideal para esa consulta: se examinaron todos los documentos, así que no quedó ninguno sin evaluar.
-- b) Los números son solo estimaciones del planificador, porque el modo `executionStats` no ejecuta la consulta.
-- c) La colección está fragmentada y necesita compactarse (`compact`) para que el motor deje de recorrerla completa.
-- d) El motor lee y descarta casi todos los documentos: falta un índice para ese patrón de consulta.
+- a) Que es lo mismo que un *column-store* analítico, pensado para agregar columnas enteras en consultas de reportes.
+- b) Que guarda cada columna en un archivo distinto del disco y por eso no admite escrituras frecuentes ni inserciones masivas.
+- c) Que no es un *column-store* analítico: su diseño gira alrededor de la partición, la distribución y las consultas previstas.
+- d) Que es un modelo relacional con más columnas por tabla, sin cambios en la forma de consultar.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** La relación ideal es `keys ≈ docs ≈ returned`. Leer 200.000 documentos para devolver 811 es trabajo descartado; en el laboratorio, con el índice adecuado, pasó a 811 → 811. `executionStats` **sí ejecuta** la consulta (b; por eso hay que tener cuidado con las escrituras), y compactar no cambia el plan (c).
+**Respuesta: c.** El "punto conceptual" de la clase: *wide-column* (Cassandra) **no** es un *column-store* analítico (a). Se diseña desde la **clave de partición** y las consultas previstas, y soporta escritura masiva (b es falsa). Tampoco es "un relacional con más columnas" (d): no tiene `JOIN` ni consultas arbitrarias.
 
 </details>
 
-**Pregunta 28** · Desafío · *Una medición engañosa*
+**Pregunta 28** · Intermedia · *El árbol de decisión*
 
-Con 15 documentos, la primera ejecución con índice tardó más milisegundos que sin índice. ¿Qué conclusión es correcta?
+Un catálogo heterogéneo ya funciona en PostgreSQL. Los atributos variables se guardan en `jsonb` con un índice `GIN` y las consultas responden con el plan esperado. Siguiendo el árbol de decisión de la clase, ¿qué corresponde?
 
-- a) No prueba nada: la primera ejecución incluye la planificación, y con 15 documentos el tiempo es ruido.
-- b) El índice empeora esa consulta en particular, así que conviene eliminarlo y repetir la medición sin él.
-- c) Los índices recién empiezan a servir a partir del millón de documentos; por debajo, siempre agregan costo.
-- d) La medición no vale: falta reiniciar el servidor entre las dos ejecuciones para vaciar la caché.
+- a) Migrar a un motor documental, porque los atributos variables siempre piden un modelo especializado aunque el plan actual responda bien.
+- b) Quedarse en el relacional extendido: la extensión alcanza para el problema.
+- c) Agregar un motor de grafos, porque los productos se relacionan con categorías.
+- d) Volver a una tabla ancha, porque `jsonb` no forma parte del modelo relacional.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** La caché de planes todavía no tenía el plan, y con tan pocos documentos cualquier diferencia es ruido: hay que repetir, comparar el trabajo examinado y probar con volumen. En el laboratorio, los documentos examinados bajaron de 15 a 3; a 200.000 documentos, de 200.000 a 811. No hay un umbral fijo de volumen (c), y reiniciar no hace la medición más representativa (d).
+**Respuesta: b.** El árbol: ¿el relacional representa bien? No → ¿alcanza una extensión? **Sí** → `jsonb`, Document Store, Full Text... Solo si la extensión no alcanza se pasa a un modelo especializado (a). La pregunta de cierre de la clase es justamente si se elige tecnología **por moda** o porque el problema lo pide. La c y la d no tienen fundamento.
 
 </details>
 
-**Pregunta 29** · Intermedia · *Costo de los índices*
+**Pregunta 29** · Intermedia · *Los criterios de la actividad*
 
-¿Qué afirmación sobre los índices secundarios en MongoDB es correcta?
+En la actividad de la unidad, un grupo habilitó una capacidad, mostró una consulta que funciona, pero no explicó qué limitación del relacional resolvía ni qué costo agregaba. ¿Cómo se evalúa?
 
-- a) No tienen costo en las escrituras: MongoDB los actualiza en segundo plano, después de confirmar cada operación.
-- b) Un índice compuesto puede incluir varios campos que sean arreglos, siempre que todos tengan la misma cantidad de elementos.
-- c) Las escrituras que tocan campos indexados mantienen cada índice, que además ocupa caché; `$indexStats` muestra los no usados.
-- d) `$indexStats` también cuenta las ejecuciones de `explain()`, así que sirve para medir cuánto se usa cada índice en las pruebas.
+- a) Logrado: la capacidad funciona y eso es lo que pide la actividad.
+- b) Parcial: la capacidad funciona, pero la decisión o la evidencia es incompleta.
+- c) No logrado, porque toda actividad sin un motor NoSQL instalado queda desaprobada.
+- d) Logrado, siempre que la capacidad sea *Core* y no requiera instalar nada.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Los índices se actualizan dentro de cada escritura, no después (a), y además ocupan espacio y compiten por la caché. En el laboratorio, dos índices secundarios agregaron un 31 % al tiempo de escritura: por eso se crea un índice por **patrón de acceso real**. Un índice compuesto admite un solo campo arreglo (b), y `explain` no incrementa los contadores de `$indexStats` (d).
+**Respuesta: b.** La meta no era "hacer funcionar una *feature*", sino justificar **problema, capacidad, evidencia, costo y veredicto**. "La capacidad funciona, pero la decisión o la evidencia es incompleta" es la definición de **parcial**. Logrado exige justificar con evidencia **y costos** (a, d). No hacía falta instalar NoSQL (c).
 
 </details>
 
-**Pregunta 30** · Básica · *`$lookup`*
+**Pregunta 30** · Desafío · *Claves ausentes en un documento*
 
-¿A qué operación de SQL equivale `$lookup` y qué lo acelera?
+Tres notebooks: una con `gpu` "integrada", otra con `gpu` "RTX 4060" y un ultrabook sin la clave `gpu`. ¿Qué devuelve `WHERE atributos->>'gpu' <> 'integrada'` (igual en MySQL con `'$.gpu'`)?
 
-- a) A un `INNER JOIN`: descarta los documentos sin coincidencias, y lo acelera un índice sobre `localField`.
-- b) A un `LEFT OUTER JOIN`; lo acelera un índice sobre `foreignField` en la colección que se une, si lo hay.
-- c) A un `UNION ALL`: agrega a la salida los documentos de la otra colección, y no puede usar índices.
-- d) A un `CROSS JOIN`: combina cada documento con todos los de la otra colección, recorriendo las dos completas.
+- a) Las dos que no tienen GPU integrada: la de RTX y el ultrabook, porque una clave ausente nunca es igual a 'integrada'.
+- b) Un error, porque el ultrabook no tiene la clave que se consulta.
+- c) Solo la de RTX: en el ultrabook la comparación da `NULL`.
+- d) Las tres, porque `<>` ignora las filas con valores ausentes.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** `$lookup` agrega a cada documento un arreglo con los documentos coincidentes de la otra colección, que queda vacío si no hay ninguno: por eso equivale a una unión externa izquierda. Para cada documento busca en la colección unida por `foreignField`; sin índice ahí, cada búsqueda recorre la colección completa.
+**Respuesta: c.** Es la **lógica de tres valores** del Parcial 1 aplicada a JSON: la clave ausente da `NULL`, la comparación da "desconocido" y el `WHERE` descarta la fila. Para incluirlo hay que pedirlo (`OR ... IS NULL`, `IS DISTINCT FROM` en PostgreSQL, `<=>` en MySQL). No hay error (b) ni se incluyen las filas sin la clave (a, d).
 
 </details>
 
-**Pregunta 31** · Desafío · *Validador `$jsonSchema`*
+**Pregunta 31** · Básica · *Buscar palabras en un texto*
 
-Antes de aplicar un validador `$jsonSchema` a `tiendas` con `collMod` (`validationLevel: "strict"`, `validationAction: "error"`), se verificó que los documentos existentes cumplieran la regla. ¿Por qué?
+`WHERE descripcion LIKE '%inalambrico%'` recorre toda la tabla aunque exista un índice B-Tree sobre `descripcion`. ¿Por qué un índice invertido de texto completo sí sirve?
 
-- a) Porque `collMod` borra sin avisar los documentos existentes que no cumplen la regla, y se perderían tiendas.
-- b) Porque `collMod` revisa todos los documentos existentes y falla por completo si alguno no cumple la regla.
-- c) No hacía falta: un validador solo controla las inserciones nuevas, y nunca las actualizaciones ni las restauraciones.
-- d) Porque los inválidos seguirían en la colección, y una restauración que crea antes la regla rechazaría esos documentos.
+- a) Porque el índice invertido guarda cada término con la lista de filas donde aparece, y no depende del comienzo del valor.
+- b) Porque el índice invertido ordena las descripciones completas alfabéticamente, igual que un B-Tree pero comprimido en disco.
+- c) Porque el B-Tree solo funciona con columnas numéricas y la descripción es texto.
+- d) Porque `LIKE` está deshabilitado en las columnas que tienen un índice de texto completo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** `collMod` no revisa ni borra lo existente (a, b): aplica la regla a las escrituras siguientes, tanto inserciones como actualizaciones (c). Con `strict`, falla toda actualización que deje el documento inválido. Además, `mongorestore` crea primero la colección con el validador y después carga los documentos. Se verifica con `countDocuments({ $nor: [{ $jsonSchema: esquema }] })`, que debe dar 0.
+**Respuesta: a.** El B-Tree ordena **valores completos**: sirve para `=`, rangos y prefijos (`'inal%'`), pero con el comodín al inicio no hay por dónde entrar. El **índice invertido** (`FULLTEXT` en MySQL, `GIN` sobre `tsvector` en PostgreSQL) indexa **cada palabra**. La b describe al B-Tree, la c es falsa (el B-Tree indexa texto) y la d también.
 
 </details>
 
-**Pregunta 32** · Básica · *Tres capas de acceso*
+**Pregunta 32** · Desafío · *Raíces de las palabras*
 
-Un usuario ejecuta `find()` sin problemas, pero `updateOne()` falla con `not authorized on logistica to execute command { update: ... }`. ¿En qué capa está el problema?
+Se busca `juego` y la descripción del producto dice `juegos`. ¿Qué pasa en cada motor con su búsqueda de texto completo por defecto?
 
-- a) Conexión: el firewall deja pasar las lecturas pero bloquea las escrituras hacia el puerto 27017.
-- b) Autenticación: la contraseña es incorrecta, y el servidor solo lo detecta al intentar escribir.
-- c) Autorización: el usuario se autenticó bien, pero su rol (por ejemplo, `read`) no incluye `update`.
-- d) Cifrado: el servidor exige TLS para las escrituras, aunque permita lecturas sin cifrar.
+- a) Los dos lo encuentran, porque cualquier índice de texto completo reduce las palabras a su raíz antes de guardarlas en el índice.
+- b) MySQL no lo encuentra, porque su `FULLTEXT` no reduce a raíces; PostgreSQL con la configuración `spanish` sí, porque las dos formas quedan como `jueg`.
+- c) PostgreSQL no lo encuentra, porque `tsvector` exige la palabra exacta; MySQL sí lo encuentra, porque su colación ignora acentos y plurales.
+- d) Ninguno lo encuentra: para eso hay que sumar siempre un buscador externo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Se diagnostica de abajo hacia arriba: si `find` funciona, la conexión y la autenticación están bien. `not authorized ... to execute command` (código 13) es un error de autorización; uno de autenticación sería `Authentication failed` (código 18). Se verifica con `connectionStatus({ showPrivileges: true })`.
+**Respuesta: b.** El `FULLTEXT` de InnoDB indexa palabras tal cual (`juego*` lo mitiga en parte). La configuración `spanish` de PostgreSQL aplica un diccionario **Snowball** que reduce a la raíz. La colación de MySQL ignora mayúsculas y acentos, no plurales (c). Por eso, en PostgreSQL, las raíces no justifican un buscador externo (d).
 
 </details>
 
-**Pregunta 33** · Intermedia · *Activar la autenticación*
+**Pregunta 33** · Intermedia · *Medir con pocos datos*
 
-¿Cuál es el orden correcto para activar la autenticación en un `mongod`?
+Con 20 filas, el plan de PostgreSQL muestra `Seq Scan` aunque existe un `GIN` adecuado. ¿Qué conclusión es correcta?
 
-- a) Crear el administrador, activar `security.authorization`, reiniciar y verificar que sin credenciales se rechacen las operaciones.
-- b) Activar `authorization`, reiniciar el servicio y después crear el administrador conectándose desde cualquier equipo de la red.
-- c) Crear los usuarios alcanza: en cuanto existe el primero, el servidor empieza a exigir credenciales sin tocar la configuración.
-- d) Activar TLS en `net.tls`: al cifrar el canal, el servidor empieza a exigir usuario y contraseña en cada conexión.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: a.** Sin `authorization: enabled`, cualquier cliente puede ejecutar cualquier comando aunque haya usuarios creados (c). Si se activa antes de crear usuarios, solo una conexión **desde localhost** puede crear el primero (b). TLS cifra el canal, pero no reemplaza la autenticación (d).
-
-</details>
-
-**Pregunta 34** · Intermedia · *Base de autenticación*
-
-`lector_logistica` se creó en la base `logistica`. Al conectarse con `--authenticationDatabase admin` obtiene `Authentication failed`. ¿Por qué?
-
-- a) Porque la contraseña de los usuarios de solo lectura vence a los 30 días y hay que renovarla desde `admin`.
-- b) Porque el usuario pertenece a la base donde se creó: hay que autenticarse contra `logistica`.
-- c) Porque los usuarios con rol `read` solo pueden autenticarse desde localhost, no desde otro equipo de la red.
-- d) Porque los usuarios creados en una base distinta de `admin` solo pueden autenticarse con un certificado TLS.
+- a) El índice está mal creado y hay que borrarlo y volver a crearlo.
+- b) Hay que dejar `enable_seqscan = off` también en producción, para forzar el uso del índice en todas las consultas futuras.
+- c) El `GIN` no sirve para `jsonb` y conviene pasar a un motor documental.
+- d) El optimizador acierta; hay que medir con más volumen.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Para el servidor, un `lector_logistica` en `admin` y otro en `logistica` serían usuarios distintos. `Authentication failed` no distingue entre usuario inexistente, clave incorrecta o base equivocada, para no darle pistas a un atacante. Las opciones a, c y d inventan restricciones que no existen.
-
-</details>
-
-**Pregunta 35** · Desafío · *`userAdminAnyDatabase`*
-
-Proponen darle `userAdminAnyDatabase` al equipo de operaciones "porque no lee ni escribe datos". ¿Qué evaluación es correcta?
-
-- a) Es correcta: sin `read` ni `readWrite` en ninguna base, ese usuario no puede acceder a ningún documento.
-- b) Es correcta, siempre que además se le quite el permiso de escribir en la base `admin`, donde están los usuarios.
-- c) Es incorrecta porque ese rol incluye la acción `shutdown`, que permite apagar el servidor en cualquier momento.
-- d) Es incorrecta: puede concederse cualquier rol a sí mismo, así que en la práctica equivale a un superusuario.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: d.** No lee datos por sí mismo (a), pero quien administra usuarios de cualquier base puede otorgarse `readWriteAnyDatabase` o `root`, y quitarle la escritura en `admin` no lo impide (b). Por eso se reserva para el DBA. Apagar el servidor es una acción de roles como `hostManager`, no de este (c).
-
-</details>
-
-**Pregunta 36** · Intermedia · *Usuarios de respaldo y de restauración*
-
-¿Por qué conviene un usuario con rol `backup` para el respaldo diario y otro, distinto, con rol `restore`?
-
-- a) Porque `restore` es un rol amplio, y la tarea automática que corre cada día solo necesita leer.
-- b) Porque MongoDB no permite asignarle a un mismo usuario dos roles integrados que actúan sobre todas las bases.
-- c) Porque `mongodump` falla si el usuario que respalda tiene también el rol `restore`, por conflicto de privilegios.
-- d) Porque con usuarios separados, `mongodump` y `mongorestore` pueden ejecutarse en paralelo y el respaldo termina antes.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: a.** En el laboratorio, `restore` permitió insertar documentos y crear usuarios. Una cuenta automática que corre todos los días no debería poder hacer eso: es mínimo privilegio, y el usuario de restauración se habilita solo durante una recuperación. Nada impide tener los dos roles (b), `mongodump` solo necesita leer (c) y la separación no tiene que ver con el rendimiento (d).
-
-</details>
-
-**Pregunta 37** · Intermedia · *`bindIp`*
-
-Un compañero dice: "Ya tenemos autenticación, así que `bindIp: 0.0.0.0` no importa". ¿Qué evaluación es correcta?
-
-- a) Es correcta: con la autenticación activa, nadie sin credenciales válidas puede hacer nada, escuche en la interfaz que escuche.
-- b) Es correcta, siempre que además se cambie el puerto 27017 por otro que los atacantes no conozcan.
-- c) Es incorrecta: expone el puerto a toda la red y deja la contraseña como única barrera.
-- d) Es incorrecta porque, con `bindIp: 0.0.0.0`, MongoDB desactiva la autenticación para las conexiones remotas.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: c.** Las defensas se suman: red, autenticación, autorización y cifrado, y ninguna reemplaza a otra (a). Exponer el puerto habilita ataques de fuerza bruta contra las credenciales, y sin TLS los datos viajan sin cifrar: se limita `bindIp`, se filtra con firewall y se activa TLS. Cambiar el puerto solo esconde el servicio (b), y `0.0.0.0` no desactiva la autenticación, pero amplía quién puede intentarla (d). Desde la versión 3.6, MongoDB escucha por defecto solo en localhost, justamente por las filtraciones masivas.
-
-</details>
-
-**Pregunta 38** · Intermedia · *TLS mutuo*
-
-El servidor tiene `mode: requireTLS` y `CAFile`, sin `allowConnectionsWithoutCertificates`. Un cliente que usa solo `--tls --tlsCAFile ca.crt` ve que la conexión se cierra. ¿Por qué?
-
-- a) Porque el certificado del servidor venció, y el cliente corta la conexión al validar las fechas de vigencia.
-- b) Porque es TLS mutuo: el servidor exige también un certificado de cliente firmado por la CA.
-- c) Porque `requireTLS` solo acepta conexiones desde localhost, y el cliente se conecta desde otro equipo.
-- d) Porque TLS y SCRAM no pueden usarse a la vez: hay que desactivar la autenticación por usuario y contraseña.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: b.** Con `allowConnectionsWithoutCertificates: true`, el cliente solo necesita confiar en la CA del servidor. Sin esa opción, el servidor también verifica **quién** se conecta, mediante su certificado (el cliente lo presenta con `--tlsCertificateKeyFile`). Un certificado vencido daría `certificate has expired` (a). `requireTLS` exige cifrado en todas las conexiones, sin importar su origen (c), y TLS convive con SCRAM (d).
-
-</details>
-
-**Pregunta 39** · Desafío · *`mongorestore` sobre datos existentes*
-
-Se restaura un volcado sobre la misma colección, que ya tiene esos documentos: aparecen errores `E11000 duplicate key` y los documentos no se actualizan. ¿Qué es correcto?
-
-- a) El volcado está dañado: los `_id` repetidos indican que `mongodump` copió dos veces los mismos documentos.
-- b) Falta `--oplogReplay`, la opción que hace que `mongorestore` sobrescriba los documentos que ya existen.
-- c) Hay que restaurar con `--noIndexRestore`, porque el error se debe a que los índices del volcado no coinciden con los existentes.
-- d) Por defecto `mongorestore` no sobrescribe; para probar, se restaura en otra base con `--nsFrom`/`--nsTo`.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: d.** Ese comportamiento protege contra pisar datos por error; `--drop` reemplaza la colección, pero es destructivo. La forma segura de probar un respaldo es restaurarlo en una base alternativa y comparar recuentos, contenido e índices. El volcado no está dañado (a): el error es esperable. `--oplogReplay` sirve para la recuperación a un punto en un *replica set* (b), y el problema no son las definiciones de índices, sino los `_id` que ya existen (c).
+**Respuesta: d.** Con muy pocas filas, recorrer la tabla es más barato que usar el índice, y el optimizador lo sabe. `enable_seqscan = off` sirve **solo para la prueba** (b). Por eso las resoluciones escalaron a miles de filas para mostrar el **cambio de plan**. El índice no está mal (a) y la c es falsa.
 
 </details>
 
 ---
 
-## Unidad 9 · Redis, Cassandra, Neo4j y persistencia políglota
+## Unidad 8 · MongoDB: de guardar JSON a diseñar agregados
 
-**Pregunta 40** · Básica · *TTL en Redis*
+**Pregunta 34** · Básica · *Las tres preguntas de diseño*
 
-Se ejecuta `SET sesion:U07 "..." EX 30` y, 35 segundos después, `TTL sesion:U07`. ¿Qué devuelve?
+Para evitar que MongoDB sea "tablas convertidas a JSON", la clase propone empezar con tres preguntas. ¿Cuáles son?
 
-- a) `0`
-- b) `-1`
-- c) `-2`
-- d) `30`
+- a) Qué se lee junto, qué cambia junto y qué puede crecer sin límite.
+- b) Cuántas tablas tiene el modelo relacional de origen, cuántas claves foráneas tiene y cuántas colecciones hay que crear para cada una.
+- c) Qué versión de MongoDB está instalada, cuánta memoria tiene el servidor y cuántos índices se pueden crear.
+- d) Qué campos son obligatorios, qué tipos usa cada campo y qué nombres siguen la convención del equipo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** `-2` indica que la clave **no existe** (venció). `-1` indicaría que existe pero no tiene vencimiento (b), y un número positivo, los segundos que le faltan. Es el mecanismo natural para sesiones y tokens.
+**Respuesta: a.** **Lecturas, cambios y crecimiento**: qué se recupera junto, qué cambia junto y qué puede crecer sin límite. Con esas respuestas se decide qué embeber y qué referenciar. La b es justamente la traducción 1:1 que hay que evitar; la c y la d son cuestiones de operación y de validación, no de diseño del agregado.
 
 </details>
 
-**Pregunta 41** · Intermedia · *Qué devuelve `HSET`*
+**Pregunta 35** · Básica · *Tipos BSON*
 
-`HSET carrito:U01 P103 1 P107 1` devolvió `2`. Después, `HSET carrito:U01 P103 3` devolvió `0`. ¿Qué significa?
+Una colección guarda importes de facturas que se suman y se comparan al centavo. ¿Qué tipo BSON corresponde?
 
-- a) `HSET` devuelve la cantidad de campos nuevos: `P103` ya existía, y su valor pasó a 3.
-- b) La segunda operación falló y el valor de `P103` quedó en 1: para cambiar un campo existente hay que usar `HINCRBY`.
-- c) El hash se reemplazó completo: `HSET` borra los campos anteriores, así que `P107` ya no existe en el carrito.
-- d) `HSET` devuelve la cantidad total de campos que quedan en el hash, y el 0 indica que el carrito quedó vacío.
+- a) `Date`, porque cada importe está asociado a una fecha de facturación y conviene guardarlos juntos en el mismo campo.
+- b) `ObjectId`, porque cada importe debe ser único dentro de la colección.
+- c) `Array`, porque una factura puede tener varios importes.
+- d) `Decimal128`, pensado para montos y cálculos financieros.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Por eso conviene verificar con `HGETALL` en lugar de interpretar el `0` como un error. La operación se aplicó (b), el hash no se reemplaza (c), y la cantidad de campos la da `HLEN` (d).
+**Respuesta: d.** BSON amplía JSON con tipos útiles para una base de datos: `ObjectId` (identificador de 12 bytes), `Date` (momento exacto en UTC), `Decimal128` (128 bits de precisión, para dinero), `Array` y `Object`. Un número de punto flotante común puede acumular errores de redondeo en sumas de dinero. Las demás opciones confunden el tipo con otros rasgos del dato.
 
 </details>
 
-**Pregunta 42** · Desafío · *ACL en Redis*
+**Pregunta 36** · Intermedia · *`_id` y `ObjectId`*
 
-`ACL SETUSER app_user on >clave ~sesion:* ~carrito:* +@read +@write`. En una prueba, `app_user` ejecutó `FLUSHALL` y vació toda la base. ¿Por qué y cómo se corrige?
+¿Qué recomienda la clase sobre el `_id` de un documento?
 
-- a) Es un error de Redis: los patrones de claves deberían limitar todos los comandos, y hay que actualizar la versión.
-- b) Porque `FLUSHALL` pertenece a la categoría `@read`: hay que quitar esa categoría y dejar solo `+@write`.
-- c) Porque falta el patrón `~*`: sin él, Redis ignora los demás patrones de claves y no aplica ninguna restricción.
-- d) Porque `FLUSHALL` está en `@write` y no recibe claves, así que los patrones no lo frenan: falta `-@dangerous`.
+- a) Que siempre lo informe la aplicación, porque MongoDB no puede generarlo.
+- b) Que se use la fecha codificada dentro del `ObjectId` como fecha de alta oficial del pedido, porque así no hace falta otro campo.
+- c) Que es único y obligatorio, que se genera si no se informa y que no conviene apoyar reglas de negocio en la estructura interna del `ObjectId`.
+- d) Que es opcional: los documentos sin `_id` se guardan igual y se identifican por posición.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Se comprobó en la Unidad 9: los patrones de claves no limitan un comando que afecta a toda la base, y eso no es un error de Redis (a). `-@dangerous` quita `FLUSHALL`, `FLUSHDB`, `KEYS`, `CONFIG` y otros comandos. Además hay que proteger al usuario `default`, que existe sin contraseña y con acceso total: una conexión sin `AUTH` lo usa y saltea la ACL de `app_user`. `FLUSHALL` no es de lectura (b), y `~*` daría acceso a todas las claves (c), lo contrario de lo buscado.
+**Respuesta: c.** Todo documento de una colección estándar tiene un `_id` **único**; si no se informa, el driver o MongoDB generan un `ObjectId`. La clase advierte que **no** conviene diseñar reglas de negocio sobre su estructura interna (b): el dato de negocio, como `nroPedido` o la fecha, va en su propio campo. La a y la d son falsas.
 
 </details>
 
-**Pregunta 43** · Intermedia · *Actualización perdida*
+**Pregunta 37** · Intermedia · *Esquema flexible*
 
-Doscientos procesos suman 1 al mismo campo. Con `HINCRBY` el resultado es 200. Si cada proceso hace `HGET` y después `HSET` con el valor más uno, el resultado es mucho menor. ¿Por qué?
+¿Qué quiere decir "esquema flexible ≠ ausencia de diseño"?
 
-- a) Porque Redis descarta escrituras cuando recibe muchas a la vez sobre la misma clave, para proteger la memoria.
-- b) Porque varios procesos leen el mismo valor y escriben el mismo resultado; `HINCRBY` es una sola operación atómica.
-- c) Porque `HSET` es más lento que `HINCRBY`, y algunas escrituras vencen por tiempo antes de llegar al servidor.
-- d) Porque faltó persistir con `BGSAVE` entre una escritura y otra, y Redis perdió las que estaban solo en memoria.
+- a) Que el esquema flexible solo existe en las primeras versiones del sistema y después hay que congelarlo con tablas.
+- b) Que los documentos pueden variar, pero la aplicación necesita nombres, tipos y reglas previsibles, y el motor puede validarlos.
+- c) Que MongoDB rechaza cualquier documento que no tenga los mismos campos que el primero de la colección.
+- d) Que el diseño se puede dejar para después de la primera carga, porque la flexibilidad del esquema corrige sola los nombres y los tipos distintos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Es una carrera de lectura-modificación-escritura. Redis no pierde escrituras (a): cada `HSET` se aplica, pero muchos procesos escriben el mismo número. No es un problema de tiempos (c) ni de persistencia (d): ocurre en memoria, entre la lectura y la escritura. La lección del laboratorio es **delegar la operación crítica al motor** en una sola sentencia atómica. Lo mismo vale para el stock en SQL: `UPDATE ... SET x = x - n WHERE ...`.
+**Respuesta: b.** Los documentos **pueden variar**, **deben ser coherentes** y **pueden validarse** (`$jsonSchema`). "La flexibilidad sirve para evolucionar; no justifica almacenar cualquier cosa". MongoDB no impone los campos del primer documento (c), el diseño no se posterga (d) ni hay que congelarlo (a).
 
 </details>
 
-**Pregunta 44** · Desafío · *`MULTI` y `EXEC`*
+**Pregunta 38** · Intermedia · *El agregado como frontera*
 
-Dentro de un bloque `MULTI`/`EXEC`, uno de los comandos falla al ejecutarse (por ejemplo, un `INCR` sobre una clave que no es numérica). ¿Qué pasa con los demás?
+Un pedido tiene cabecera, dirección de entrega, ítems y totales, y siempre se muestra y se confirma completo. ¿Qué dice la clase?
 
-- a) Se ejecutan igual: Redis no tiene retroceso, y el error solo aparece en la respuesta de ese comando dentro del `EXEC`.
-- b) Se deshace todo el bloque, igual que con un `ROLLBACK` en una transacción SQL, y `EXEC` devuelve un error.
-- c) Se cancelan los comandos que faltaban, pero los que ya se ejecutaron quedan aplicados, como en un `ROLLBACK` parcial.
-- d) El bloque queda en una cola del servidor y se reintenta hasta que todos los comandos funcionen sin error.
+- a) Hay que separar cada parte en su colección, porque un documento no debe tener más de un nivel de anidamiento.
+- b) Hay que referenciar los ítems, porque cualquier array dentro de un documento es un antipatrón.
+- c) Conviene guardar solo la cabecera y calcular los totales en cada lectura con un `$lookup`.
+- d) Que, si se lee y persiste como una unidad, el documento puede ser esa frontera.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** `MULTI`/`EXEC` garantiza que los comandos se ejecuten en secuencia, sin otros intercalados, pero un error durante la ejecución no revierte los anteriores (b) ni frena los siguientes (c), y nada se reintenta solo (d). Para detectar cambios concurrentes está `WATCH`, que hace abortar el `EXEC` si una clave vigilada cambió antes (un control optimista); para lógica condicional atómica, un script Lua.
+**Respuesta: d.** "Lo que se lee y cambia junto suele vivir junto": si el pedido se lee y persiste como unidad, **el documento es la frontera del agregado**. Solo si una relación crece o cambia por separado conviene referenciar. Tener arrays no es el problema (b): el problema es que crezcan sin límite. La a y la c no tienen fundamento.
 
 </details>
 
-**Pregunta 45** · Intermedia · *Respaldo RDB*
+**Pregunta 39** · Intermedia · *Diseñar desde los patrones de acceso*
 
-¿Qué procedimiento de respaldo y restauración con RDB es correcto?
+¿En qué orden propone la clase diseñar una base documental?
 
-- a) Lanzar `BGSAVE` y copiar `dump.rdb` en el acto, sin esperar: el archivo ya tiene los datos nuevos.
-- b) Usar siempre `SAVE` en lugar de `BGSAVE`, porque guarda sin bloquear al servidor y termina antes.
-- c) Ejecutar `BGSAVE`, confirmar con `LASTSAVE` que terminó, copiar el archivo y restaurarlo en otra instancia.
-- d) No hace falta copiar nada: RDB registra cada escritura en el momento, así que no puede perder datos.
+- a) Diseñar el documento, cargar datos de prueba, medir con `explain()` y recién después listar las consultas.
+- b) Copiar el diagrama entidad-relación, crear una colección por tabla y agregar índices sobre cada clave foránea.
+- c) Listar las consultas, identificar las escrituras, medir la cardinalidad y recién después diseñar el documento.
+- d) Elegir los índices, definir el validador y dejar que los documentos tomen la forma que necesite cada inserción.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Redis escribe la foto nueva en un archivo temporal y recién al terminar reemplaza a `dump.rdb`: si se copia antes, se lleva la foto anterior (a). El fin del guardado se confirma con `LASTSAVE` o `INFO persistence`, el archivo se ubica con `CONFIG GET dir` y `CONFIG GET dbfilename`, y la copia se valida restaurándola en otra instancia. `SAVE` **bloquea** el servidor; `BGSAVE` trabaja en segundo plano (b). RDB es una foto y puede perder lo escrito después de la última; el registro de cada escritura es **AOF** (d).
+**Respuesta: c.** "Primero preguntas; después estructura": **consultas** (qué lecturas son frecuentes y críticas), **escrituras** (qué cambia junto), **cardinalidad** (¿uno a pocos o a millones?) y, al final, el **documento** (embeber, referenciar o duplicar). La b es la traducción 1:1 y la a y la d invierten el orden.
 
 </details>
 
-**Pregunta 46** · Desafío · *Memoria llena*
+**Pregunta 40** · Intermedia · *La "foto" del momento de compra*
 
-Una instancia de Redis se usa como caché de páginas (todo se puede recalcular) y otra guarda carritos que no deberían desaparecer en silencio. ¿Qué política de memoria corresponde?
+¿Por qué la clase embebe en el pedido la descripción y el precio unitario de cada ítem, en lugar de referenciar solo el producto?
 
-- a) `noeviction` para las dos: expulsar claves siempre es un error, aunque el dato se pueda recalcular.
-- b) `allkeys-lru` para las dos, porque Redis guarda en el disco lo que expulsa y lo recupera si se vuelve a pedir.
-- c) `volatile-ttl` para las dos, porque expulsa primero lo que está por vencer y así nunca se pierde nada útil.
-- d) `allkeys-lru` en la caché y `noeviction` en los carritos, que deben fallar antes que perder datos en silencio.
+- a) Porque el pedido debe conservar el estado histórico: si el producto cambia de precio, el pedido pasado no cambia.
+- b) Porque MongoDB no permite guardar referencias a documentos de otra colección.
+- c) Porque embeber siempre ocupa menos espacio que referenciar.
+- d) Porque así el precio del catálogo se actualiza solo en todos los pedidos cuando cambia, sin tener que recorrerlos con un `updateMany`.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** La política se elige según si el dato se puede reconstruir. Lo expulsado **se pierde** (b). `noeviction` hace fallar las escrituras cuando se llena la memoria, en lugar de borrar datos en silencio; para una caché sería un problema innecesario (a). `volatile-ttl` solo expulsa claves con vencimiento (c), y no todas lo tienen. En los carritos conviene, además, activar la persistencia y no usar Redis como única fuente de lo que no puede perderse.
+**Respuesta: a.** El ítem es una **"foto" del momento de compra**. Referenciar siempre al producto actual podría alterar la interpretación del pedido pasado (si el teclado sube de precio, el pedido mostraría un total que nunca se cobró). La d describe justamente lo que **no** se quiere. MongoDB sí admite referencias (b), y embeber no siempre ocupa menos (c).
 
 </details>
 
-**Pregunta 47** · Básica · *Clave primaria en Cassandra*
+**Pregunta 41** · Intermedia · *Referenciar al cliente*
 
-En `PRIMARY KEY ((usuario_id), fecha_evento, evento_id)`, ¿qué rol cumple cada parte?
+En el ejemplo de la clase, el pedido guarda `clienteId` y el cliente vive en su propia colección. ¿Qué lo justifica?
 
-- a) `usuario_id` es la clave de partición; `fecha_evento` y `evento_id` ordenan las filas dentro de ella.
-- b) Las tres columnas forman juntas la clave de partición, y Cassandra ordena las particiones por fecha.
-- c) `evento_id` es la clave de partición, porque es el único valor que no se repite; las otras dos son índices.
-- d) `usuario_id` funciona como índice secundario, y `fecha_evento` es la clave de partición que ubica cada fila.
+- a) Que el cliente tiene muchos campos, y los documentos con muchos campos anidados no pueden embeberse dentro de otro documento.
+- b) Que los datos personales nunca deben guardarse en MongoDB.
+- c) Que referenciar garantiza la integridad referencial, como una clave foránea.
+- d) Que el cliente tiene vida propia y cambia por separado.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Los paréntesis internos marcan la partición, y lo que sigue es clustering. `usuario_id` decide dónde vive la fila y agrupa los eventos de un usuario; `fecha_evento` los ordena, y `evento_id` desempata dos eventos con la misma fecha. Con las tres en la partición (b), cada evento quedaría en una partición distinta y no se podría pedir el historial de un usuario. La partición se ubica por el hash de su clave (el *token*), no por la unicidad de una columna (c), y en esa definición no hay índices secundarios (d).
+**Respuesta: d.** Se referencia lo que **vive y cambia por separado**, tiene alta cardinalidad o lo **comparten** muchos documentos. Si el cliente estuviera copiado en cada pedido, cambiar su email obligaría a actualizar todas las copias. Una referencia en MongoDB **no** es una clave foránea: el motor no garantiza la integridad (c). La a y la b son falsas.
 
 </details>
 
-**Pregunta 48** · Intermedia · *Los últimos eventos*
+**Pregunta 42** · Desafío · *Uno a muchísimos*
 
-Con el orden de clustering por defecto (ascendente), `SELECT ... WHERE usuario_id = 'U01' LIMIT 3` devuelve los tres eventos más antiguos. ¿Cómo se obtienen los tres más recientes?
+Un dispositivo IoT envía una medición por segundo durante años. ¿Qué diseño corresponde según la clase?
 
-- a) Agregando `ALLOW FILTERING`, para que Cassandra recorra la partición completa y devuelva las filas más nuevas.
-- b) Creando un índice secundario sobre `fecha_evento`, porque el orden de clustering no se puede invertir en la consulta.
-- c) Pidiendo `ORDER BY fecha_evento DESC`, o definiendo ese orden en `CLUSTERING ORDER BY`.
-- d) No se puede: Cassandra devuelve las filas en el orden en que se insertaron, y `LIMIT` toma siempre las primeras.
+- a) Embeber todas las mediciones en un array dentro del documento del dispositivo, para leerlas de una sola vez.
+- b) Guardar solo la última medición y descartar el resto, porque MongoDB no admite series largas.
+- c) Una colección separada para las mediciones, preferiblemente con el patrón *bucket* o una colección *time series*.
+- d) Un documento por dispositivo con un array de mediciones, que se recorta cuando supera los 16 MB.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Dentro de la partición, las filas están ordenadas por las columnas de clustering, y `LIMIT` toma las primeras. Se comprobó en la Unidad 9: con orden descendente devolvió los tres más recientes. `ALLOW FILTERING` no cambia el orden (a), y un índice secundario no es la forma de ordenar (b).
+**Respuesta: c.** Es **uno a muchísimos** (logs, telemetría, historial continuo): hay que evitar los arrays no acotados y **separar** o usar patrones específicos. Es la respuesta del microdesafío de la clase para IoT. La a y la d crean un array sin cota que se acerca al límite de 16 MB. La b pierde datos sin motivo.
 
 </details>
 
-**Pregunta 49** · Intermedia · *Consulta por una columna que no es clave*
+**Pregunta 43** · Desafío · *Por qué un array sin cota es un problema*
 
-`SELECT * FROM eventos WHERE tipo_evento = 'COMPRA';` responde `InvalidRequest ... use ALLOW FILTERING`. ¿Qué solución propone Cassandra?
+¿Qué argumento es correcto contra un array que crece sin límite dentro de un documento?
 
-- a) Agregar `ALLOW FILTERING`, que resuelve el problema de forma definitiva aunque la tabla crezca a millones de filas.
-- b) Crear otra tabla para esa consulta, con `tipo_evento` en la partición, y que la aplicación escriba en las dos.
-- c) Hacer un `JOIN` entre la tabla de eventos y una tabla de tipos de evento que tenga `tipo_evento` como clave.
-- d) Aumentar el factor de replicación, para que la consulta encuentre los datos en cualquiera de los nodos.
+- a) Se acerca al límite de 16 MB por documento, cada lectura lo trae entero a la caché y mantenerlo y sus índices se encarece.
+- b) El motor WiredTiger mueve el documento a otro lugar del disco cada vez que crece, y eso fragmenta la colección.
+- c) MongoDB no permite más de 100 elementos en un array, y la escritura número 101 falla con un error de validación del documento.
+- d) Los arrays no se pueden indexar, así que cualquier búsqueda dentro de ellos recorre la colección.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** En Cassandra **se diseña una tabla por consulta**, con desnormalización deliberada. `ALLOW FILTERING` solo fuerza a recorrer todas las particiones: con volumen es lento e impredecible (a). No hay `JOIN` (c), y la replicación no cambia cómo se ubican los datos (d).
+**Respuesta: a.** Tamaño (16 MB), caché (*working set*) y costo de mantenimiento son los argumentos actuales. La b es una trampa: "mover el documento cuando crece" era un argumento del motor viejo **MMAPv1**, no de WiredTiger. No hay límite de 100 elementos (c), y los arrays se indexan con índices multiclave (d).
 
 </details>
 
-**Pregunta 50** · Desafío · *Particiones que crecen sin límite*
+**Pregunta 44** · Intermedia · *Duplicación controlada*
 
-Se crea `eventos_por_tipo` con `PRIMARY KEY ((tipo_evento), fecha_evento, evento_id)`. Hay cinco tipos y millones de eventos por día. ¿Qué riesgo hay y cómo se mitiga?
+¿Cuándo justifica la clase duplicar un dato en varios documentos?
 
-- a) Ninguno: con pocas particiones, cada consulta toca un solo nodo y Cassandra responde más rápido.
-- b) Se acumulan demasiadas lápidas en cada partición; se mitiga agregando un `TTL` a cada inserción.
-- c) Las consultas por tipo exigirán `ALLOW FILTERING`; se mitiga con un índice secundario sobre `tipo_evento`.
-- d) Cinco particiones gigantes y calientes en pocos nodos; se mitiga con un cubo, como `((tipo_evento, dia), ...)`.
+- a) Siempre: desnormalizar es el objetivo principal del modelo documental, y cuantas más copias haya, menos `$lookup` hacen falta.
+- b) Cuando ganar en lectura compensa mantener las copias.
+- c) Solo cuando el dato es un `ObjectId`, porque es inmutable.
+- d) Nunca: duplicar datos es un error de diseño en cualquier modelo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** La clave de partición necesita **cardinalidad suficiente** y particiones acotadas. Con cinco valores, cada partición acumula todo el volumen de su tipo, y los nodos dueños se saturan (*particiones calientes*); que cada consulta toque un solo nodo no compensa ese riesgo (a). El cubo por día reparte la carga y acota cada partición. Las lápidas aparecen con los borrados, no por tener pocas particiones (b), y la consulta por tipo indica la partición, así que no necesita `ALLOW FILTERING` (c).
+**Respuesta: b.** La clase llama a la desnormalización "una negociación permanente, no un objetivo". **Beneficio:** menos lecturas cruzadas. **Costo:** más espacio y decidir cómo sincronizar. **Regla:** duplicar cuando el beneficio de lectura supera el costo de mantener la consistencia. Ni siempre (a) ni nunca (d); la c no tiene sentido.
 
 </details>
 
-**Pregunta 51** · Intermedia · *`UPDATE` en Cassandra*
+**Pregunta 45** · Intermedia · *SQL traducido 1:1*
 
-Se ejecuta un `UPDATE` sobre una clave primaria que no existe. ¿Qué pasa?
+Un equipo creó las colecciones `clientes`, `pedidos`, `items`, `productos` y `direcciones`, con referencias entre todas, y cada pantalla encadena varios `$lookup`. ¿Qué diagnóstico hace la clase?
 
-- a) Se crea la fila, porque en Cassandra tanto `INSERT` como `UPDATE` escriben sin leer antes (*upsert*).
-- b) Da un error de clave inexistente, porque `UPDATE` solo modifica filas que ya existen.
-- c) No modifica nada y no avisa, igual que un `UPDATE` de SQL que no encuentra filas.
-- d) Se convierte en una lápida (*tombstone*) sobre esa clave, que se elimina en la próxima compactación.
+- a) Es el diseño recomendado, porque evita toda duplicación de datos y cada colección queda pequeña y fácil de indexar.
+- b) Es correcto si cada colección tiene un validador `$jsonSchema`.
+- c) Es el antipatrón "SQL traducido 1:1": reconstruye el agregado como si fueran `JOIN` y no aprovecha el modelo documental.
+- d) Es correcto solo si el clúster tiene más de tres nodos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Cassandra no lee antes de escribir: las dos operaciones escriben la fila con esa clave. Se vio en la Unidad 9: un `UPDATE` sobre una clave inexistente creó una fila nueva sin dar error. Por eso cada operación se verifica después con un `SELECT`. Las lápidas aparecen con `DELETE`, no con `UPDATE` (d).
+**Respuesta: c.** "Muchas colecciones pequeñas + referencias para todo": si cada lectura obliga a reconstruir el agregado con `$lookup`, no se aprovechó el modelo documental. Se obtiene lo peor de los dos mundos: ni integridad declarativa ni lectura de una sola vez. En los criterios de logro, "traducción 1:1 del relacional" es **no logrado**. La validación (b) y la topología (d) no cambian eso.
 
 </details>
 
-**Pregunta 52** · Desafío · *Consistencia ajustable*
+**Pregunta 46** · Intermedia · *Microdesafío: el catálogo*
 
-Con factor de replicación 3, las escrituras y las lecturas se hacen con `QUORUM`. ¿Qué es correcto?
+Para un catálogo con producto, categorías y stock, ¿qué decisión da la clase en el microdesafío?
 
-- a) `QUORUM` son 3 réplicas, y por eso usar `ONE` en lecturas y escrituras da la misma consistencia con menos latencia.
-- b) La consistencia depende solo del factor de replicación: con RF 3, cualquier nivel garantiza leer la última escritura.
-- c) `QUORUM` son 2 réplicas, y como lecturas y escrituras suman 2 + 2 > 3, cada lectura ve la última escritura confirmada.
-- d) Cassandra tiene un nodo maestro que confirma cada escritura, así que la consistencia no depende del nivel elegido.
+- a) Híbrida: referenciar las categorías y embeber el stock.
+- b) Embeber las categorías completas en cada producto y guardar el stock en otra colección, porque el stock cambia más seguido que las categorías.
+- c) Una colección *time series* para el stock, porque cambia con el tiempo.
+- d) Referenciar todo, porque el catálogo es una entidad con vida propia.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** `QUORUM` = ⌊RF ÷ 2⌋ + 1 = 2. La regla es **R + W > RF**; con `ONE` en ambas (1 + 1 = 2) se podría leer un valor viejo (a). El nivel de consistencia se elige **por operación** (b). No hay nodo maestro: el nodo que recibe una operación actúa como coordinador solo para ella (d).
+**Respuesta: a.** El microdesafío resuelve tres casos: **perfil de usuario → embeber**, **catálogo → híbrido** (referenciar categorías + embeber stock) e **IoT → colección separada** (*bucket* o *time series*). La b invierte la lógica; la c confunde un valor que cambia con una serie de mediciones; la d vuelve a la traducción 1:1.
 
 </details>
 
-**Pregunta 53** · Intermedia · *Un solo nodo*
+**Pregunta 47** · Básica · *Herramientas*
 
-En el laboratorio, Cassandra corre en un solo nodo con factor de replicación 1. ¿Qué se puede afirmar?
+¿Qué herramienta usa una aplicación en Python o Node.js para trabajar con MongoDB?
 
-- a) Que la base es tolerante a fallas, porque todo lo escrito queda primero en el *commit log* del nodo.
-- b) Que el modelo de datos y las consultas funcionan, pero no la tolerancia a fallas ni la diferencia entre niveles.
-- c) Que `QUORUM` y `ONE` ya se comportan distinto, porque Cassandra guarda dos copias en el disco del nodo.
-- d) Que la replicación funciona, aunque las copias queden repartidas entre los discos del mismo nodo.
+- a) Compass, el cliente gráfico, que la aplicación invoca para cada consulta.
+- b) mongosh, la shell interactiva.
+- c) `mongodump`, la herramienta de respaldo.
+- d) Los *drivers* oficiales, las APIs de cada lenguaje.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Para ensayar tolerancia a fallas y niveles de consistencia hace falta un clúster de al menos tres nodos. Con RF = 1 hay una sola copia: si el nodo cae, el dato no está disponible, y todos los niveles se comportan igual. Por eso, en el caso OmniMarket, Cassandra quedó diseñada sin afirmar lo que no se podía ensayar. El *commit log* da durabilidad local, no tolerancia a fallas (a).
+**Respuesta: d.** "Mismo motor, distintas interfaces": **mongosh** para comandos y scripts, **Compass** para explorar datos, consultas, índices y *pipelines* en forma gráfica, y los **drivers** (Java, Python, Node.js, C#) para las aplicaciones. `mongodump` es una herramienta de respaldo (c).
 
 </details>
 
-**Pregunta 54** · Básica · *Por qué un grafo*
+**Pregunta 48** · Básica · *Filtro y proyección*
 
-Para recomendar "lo que compran los clientes que sigo", ¿por qué conviene un grafo?
+En `db.pedidos.find({ estado: "nuevo" }, { nroPedido: 1, total: 1, _id: 0 })`, ¿qué hace el segundo argumento?
 
-- a) Porque guarda los datos de forma más compacta que las tablas, y por eso entra más información en memoria.
-- b) Porque es el único modelo que permite guardar relaciones entre clientes, como `SIGUE`, sin tablas intermedias.
-- c) Porque suma y agrupa todos los datos más rápido que SQL, al no tener que resolver ningún `JOIN`.
-- d) Porque las relaciones están guardadas: cada salto las sigue directamente, sin buscar por clave como un `JOIN`.
+- a) Ordena el resultado por `nroPedido` y `total` de forma ascendente, y excluye `_id` del ordenamiento.
+- b) Agrega los campos `nroPedido` y `total` a los documentos que no los tienen.
+- c) Es la proyección: devuelve solo `nroPedido` y `total`, sin `_id`.
+- d) Filtra los pedidos cuyo `nroPedido` y `total` valen 1.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** En SQL, cada salto es un `JOIN` que se calcula al consultar, y la dificultad crece con la profundidad. En el grafo, las relaciones están almacenadas: el costo depende de la parte que se explora y no del tamaño total, y en Cypher dos saltos son un solo patrón. Un relacional también guarda relaciones (b), y la compacidad no es el motivo (a). Las agregaciones masivas sobre todo el conjunto **no** son el punto fuerte de un grafo (c).
+**Respuesta: c.** El primer argumento es el **filtro** (≈ `WHERE`) y el segundo, la **proyección** (≈ las columnas del `SELECT`); `_id: 0` lo excluye, porque sale por defecto. Ordenar es tarea de `sort()` sobre el cursor (a). La proyección no modifica datos (b) ni filtra (d).
 
 </details>
 
-**Pregunta 55** · Intermedia · *`CREATE` y `MERGE`*
+**Pregunta 49** · Intermedia · *Operadores de actualización*
 
-El script de carga de clientes se ejecutó dos veces. Con `CREATE` quedaron clientes duplicados; con `MERGE`, no. ¿Qué es correcto?
+Al confirmar un pago hay que cambiar el estado, sumar 1 a `intentosPago` y agregar un evento al historial del pedido. ¿Qué escritura corresponde?
 
-- a) `CREATE` crea siempre, mientras que `MERGE` busca el patrón completo y solo lo crea si no existe.
-- b) `MERGE` también crea, pero sobrescribe todas las propiedades del nodo existente cada vez que se ejecuta.
-- c) Los dos crean nodos nuevos; la diferencia es que `MERGE` aplica un `DISTINCT` al devolver los resultados.
-- d) `MERGE` solo sirve para relaciones: con nodos se comporta como `MATCH` y nunca crea nada nuevo.
+- a) Un `updateOne` con `$set`, `$inc` y `$push`.
+- b) Un `replaceOne` con el documento completo armado en la aplicación, para no depender de operadores.
+- c) Un `deleteOne` seguido de un `insertOne` con el pedido actualizado.
+- d) Un `insert()` sobre el mismo `_id`, que reemplaza al documento anterior.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Por eso la carga usa `MERGE`: se puede repetir sin duplicar, y una restricción de unicidad rechaza cualquier duplicado que se cuele. Se aplica sobre el patrón entero, sea un nodo o una relación (d): `MERGE (u)-[:SIGUE]->(s)` crea la relación solo si no estaba. No tiene que ver con `DISTINCT` (c), y para cambiar propiedades se usa `SET` u `ON MATCH SET` (b).
+**Respuesta: a.** "Los operadores expresan la intención del cambio": `$set`, `$inc` (atómico, ideal para contadores) y `$push`, en una sola operación sobre un documento, que además es atómica. `replaceOne` (b) pisa todo y pierde cambios concurrentes; borrar e insertar (c) no es atómico; el viejo `insert()` fue reemplazado y no actualiza (d).
 
 </details>
 
-**Pregunta 56** · Básica · *Borrar un nodo*
+**Pregunta 50** · Intermedia · *Borrar con intención explícita*
 
-`MATCH (c:Cliente {id: 'U99'}) DELETE c` falla con un error que indica que todavía existen relaciones. ¿Qué se hace?
+Antes de ejecutar `deleteMany({ estado: "cancelado", fecha: { $lt: ISODate("2025-01-01") } })`, ¿qué práctica recomienda la clase?
 
-- a) Nada: Neo4j no permite borrar nodos con historia, así que hay que marcarlo como inactivo con una propiedad.
-- b) Usar `REMOVE c`, que borra el nodo junto con sus relaciones en una sola operación.
-- c) Usar `DETACH DELETE c`, que borra el nodo junto con todas sus relaciones, o borrarlas antes.
-- d) Pasar a la edición Enterprise, que es la única que permite borrar nodos que todavía tienen relaciones.
+- a) Desactivar los índices de la colección para que el borrado sea más rápido.
+- b) Ejecutar `drop()` sobre la colección y volver a cargar solo los documentos que se quieren conservar.
+- c) Cambiar el filtro por `{}` para asegurarse de que no quede ningún documento inconsistente.
+- d) Ejecutar el mismo filtro con `find()` o `countDocuments()` y guardar evidencia del conjunto afectado.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Una relación siempre une dos nodos, así que Neo4j no deja que quede "colgando": las relaciones se borran antes o junto con el nodo. Neo4j sí borra nodos (a). `REMOVE` quita propiedades o etiquetas, no nodos (b), y el comportamiento es el mismo en todas las ediciones (d).
+**Respuesta: d.** La **práctica segura**: comprobar con el mismo filtro qué se va a borrar y dejar evidencia. Las demás opciones son destructivas o arriesgadas: `drop()` (b) y `{}` (c) borran de más, y desactivar índices (a) no tiene relación con la seguridad del borrado.
 
 </details>
 
-**Pregunta 57** · Desafío · *Duplicados en una recomendación*
+**Pregunta 51** · Desafío · *`$elemMatch`*
 
-`MATCH (u:Cliente {id:'U01'})-[:SIGUE]->(s)-[:COMPRO]->(p) WHERE NOT (u)-[:COMPRO]->(p) RETURN p.nombre` devuelve `Notebook` dos veces. ¿Por qué y cómo se corrige?
+Se buscan envíos que tengan **algún paquete frágil y de más de 10 kg**. Un envío tiene un paquete frágil de 3 kg y otro no frágil de 12 kg. ¿Qué consulta lo excluye correctamente?
 
-- a) Hay dos nodos `Notebook` cargados en la base, y se corrige borrando el duplicado con `DETACH DELETE`.
-- b) Hay una fila por cada camino, y dos clientes seguidos la compraron: se corrige con `RETURN DISTINCT`.
-- c) `WHERE NOT` evalúa el patrón dos veces y duplica los resultados, así que hay que quitar esa condición.
-- d) `MATCH` repite los nodos que encuentra por más de un camino; se corrige reemplazándolo por `MERGE`.
+- a) `{ "paquetes.fragil": true, "paquetes.peso_kg": { $gt: 10 } }`
+- b) `{ $or: [ { "paquetes.fragil": true }, { "paquetes.peso_kg": { $gt: 10 } } ] }`
+- c) `{ paquetes: { $elemMatch: { fragil: true, peso_kg: { $gt: 10 } } } }`
+- d) `{ paquetes: { fragil: true, peso_kg: { $gt: 10 } } }`
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Es el comportamiento esperado de un patrón: cada camino es una fila, y la misma notebook aparece por dos caminos, no por dos nodos (a). Para ordenar por relevancia se usa `count(DISTINCT s)`. `WHERE NOT (u)-[:COMPRO]->(p)` es lo que excluye lo que U01 ya compró (c), y `MERGE` crearía datos en lugar de consultarlos (d).
+**Respuesta: c.** `$elemMatch` exige que **el mismo elemento** cumpla todas las condiciones. Con la notación con punto (a), cada condición puede cumplirla un paquete distinto, y ese envío aparece. La b es todavía más amplia. La d compara contra un subdocumento exacto y no interpreta `$gt` como un operador dentro del arreglo.
 
 </details>
 
-**Pregunta 58** · Intermedia · *`LOAD CSV`*
+**Pregunta 52** · Intermedia · *Índices con intención*
 
-`LOAD CSV WITH HEADERS FROM 'file:///productos.csv'` no encuentra el archivo guardado en `/home/usuario/`. Después de copiarlo donde corresponde, `ORDER BY p.precio` pone `"1000"` antes que `"200"`. ¿Qué explica las dos cosas?
+¿Qué criterio da la clase para crear un índice en MongoDB?
 
-- a) `LOAD CSV` lee cualquier ruta del equipo, y el orden falla porque falta un índice sobre la propiedad `precio`.
-- b) Para importar un CSV hace falta `neo4j-admin`, y la importación con `LOAD CSV` convierte los números en fechas.
-- c) `LOAD CSV` espera archivos JSON por defecto, así que interpretó mal el CSV y todas sus columnas.
-- d) Solo lee del directorio `import`, y los valores llegan como texto: hay que convertirlos con `toInteger()`.
+- a) Que una consulta concreta lo justifique.
+- b) Crear un índice por cada campo de la colección, por si alguna consulta futura lo necesita, ya que los índices no afectan a las escrituras.
+- c) No crear índices secundarios, porque `_id` alcanza para cualquier consulta.
+- d) Crear índices solo después de pasar a un clúster fragmentado.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Restringir la lectura a `import` evita que una consulta lea archivos arbitrarios del sistema. Como todo llega como texto, `"1000"` queda antes que `"200"` en orden alfabético. Un índice no cambia el tipo de un valor (a).
+**Respuesta: a.** "El índice debe responder a consultas reales": cada uno se mantiene en cada inserción, borrado y modificación del campo indexado, y compite por la caché. La pregunta de la clase es **qué consulta concreta justifica cada índice**. "Por si acaso" (b) es lo que se desaconseja; `_id` no sirve para filtros por otros campos (c); la d no tiene fundamento.
 
 </details>
 
-**Pregunta 59** · Intermedia · *Neo4j Community*
+**Pregunta 53** · Intermedia · *Leer un `explain`*
 
-¿Qué afirmación sobre Neo4j Community es correcta?
+`explain("executionStats")` muestra `COLLSCAN`, `totalDocsExamined: 200000` y `nReturned: 811`. ¿Qué se concluye?
 
-- a) Sí tiene autenticación, pero no roles con privilegios, ni respaldo en caliente, ni clúster.
-- b) Permite crear roles con `GRANT` y `DENY`, igual que Enterprise; solo le falta el clúster.
-- c) No tiene autenticación: cualquiera que llegue al puerto 7687 entra sin usuario ni contraseña.
-- d) Permite el respaldo en caliente con `neo4j-admin`, sin detener la base, pero no la restauración.
+- a) La consulta es óptima, porque devolvió todos los documentos pedidos y el plan no muestra ninguna etapa `SORT` en memoria.
+- b) No hay un índice útil: recorrió toda la colección para devolver poco.
+- c) Hay que aumentar la memoria del servidor, porque la colección no entra en la caché.
+- d) El índice existe y se usó, pero está fragmentado.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** En Community, `SHOW ROLES` responde que no está soportado en esa edición. Por eso la consigna no exigía RBAC granular en Community: se compensa con una clave robusta, escuchando solo en localhost y con los permisos del sistema operativo. Sí hay autenticación: el usuario inicial `neo4j` debe cambiar su clave en el primer ingreso (c). El respaldo en caliente es de Enterprise (d).
+**Respuesta: b.** `COLLSCAN` es un recorrido completo. Lo ideal es que documentos examinados, claves examinadas y devueltos sean parecidos (`keys ≈ docs ≈ returned`): con el índice adecuado se pasa a `IXSCAN` y se examinan 811 para devolver 811. Con un índice usado, el plan diría `IXSCAN` (d). Más memoria (c) no corrige un plan malo.
 
 </details>
 
-**Pregunta 60** · Desafío · *Respaldo y restauración en Neo4j*
+**Pregunta 54** · Desafío · *Regla ESR*
 
-`neo4j-admin database dump neo4j` con el servicio activo responde "The database is in use". ¿Cuál es el procedimiento correcto?
+Una consulta filtra `ruta` por igualdad, `fecha_despacho` por rango y ordena por `prioridad`. Siguiendo la regla ESR, ¿qué índice compuesto conviene?
 
-- a) Agregar `--force` al comando, que hace el volcado en caliente sin detener la base.
-- b) Copiar la carpeta de datos con el servicio en marcha y comprimirla, que equivale a un volcado.
-- c) Detener el servicio, volcar, reiniciar, y cargar el volcado en una instancia aislada para comparar.
-- d) Exportar a un archivo el resultado de `MATCH (n) RETURN n`, que contiene todos los nodos y relaciones.
+- a) `{ fecha_despacho: 1, ruta: 1, prioridad: 1 }`
+- b) `{ prioridad: 1, fecha_despacho: 1, ruta: 1 }`
+- c) `{ ruta: 1, prioridad: 1, fecha_despacho: 1 }`
+- d) `{ fecha_despacho: 1, prioridad: 1, ruta: 1 }`
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Community no ofrece respaldo en caliente: el volcado exige la base detenida, y ninguna opción lo evita (a). Copiar archivos en uso no es consistente (b), y el resultado de una consulta no es un respaldo restaurable: `MATCH (n) RETURN n` ni siquiera trae las relaciones (d). La carga se hace con `neo4j-admin database load` en una instancia aislada, para no pisar el servicio, y se compara antes y después: de 0/0 a los mismos recuentos, la misma consulta de negocio y un `diff` sin diferencias. Contar demuestra que **hay** datos; la consulta y el `diff` demuestran que son **los mismos**.
+**Respuesta: c.** **ESR**: primero la **igualdad** (*Equality*), después el **ordenamiento** (*Sort*) y al final el **rango** (*Range*). Es la regla del prefijo izquierdo del Parcial 1 con el orden en el medio. Empezar por el rango (a, d) obliga a recorrer las fechas de todas las rutas; empezar por el orden (b) no acota nada.
 
 </details>
 
-**Pregunta 61** · Básica · *"No gana quien usa más tecnologías"*
+**Pregunta 55** · Intermedia · *`$unwind`*
 
-¿Qué criterio respeta la consigna de la Unidad 9, según la cual "no gana quien usa más tecnologías"?
+En el *pipeline* de ventas por producto de la clase (`$match` → `$unwind: "$items"` → `$group` por `items.sku` → `$sort`), ¿qué hace `$unwind`?
 
-- a) Sumar un motor especializado en cada dominio, para que cada área tenga la tecnología óptima para su carga.
-- b) Sumar un motor solo si el que ya se tiene falla en un requisito crítico que el nuevo sí cubre.
-- c) Elegir para cada área el motor más usado del mercado, porque tiene más documentación y más especialistas.
-- d) Usar siempre un único motor para todo el sistema, aunque no cumpla alguno de los requisitos obligatorios.
+- a) Abre el array: un documento por ítem.
+- b) Elimina los pedidos que no tienen ítems, como un filtro previo al agrupamiento que reemplaza a `$match` en esa posición.
+- c) Une la colección de pedidos con la de productos, como un `JOIN`.
+- d) Ordena los ítems de cada pedido por importe antes de agruparlos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** Cada motor suma operación, respaldo, seguridad, conocimiento e integración. La pregunta no es "¿qué motor sirve?" sino "¿el que tengo no alcanza?". La popularidad no es un requisito (c), y forzar un solo motor que incumple lo obligatorio tampoco es válido (d).
+**Respuesta: a.** `$match` reduce el conjunto, `$unwind` **abre el array**, `$group` calcula métricas y `$sort` ordena. Sin abrir el array, no se podría agrupar por ítem. Es cierto que, sin `preserveNullAndEmptyArrays`, descarta los documentos con el array vacío (b), pero esa no es su función. La unión es `$lookup` (c) y ordenar, `$sort` (d).
 
 </details>
 
-**Pregunta 62** · Intermedia · *Patrón de acceso*
+**Pregunta 56** · Intermedia · *El orden de las etapas*
 
-Navegación: 30 millones de eventos por día, que solo se agregan, y la consulta principal es "historial reciente de un usuario por fecha". ¿Qué modelo encaja?
+¿Por qué conviene poner `$match` al comienzo de un *pipeline*?
 
-- a) Grafos, porque cada evento relaciona a un usuario con un producto, y eso es una relación entre nodos.
-- b) Clave-valor en memoria, porque la navegación necesita la menor latencia posible en cada escritura.
-- c) Columnas anchas, con partición por usuario y clustering por fecha, para escribir sin pausa.
-- d) Documental, con un arreglo de eventos dentro del documento de cada usuario, ordenado por fecha.
+- a) Porque MongoDB rechaza los *pipelines* que no empiezan con `$match`, salvo que el primero sea `$sort` sobre un índice.
+- b) Porque `$match` es la única etapa que puede calcular sumas y promedios.
+- c) Porque al final del *pipeline* `$match` se ignora.
+- d) Porque reduce el conjunto temprano y puede usar un índice.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Escritura masiva que solo agrega, más lectura por clave y por rango ordenado, es el caso de Cassandra, con un cubo por día en la partición para acotarla. Once mil millones de eventos por año no entran en memoria (b), y un arreglo por usuario sería un arreglo sin cota (d). Un grafo sirve para recorrer relaciones, no para series de eventos (a).
+**Respuesta: d.** "El orden de las etapas puede afectar el trabajo y el rendimiento": filtrar primero evita procesar documentos que se descartarían después, y solo al comienzo `$match` usa un índice. No es obligatorio (a), los cálculos son de `$group` (b), y al final funciona, solo que tarde (c).
 
 </details>
 
-**Pregunta 63** · Intermedia · *Dimensionamiento*
+**Pregunta 57** · Intermedia · *Validación en el motor*
 
-OmniMarket recibe 100.000 pedidos por día. El grupo rival dice que una base relacional no lo soporta. ¿Qué cálculo corresponde?
+Una diapositiva vieja decía que "en MongoDB toda la validación queda en la aplicación". ¿Qué dice la clase actual?
 
-- a) ≈ 1,2 pedidos por segundo (100.000 ÷ 86.400): una carga baja incluso para un solo servidor relacional.
-- b) ≈ 115 pedidos por segundo: una carga que solo una base distribuida como Cassandra sostiene en el tiempo.
-- c) ≈ 1.157 pedidos por segundo: hay que fragmentar la base relacional en varios servidores desde el inicio.
-- d) No se puede estimar nada: sin una prueba de carga, cualquier cifra por segundo es una suposición.
+- a) Que es correcto, porque un motor sin esquema fijo no puede rechazar documentos.
+- b) Que es incompleta: MongoDB valida en el motor con validadores por colección, como `$jsonSchema`, que exigen campos, tipos y reglas.
+- c) Que es correcto solo para MongoDB Atlas; en una instalación propia sí se valida, porque se puede editar `mongod.conf`.
+- d) Que la validación existe, pero solo para el campo `_id`.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Una cuenta de orden de magnitud basta para descartar el argumento; aun con un pico de 40 por segundo sigue siendo una carga baja, y no hay razón técnica para sacar los pedidos de MySQL. Las opciones b y c multiplican el resultado por 100 y por 1.000. Una prueba de carga sirve para validar el supuesto, pero no impide razonar con él (d).
+**Respuesta: b.** La clase lo aclara expresamente: MongoDB **sí** posee validación en el motor (`db.createCollection` o `collMod` con `validator: { $jsonSchema: ... }`), con campos requeridos, `bsonType` y reglas. Si un documento no cumple, la escritura se rechaza (código 121). La a, la c y la d son falsas.
 
 </details>
 
-**Pregunta 64** · Desafío · *Regla de adopción*
+**Pregunta 58** · Intermedia · *Atomicidad y transacciones*
 
-Catálogo: el relacional suma 23 puntos y el documental, 23. La regla dice que se suma un NoSQL solo si (1) hay un criterio de peso 3 que el relacional cubre con aptitud 1 o menos, (2) el candidato lo cubre con 3 y (3) suma más puntos. ¿Qué resultado da?
+¿Qué es atómico en MongoDB sin usar transacciones?
 
-- a) Gana el documental: la flexibilidad de esquema tiene peso 3 en el catálogo, y es su punto más fuerte.
-- b) Se usan los dos motores para el catálogo, uno como copia del otro, para no perder ninguna fortaleza.
-- c) No se puede decidir: con un empate, la regla no aplica y la elección queda librada al equipo.
-- d) Queda en el relacional: ningún criterio de peso 3 tiene aptitud relacional de 1 o menos.
+- a) Una escritura sobre un único documento, aunque toque varios campos.
+- b) Cualquier conjunto de escrituras enviadas en el mismo `insertMany`, sobre cualquier cantidad de documentos.
+- c) Nada: toda escritura necesita una transacción multidocumento para ser atómica.
+- d) Las escrituras sobre la misma colección, aunque afecten a muchos documentos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** En el catálogo, los criterios de peso 3 son la flexibilidad y las consultas ad hoc: el relacional cubre la primera con aptitud 2 (`JSON` con índices) y la segunda con 3, y además los puntajes empatan. Fallan las condiciones 1 y 3. La regla se fija **antes** de ver el resultado y concreta el principio de no sumar motores sin necesidad: si no se cumple, incluido el empate, el dominio queda en el motor que ya está (c). La decisión deja un criterio de revisión: si hubiera que filtrar libremente por cualquier atributo, sin indexarlo antes, se reevalúa.
+**Respuesta: a.** **Documento único:** atómico aunque toque varios campos. **Varios documentos:** existen transacciones multidocumento, pero requieren un replica set o un clúster fragmentado. Por eso "modelar bien puede reducir la necesidad de transacciones": lo que cambia junto, en un documento. Un `insertMany` no es atómico en conjunto (b), ni una colección entera (d).
 
 </details>
 
-**Pregunta 65** · Básica · *Teorema CAP*
+**Pregunta 59** · Intermedia · *Replica set y sharded cluster*
 
-¿Qué formulación del teorema CAP es correcta?
+¿Qué afirmación es correcta?
 
-- a) Cada sistema elige dos de las tres propiedades de una vez y para siempre; por ejemplo, Cassandra es siempre AP.
-- b) Durante una partición de red, el sistema elige entre responder con un error o con un dato quizás desactualizado.
-- c) CAP compara la latencia con el rendimiento: un sistema distribuido no puede optimizar las dos al mismo tiempo.
-- d) La C de CAP es la misma C de ACID: cada transacción debe respetar las restricciones de integridad de la base.
+- a) En un replica set, `mongos` enruta cada consulta al nodo secundario que tiene el fragmento pedido, y los config servers eligen al primario.
+- b) Un sharded cluster tiene un solo nodo, que divide sus datos en archivos por colección.
+- c) Los config servers son las réplicas secundarias que atienden las lecturas.
+- d) El replica set busca alta disponibilidad con elección automática; el sharded cluster, escalar horizontalmente.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** La elección ocurre **durante la falla**: sin particiones, el sistema puede ser consistente y disponible a la vez. No es una etiqueta fija por producto: depende de la configuración (réplicas, nivel de consistencia), por eso a es falsa. CAP no habla de latencia (c; eso lo agrega PACELC), y su C no es la de ACID (d).
+**Respuesta: d.** Son **dos problemas distintos**: el **replica set** mantiene copias para redundancia y alta disponibilidad, con elección automática ante una falla; el **sharded cluster** distribuye datos entre shards, con `mongos` como enrutador y los **config servers** con los metadatos. `mongos` es del clúster fragmentado, no del replica set (a); la b y la c son falsas.
 
 </details>
 
-**Pregunta 66** · Intermedia · *La C de ACID y la C de CAP*
+**Pregunta 60** · Básica · *Lo mínimo en seguridad*
 
-¿Qué diferencia hay entre la "C" de ACID y la de CAP?
+La clase lista cuatro mínimos que un DBA no puede omitir: autenticación, RBAC, red/TLS y backups. ¿Qué exige en el caso de los backups?
 
-- a) Ninguna: las dos exigen que todas las réplicas tengan los mismos datos en el mismo momento.
-- b) La de ACID se refiere a que las réplicas coincidan, y la de CAP, a que se cumplan las restricciones `CHECK`.
-- c) La de ACID es respetar las restricciones; la de CAP, que cada lectura vea la última escritura confirmada.
-- d) La de ACID solo existe en las bases relacionales, y la de CAP, solo en las bases NoSQL distribuidas.
+- a) Que se guarden en el mismo servidor, para restaurarlos más rápido.
+- b) Que se hagan con `mongoexport`, porque el formato JSON es portable.
+- c) Probar la restauración: un backup sin restore probado no alcanza.
+- d) Que se activen solo en los clústeres de más de un nodo.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** La de ACID es que cada transacción lleve la base de un estado válido a otro; la de CAP, que cada lectura vea la última escritura confirmada o reciba un error. Confundirlas es un error frecuente en las defensas. Un sistema puede respetar un `CHECK` (la C de ACID) y, en un clúster con réplicas asíncronas, devolver un dato viejo (no cumple la C de CAP). La b invierte los conceptos, y la d inventa una separación por tipo de motor.
+**Respuesta: c.** "Backup sin restore probado no alcanza". En el mismo servidor (a) se pierde junto con él; `mongoexport` (b) pierde los tipos BSON y los índices, así que no es un respaldo. Respaldar no depende de la cantidad de nodos (d).
 
 </details>
 
-**Pregunta 67** · Intermedia · *PACELC*
+**Pregunta 61** · Desafío · *Tres capas de acceso*
 
-Sin ninguna falla de red, un sistema replicado que espera a una mayoría de réplicas en cada lectura responde más lento. ¿Qué lo explica?
+Un usuario se conecta, ejecuta `find()` sin problemas, pero `updateOne()` responde `not authorized on logistica to execute command`. ¿Qué capa falla?
 
-- a) PACELC: cuando no hay partición (*else*), el sistema elige entre menor latencia y más consistencia.
-- b) El teorema CAP, que obliga a resignar disponibilidad incluso cuando no hay ninguna partición de red.
-- c) El modelo BASE, que prohíbe leer de una sola réplica y obliga a consultar siempre a la mayoría.
-- d) La durabilidad de ACID, que obliga a escribir en el disco de cada réplica también durante las lecturas.
+- a) La autorización: el rol no permite modificar.
+- b) La conexión: el firewall deja pasar las lecturas por el puerto 27017, pero bloquea las escrituras que viajan por otro puerto.
+- c) La autenticación: la clave es incorrecta para las operaciones de escritura.
+- d) El TLS: las escrituras requieren un certificado de cliente.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** CAP solo describe la elección durante una partición (b). PACELC mantiene esa elección ante una partición y agrega el caso normal: esperar más réplicas da datos más actualizados a cambio de latencia. BASE es una actitud de diseño que prioriza la disponibilidad (c), y la durabilidad se refiere a lo confirmado, no a las lecturas (d).
+**Respuesta: a.** Se diagnostica de abajo hacia arriba: si `find()` funciona, la **conexión** y la **autenticación** están bien. El rechazo es de **autorización** (código 13): un rol como `read` permite consultar pero no modificar. La solución, con mínimo privilegio, es otorgar `readWrite` sobre esa base. Un firewall no distingue lecturas de escrituras (b), y una clave incorrecta impediría todo (c).
 
 </details>
 
-**Pregunta 68** · Intermedia · *Dónde va lo transaccional*
+**Pregunta 62** · Intermedia · *Activar la autenticación*
 
-Confirmar un pedido descuenta stock, registra el pago y acredita puntos: todo o nada. ¿Dónde se ubica y por qué?
+¿En qué orden se activa la autenticación en una instancia propia de MongoDB?
 
-- a) En Cassandra, porque garantiza aislamiento entre particiones y restricciones `CHECK` entre tablas distintas.
-- b) En Redis, porque `MULTI`/`EXEC` revierte todo el bloque si uno de los comandos falla al ejecutarse.
-- c) En Neo4j, porque es la única de las cuatro bases con transacciones ACID completas sobre varias entidades.
-- d) En MySQL, que ofrece transacciones ACID entre varias tablas y restricciones declarativas como `CHECK`.
+- a) Activar `security.authorization`, reiniciar el servicio y crear después el administrador desde cualquier máquina de la red del laboratorio.
+- b) Crear el administrador, activar la autorización, reiniciar y verificar el rechazo.
+- c) Activar la autorización sin reiniciar, porque el parámetro se aplica en caliente.
+- d) Crear usuarios con `readWrite`, reiniciar y activar la autorización cuando haya un incidente.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** El dominio necesita atomicidad **entre varias entidades** y restricciones como `CHECK`. NoSQL no significa "sin ACID", pero el alcance cambia: Cassandra es atómica por partición, y Redis, por comando o script. Cassandra no tiene restricciones de ese tipo ni aislamiento entre particiones (a), `MULTI`/`EXEC` no tiene retroceso (b), y Neo4j no es la única con ACID: MySQL también lo es (c).
+**Respuesta: b.** Primero el administrador, después la configuración, el reinicio y la **verificación del rechazo**. Si la autenticación ya está activa y no hay usuarios, la **excepción de localhost** permite crear el primero, pero solo desde el mismo servidor (no "desde cualquier máquina", a). Sin `authorization: enabled`, cualquiera ejecuta cualquier cosa aunque existan usuarios (d).
 
 </details>
 
-**Pregunta 69** · Intermedia · *Escritura doble*
+**Pregunta 63** · Desafío · *Probar un respaldo*
 
-La aplicación guarda el pedido en MySQL y, a continuación, lo escribe directamente en Neo4j. El proceso cae entre las dos escrituras. ¿Qué pasa y cómo se evita?
+`mongorestore` sobre la misma base de origen responde `E11000 duplicate key` en cada documento. ¿Cuál es la forma segura de probar el respaldo?
 
-- a) Nada grave: al reiniciarse, Neo4j detecta la escritura que quedó pendiente y la aplica por su cuenta.
-- b) Quedan inconsistentes; se evita guardando el evento en una tabla *outbox* dentro de la transacción del pedido.
-- c) Se evita con una transacción distribuida (*two-phase commit*), disponible entre cualquier par de motores.
-- d) Se evita invirtiendo el orden: primero se escribe en Neo4j y, si sale bien, después en MySQL.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: b.** Dos escrituras a motores distintos no son atómicas, y la falla pasa inadvertida: Neo4j no sabe nada de una escritura que nunca recibió (a). Con el *outbox*, un proceso aparte publica el evento y lo reintenta hasta aplicarlo. Invertir el orden solo cambia qué motor queda desactualizado (d). El *two-phase commit* no está disponible entre estos motores y, aunque lo estuviera, bloquea y reduce la disponibilidad (c). Con volumen alto, la evolución del outbox es la captura de cambios (CDC) del binlog.
-
-</details>
-
-**Pregunta 70** · Desafío · *Entrega "al menos una vez"*
-
-El relay entrega los eventos "al menos una vez", y el mismo `PEDIDO_CONFIRMADO` llega dos veces al consumidor de Neo4j. ¿Cómo se evita duplicar la compra?
-
-- a) Con un consumidor idempotente: `MERGE` sobre `linea_id`, protegido por una restricción de unicidad.
-- b) Configurando la red y el relay para que garanticen la entrega "exactamente una vez" de cada evento.
-- c) Usando `CREATE` en lugar de `MERGE`, para que la segunda inserción falle y avise del duplicado.
-- d) Desactivando los reintentos del relay, para que cada evento se entregue como máximo una vez.
+- a) Repetir la restauración con `--drop`, que borra cada colección antes de restaurarla y así evita el conflicto con los `_id`.
+- b) Borrar los índices únicos de la base de origen para que acepte los duplicados.
+- c) Restaurar con otro nombre (`--nsFrom 'base.*' --nsTo 'base_restore.*'`) y comparar recuentos, contenido e índices con el original.
+- d) Usar `mongoexport` y `mongoimport`, que no controlan los `_id` repetidos.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** **Al menos una vez más un consumidor idempotente** equivale, en la práctica, a "exactamente una vez"; la red sola no puede garantizarlo (b). El laboratorio lo mostró: después de la reentrega, las compras siguieron en 4. Una `version` por entidad, además, descarta los eventos viejos que llegan tarde. Desactivar los reintentos (d) puede **perder** eventos. Con `CREATE`, la segunda entrega duplica la compra o, si hay una restricción, termina en un error que el relay trataría como falla y volvería a intentar (c).
-
-</details>
-
-**Pregunta 71** · Intermedia · *Caminos de sincronización*
-
-Con cinco motores, ¿cuántos caminos de sincronización hay en una arquitectura en estrella y cuántos en una malla?
-
-- a) Estrella 10, malla 4.
-- b) Estrella 4, malla 10.
-- c) Cinco en las dos formas.
-- d) Estrella 5, malla 25.
-
-<details>
-<summary>Ver respuesta</summary>
-
-**Respuesta: b.** En estrella son n − 1 caminos, y en malla, n × (n − 1) ÷ 2; la d cuenta n y n × n. Por eso OmniMarket centraliza la fuente de verdad en MySQL y proyecta desde ahí: con cuatro motores en estrella hay 3 caminos. Cada camino es un punto donde pueden aparecer duplicados, desorden y reintentos.
+**Respuesta: c.** Por defecto `mongorestore` **no sobrescribe**: los `_id` existentes fallan con `E11000`. Lo seguro es restaurar **en otro lugar** y validar: recuentos, los mismos `_id`, índices, validador y una consulta de negocio. `--drop` (a) es destructivo sobre el original; la b rompe la integridad; la d pierde los tipos BSON.
 
 </details>
 
 ---
 
-## Unidad 10 · Bases de datos como servicio (MongoDB Atlas)
+## Unidad 9 · Redis, Cassandra, Neo4j y CAP
 
-**Pregunta 72** · Básica · *Responsabilidad compartida*
+**Pregunta 64** · Básica · *Tres modelos, tres preguntas*
 
-En MongoDB Atlas, ¿qué sigue siendo responsabilidad del equipo?
+Según la clase, ¿qué pregunta responde cada motor?
 
-- a) Instalar el motor, elegir y aplicar las versiones nuevas, y mantener al día los parches del sistema operativo.
-- b) Mantener el hardware, el almacenamiento y la red física del centro de datos donde corre el clúster.
-- c) Nada: el proveedor se ocupa de todo, incluidos los datos, sus permisos y sus respaldos.
-- d) El modelo de datos, los permisos, la lista de IP y la prueba de restauración de los respaldos.
+- a) Redis: ¿qué conexiones necesito recorrer? Cassandra: ¿qué dato recupero por una clave? Neo4j: ¿qué consultas escalan sobre volumen distribuido?
+- b) Redis: ¿qué dato recupero por una clave? Cassandra: ¿qué consultas escalan sobre volumen distribuido? Neo4j: ¿qué conexiones recorro?
+- c) Los tres responden la misma pregunta con distinta velocidad y distinto costo de licencia, así que se elige el más rápido que entre en el presupuesto.
+- d) Redis y Cassandra responden por clave; Neo4j es un relacional con otro lenguaje de consulta.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Es el **modelo de responsabilidad compartida**: el proveedor opera la infraestructura (sistema operativo, instalación, versiones, réplicas, TLS) y el equipo gobierna lo que está dentro de la base. La responsabilidad sobre los datos nunca se delega (c): si un usuario con permisos de más borra una colección, el servicio replica el borrado sin dudar.
+**Respuesta: b.** "Tres modelos, tres preguntas; no son sustitutos perfectos": **clave** (Redis), **consultas que escalan sobre volumen distribuido** (Cassandra) y **conexiones** (Neo4j). En el comercio de la clase: sesiones que caducan, millones de eventos por usuario y recomendaciones. La a mezcla las preguntas; la c y la d niegan que los modelos sean distintos.
 
 </details>
 
-**Pregunta 73** · Intermedia · *Crear usuarios en Atlas*
+**Pregunta 65** · Básica · *TTL en Redis*
 
-En Atlas, `db.getSiblingDB("admin").createUser(...)` ejecutado con un usuario `atlasAdmin` es rechazado. ¿Por qué?
+Se ejecutó `SET session:ana activa EX 120`. Tres minutos después, ¿qué devuelven `GET session:ana` y `TTL session:ana`?
 
-- a) Porque `atlasAdmin` tiene menos privilegios que `root`: hay que reconectarse con un usuario que tenga el rol `root`.
-- b) Porque en Atlas los usuarios de la base se crean desde la plataforma (*Database Access* o la API), no con comandos.
-- c) Porque el plan gratuito permite un solo usuario de base de datos, y ese lugar ya lo ocupa el administrador.
-- d) Porque falta activar `security.authorization` en el `mongod.conf` del clúster antes de crear usuarios.
+- a) `"activa"` y `0`: la clave sigue, pero sin tiempo restante.
+- b) `"activa"` y `-1`: la clave existe sin vencimiento.
+- c) `(nil)` y `-2`: la clave ya venció y no existe.
+- d) Un error, porque una clave vencida bloquea su nombre hasta un reinicio.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** El motor hace cumplir los permisos, pero no los administra: el comando está bloqueado incluso para `atlasAdmin`, el rol más alto que se le puede dar a un usuario de base de datos (a). Es la diferencia más clara con la VM: en la Unidad 8 los usuarios se creaban con `db.createUser()`. En Atlas no hay acceso a `mongod.conf` (d), y el plan Free admite varios usuarios: en la actividad se usaron un administrador y un usuario de solo lectura (c).
+**Respuesta: c.** `EX 120` da 120 segundos de vida; a los tres minutos la clave ya no existe. `TTL` devuelve los segundos restantes si hay vencimiento, `-1` si la clave existe **sin** vencimiento (b) y `-2` si **no existe**. No queda "con 0 segundos" (a) ni bloquea el nombre (d).
 
 </details>
 
-**Pregunta 74** · Intermedia · *Permisos de la plataforma y del motor*
+**Pregunta 66** · Intermedia · *Elegir una estructura en Redis*
 
-A un compañero se lo invita al proyecto con el rol *Project Read Only*. ¿Puede leer los documentos de `tienda.productos` desde `mongosh`?
+Hay que mantener un ranking de productos ordenado por cantidad de ventas y consultar los tres primeros. ¿Qué estructura corresponde?
 
-- a) No: ese rol es de la plataforma; para leer datos necesita un usuario de base de datos con lectura.
-- b) Sí: un rol de solo lectura en el proyecto incluye leer todas las bases y colecciones de sus clústeres.
-- c) Sí, siempre que se conecte desde una IP habilitada en la lista de acceso y use su cuenta de Atlas.
-- d) Solo en los planes pagos se separan esos permisos; en el plan Free, todos los miembros leen los datos.
+- a) Un *set*, porque no admite repetidos.
+- b) Un *string* por producto, ordenado por el nombre de la clave.
+- c) Un *hash*, con el producto como campo y las ventas como valor, que se ordena solo.
+- d) Un *sorted set*: cada miembro tiene un puntaje que lo ordena.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** *Project Read Only* sirve para ver la configuración y las métricas del proyecto. Son dos capas: las cuentas de la consola web, con roles de organización y de proyecto, y los usuarios de base de datos, que se autentican con SCRAM contra el motor. Una identidad de una capa no sirve en la otra: un usuario de base de datos tampoco puede entrar a la consola. La IP habilitada (c) es una condición de red, no un permiso.
+**Respuesta: d.** La clase asocia cada estructura a un uso: **hash** para atributos de un carrito o un perfil, **set** para miembros únicos (favoritos) y **sorted set** para un **ranking por puntuación**. El *set* no tiene orden (a); el *hash* no ordena por valor (c); las claves no se ordenan (b).
 
 </details>
 
-**Pregunta 75** · Intermedia · *Conectarse desde otra red*
+**Pregunta 67** · Intermedia · *Leer un ranking*
 
-Desde casa, `mongosh` se conectaba a Atlas; en el aula, se queda esperando hasta dar *timeout*. ¿Cuál es la causa y la corrección adecuada?
+Después de `ZADD ranking 10 ana 20 luis 15 eva`, ¿qué devuelve `ZREVRANGE ranking 0 2 WITHSCORES`?
 
-- a) El clúster se eliminó por inactividad, y hay que crearlo de nuevo y volver a cargar los datos.
-- b) La cadena SRV solo se resuelve en redes domésticas; en otras redes hay que usar la IP fija del nodo primario.
-- c) La IP pública de la red cambió: hay que agregarla a la lista de acceso del proyecto, sin abrir `0.0.0.0/0`.
-- d) Atlas dejó de aceptar `mongosh` 2.x en el plan Free, y hay que usar una versión anterior del cliente.
+- a) ana 10, eva 15, luis 20.
+- b) luis 20, eva 15, ana 10.
+- c) ana, luis, eva, en el orden de inserción, sin puntajes.
+- d) Solo luis 20, porque el rango 0 2 devuelve un único elemento.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Se agrega en *Network Access*, por ejemplo con *Add Current IP Address*. La lista de IP es el primer control: si la IP no está, la conexión ni siquiera llega al motor, y se ve como un *timeout*, no como un error de credenciales. `0.0.0.0/0` abriría el clúster a cualquier dirección de internet y dejaría la clave como única defensa. Un clúster Free inactivo se **pausa** a los 30 días, no se elimina (a); la cadena SRV funciona en cualquier red con DNS (b), y la versión de `mongosh` no tiene que ver (d).
+**Respuesta: b.** `ZREVRANGE` recorre de **mayor a menor** puntaje; `0 2` son las posiciones 0, 1 y 2 (tres elementos), y `WITHSCORES` agrega el puntaje. La a es el orden ascendente de `ZRANGE`. Desde Redis 6.2 la forma recomendada es `ZRANGE ranking 0 2 REV WITHSCORES`, con el mismo resultado.
 
 </details>
 
-**Pregunta 76** · Básica · *La cadena SRV*
+**Pregunta 68** · Intermedia · *Persistencia en Redis*
 
-¿Por qué la cadena `mongodb+srv://<cluster>.<id>.mongodb.net/` no tiene IP ni puerto?
+¿Qué diferencia hay entre RDB y AOF?
 
-- a) Porque Atlas usa un único servidor con una dirección fija, y el nombre del clúster ya equivale a esa IP.
-- b) Porque la conexión pasa por un proxy HTTP del proveedor, que reenvía cada consulta al nodo que corresponda.
-- c) Porque solo funciona dentro de una VPN del proveedor, que asigna la IP y el puerto al conectarse.
-- d) Porque el cliente obtiene los nodos y las opciones de conexión consultando registros SRV y TXT en el DNS.
+- a) RDB toma *snapshots* periódicos y puede perder lo escrito después del último; AOF registra las operaciones, con una durabilidad que depende de la configuración.
+- b) RDB guarda en disco y AOF solo en memoria, por eso AOF se pierde al reiniciar.
+- c) Son lo mismo con distinto nombre: los dos copian la memoria a disco en cada escritura.
+- d) RDB sirve solo para replicar hacia otros nodos y AOF solo para respaldar en otro servidor; ninguno se usa para recuperar después de un reinicio.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Los registros SRV indican los nodos, y el TXT, opciones como el *replica set* y `authSource`. Así el proveedor puede reemplazar nodos sin cambiar la cadena. El clúster Free es un *replica set* de tres nodos: con SRV, el cliente los descubre y se conecta con TLS, que en Atlas es obligatorio. Las otras opciones describen arquitecturas que Atlas no usa.
+**Respuesta: a.** **RDB**: fotos periódicas, recuperación con posible pérdida reciente. **AOF**: registro de cada escritura, más durable según cómo se configure. Los dos sirven para recuperar después de un reinicio (d). La clase agrega los **límites**: RAM, política de expulsión, replicación y operación deben diseñarse. "Rendimiento no significa ausencia de compromisos".
 
 </details>
 
-**Pregunta 77** · Intermedia · *La replicación no es un respaldo*
+**Pregunta 69** · Intermedia · *Arquitecturas de Redis*
 
-Un usuario borra un producto por error en un clúster de tres nodos. Alguien dice: "Tenemos tres copias, lo recuperamos de un secundario". ¿Qué evaluación es correcta?
+¿Qué afirmación sobre las arquitecturas de Redis coincide con la clase?
 
-- a) Es correcta: alcanza con promover un secundario a primario antes de que reciba el borrado.
-- b) Es incorrecta: el borrado ya se replicó a los tres nodos, y para volver atrás hace falta un respaldo.
-- c) Es correcta, porque en Atlas los secundarios aplican los cambios con una hora de retraso, como margen.
-- d) Es correcta, porque Atlas conserva los documentos borrados durante 30 días en una papelera del clúster.
+- a) Toda instalación de Redis es distribuida por defecto: reparte las claves entre los nodos de la red.
+- b) La réplica es síncrona: el primario espera a que cada réplica confirme, así que una conmutación nunca pierde escrituras confirmadas.
+- c) Instancia única para practicar; réplica para lecturas, habitualmente asíncrona; Cluster reparte claves por *slots*.
+- d) Cluster replica todas las claves en todos los nodos, sin repartirlas.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: b.** La replicación da disponibilidad ante la caída de un nodo; para volver atrás hace falta un respaldo, que es una copia en otro momento y otro lugar. Es la misma idea de la Unidad 6: la alta disponibilidad protege contra fallas físicas, no contra errores lógicos. Los secundarios replican casi al instante, así que no hay a cuál promover a tiempo (a, c), y Atlas no conserva los documentos borrados (d).
+**Respuesta: c.** "Distribución no es una propiedad de todas las instalaciones" (a). La réplica es **habitualmente asíncrona** (b es falsa: una conmutación puede perder las últimas escrituras). **Cluster** reparte las claves en 16.384 *slots*, no las copia todas en todos los nodos (d).
 
 </details>
 
-**Pregunta 78** · Desafío · *Respaldo en el plan Free*
+**Pregunta 70** · Desafío · *`MULTI` y `EXEC`*
 
-La consigna pide identificar la protección administrada, generar un respaldo lógico y verificar una recuperación, sin registrar tarjetas. ¿Qué enfoque es correcto?
+Dentro de un bloque `MULTI` … `EXEC`, el segundo de tres comandos falla al ejecutarse por operar sobre un tipo equivocado. ¿Qué pasa?
 
-- a) Sin activar los snapshots pagos: `mongodump`, restauración en otra base y comparación de recuentos y `_id`.
-- b) Activar los snapshots en la pestaña Backup y entregar una captura que muestre el respaldo activado.
-- c) Documentar la limitación: el plan Free no permite `mongodump`, así que no hay forma de probar una recuperación.
-- d) Pasar el clúster por un rato a un plan pago, tomar un snapshot y volver al plan Free antes de que se facture.
+- a) Redis deshace el primer comando y no ejecuta el tercero, como un `ROLLBACK`.
+- b) Se aplican el primero y el tercero: el bloque corre en secuencia, sin intercalar otros comandos, pero no tiene *rollback*.
+- c) Redis rechaza el bloque entero antes de ejecutarlo, porque valida los tipos de cada clave de antemano y aborta ante el primer error.
+- d) El bloque queda pendiente hasta que se ejecute `WATCH`.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: a.** Los snapshots administrados del plan Free son una suscripción paga que exige un medio de pago, así que no se activan. El `mongodump` se hace contra el endpoint, y la restauración, en otro espacio de nombres (`--nsFrom`/`--nsTo`). La consigna aclaraba que una captura de "backup activado" no prueba una restauración (b). `mongodump` sí funciona en el plan Free (c), y pasar a un plan pago rompe la condición de no registrar tarjetas (d). Que los `_id` coincidan prueba que es una copia fiel y no una nueva carga.
+**Respuesta: b.** La tabla de ACID de la clase: en Redis, **comandos atómicos** y transacciones `MULTI`/`EXEC` **sin rollback tradicional**. El bloque se ejecuta sin comandos intercalados, pero un error de ejecución no deshace lo anterior (a). `WATCH` sirve para abortar si una clave vigilada cambió (d). Para lógica condicional atómica se usa un script Lua.
 
 </details>
 
-**Pregunta 79** · Intermedia · *Límites del plan Free*
+**Pregunta 71** · Desafío · *Permisos en Redis*
 
-¿Qué afirmación sobre el plan Free (M0) de Atlas es correcta?
+Un usuario de aplicación tiene `~sesion:* ~carrito:* +@read +@write`. ¿Puede vaciar toda la base con `FLUSHALL`?
 
-- a) Se puede elegir la versión de MongoDB, descargar los logs del servidor y usar el panel de rendimiento en tiempo real.
-- b) No tiene límite de almacenamiento: el plan solo limita la cantidad de operaciones por segundo y de conexiones.
-- c) Tiene 512 MB de almacenamiento, 100 operaciones por segundo y 500 conexiones, y la versión la fija el proveedor.
-- d) Admite JavaScript del lado del servidor (`$where`, `mapReduce`) y políticas de respaldo personalizadas sin costo.
+- a) No: los patrones de claves impiden cualquier comando que no reciba claves dentro de `sesion:*` o de `carrito:*`, incluido `FLUSHALL`.
+- b) No, porque `FLUSHALL` solo lo puede ejecutar el usuario `default`.
+- c) Sí: `FLUSHALL` está en `@write` y no recibe claves, así que el patrón no lo limita. Hay que quitar `@dangerous`.
+- d) Sí, pero solo si Redis corre en modo Cluster.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: c.** Son los límites de la documentación oficial de Atlas, consultada en la Unidad 10. La versión no se elige, no se pueden descargar los logs ni usar el panel en tiempo real, y las métricas se reducen a conexiones, operaciones, red y tamaño lógico (a). El almacenamiento también está limitado (b), y el JavaScript del lado del servidor no está soportado (d). Además, un clúster Free se pausa tras 30 días sin conexiones.
+**Respuesta: c.** Los patrones de claves **no limitan** los comandos que afectan a toda la base. `-@dangerous` quita `FLUSHALL`, `FLUSHDB`, `KEYS`, `CONFIG` y otros. Además, el usuario `default` existe sin contraseña y con acceso total si no se lo protege: no es un límite, es otro riesgo (b).
 
 </details>
 
-**Pregunta 80** · Intermedia · *¿DBaaS elimina al DBA?*
+**Pregunta 72** · Básica · *Partición y clustering*
 
-¿Qué conclusión respalda mejor la evidencia de la Unidad 10?
+En `PRIMARY KEY ((usuario), fecha, evento_id)` con `CLUSTERING ORDER BY (fecha DESC, evento_id ASC)`, ¿qué hace cada parte?
 
-- a) DBaaS elimina al DBA: el proveedor se ocupa de la instalación, las réplicas, la seguridad y los respaldos.
-- b) El trabajo del DBA es el mismo que en la VM: solo cambia dónde está el servidor y quién paga el hardware.
-- c) El DBA solo hace falta para escribir consultas, porque la seguridad y los respaldos los resuelve la plataforma.
-- d) DBaaS transforma el rol: se delega la infraestructura, pero quedan los datos, el acceso, la continuidad y los costos.
+- a) `usuario` y `fecha` forman juntas la clave de partición, y `evento_id` funciona como un índice secundario sobre cada partición.
+- b) `usuario` es la partición; `fecha` y `evento_id` ordenan dentro de ella.
+- c) Las tres columnas forman la partición, y el orden se elige en cada consulta.
+- d) `evento_id` es la clave de partición, porque es el único valor único.
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Respuesta: d.** Se delegan la instalación, los parches, las réplicas y el TLS, pero quedan el diseño de datos, el mínimo privilegio, la red, la continuidad con restauraciones probadas, los límites del servicio y los costos. En la actividad igual hubo que decidir permisos (un lector con `read`), red (la lista de IP), estructura y respaldo con su verificación, y compensar los límites del plan: sin respaldo administrado gratuito, sin `createUser` y sin logs. Las otras opciones ignoran esa evidencia.
+**Respuesta: b.** Los paréntesis internos marcan la **clave de partición** (`usuario`): determina la ubicación del dato y agrupa todos sus eventos. Las **columnas de clustering** organizan las filas dentro de la partición, acá de la más reciente a la más antigua; `evento_id` desempata dos eventos con la misma fecha. El orden se fija en la tabla, no en cada consulta (c).
+
+</details>
+
+**Pregunta 73** · Intermedia · *Un keyspace de laboratorio*
+
+En el laboratorio se creó un *keyspace* con `SimpleStrategy` y `replication_factor: 1` en un solo nodo. ¿Qué se puede afirmar con esa evidencia?
+
+- a) Que Cassandra tolera la caída de un nodo, porque ninguna escritura falló durante toda la carga de datos del laboratorio.
+- b) Que `QUORUM` y `ONE` dan resultados distintos, porque hay replicación.
+- c) Que el clúster tiene tres copias de cada partición, como en producción.
+- d) Que CQL, particiones y modelado funcionan, no la tolerancia a fallas.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** La advertencia de la clase: **nodo único** permite CQL, particiones y modelado; **tres nodos** son necesarios para observar RF = 3 y caídas; y "no afirmar tolerancia a fallas sin ensayar un clúster real". Con RF = 1 hay una sola copia: no hay diferencia observable entre niveles de consistencia (b) ni tolerancia a fallas (a).
+
+</details>
+
+**Pregunta 74** · Intermedia · *Consultar por una columna que no es clave*
+
+En la tabla `eventos` particionada por `usuario`, se necesita buscar todos los eventos de tipo `'compra'`. ¿Qué corresponde en Cassandra?
+
+- a) Otra tabla para esa consulta, con el tipo en la partición.
+- b) Agregar `ALLOW FILTERING` al final del `SELECT`, que resuelve la consulta con el mismo costo que una búsqueda por partición.
+- c) Hacer un `JOIN` entre `eventos` y una tabla de tipos.
+- d) Ninguna: Cassandra no puede devolver eventos de un tipo determinado.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** La pregunta de la clase ("¿por qué una búsqueda global por tipo requeriría otro diseño?") apunta a esto: en Cassandra **la tabla se diseña desde la consulta**, y la desnormalización es deliberada. `ALLOW FILTERING` (b) obliga a recorrer todas las particiones. No hay `JOIN` (c). Cuidado: con pocos tipos, la nueva partición crecería sin límite; se agrega un cubo, como `(tipo, dia)`.
+
+</details>
+
+**Pregunta 75** · Intermedia · *Token y coordinador*
+
+¿Cómo encuentra Cassandra los nodos que guardan los eventos de `usuario = 'ana'`, y quién coordina la operación?
+
+- a) Un nodo maestro fijo consulta un índice global de particiones y reenvía la operación al nodo correcto, que la confirma al maestro.
+- b) Se recorren todos los nodos hasta encontrar la partición, y el primero que responde coordina.
+- c) La clave de partición pasa por una función *hash* que da un token, y el token determina los nodos dueños. Coordina el nodo que recibió esa operación, que puede ser cualquiera.
+- d) El cliente elige el nodo por orden alfabético de la clave, y ese nodo es el maestro de la partición.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** **Token:** el *hash* de la clave de partición ubica el dato. **RF:** cuántas copias hay. **Coordinador:** como no hay nodo maestro (a), es el nodo al que el cliente le envió esa operación, y puede ser distinto en cada consulta. No se recorre todo el clúster (b).
+
+</details>
+
+**Pregunta 76** · Desafío · *RF y nivel de consistencia*
+
+Con RF = 3, ¿cuántas réplicas deben responder con `ONE` y con `QUORUM`?
+
+- a) Una y dos.
+- b) Una y tres.
+- c) Tres y dos.
+- d) Una y una, porque `QUORUM` es el valor por defecto de `ONE`.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** **RF y CL son decisiones diferentes:** RF = 3 son tres copias; `ONE` se satisface con **una** respuesta; `QUORUM` es la mayoría, ⌊RF ÷ 2⌋ + 1 = **2**. Tres respuestas serían `ALL` (b). El RF se fija en el *keyspace* y el CL se elige en cada operación.
+
+</details>
+
+**Pregunta 77** · Desafío · *Consistencia fuerte en Cassandra*
+
+Con RF = 3, ¿qué combinación de nivel de escritura (W) y de lectura (R) garantiza leer la última escritura confirmada?
+
+- a) W = `ONE` y R = `ONE`, porque cada operación toca una réplica.
+- b) W = `QUORUM` y R = `ONE`, porque la escritura ya llegó a la mayoría.
+- c) W = `ONE` y R = `QUORUM`, porque la lectura consulta a la mayoría.
+- d) W = `QUORUM` y R = `QUORUM`, porque 2 + 2 > 3.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** La regla es **R + W > RF**: los conjuntos de réplicas que escriben y que leen se cruzan en al menos una. 2 + 2 = 4 > 3 la cumple. Con `ONE` y `ONE` (a), 1 + 1 = 2 puede leer una réplica vieja. La b y la c dan 2 + 1 = 3, que no supera a 3.
+
+</details>
+
+**Pregunta 78** · Intermedia · *`UPDATE` en Cassandra*
+
+Se ejecuta un `UPDATE` sobre una clave primaria que no existe en la tabla. ¿Qué pasa?
+
+- a) Da error, porque no hay fila para modificar.
+- b) Crea la fila: en Cassandra `INSERT` y `UPDATE` son *upsert*.
+- c) No hace nada y devuelve "0 filas afectadas", como en SQL.
+- d) Escribe una lápida (*tombstone*) que marca la clave como inexistente.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** En Cassandra las escrituras son **upsert**: si la fila no existe, se crea, sin dar error (se comprobó en el laboratorio). Para "insertar solo si no existe" está `INSERT ... IF NOT EXISTS`, una transacción ligera con Paxos, más lenta. Las lápidas (d) las escribe el `DELETE`.
+
+</details>
+
+**Pregunta 79** · Básica · *Por qué un grafo*
+
+¿Qué diferencia de fondo tiene Neo4j frente a un relacional cuando se recorren relaciones?
+
+- a) Neo4j guarda las relaciones como listas de identificadores dentro de cada nodo, como un array JSON que se recorre en cada consulta.
+- b) Las relaciones son elementos de primera clase, persistidas con tipo y dirección: recorrerlas no exige buscar por clave en otra estructura.
+- c) Neo4j no tiene relaciones: une los nodos en cada consulta comparando sus propiedades.
+- d) Es igual que el relacional, pero con otro lenguaje de consulta.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** "Los vínculos son relaciones **persistidas**, no listas de identificadores" (a). Por eso el costo de un recorrido depende de la parte del grafo que se explora y no del tamaño total, mientras que en SQL cada salto es un `JOIN` que busca por clave. La c y la d niegan justamente lo que distingue al modelo.
+
+</details>
+
+**Pregunta 80** · Intermedia · *Leer una consulta Cypher*
+
+¿Qué devuelve `MATCH (p:Producto)<-[:COMPRO]-(c:Cliente) RETURN p.nombre, count(c) AS compras`?
+
+- a) Los clientes que compraron cada producto, uno por fila, sin agrupar.
+- b) La cantidad total de productos de la base, contando también los que nadie compró todavía.
+- c) Cada producto comprado, con cuántos clientes lo compraron.
+- d) Los productos que ningún cliente compró.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** El patrón recorre las relaciones `COMPRO` desde los clientes hacia los productos; `count(c)` agrupa implícitamente por `p.nombre`. Los productos sin compras (d) no cumplen el patrón y no aparecen. Es la segunda consulta de la clase, que muestra lo que aporta **recorrer relaciones** frente a varios `JOIN`.
+
+</details>
+
+**Pregunta 81** · Intermedia · *Supernodos*
+
+¿Qué es un **supernodo** y por qué la clase lo menciona como costo del modelo de grafos?
+
+- a) Un nodo con muchísimas relaciones, caro de atravesar.
+- b) Un nodo administrador con permisos sobre todo el grafo, que es un riesgo de seguridad porque cualquier consulta puede pasar por él.
+- c) Un nodo con muchas propiedades, que ocupa más espacio en disco.
+- d) El servidor principal de un clúster de Neo4j, que concentra las escrituras.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** La clase resume el costo de Neo4j: "modelado, índices, cardinalidad y **supernodos**". Un producto que compraron millones de clientes es un supernodo: recorrer a través de él examina todas sus relaciones. Por eso la decisión es "elegir cuando el valor está en explorar conexiones", no reemplazar todo SQL.
+
+</details>
+
+**Pregunta 82** · Intermedia · *`CREATE` y `MERGE`*
+
+Un script de carga de Neo4j se ejecutó dos veces por error. ¿Qué pasa según se haya escrito con `CREATE` o con `MERGE`?
+
+- a) Con los dos se duplican los nodos, porque Neo4j no controla duplicados.
+- b) Con los dos queda igual, porque Neo4j detecta los nodos repetidos por sus propiedades.
+- c) Con `MERGE` se duplican y con `CREATE` no, porque `CREATE` busca el patrón antes de crear.
+- d) Con `CREATE` se duplican; `MERGE` busca el patrón completo y solo lo crea si no existe.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** `CREATE` crea **siempre**; `MERGE` crea solo si el patrón completo no existe, y vale también para relaciones (`MERGE (a)-[:SIGUE]->(b)`). Con una restricción de unicidad (`REQUIRE c.id IS UNIQUE`) además se rechazan los duplicados y se protegen los `MERGE` concurrentes. La c invierte los comandos.
+
+</details>
+
+**Pregunta 83** · Desafío · *Duplicados en un recorrido*
+
+`MATCH (u:Cliente {id:'U01'})-[:SIGUE]->(s)-[:COMPRO]->(p) RETURN p.nombre` muestra dos veces la misma notebook. ¿Por qué?
+
+- a) Porque la notebook está cargada dos veces en la base.
+- b) Porque un patrón devuelve una fila por camino: dos clientes seguidos compraron la misma notebook. Se corrige con `DISTINCT` o `count(DISTINCT s)`.
+- c) Porque `MATCH` siempre duplica los resultados de los recorridos de dos saltos, y hay que dividir el conteo por la cantidad de saltos.
+- d) Porque falta un índice sobre `Producto.nombre`.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** Hay **dos caminos** distintos que llegan al mismo producto. `RETURN DISTINCT p.nombre` lo muestra una vez, y `count(DISTINCT s)` además dice cuántos seguidos lo compraron, útil para ordenar recomendaciones. No hace falta que el producto esté duplicado (a), y un índice no cambia el resultado (d).
+
+</details>
+
+**Pregunta 84** · Intermedia · *Comparación transversal*
+
+En el comercio de la clase, ¿qué pieza resuelve cada motor?
+
+- a) Redis: afinidades entre clientes y productos. Cassandra: carrito y sesión con vencimiento. Neo4j: actividad por usuario y período.
+- b) Redis: actividad por usuario y período. Cassandra: afinidades. Neo4j: carrito con TTL.
+- c) Redis: sesión y carrito. Cassandra: actividad. Neo4j: afinidades.
+- d) Los tres guardan lo mismo, replicado, para tener alta disponibilidad.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** "Mismo comercio, tres piezas complementarias". El cierre de la clase lo resume: Redis prioriza el **acceso directo** en memoria; Cassandra **diseña por consultas** y distribuye; Neo4j hace foco en los **vínculos y recorridos**. La a y la b mezclan los usos; la d confunde complementar con replicar.
+
+</details>
+
+**Pregunta 85** · Desafío · *ACID en los motores NoSQL*
+
+¿Qué afirmación coincide con la tabla de ACID de la clase?
+
+- a) Cassandra ofrece atomicidad por partición y transacciones ligeras con Paxos, sin aislamiento general entre particiones.
+- b) Ningún motor NoSQL ofrece durabilidad: todos guardan los datos solo en memoria.
+- c) Redis ofrece transacciones ACID completas con aislamiento por bloqueos, igual que Neo4j, y por eso tiene *rollback* con `MULTI`/`EXEC`.
+- d) Neo4j no tiene transacciones, porque los grafos no admiten ACID.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** La tabla de la clase: **Redis**, comandos atómicos y `MULTI`/`EXEC` sin rollback, durabilidad según RDB/AOF; **Cassandra**, atomicidad por partición, Paxos, sin aislamiento entre particiones, *commit log* + SSTables; **Neo4j**, transacciones ACID completas con aislamiento por bloqueos (c y d son falsas). "NoSQL no significa sin ACID": las garantías y su **alcance** dependen del motor (b).
+
+</details>
+
+**Pregunta 86** · Intermedia · *Particionado, replicación y consistencia*
+
+La clase pide "no confundir técnicas con propiedades". ¿Qué definición es correcta?
+
+- a) Particionado es mantener copias para tolerar fallas; replicación es repartir subconjuntos de datos entre nodos para escalar la escritura.
+- b) Consistencia es una técnica para repartir la carga de escritura entre nodos.
+- c) Particionado, replicación y consistencia son tres nombres del sharding.
+- d) Particionado reparte subconjuntos de datos; replicación mantiene copias; consistencia define qué lecturas y escrituras se consideran válidas.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** **Particionado** y **replicación** son técnicas (repartir y copiar); **consistencia** es una propiedad (qué se considera válido leer y escribir). La a invierte las dos primeras. La b y la c confunden una propiedad con una técnica.
+
+</details>
+
+**Pregunta 87** · Desafío · *Se corta la red*
+
+Dos réplicas dejan de comunicarse. El lado A acepta `X = 1` y el lado B recibe una lectura de `X`. ¿Qué pasa si **los dos lados siguen respondiendo**?
+
+- a) El sistema es consistente y disponible a la vez, porque la partición es temporal y las réplicas se ponen al día cuando vuelve la red.
+- b) Sigue disponible, pero B puede devolver un valor viejo y aceptar escrituras que choquen con las de A.
+- c) El lado B rechaza la lectura, porque no puede confirmar el último valor.
+- d) Las dos réplicas se sincronizan por otra vía y B devuelve `X = 1`.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** Es la disyuntiva de la clase: "¿responder en ambos lados o rechazar alguna operación?". Responder en los dos lados prioriza la **disponibilidad** y sacrifica la consistencia; rechazar en B (c) prioriza la **consistencia** y sacrifica la disponibilidad en ese lado. No se pueden tener las dos durante la partición (a), y por definición no hay otra vía de comunicación (d).
+
+</details>
+
+**Pregunta 88** · Básica · *CAP, formulación correcta*
+
+¿Cuál es la formulación correcta del teorema CAP?
+
+- a) Todo sistema distribuido elige, al diseñarse, dos de las tres propiedades y renuncia para siempre a la tercera.
+- b) Un sistema distribuido no puede ser consistente si tiene más de tres nodos.
+- c) Si la red se particiona, hay que elegir entre devolver un error (consistencia) o una respuesta posiblemente desactualizada (disponibilidad).
+- d) La consistencia y la disponibilidad se excluyen siempre, haya o no fallas de red, y por eso todo sistema distribuido debe renunciar a una.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** **C**: cada lectura ve el último valor confirmado o recibe error. **A**: cada solicitud a un nodo no fallado obtiene respuesta. **P**: la red puede perder mensajes. La elección ocurre **durante la partición**; sin particiones se pueden tener C y A (d es falsa). "No es un menú" (a).
+
+</details>
+
+**Pregunta 89** · Intermedia · *La C de ACID y la C de CAP*
+
+¿Qué diferencia hay entre la "C" de ACID y la "C" de CAP?
+
+- a) La de ACID: cada transacción lleva la base de un estado válido a otro. La de CAP: cada lectura ve la última escritura.
+- b) Son la misma propiedad, vista desde una sola máquina y desde varias.
+- c) La de ACID habla de que las réplicas tengan el mismo valor, y la de CAP habla de restricciones como `CHECK` y claves foráneas.
+- d) La de CAP solo existe en los motores relacionales.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** La clase lo marca como uno de los malentendidos: "la C de CAP no equivale a la consistencia de restricciones ACID". Un sistema puede respetar un `CHECK` y, con réplicas asíncronas, devolver un dato viejo. La c invierte las definiciones.
+
+</details>
+
+**Pregunta 90** · Intermedia · *Cassandra y CAP*
+
+Con RF = 3, una réplica queda aislada por un corte de red. ¿Qué pasa con las operaciones según su nivel de consistencia?
+
+- a) Las dos fallan siempre, porque Cassandra es un sistema CP.
+- b) Las dos responden siempre, porque Cassandra es un sistema AP.
+- c) `ONE` puede seguir respondiendo con las réplicas que quedan; `QUORUM` exige mayoría y puede rechazar operaciones.
+- d) `QUORUM` responde más rápido que `ONE` durante la falla, porque consulta más réplicas en paralelo y toma la primera respuesta que llega.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** "La consistencia depende de la operación": latencia, disponibilidad y frescura dependen de la configuración y de las fallas. Por eso no corresponde ponerle a Cassandra una **etiqueta fija** de CP o AP (a, b): el mismo clúster se comporta distinto según el CL de cada operación.
+
+</details>
+
+**Pregunta 91** · Intermedia · *Redis y Neo4j ante fallas*
+
+¿Qué regla da la clase para analizar Redis y Neo4j frente a CAP?
+
+- a) Redis es siempre CP y Neo4j siempre AP, sin importar cómo se instalen.
+- b) Los dos garantizan consistencia y disponibilidad al mismo tiempo durante una partición, porque sus réplicas confirman cada escritura antes de responder.
+- c) CAP no se aplica a ninguno de los dos, porque no son motores distribuidos.
+- d) No asignar una etiqueta sin contexto: hay que evaluar el despliegue (*standalone*, réplica, Sentinel, clúster), la escritura, la lectura y la partición concreta.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** En Redis, réplica, Sentinel y Cluster cambian la recuperación y el comportamiento; en Neo4j, *standalone* o clúster cambian las garantías. La regla: evaluar **despliegue, escritura, lectura y partición concreta**. La a pone etiquetas fijas; la c ignora que pueden distribuirse; la b contradice CAP.
+
+</details>
+
+**Pregunta 92** · Intermedia · *PACELC*
+
+¿Qué agrega PACELC a CAP?
+
+- a) Que sin partición hay que elegir entre latencia y consistencia.
+- b) Que la partición se puede evitar agregando más nodos y enlaces de red redundantes entre ellos.
+- c) Que la consistencia eventual garantiza latencia cero.
+- d) Que los sistemas con particiones no pueden ser consistentes nunca.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** Si hay **P**artición, se elige entre **A** y **C**; si no (**E**lse), entre **L**atencia y **C**onsistencia. Explica por qué un sistema que espera a una mayoría de réplicas responde más lento aun sin fallas: es el costo de `QUORUM`.
+
+</details>
+
+**Pregunta 93** · Intermedia · *Matriz de decisión*
+
+La clase propone elegir motor con tres criterios. ¿Cuáles son?
+
+- a) Popularidad del motor en el mercado, precio de licencia y cantidad de tutoriales y cursos disponibles para el equipo.
+- b) Lenguaje de consulta, sintaxis y herramienta gráfica.
+- c) Acceso (clave, rango por partición o recorrido), escala (memoria, distribución o densidad) y operación.
+- d) Velocidad de lectura, velocidad de escritura y velocidad de instalación.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** "Elegir según el patrón de acceso": **acceso**, **escala** y **operación**. El objetivo de la clase es "decidir a partir de evidencia, no por popularidad" (a). El cierre lo resume: elegir motor también es **elegir costos de operación**.
+
+</details>
+
+**Pregunta 94** · Básica · *"No gana quien usa más tecnologías"*
+
+En la batalla de arquitecturas, un grupo propone seis motores distintos para el comercio. ¿Qué objeción es la más sólida?
+
+- a) Ninguna: más motores hacen la arquitectura más preparada para el futuro, porque cada dato queda en el motor más rápido para él.
+- b) Que cada motor suma operación, respaldo, seguridad, conocimiento e integración, y hay que justificar que el que ya se tiene no alcanza.
+- c) Que seis motores no pueden convivir en una misma red.
+- d) Que solo se permiten motores de una misma familia en un sistema.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** La pregunta de la actividad es si existe una única arquitectura correcta. No existe, pero cada motor tiene un **costo**: operarlo, respaldarlo, asegurarlo, conocerlo e **integrarlo** con los demás. La pregunta no es "¿qué motor sirve?", sino "¿el que tengo no alcanza?". La a es la falacia "más motores, más preparada".
+
+</details>
+
+**Pregunta 95** · Intermedia · *Dónde va lo transaccional*
+
+Pedido, descuento de stock y registro del pago deben confirmarse juntos o no confirmarse. ¿Dónde conviene resolverlo?
+
+- a) En Redis, porque responde en milisegundos y `MULTI`/`EXEC` agrupa los comandos del pedido, el stock y el pago.
+- b) En Cassandra, porque la escritura masiva es su fortaleza.
+- c) En Neo4j, porque el pedido relaciona clientes y productos.
+- d) En el motor relacional, con una transacción entre tablas.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** "Lo que importa es el alcance de la garantía": un dominio que necesita atomicidad **entre varias entidades** va al motor que la ofrece entre tablas. Redis no tiene rollback (a); Cassandra es atómica por partición (b). En la clase 7, pedidos y pagos son el ejemplo del relacional.
+
+</details>
+
+**Pregunta 96** · Desafío · *Escritura doble*
+
+Una aplicación guarda el pedido en MySQL y después lo escribe en Neo4j para las recomendaciones. ¿Qué problema tiene y qué patrón lo resuelve?
+
+- a) No tiene problema: si la segunda escritura falla, la aplicación muestra un error y el usuario reintenta.
+- b) Las dos escrituras no son atómicas entre sí. Se resuelve con un outbox transaccional: el evento se guarda en la misma transacción del pedido y un proceso lo publica y reintenta.
+- c) Neo4j no puede recibir datos de MySQL, así que hay que cargarlo a mano.
+- d) Se resuelve con un *two-phase commit* entre MySQL y Neo4j, que garantiza la atomicidad y no afecta la disponibilidad de ninguno de los dos.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** Si el proceso cae entre las dos escrituras, los motores quedan inconsistentes y nadie se entera. El **outbox** guarda el evento en la misma transacción del negocio, y el consumidor en Neo4j se hace **idempotente** (`MERGE` sobre una clave única). Un *two-phase commit* (d) no está disponible entre estos motores y, aunque lo estuviera, bloquea y reduce la disponibilidad.
+
+</details>
+
+**Pregunta 97** · Desafío · *Actualización perdida*
+
+Doscientos procesos suman 1 al mismo contador en Redis. Con `HGET` y luego `HSET` el total queda muy por debajo de 200. ¿Qué lo corrige?
+
+- a) Ejecutar los procesos más rápido, para que no se superpongan.
+- b) Leer el contador dos veces antes de escribirlo.
+- c) Usar `HINCRBY`, que suma en una sola operación atómica del motor.
+- d) Activar AOF con `appendfsync always`, para que ninguna escritura del contador se pierda.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** Es la **actualización perdida** del Parcial 1: muchos procesos leen el mismo valor y escriben el mismo resultado. La lección es **delegar la operación crítica al motor** en una sola sentencia atómica (`HINCRBY`, o `UPDATE ... SET x = x + 1` en SQL). AOF (d) da durabilidad, no evita la carrera; leer dos veces (b) tampoco.
+
+</details>
+
+---
+
+## Unidad 10 · Operar como servicio: DBaaS y Cloud
+
+**Pregunta 98** · Básica · *¿Qué queda por administrar?*
+
+Si el proveedor administra el servidor, los backups y la alta disponibilidad, ¿qué queda por administrar según la clase?
+
+- a) Configurar, proteger, observar y pagar.
+- b) Nada: el servicio administrado reemplaza toda la tarea del DBA, porque el proveedor también diseña los datos y los índices.
+- c) Solo el pago de la factura mensual del proveedor.
+- d) Solo la instalación del sistema operativo de la instancia.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** La pregunta disparadora de la clase se desarma en cuatro: **¿quién configura? ¿quién protege? ¿quién observa? ¿quién paga?** "DBaaS reduce trabajo operativo; no elimina las decisiones de administración". El sistema operativo (d) es justamente lo que el proveedor sí opera.
+
+</details>
+
+**Pregunta 99** · Básica · *Abstracción y responsabilidad*
+
+Al pasar de on-premise a IaaS, a DBaaS y a serverless, ¿qué ocurre según la clase?
+
+- a) Desaparece toda responsabilidad sobre los datos al llegar a DBaaS.
+- b) Aumenta el control del sistema operativo en cada paso.
+- c) El costo baja siempre en cada paso, porque se paga solo lo que se usa y desaparece la inversión en hardware propio.
+- d) Más abstracción y menos infraestructura propia, pero no necesariamente menos responsabilidad sobre los datos.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** On-premise (máximo control) → IaaS (infraestructura alquilada) → PaaS/DBaaS (operación compartida) → serverless (mayor abstracción). "A mayor abstracción, menos infraestructura propia; **no necesariamente menos responsabilidad** sobre los datos". El control del SO baja (b) y el costo depende de la configuración (c).
+
+</details>
+
+**Pregunta 100** · Intermedia · *Las tres ideas de la nube*
+
+¿Qué advertencia hace la clase sobre la elasticidad, el pago por consumo y la automatización?
+
+- a) Que solo existen en los proveedores más grandes.
+- b) Que cloud no significa automáticamente barato, elástico ni disponible: depende de cómo se configure.
+- c) Que la elasticidad es siempre automática en cualquier servicio, y por eso no requiere decisiones de capacidad ni de costo.
+- d) Que el pago por consumo hace imposible estimar el costo de una base.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** **Elasticidad** (ajustar capacidad sin comprar hardware, manual o automática), **pago por consumo** (el costo pasa a los recursos usados) y **automatización** (aprovisionamiento, backups, parches, HA como capacidades de plataforma). Ninguna viene garantizada por estar "en la nube". El costo se estima con las calculadoras de cada proveedor (d).
+
+</details>
+
+**Pregunta 101** · Intermedia · *Qué es DBaaS*
+
+¿Qué afirmación sobre DBaaS es correcta?
+
+- a) Una forma de operar un motor, no un modelo de datos.
+- b) Es un modelo de datos nuevo, distinto del relacional y del documental, pensado para aplicaciones que corren en la nube.
+- c) Es un motor NoSQL que solo existe en la nube.
+- d) Es un tipo de respaldo que copia la base a un proveedor externo.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** Se consume la base mediante un **endpoint** y una API o consola; el proveedor opera gran parte de la infraestructura y del ciclo de vida del motor. Un PostgreSQL administrado sigue siendo relacional, y MongoDB Atlas sigue siendo documental. La b y la c confunden la forma de operar con el modelo.
+
+</details>
+
+**Pregunta 102** · Intermedia · *Responsabilidad compartida*
+
+En la tabla de responsabilidad compartida de la clase, ¿cuál de estas tareas es **compartida** entre proveedor y cliente?
+
+- a) Hardware y centro de datos donde corre el servicio.
+- b) Usuarios, roles y privilegios.
+- c) Modelo de datos, SQL e índices.
+- d) La disponibilidad de la plataforma.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** **Proveedor:** hardware y centro de datos (a), SO y parches de plataforma. **Compartida:** disponibilidad de la plataforma. **Cliente:** configuración del servicio, usuarios y privilegios (b), modelo, SQL e índices (c), datos y su clasificación, costo y gobierno. "Managed no significa sin dueño".
+
+</details>
+
+**Pregunta 103** · Intermedia · *Qué desaparece y qué permanece*
+
+Comparado con la VM del curso, ¿qué tarea **permanece** al pasar a DBaaS?
+
+- a) Instalar el sistema operativo y el motor.
+- b) Probar el *restore* y los costos.
+- c) Gestionar los discos del servidor.
+- d) Construir los mecanismos básicos de alta disponibilidad, como la réplica en otra zona y el *failover*.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** **Suele reducirse:** instalar SO y motor (a), gestionar discos (c), parte del *patching*, la HA básica (d) y las copias estándar. **Permanece:** diseñar datos e índices, gestionar identidades, configurar parámetros, diagnosticar consultas, **validar el restore, el RPO/RTO y los costos**, y definir la arquitectura. "De administrar máquinas a administrar niveles de servicio y decisiones".
+
+</details>
+
+**Pregunta 104** · Intermedia · *Lo que ve la aplicación*
+
+En la arquitectura DBaaS de la clase (APP → DNS → TLS → DB → DATA → OBS), ¿cómo trabaja el DBA?
+
+- a) Entra por SSH al servidor del proveedor para revisar los archivos de configuración y los logs del sistema operativo.
+- b) Pide al proveedor un acceso físico al centro de datos ante cada incidente.
+- c) Observa el servicio mediante SQL, consola, API, métricas y logs.
+- d) No puede ver nada del servicio hasta que el proveedor envía un informe mensual.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** "La infraestructura se oculta; el endpoint se vuelve la frontera visible". El DBA ya no "entra al servidor" para resolver todo (a): no hay acceso al sistema operativo. Observa con las herramientas del servicio. La b y la d no describen ningún DBaaS.
+
+</details>
+
+**Pregunta 105** · Intermedia · *Provisionar*
+
+¿Qué decisiones se toman al provisionar una base como servicio, antes del primer `CREATE TABLE`?
+
+- a) Región, motor y versión, cómputo, almacenamiento, red y alta disponibilidad.
+- b) Solo el nombre de la base y la contraseña del administrador.
+- c) Solo el tamaño del disco, porque lo demás lo decide el proveedor.
+- d) El modelo de datos y los índices, porque el proveedor ya fijó la infraestructura.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** **Región** (¿dónde vive?), **motor/versión** (¿qué compatibilidad?), **compute** (¿cuánta CPU y RAM?), **storage** (¿capacidad e IOPS?), **red** (¿pública o privada?) y **HA** (¿una zona o varias?). "Provisionar es diseñar una plataforma operativa, no solamente crear una base". Las demás opciones dejan afuera decisiones que son del cliente.
+
+</details>
+
+**Pregunta 106** · Intermedia · *Anatomía del endpoint*
+
+En `postgresql://app@mi-db.proveedor.cloud:5432/ventas`, ¿qué es cada parte?
+
+- a) `app` es la base, `mi-db.proveedor.cloud` es el usuario de la plataforma, `5432` es el código de la región y `ventas` es el motor elegido.
+- b) `app` es el motor, `5432` es la versión y `ventas` es el certificado TLS.
+- c) `mi-db.proveedor.cloud` es la IP fija del servidor físico, que no cambia nunca.
+- d) `app` el usuario, el host el endpoint, `5432` el puerto y `ventas` la base.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** **Usuario** (identidad), **host** (endpoint administrado), **puerto** del motor y **base lógica**, más TLS y *timeout* como comportamiento del cliente. El endpoint reemplaza a la IP del servidor (c): el proveedor puede cambiar la máquina detrás sin cambiar el nombre. "La conexión cambia de infraestructura, no de principios".
+
+</details>
+
+**Pregunta 107** · Intermedia · *Público no significa abierto*
+
+Una base con acceso público funciona desde la casa de un integrante, pero desde la red de la facultad la conexión da *timeout*. ¿Qué es lo más probable y cómo se corrige?
+
+- a) La clave es incorrecta desde esa red, porque el proveedor asocia cada contraseña a la red desde la que se creó el usuario.
+- b) La regla de red (lista de IP o firewall) no incluye la IP pública de la facultad; se agrega esa IP, sin abrir el acceso a todo internet.
+- c) El motor está caído; hay que reiniciar el servicio desde la consola.
+- d) Falta TLS; hay que desactivarlo para conectarse desde redes públicas.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** Un *timeout* indica que la conexión **ni siquiera llega** al motor: es la capa de red. Una clave incorrecta daría `Authentication failed` (a). "Público no significa abierto": el endpoint alcanzable desde internet se protege con reglas, identidad y TLS. Abrir `0.0.0.0/0` dejaría la clave como única defensa.
+
+</details>
+
+**Pregunta 108** · Intermedia · *¿Sigue siendo PostgreSQL?*
+
+Un equipo migra a un PostgreSQL administrado y descubre que el usuario `postgres` que entrega la plataforma no es `SUPERUSER`. ¿Cómo lo explica la clase?
+
+- a) Es esperable: se mantiene el SQL, pero pueden cambiar el superusuario, las extensiones y los parámetros.
+- b) Es un error de configuración del proveedor que hay que reclamar.
+- c) Significa que no es PostgreSQL, sino otro motor que imita su sintaxis.
+- d) Impide crear roles y tablas, así que el servicio no sirve para producción y hay que volver a un servidor propio con acceso total.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** "Compatibilidad no implica control idéntico al servidor propio". Se mantienen SQL, tipos, índices, transacciones y planes; **puede cambiar** el superusuario, las extensiones, los parámetros, el acceso al sistema de archivos y las ventanas de mantenimiento. Así se evita que un cliente comprometa el host compartido. Los roles y las tablas se siguen creando con privilegios delegados (d).
+
+</details>
+
+**Pregunta 109** · Desafío · *Backup administrado*
+
+En el backup administrado, ¿quién hace qué según la clase?
+
+- a) El proveedor hace todo, incluida la validación de los datos restaurados, y entrega un certificado de recuperabilidad en cada copia.
+- b) El cliente ejecuta las copias a mano, porque el proveedor solo guarda los archivos.
+- c) El proveedor elige la política de retención y el cliente ejecuta las copias.
+- d) El proveedor ejecuta las copias según la configuración; el cliente elige la política y prueba el *restore*; los dos sostienen el RPO/RTO.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** **Proveedor:** ejecuta copias y retención según la configuración. **Cliente:** elige política, retención y ventanas, y **prueba el restore**. **Ambos:** sostienen el RPO/RTO. "Un checkbox *backup enabled* no demuestra recuperabilidad. La evidencia sigue siendo un restore validado". La c invierte los papeles.
+
+</details>
+
+**Pregunta 110** · Intermedia · *HA no es backup*
+
+Un servicio con réplica en otra zona y *failover* automático recibe un `DELETE` sin `WHERE`. ¿Qué pasa?
+
+- a) El *failover* detecta el error y conmuta a la réplica, que todavía tiene los datos.
+- b) El borrado se replica al *standby*: la HA protege contra caídas, no contra errores lógicos.
+- c) La réplica rechaza el borrado porque no tiene `WHERE`.
+- d) El proveedor revierte la operación automáticamente, porque deshacer errores de los usuarios es parte del servicio administrado.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** "La HA del servicio no reemplaza al backup ni corrige errores lógicos". Es el "alta disponibilidad no es backup" del Parcial 1: la réplica copia lo que hace el primario, incluidos los errores. Las preguntas del DBA ante la HA administrada: qué SLA ofrece, qué RPO/RTO necesito, qué pasa con las conexiones y cómo pruebo el *failover*.
+
+</details>
+
+**Pregunta 111** · Intermedia · *Patching administrado*
+
+¿Qué significa que "managed cambia quién aplica el parche, no quién asume el impacto"?
+
+- a) Que el cliente debe aplicar los parches a mano aunque el servicio sea administrado.
+- b) Que los parches nunca reinician la base en un servicio administrado.
+- c) Que el proveedor aplica los parches según la política, pero el cliente define la ventana, prueba la compatibilidad, y la aplicación debe tolerar reinicios y *failover*.
+- d) Que el proveedor se hace cargo de cualquier pérdida de negocio causada por un parche, porque lo aplicó sin consultar al cliente.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** **Proveedor:** mantiene la plataforma y publica versiones y ventanas. **Cliente:** define la ventana, prueba compatibilidad, revisa extensiones y planifica cambios de versión. **Aplicación:** tolera reinicios, *failover* y cambios de sesión. Los parches sí pueden reiniciar (b), y el impacto de negocio sigue siendo del equipo (d).
+
+</details>
+
+**Pregunta 112** · Intermedia · *Observabilidad*
+
+La consola del servicio muestra CPU, memoria, conexiones, latencia, I/O, consultas costosas, logs y alertas. ¿Qué pregunta propone la clase frente a esas señales?
+
+- a) "¿Qué decisión puedo tomar con esta señal?"
+- b) "¿Qué dashboard tiene más gráficos?"
+- c) "¿Cuántas métricas ofrece este proveedor frente a otro?"
+- d) "¿Cómo desactivo las alertas para no recibir notificaciones?"
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** "La pregunta no es qué dashboard existe, sino **qué decisión puedo tomar con esa señal**". Una alerta es **un umbral más una acción**. La consola reemplaza parte del acceso al SO, pero hace falta evidencia; y los planes gratuitos suelen limitar las métricas y los logs disponibles.
+
+</details>
+
+**Pregunta 113** · Desafío · *"Subamos la instancia"*
+
+La CPU está alta y la latencia crece. Alguien propone duplicar el cómputo. ¿Qué haría un DBA según la clase?
+
+- a) Duplicar el cómputo enseguida, porque en la nube escalar es inmediato, no tiene techo y no cambia el costo mensual.
+- b) Reducir el cómputo a la mitad para bajar el costo, aunque suba la latencia.
+- c) Migrar a otro proveedor, porque el actual no optimiza el SQL.
+- d) Medir SQL, I/O e índices y comparar optimizar con escalar.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** Duplicar el cómputo baja la latencia, pero **sube el costo** y puede ocultar un problema. "El proveedor no optimiza nuestro SQL", y comprar recursos no convierte una consulta mala en un buen diseño. **FinOps** para bases: optimizar el valor, no minimizar el costo a cualquier precio (b).
+
+</details>
+
+**Pregunta 114** · Intermedia · *Réplicas de lectura*
+
+¿Qué condición pone la clase para que las réplicas de lectura de un DBaaS sirvan?
+
+- a) Que las réplicas estén en la misma zona que el primario.
+- b) Que la aplicación sepa usarlas: distribuyen las consultas compatibles, no las escrituras.
+- c) Que se desactive el primario, para que las réplicas reciban toda la carga.
+- d) Que el plan sea serverless, porque solo esos planes admiten réplicas de lectura.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** "Escalar es una decisión de arquitectura y costo, no un botón mágico". **Vertical:** más CPU y RAM, con reinicio y techo. **Lecturas:** réplicas que la aplicación debe saber usar. **Serverless/autoscale:** simplifica picos, pero hay que entender límites y modelo de cobro.
+
+</details>
+
+**Pregunta 115** · Intermedia · *Componentes del costo*
+
+Un reporte descarga todos los días varios GB desde la base en la nube hacia una oficina. ¿Qué componente del costo crece?
+
+- a) El cómputo, porque cada descarga suma vCPU a la instancia.
+- b) El *storage*, porque cada descarga duplica los GB provisionados.
+- c) La red: la transferencia de salida (*egress*).
+- d) La HA, porque cada descarga crea una réplica nueva.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** Los componentes de la clase: **compute** (vCPU, RAM, tiempo), **storage** (GB provisionados), **I/O** (operaciones), **backup** (retención, *snapshots*), **red** (*egress*) y **HA** (réplicas, zonas). "En DBaaS cada decisión técnica puede tener traducción económica".
+
+</details>
+
+**Pregunta 116** · Intermedia · *Seguridad en dos planos*
+
+Un integrante tiene un rol de solo lectura en la consola del proveedor, pero no tiene usuario de base de datos. ¿Puede leer los datos de las colecciones o tablas?
+
+- a) No: la identidad de la plataforma controla quién administra o ve el servicio, y la del motor controla quién usa los datos. Son planos distintos.
+- b) Sí, porque el rol de solo lectura de la consola incluye leer todos los datos de las bases del proyecto desde el explorador web.
+- c) Sí, siempre que se conecte desde una IP permitida.
+- d) No, porque en DBaaS nadie puede leer datos, salvo el proveedor.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: a.** **Identidad cloud** (IAM, roles de la plataforma): quién crea, modifica o lee la configuración del servicio. **Identidad del motor:** quién accede a objetos y acciones dentro de la base. Una identidad de un plano **no sirve en el otro**: un rol de solo lectura del proyecto no lee documentos, y un usuario de base de datos no entra a la consola. La red (c) es una tercera capa, no un permiso.
+
+</details>
+
+**Pregunta 117** · Intermedia · *Cuándo termina una migración*
+
+Según la clase, ¿cuándo termina la migración de una base a DBaaS?
+
+- a) Cuando termina de copiarse el último dato al servicio nuevo y el recuento de filas coincide con el del origen.
+- b) Cuando el proveedor confirma que la instancia está creada.
+- c) Cuando se borra la base de origen.
+- d) Cuando la operación es estable y verificable: validada, con el traspaso hecho y observando errores, latencia y costo.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** Los seis pasos: **inventariar** (versiones, extensiones, tamaño), **evaluar** (compatibilidad, límites), **mover** (*dump/restore* o replicación), **validar** (conteos, SQL, rendimiento), **traspaso** (DNS o endpoint, ventana) y **observar** (errores, latencia, costo). "La migración termina cuando la operación es estable y verificable, no cuando finaliza la copia" (a).
+
+</details>
+
+**Pregunta 118** · Intermedia · *Dónde conviene operar*
+
+En la tabla comparativa de la clase, ¿qué combinación corresponde a DBaaS?
+
+- a) Control del SO alto, instalación y parches propios, costo en CapEx.
+- b) Control del SO bajo, parches del proveedor, compatibilidad con límites y foco en el servicio y los datos.
+- c) Elasticidad baja y planificada, compatibilidad máxima con el motor original y foco del DBA en el servidor y el motor.
+- d) Control del SO alto, elasticidad media y foco en la VM y el motor.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: b.** La a y la c describen on-premise (CapEx, máximo control y compatibilidad); la d describe VM/IaaS (OpEx). "No hay un ganador universal: cambia el equilibrio entre control y esfuerzo". **Elegir DBaaS es elegir una frontera de responsabilidad**, no solamente un proveedor.
+
+</details>
+
+**Pregunta 119** · Intermedia · *Estrategia de salida*
+
+¿Qué propone la clase para no quedar atado a una plataforma (*lock-in*)?
+
+- a) Usar todas las funciones propietarias del proveedor, porque así se aprovecha mejor el servicio y se reduce el costo de operarlo.
+- b) No usar nunca un servicio administrado.
+- c) Revisar las dependencias propietarias, asegurar herramientas y permisos para exportar datos y esquema, y probar la salida restaurando en otra instancia.
+- d) Pedir al proveedor un contrato que prohíba subir los precios.
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: c.** **Dependencias** (extensiones, versiones, autenticación, APIs propietarias), **exportación** (formatos, herramientas, permisos) y **prueba de salida** (restaurar en otra instancia, medir tiempos, ejecutar las consultas críticas). La pregunta antes de adoptar: "¿cómo nos iríamos de esta plataforma?". Cuanto más se usan funciones propias (a), mayor es el *lock-in*.
+
+</details>
+
+**Pregunta 120** · Básica · *¿DBaaS elimina al DBA?*
+
+¿Qué conclusión da la clase sobre el rol del DBA en DBaaS?
+
+- a) Desaparece: el proveedor se ocupa de todo.
+- b) Se reduce a pagar la factura, abrir tickets de soporte y aprobar las ventanas de mantenimiento que propone el proveedor.
+- c) No cambia: hace las mismas tareas que en el servidor propio.
+- d) Se eleva: pasa de operar servidores a gobernar una plataforma de datos (configuración, seguridad, automatización, costos y gobierno).
+
+<details>
+<summary>Ver respuesta</summary>
+
+**Respuesta: d.** "DBaaS no elimina al DBA: **eleva el nivel** en el que debe administrar". La pregunta cambia de "¿quién administra el servidor?" a "¿quién responde por el servicio?". **Siempre** siguen siendo del equipo los datos, el SQL, la seguridad, la continuidad y las decisiones. En los criterios de la actividad, interpretar DBaaS como "sin administración" (a) es **no logrado**.
 
 </details>
 
@@ -1335,7 +1978,7 @@ La consigna pide identificar la protección administrada, generar un respaldo l�
 
 | Unidad | Respuestas |
 | :--- | :--- |
-| U7 | 1 c · 2 b · 3 a · 4 d · 5 c · 6 a · 7 d · 8 b · 9 c · 10 a · 11 d · 12 c · 13 a · 14 b · 15 d · 16 b · 17 c |
-| U8 | 18 d · 19 a · 20 c · 21 b · 22 d · 23 c · 24 a · 25 b · 26 c · 27 d · 28 a · 29 c · 30 b · 31 d · 32 c · 33 a · 34 b · 35 d · 36 a · 37 c · 38 b · 39 d |
-| U9 | 40 c · 41 a · 42 d · 43 b · 44 a · 45 c · 46 d · 47 a · 48 c · 49 b · 50 d · 51 a · 52 c · 53 b · 54 d · 55 a · 56 c · 57 b · 58 d · 59 a · 60 c · 61 b · 62 c · 63 a · 64 d · 65 b · 66 c · 67 a · 68 d · 69 b · 70 a · 71 b |
-| U10 | 72 d · 73 b · 74 a · 75 c · 76 d · 77 b · 78 a · 79 c · 80 d |
+| U7 | 1 c · 2 b · 3 d · 4 a · 5 b · 6 c · 7 d · 8 a · 9 b · 10 c · 11 b · 12 a · 13 b · 14 d · 15 c · 16 b · 17 d · 18 b · 19 c · 20 b · 21 c · 22 d · 23 a · 24 b · 25 d · 26 a · 27 c · 28 b · 29 b · 30 c · 31 a · 32 b · 33 d |
+| U8 | 34 a · 35 d · 36 c · 37 b · 38 d · 39 c · 40 a · 41 d · 42 c · 43 a · 44 b · 45 c · 46 a · 47 d · 48 c · 49 a · 50 d · 51 c · 52 a · 53 b · 54 c · 55 a · 56 d · 57 b · 58 a · 59 d · 60 c · 61 a · 62 b · 63 c |
+| U9 | 64 b · 65 c · 66 d · 67 b · 68 a · 69 c · 70 b · 71 c · 72 b · 73 d · 74 a · 75 c · 76 a · 77 d · 78 b · 79 b · 80 c · 81 a · 82 d · 83 b · 84 c · 85 a · 86 d · 87 b · 88 c · 89 a · 90 c · 91 d · 92 a · 93 c · 94 b · 95 d · 96 b · 97 c |
+| U10 | 98 a · 99 d · 100 b · 101 a · 102 d · 103 b · 104 c · 105 a · 106 d · 107 b · 108 a · 109 d · 110 b · 111 c · 112 a · 113 d · 114 b · 115 c · 116 a · 117 d · 118 b · 119 c · 120 d |

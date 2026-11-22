@@ -18,7 +18,7 @@ Todo está en español. Las salidas que aparecen en las bitácoras salen de ejec
 | :--- | :--- |
 | [apunte_parcial_1.md](Parcial%201/apunte_parcial_1.md) | Apunte de las Unidades 1 a 6, con la comparación MySQL y PostgreSQL por unidad |
 | [preguntas_simulacro_parcial_1.md](Parcial%201/preguntas_simulacro_parcial_1.md) | 80 preguntas de opción múltiple sobre las Unidades 1 a 6, con la respuesta explicada |
-| [preguntas_simulacro_parcial_2.md](Parcial%202/preguntas_simulacro_parcial_2.md) | 80 preguntas de opción múltiple sobre las Unidades 7 a 10, con la respuesta explicada |
+| [preguntas_simulacro_parcial_2.md](Parcial%202/preguntas_simulacro_parcial_2.md) | 120 preguntas de opción múltiple sobre las clases 7 a 10 de la cátedra, con la respuesta explicada |
 | [referencia_laboratorio.md](Laboratorio%20Integrador/referencia_laboratorio.md) | Recetas por tarea (usuarios, carga masiva, índices, respaldo, MongoDB, Atlas) para consultar durante el laboratorio |
 
 En los dos pregunteros cada pregunta es una situación concreta con cuatro opciones y una sola correcta. La respuesta está dentro de un bloque desplegable, y al final hay una clave para corregir rápido.
